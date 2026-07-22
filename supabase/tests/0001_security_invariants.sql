@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(11);
+select plan(17);
 
 select ok(
   not exists (
@@ -81,6 +81,46 @@ select ok(
 select ok(
   not has_function_privilege('authenticated', 'public.bootstrap_initial_admin(uuid,text)', 'EXECUTE'),
   'Authenticated users cannot execute initial admin bootstrap'
+);
+
+select ok(
+  not has_function_privilege('anon', 'public.admin_set_user_role(uuid,public.app_role,boolean,text)', 'EXECUTE'),
+  'Anon cannot execute role administration RPC'
+);
+
+select ok(
+  not has_function_privilege('anon', 'public.complete_privileged_onboarding()', 'EXECUTE'),
+  'Anon cannot execute privileged onboarding RPC'
+);
+
+select ok(
+  not has_function_privilege('anon', 'public.mark_notification_read(uuid)', 'EXECUTE'),
+  'Anon cannot execute notification mutation RPC'
+);
+
+select ok(
+  not has_function_privilege('anon', 'public.update_my_profile(text,public.app_locale,text,text)', 'EXECUTE'),
+  'Anon cannot execute profile mutation RPC'
+);
+
+select ok(
+  not exists (
+    select 1 from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'content_media_public_read'
+  ),
+  'Public content bucket cannot be listed through a broad policy'
+);
+
+select ok(
+  not exists (
+    select 1 from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'avatars_public_read'
+  ),
+  'Public avatar bucket cannot be listed through a broad policy'
 );
 
 select * from finish();
