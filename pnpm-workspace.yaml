@@ -1,0 +1,29 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+  supabase: true
+  unrs-resolver: true
+overrides:
+  postcss: 8.5.21
+  sharp: 0.35.3
+minimumReleaseAgeExclude:
+  - "@next/env@16.2.11"
+  - "@next/eslint-plugin-next@16.2.11"
+  - "@next/swc-darwin-arm64@16.2.11"
+  - "@next/swc-darwin-x64@16.2.11"
+  - "@next/swc-linux-arm64-gnu@16.2.11"
+  - "@next/swc-linux-arm64-musl@16.2.11"
+  - "@next/swc-linux-x64-gnu@16.2.11"
+  - "@next/swc-linux-x64-musl@16.2.11"
+  - "@next/swc-win32-arm64-msvc@16.2.11"
+  - "@next/swc-win32-x64-msvc@16.2.11"
+  - "@supabase/auth-js@2.110.8"
+  - "@supabase/functions-js@2.110.8"
+  - "@supabase/postgrest-js@2.110.8"
+  - "@supabase/realtime-js@2.110.8"
+  - "@supabase/storage-js@2.110.8"
+  - "@supabase/supabase-js@2.110.8"
+  - eslint-config-next@16.2.11
+  - next@16.2.11
+  - prettier@3.9.6
+  - postcss@8.5.21

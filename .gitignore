@@ -7,6 +7,7 @@ coverage/
 playwright-report/
 test-results/
 .turbo/
+.vercel/
 *.tsbuildinfo
 
 # Environment and secrets
@@ -41,6 +42,6 @@ supabase/.env.*
 *.log
 *.sqlite
 *.db
-downloads/
-uploads/
-tmp/
+/downloads/
+/uploads/
+/tmp/

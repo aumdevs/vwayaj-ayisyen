@@ -1,6 +1,6 @@
 # haitian-legal-travel-platform
 
-Paquete de especificación y handoff para que Codex construya una plataforma web completa con Next.js, Supabase, Vercel, GitHub, Stripe, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
+Aplicación y handoff de una plataforma web multilingüe construida con Next.js, Supabase, Vercel, GitHub, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
 
 ## Propósito del producto
 
@@ -38,6 +38,32 @@ El producto combinará información oficial, experiencia práctica, realidad com
 10. Diseño premium sin sacrificar simplicidad.
 
 Consulta `00_START_HERE.md` para el orden de lectura.
+
+## Desarrollo local
+
+Requisitos: Node `24.18.0`, pnpm `11.15.0`, Supabase CLI y un runtime Docker compatible.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm db:start
+pnpm db:reset
+pnpm db:lint
+pnpm db:test
+pnpm db:types
+pnpm check:all
+pnpm test:e2e
+```
+
+Copia únicamente nombres y valores locales seguros desde `.env.example` a un archivo `.env.local` ignorado. Nunca uses secretos de producción en desarrollo o preview.
+
+## Estado seguro por defecto
+
+- Kreyòl es el idioma inicial; también existen francés, español, portugués e inglés.
+- Las páginas de país leen sólo la vista RLS de contenido publicado y revisado.
+- Comparador y cuestionario no muestran puntuaciones hasta que reglas y fuentes estén validadas.
+- Pagos, documentos, IA, comunidad, citas, intake, WhatsApp, cursos y portal profesional usan kill switches cerrados.
+- El nombre, logo, dominio y textos legales visibles son provisionales hasta aprobación.
+- Consulta `docs/DECISIONS_IMPLEMENTED.md` y `operations/CODEX_FINAL_REPORT.md` para el estado verificado y los bloqueos.
 
 ## Cómo usar este handoff
 

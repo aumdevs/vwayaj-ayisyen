@@ -17,6 +17,7 @@ requireValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
 if (featureEnabled("DISABLE_PAYMENTS")) {
   requireValue("STRIPE_SECRET_KEY");
   requireValue("STRIPE_WEBHOOK_SECRET");
+  requireValue("STRIPE_API_VERSION");
 }
 if (featureEnabled("DISABLE_DOCUMENT_UPLOADS")) {
   requireValue("MALWARE_SCANNER_URL");
@@ -31,6 +32,12 @@ if (featureEnabled("DISABLE_AI_ASSISTANT")) {
 if (featureEnabled("DISABLE_PUBLIC_INTAKE")) {
   requireValue("CRM_ENCRYPTION_KEY_V1");
   requireValue("CRM_BLIND_INDEX_KEY_V1");
+}
+if (featureEnabled("DISABLE_WHATSAPP")) {
+  requireValue("NEXT_PUBLIC_WHATSAPP_NUMBER");
+}
+if (featureEnabled("DISABLE_APPOINTMENTS")) {
+  requireValue("MEETING_PROVIDER");
 }
 if (env.ALLOW_ADMIN_BOOTSTRAP === "true") {
   requireValue("SUPABASE_SERVICE_ROLE_KEY");
