@@ -8,7 +8,7 @@ Fecha de corte: 2026-07-21.
 - Rama de implementación: `aumdevs/build-production-platform`.
 - Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform`.
 - Supabase remoto: no creado; bloqueo externo documentado en `docs/DECISIONS_IMPLEMENTED.md`.
-- GitHub Advanced Security: no disponible para Dependency Review nativo; fallback de auditoría activo.
+- GitHub Code Security: no disponible para Dependency Review ni CodeQL nativos; fallbacks de auditoría y análisis estático activos.
 - Supabase local: PostgreSQL 17, región remota prevista São Paulo si el plan lo permite.
 - Stripe: no configurado; pagos desactivados.
 
