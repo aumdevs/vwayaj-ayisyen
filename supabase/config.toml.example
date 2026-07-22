@@ -1,5 +1,5 @@
 # Run `supabase init` with the current CLI and merge these intentions.
-project_id = "haitian-legal-travel-platform"
+project_id = "vwayaj-ayisyen"
 
 [api]
 enabled = true

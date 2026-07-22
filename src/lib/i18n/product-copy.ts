@@ -1,8 +1,7 @@
 import type { Locale } from "@/types/domain";
 
 type ProductCopy = {
-  provisionalName: string;
-  provisionalStatus: string;
+  productName: string;
   reviewBadge: string;
   reviewedOnly: string;
   reviewedOnlyBody: string;
@@ -41,8 +40,7 @@ type ProductCopy = {
 
 const copy = {
   ht: {
-    provisionalName: "Sant enfòmasyon",
-    provisionalStatus: "Idantite pwovizwa",
+    productName: "Vwayaj Ayisyen",
     reviewBadge: "Revizyon obligatwa",
     reviewedOnly: "Sous ak dat vizib",
     reviewedOnlyBody:
@@ -96,8 +94,7 @@ const copy = {
     backToCountry: "Retounen nan paj peyi a"
   },
   fr: {
-    provisionalName: "Centre d’information",
-    provisionalStatus: "Identité provisoire",
+    productName: "Vwayaj Ayisyen",
     reviewBadge: "Révision obligatoire",
     reviewedOnly: "Sources et dates visibles",
     reviewedOnlyBody:
@@ -157,8 +154,7 @@ const copy = {
     backToCountry: "Retour au pays"
   },
   es: {
-    provisionalName: "Centro de información",
-    provisionalStatus: "Identidad provisional",
+    productName: "Vwayaj Ayisyen",
     reviewBadge: "Revisión obligatoria",
     reviewedOnly: "Fuentes y fechas visibles",
     reviewedOnlyBody:
@@ -215,8 +211,7 @@ const copy = {
     backToCountry: "Volver al país"
   },
   pt: {
-    provisionalName: "Centro de informação",
-    provisionalStatus: "Identidade provisória",
+    productName: "Vwayaj Ayisyen",
     reviewBadge: "Revisão obrigatória",
     reviewedOnly: "Fontes e datas visíveis",
     reviewedOnlyBody:
@@ -272,8 +267,7 @@ const copy = {
     backToCountry: "Voltar ao país"
   },
   en: {
-    provisionalName: "Information center",
-    provisionalStatus: "Provisional identity",
+    productName: "Vwayaj Ayisyen",
     reviewBadge: "Review required",
     reviewedOnly: "Visible sources and dates",
     reviewedOnlyBody:

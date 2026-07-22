@@ -24,12 +24,12 @@ const headingFont = Manrope({
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: "Enfòmasyon klè pou prepare desizyon ou",
-    template: "%s · Sant enfòmasyon"
+    default: "Vwayaj Ayisyen",
+    template: "%s · Vwayaj Ayisyen"
   },
   description:
     "Yon platfòm enfòmasyon ak preparasyon pou kominote ayisyèn nan, ak sous, dat ak limit ki vizib.",
-  applicationName: "Sant enfòmasyon",
+  applicationName: "Vwayaj Ayisyen",
   category: "education",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ht_HT",
-    title: "Enfòmasyon klè pou prepare desizyon ou",
+    title: "Vwayaj Ayisyen",
     description: "Enfòmasyon estriktire, onèt ak aksesib pou kominote ayisyèn nan."
   }
 };

@@ -1,6 +1,6 @@
 # Handoff narrativo consolidado para Codex
 
-**Proyecto técnico:** `haitian-legal-travel-platform`  
+**Proyecto técnico:** `vwayaj-ayisyen`
 **Generado:** 2026-07-21
 
 Este archivo reúne la documentación narrativa para facilitar una sola lectura. Los archivos individuales del ZIP siguen siendo la fuente autoritativa; las migraciones SQL, workflows, CSV, JSON, YAML, plantillas TypeScript, OpenAPI y diagramas no se duplican aquí.
@@ -16,7 +16,7 @@ La credencial temporal del administrador **no está incluida** en este archivo n
 
 # Empieza aquí — paquete de entrega para Codex
 
-**Proyecto técnico provisional:** `haitian-legal-travel-platform`  
+**Proyecto técnico:** `vwayaj-ayisyen`
 **Fecha del documento:** 2026-07-21  
 **Propietario previsto del repositorio:** `aumdevs`  
 **Grupo de Supabase:** `aumprodz Group`  
@@ -28,7 +28,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 1. Leer primero `CODEX_MASTER_PROMPT.md`.
 2. Leer `AGENTS.md` y todos los documentos de `/docs`.
-3. Crear un repositorio **privado** llamado `haitian-legal-travel-platform` bajo `aumdevs`.
+3. Usar el repositorio **público con licencia propietaria** `aumdevs/vwayaj-ayisyen`.
 4. Crear el proyecto de Supabase dentro de `aumprodz Group`.
 5. Crear/importar el proyecto en Vercel dentro de `aum prodz Group`.
 6. Construir, probar, securizar, desplegar y documentar la aplicación.
@@ -56,7 +56,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 ## Advertencias importantes
 
-- El nombre público de la marca todavía no está definido. El slug técnico no debe mostrarse como marca final.
+- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL actual usa Vercel porque no se comprará un dominio propio por ahora.
 - El número de WhatsApp, dominio, entidad legal, dirección, correo de soporte, claves de Stripe, proveedor de correo y proveedor de IA no están incluidos.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
@@ -71,7 +71,7 @@ Entregar a Codex el ZIP completo. Como alternativa, `CODEX_ALL_IN_ONE.md` reúne
 
 # Archivo: `README.md`
 
-# haitian-legal-travel-platform
+# vwayaj-ayisyen
 
 Paquete de especificación y handoff para que Codex construya una plataforma web completa con Next.js, Supabase, Vercel, GitHub, Stripe, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
 
@@ -158,7 +158,7 @@ Este paquete incluye:
 - Contenido jurídico listo para publicar.
 - Datos personales reales.
 - Un dominio.
-- Una marca definitiva.
+- Activos definitivos de marca distintos del nombre oficial **Vwayaj Ayisyen**.
 - Compromiso de que una región, plan o función de terceros esté disponible sin verificarlo en el momento de implementación.
 
 ## Regla de verdad
@@ -354,7 +354,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### GitHub
 
 - Propietario: `aumdevs`
-- Repositorio público con licencia propietaria de Aum Prodz: `haitian-legal-travel-platform`; conservar auditoría de secretos y controles de seguridad activos.
+- Repositorio público con licencia propietaria de Aum Prodz: `vwayaj-ayisyen`; conservar auditoría de secretos y controles de seguridad activos.
 - Rama principal: `main`
 - Activa las protecciones disponibles: PR obligatorio, checks, bloqueo de force-push, eliminación de rama tras merge, Dependabot, CodeQL, detección de secretos y reglas de revisión.
 - No introduzcas secretos en Git, commits, issues, PR, Actions logs o artefactos.
@@ -362,7 +362,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### Supabase
 
 - Organización/grupo: `aumprodz Group`
-- Nombre técnico del proyecto: `haitian-legal-travel-platform`
+- Nombre del proyecto: **Vwayaj Ayisyen** (`vwayaj-ayisyen` como slug técnico)
 - Prefiere una región de Sudamérica disponible, documentando la región elegida. No cambies de región después de almacenar datos reales sin un plan de migración.
 - Usa migraciones versionadas dentro del repositorio. No hagas cambios irreproducibles sólo desde el Dashboard.
 - Activa RLS en toda tabla expuesta.
@@ -373,7 +373,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### Vercel
 
 - Equipo: `aum prodz Group`
-- Proyecto: `haitian-legal-travel-platform`
+- Proyecto: `vwayaj-ayisyen`
 - Importa el repositorio de GitHub.
 - Configura Preview y Production.
 - Variables separadas por entorno.
@@ -411,12 +411,12 @@ No fijes dependencias vulnerables o obsoletas sólo porque aparecen en este docu
 
 ## 4. Nombre y marca
 
-El nombre comercial no está definido.
+El nombre comercial oficial es **Vwayaj Ayisyen**.
 
-- El slug técnico es `haitian-legal-travel-platform`.
-- No lo presentes como marca pública definitiva.
+- El slug técnico es `vwayaj-ayisyen`.
+- Presenta **Vwayaj Ayisyen** como marca pública.
 - Implementa `site_settings` editable desde administración: nombre, logotipo, colores, correo, WhatsApp, entidad legal, dominio y redes.
-- Usa una identidad provisional premium y sobria, claramente reemplazable.
+- Usa la identidad oficial **Vwayaj Ayisyen**.
 - No menciones ni reutilices nombres, logos, textos, bases de datos o diseños de proyectos anteriores.
 
 ## 5. Idiomas
@@ -4137,10 +4137,10 @@ Producción exige checklist, migración revisada, rollback y aprobación.
 ## Repositorio
 
 - Propietario: `aumdevs`
-- Nombre: `haitian-legal-travel-platform`
-- Visibilidad: privada
+- Nombre: `vwayaj-ayisyen`
+- Visibilidad: pública con licencia propietaria de Aum Prodz
 - Rama principal: `main`
-- Licencia: privada/propietaria hasta decisión explícita
+- Licencia: propietaria; visibilidad pública no concede derechos de reutilización
 - No importar historial ni artefactos de otros proyectos.
 
 ## Reglas de rama
@@ -4252,7 +4252,7 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
 
 ## 1. Crear repositorio
 
-1. Crear repo privado `aumdevs/haitian-legal-travel-platform`.
+1. Verificar el repo público con licencia propietaria `aumdevs/vwayaj-ayisyen`.
 2. Inicializar desde el código generado.
 3. Configurar descripción técnica sin promesas comerciales.
 4. Subir `main`.
@@ -4274,7 +4274,7 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
 
 ## 3. Crear Supabase
 
-1. En `aumprodz Group`, crear proyecto `haitian-legal-travel-platform`.
+1. En `aumprodz Group`, crear el proyecto **Vwayaj Ayisyen**.
 2. Elegir región disponible cercana a usuarios/operación, preferiblemente São Paulo si cumple requisitos; registrar decisión.
 3. Generar contraseña de DB con gestor seguro; no reutilizar.
 4. Guardar `project_ref` sin tratarlo como secreto.
@@ -4300,7 +4300,7 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
 ## 4. Crear Vercel
 
 1. Importar repo bajo `aum prodz Group`.
-2. Nombre `haitian-legal-travel-platform`.
+2. Nombre `vwayaj-ayisyen`.
 3. Framework Next.js.
 4. Definir Node runtime compatible y pnpm.
 5. Configurar variables por Preview/Production.
@@ -5165,9 +5165,9 @@ Nada se declara “production-ready” sólo porque `pnpm build` termina.
 
 | Tema | Decisión |
 |---|---|
-| Slug técnico | `haitian-legal-travel-platform` |
-| Marca | Pendiente; editable, no inventar marca definitiva |
-| Repo | Privado en `aumdevs` |
+| Slug técnico | `vwayaj-ayisyen` |
+| Marca | **Vwayaj Ayisyen**, nombre oficial |
+| Repo | Público con licencia propietaria en `aumdevs` |
 | Supabase | Proyecto propio en `aumprodz Group` |
 | Vercel | Proyecto en `aum prodz Group` |
 | Idioma base | Kreyòl haitiano (`ht`) |
@@ -6096,9 +6096,9 @@ Este documento aplica cuando Codex dispone de sesiones ya iniciadas en Safari pa
 
 | Servicio | Cuenta/equipo | Recurso nuevo |
 |---|---|---|
-| GitHub | `aumdevs` | repositorio `haitian-legal-travel-platform`; público sólo tras autorización y auditoría de secretos |
-| Supabase | `aumprodz Group` | proyecto `haitian-legal-travel-platform` |
-| Vercel | `aum prodz Group` | proyecto `haitian-legal-travel-platform` importado desde GitHub |
+| GitHub | `aumdevs` | repositorio `vwayaj-ayisyen`; público sólo tras autorización y auditoría de secretos |
+| Supabase | `aumprodz Group` | proyecto **Vwayaj Ayisyen** |
+| Vercel | `aum prodz Group` | proyecto `vwayaj-ayisyen` importado desde GitHub |
 
 No modificar, borrar, transferir ni reutilizar recursos existentes que no hayan sido creados para este trabajo.
 
@@ -6183,7 +6183,7 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 | Área | Decisión/evidencia necesaria | Estado inicial | Efecto |
 |---|---|---|---|
-| Marca | nombre comercial, logo, dominio, colores definitivos | pendiente | usar identidad provisional no registrable |
+| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial; se mantiene la URL de Vercel |
 | Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
 | Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
@@ -7621,7 +7621,7 @@ Codex debe intentar ejecutar estos pasos con las sesiones autorizadas existentes
 ## GitHub — `aumdevs`
 
 - [ ] Verificar propietario visible.
-- [ ] Crear repo privado `haitian-legal-travel-platform`.
+- [x] Verificar repo público con licencia propietaria `aumdevs/vwayaj-ayisyen`.
 - [ ] Configurar `main`.
 - [ ] Push inicial sin secretos.
 - [ ] Activar branch/ruleset.

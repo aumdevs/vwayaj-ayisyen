@@ -31,15 +31,13 @@ test("private routes redirect to sign in without a session", async ({ page }) =>
   await expect(page.getByRole("heading", { name: "Konekte" })).toBeVisible();
 });
 
-test("registration reaches the non-enumerating email verification state", async ({
+test("public registration stays closed until email delivery and anti-abuse are ready", async ({
   page
-}, testInfo) => {
+}) => {
   await page.goto("/ht/auth/sign-up");
-  await page.getByLabel("Imèl").fill(`codex-${testInfo.project.name}-${Date.now()}@example.com`);
-  await page.getByLabel("Modpas").fill("Codex-Test-2026!A");
-  await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Kreye kont" }).click();
-  await expect(page.getByText("Verifye imèl ou")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Kreye kont" })).toBeVisible();
+  await expect(page.getByText("Fonksyon sa a poko disponib an sekirite.")).toBeVisible();
+  await expect(page.getByLabel("Imèl")).toHaveCount(0);
 });
 
 test("public home has no serious or critical axe violations", async ({ page }) => {

@@ -4,9 +4,9 @@
 
 | Tema | Decisión |
 |---|---|
-| Slug técnico | `haitian-legal-travel-platform` |
-| Marca | Pendiente; editable, no inventar marca definitiva |
-| Repo | Privado en `aumdevs` |
+| Slug técnico | `vwayaj-ayisyen` |
+| Marca | **Vwayaj Ayisyen**, nombre oficial |
+| Repo | Público con licencia propietaria en `aumdevs` |
 | Supabase | Proyecto propio en `aumprodz Group` |
 | Vercel | Proyecto en `aum prodz Group` |
 | Idioma base | Kreyòl haitiano (`ht`) |

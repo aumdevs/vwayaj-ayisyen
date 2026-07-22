@@ -29,7 +29,7 @@ describe("locale configuration", () => {
     const expected = leafKeys(getDictionary("ht")).sort();
     for (const locale of SUPPORTED_LOCALES) {
       expect(leafKeys(getDictionary(locale)).sort()).toEqual(expected);
-      expect(getProductCopy(locale).provisionalName.length).toBeGreaterThan(3);
+      expect(getProductCopy(locale).productName).toBe("Vwayaj Ayisyen");
     }
   });
 

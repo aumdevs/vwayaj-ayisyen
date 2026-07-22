@@ -1,4 +1,4 @@
-# haitian-legal-travel-platform
+# Vwayaj Ayisyen
 
 Aplicación y handoff de una plataforma web multilingüe construida con Next.js, Supabase, Vercel, GitHub, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
 
@@ -72,7 +72,7 @@ Copia únicamente nombres y valores locales seguros desde `.env.example` a un ar
 - Las páginas de país leen sólo la vista RLS de contenido publicado y revisado.
 - Comparador y cuestionario no muestran puntuaciones hasta que reglas y fuentes estén validadas.
 - Pagos, documentos, IA, comunidad, citas, intake, WhatsApp, cursos y portal profesional usan kill switches cerrados.
-- El nombre, logo, dominio y textos legales visibles son provisionales hasta aprobación.
+- Vwayaj Ayisyen es el nombre oficial; la URL pública usa Vercel mientras no exista un dominio propio.
 - Consulta `docs/DECISIONS_IMPLEMENTED.md` y `operations/CODEX_FINAL_REPORT.md` para el estado verificado y los bloqueos.
 
 ## Cómo usar este handoff

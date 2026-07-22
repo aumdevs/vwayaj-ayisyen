@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getSiteUrl, getSupabasePublicConfig, isIndexingAllowed } from "@/lib/config/runtime";
+import {
+  getSiteUrl,
+  getSupabasePublicConfig,
+  isIndexingAllowed,
+  isPublicRegistrationEnabled
+} from "@/lib/config/runtime";
 
 afterEach(() => vi.unstubAllEnvs());
 
@@ -47,5 +52,14 @@ describe("public runtime configuration", () => {
     expect(isIndexingAllowed()).toBe(false);
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "true");
     expect(isIndexingAllowed()).toBe(true);
+  });
+
+  it("keeps public registration closed unless the kill switch is explicitly disabled", () => {
+    vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "");
+    expect(isPublicRegistrationEnabled()).toBe(false);
+    vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "FALSE");
+    expect(isPublicRegistrationEnabled()).toBe(false);
+    vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
+    expect(isPublicRegistrationEnabled()).toBe(true);
   });
 });

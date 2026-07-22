@@ -28,3 +28,7 @@ export function getSupabasePublicConfig(): SupabasePublicConfig | null {
 export function isIndexingAllowed(): boolean {
   return process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
 }
+
+export function isPublicRegistrationEnabled(): boolean {
+  return process.env.DISABLE_PUBLIC_REGISTRATION === "false";
+}

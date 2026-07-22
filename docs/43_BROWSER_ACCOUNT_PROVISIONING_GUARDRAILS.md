@@ -6,9 +6,9 @@ Este documento aplica cuando Codex dispone de sesiones ya iniciadas en Safari pa
 
 | Servicio | Cuenta/equipo | Recurso nuevo |
 |---|---|---|
-| GitHub | `aumdevs` | repositorio `haitian-legal-travel-platform`; público sólo tras autorización y auditoría de secretos |
-| Supabase | `aumprodz Group` | proyecto `haitian-legal-travel-platform` |
-| Vercel | `aum prodz Group` | proyecto `haitian-legal-travel-platform` importado desde GitHub |
+| GitHub | `aumdevs` | repositorio `vwayaj-ayisyen`; público sólo tras autorización y auditoría de secretos |
+| Supabase | `aumprodz Group` | proyecto **Vwayaj Ayisyen** |
+| Vercel | `aum prodz Group` | proyecto `vwayaj-ayisyen` importado desde GitHub |
 
 No modificar, borrar, transferir ni reutilizar recursos existentes que no hayan sido creados para este trabajo.
 

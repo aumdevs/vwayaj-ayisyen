@@ -5,7 +5,7 @@ Codex debe intentar ejecutar estos pasos con las sesiones autorizadas existentes
 ## GitHub — `aumdevs`
 
 - [ ] Verificar propietario visible.
-- [ ] Crear repo privado `haitian-legal-travel-platform`.
+- [x] Verificar repo público con licencia propietaria `aumdevs/vwayaj-ayisyen`.
 - [ ] Configurar `main`.
 - [ ] Push inicial sin secretos.
 - [ ] Activar branch/ruleset.

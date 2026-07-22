@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Sant enfòmasyon — idantite pwovizwa",
-    short_name: "Sant enfòmasyon",
+    name: "Vwayaj Ayisyen",
+    short_name: "Vwayaj Ayisyen",
     description: "Enfòmasyon estriktire pou kominote ayisyèn nan.",
     start_url: "/ht",
     display: "standalone",

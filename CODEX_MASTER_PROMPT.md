@@ -37,7 +37,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### GitHub
 
 - Propietario: `aumdevs`
-- Repositorio público con licencia propietaria de Aum Prodz: `haitian-legal-travel-platform`; conservar auditoría de secretos y controles de seguridad activos.
+- Repositorio público con licencia propietaria de Aum Prodz: `vwayaj-ayisyen`; conservar auditoría de secretos y controles de seguridad activos.
 - Rama principal: `main`
 - Activa las protecciones disponibles: PR obligatorio, checks, bloqueo de force-push, eliminación de rama tras merge, Dependabot, CodeQL, detección de secretos y reglas de revisión.
 - No introduzcas secretos en Git, commits, issues, PR, Actions logs o artefactos.
@@ -45,7 +45,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### Supabase
 
 - Organización/grupo: `aumprodz Group`
-- Nombre técnico del proyecto: `haitian-legal-travel-platform`
+- Nombre del proyecto: **Vwayaj Ayisyen** (`vwayaj-ayisyen` como slug técnico)
 - Prefiere una región de Sudamérica disponible, documentando la región elegida. No cambies de región después de almacenar datos reales sin un plan de migración.
 - Usa migraciones versionadas dentro del repositorio. No hagas cambios irreproducibles sólo desde el Dashboard.
 - Activa RLS en toda tabla expuesta.
@@ -56,7 +56,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### Vercel
 
 - Equipo: `aum prodz Group`
-- Proyecto: `haitian-legal-travel-platform`
+- Proyecto: `vwayaj-ayisyen`
 - Importa el repositorio de GitHub.
 - Configura Preview y Production.
 - Variables separadas por entorno.
@@ -94,12 +94,12 @@ No fijes dependencias vulnerables o obsoletas sólo porque aparecen en este docu
 
 ## 4. Nombre y marca
 
-El nombre comercial no está definido.
+El nombre comercial oficial es **Vwayaj Ayisyen**.
 
-- El slug técnico es `haitian-legal-travel-platform`.
-- No lo presentes como marca pública definitiva.
+- El slug técnico es `vwayaj-ayisyen`.
+- Presenta **Vwayaj Ayisyen** como marca pública.
 - Implementa `site_settings` editable desde administración: nombre, logotipo, colores, correo, WhatsApp, entidad legal, dominio y redes.
-- Usa una identidad provisional premium y sobria, claramente reemplazable.
+- Usa la identidad oficial **Vwayaj Ayisyen**.
 - No menciones ni reutilices nombres, logos, textos, bases de datos o diseños de proyectos anteriores.
 
 ## 5. Idiomas

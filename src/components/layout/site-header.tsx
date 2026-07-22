@@ -28,8 +28,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
         <Link className="brand-link" href={localizedPath(locale)}>
           <LogoMark className="brand-mark" />
           <span className="brand-copy">
-            <span className="brand-name">{productCopy.provisionalName}</span>
-            <span className="brand-status">{productCopy.provisionalStatus}</span>
+            <span className="brand-name">{productCopy.productName}</span>
           </span>
         </Link>
 

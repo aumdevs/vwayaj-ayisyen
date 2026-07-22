@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Haitian Legal Travel Platform internal API
+  title: Vwayaj Ayisyen internal API
   version: 0.1.0
   description: |
     Contract blueprint. Codex must align with implemented Route Handlers.

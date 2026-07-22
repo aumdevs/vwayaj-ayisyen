@@ -18,10 +18,9 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
         <div>
           <div className="footer-brand">
             <LogoMark className="brand-mark" />
-            <strong>{productCopy.provisionalName}</strong>
+            <strong>{productCopy.productName}</strong>
           </div>
           <p>{dictionary.packages.not_guarantee}</p>
-          <p className="fine-print">{productCopy.provisionalStatus}</p>
         </div>
         <nav aria-label="Lyen enfòmasyon">
           <Link href={localizedPath(locale, "about")}>{dictionary.nav.help}</Link>
@@ -37,7 +36,7 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
         </nav>
       </div>
       <div className="shell footer-bottom">
-        <span>© {new Date().getUTCFullYear()} Pwototip teknik prive.</span>
+        <span>© {new Date().getUTCFullYear()} Vwayaj Ayisyen.</span>
         <a href="#page-top">Retounen anlè</a>
       </div>
     </footer>

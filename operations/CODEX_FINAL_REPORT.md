@@ -4,16 +4,16 @@ Fecha de corte: 2026-07-22.
 
 ## Recursos
 
-- GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (público, licencia propietaria de Aum Prodz).
+- GitHub: `https://github.com/aumdevs/vwayaj-ayisyen` (público, licencia propietaria de Aum Prodz).
 - Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview limpio `dpl_1445zFH6cV37jZ8Fsvn9iJTZFiPe` en estado `READY`.
-- Supabase remoto: `gaknpocbfmiamghpoqhw`, São Paulo, plan gratuito, creado mediante Vercel Marketplace.
+- Vercel: equipo `Aum prodz Group`, proyecto `vwayaj-ayisyen` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview protegido por Vercel Authentication.
+- Supabase remoto: **Vwayaj Ayisyen** (`gaknpocbfmiamghpoqhw`), São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
 - GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
 - GitHub `main`: cambios sólo por PR, historial lineal, conversaciones resueltas, sin force-push ni borrado; Actions fijadas a SHA y workflows de forks sujetos a aprobación.
 - Supabase: PostgreSQL 17, SSL obligatorio, Auth endurecido y RLS validada local y remotamente.
 - Supabase Auth firma con ES256; la firma HS256 anterior y las API keys heredadas están revocadas/deshabilitadas.
-- Stripe: no configurado; pagos desactivados.
+- Proveedores elegidos: Stripe para pagos, Resend para email, Zoom para citas y OpenAI para IA. Sus funciones siguen desactivadas hasta completar credenciales, configuración comercial y gates de privacidad/seguridad.
 
 ## Implementación
 
@@ -33,7 +33,7 @@ Fecha de corte: 2026-07-22.
 | Lint PostgreSQL | sin hallazgos |
 | Pruebas pgTAP/RLS | 21 aprobadas local y remotamente |
 | Schema drift | vacío |
-| Unit tests | 23 aprobadas |
+| Unit tests | 24 aprobadas |
 | Cobertura del núcleo | 100% líneas, 97.29% ramas |
 | Playwright desktop/móvil | 16 aprobadas |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
@@ -45,7 +45,7 @@ Fecha de corte: 2026-07-22.
 | Clave privada nueva de Supabase | REST remoto `200` |
 | Contraseña rotada de Postgres | conexión SSL directa aprobada |
 | GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
-| Vercel | Preview `READY`, health `200`, home final `200`, `robots.txt` bloqueado y Production sin publicación |
+| Vercel | Preview protegido verificado; publicación de Production reservada a un merge aprobado en `main` |
 
 ## Estado de funciones
 
@@ -54,30 +54,30 @@ Fecha de corte: 2026-07-22.
 | Contenido público | estructura activa, contenido real vacío | fuentes y revisión humana |
 | Comparación/evaluación | desactivada | método, datos y revisión |
 | Servicios/WhatsApp | desactivada | oferta, número, privacidad |
-| Pagos | desactivada | Stripe test, webhook, legal |
+| Pagos | desactivada | productos/precios, webhook y legal en Stripe |
 | Intake/CRM | desactivada | consentimiento, CAPTCHA, rate limit, cifrado |
 | Documentos | desactivada | escáner, restore, consentimiento, pentest |
-| Citas | desactivada | proveedor, privacidad, zonas horarias |
+| Citas | desactivada | credenciales Zoom, privacidad y zonas horarias |
 | Cursos | desactivada | contenido, transcripciones, accesibilidad |
 | Comunidad | desactivada | moderación, apelación, antiabuso |
-| IA | desactivada | DPA, RAG eval, PII, presupuesto |
+| IA | desactivada | credenciales OpenAI, DPA, RAG eval, PII y presupuesto |
 
 ## Administrador inicial
 
 - Email creado y confirmado: `admin@aumprodz.com`.
-- Roles verificados: `user`, `admin`, `super_admin`; cuenta activa y cambio de contraseña obligatorio.
-- La contraseña temporal está únicamente en macOS Keychain bajo el servicio `com.aumprodz.haitian-legal-travel.admin`.
+- Roles verificados: `user`, `admin`, `super_admin`; cuenta activa, contraseña rotada y credencial temporal rechazada.
+- Las credenciales administrativas están únicamente en macOS Keychain bajo servicios `com.aumprodz.vwayaj-ayisyen.admin*`.
 - El permiso remoto de ejecución del bootstrap fue revocado incluso para `service_role` después del alta.
-- El primer inicio de sesión, cambio de contraseña y enrolamiento TOTP requieren la intervención del propietario.
+- TOTP está enrolado y la sesión administrativa fue verificada en `aal2`; `force_password_change=false`.
 
 ## Variables y gates
 
 - Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
-- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
+- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
-- Stripe, SMTP, CAPTCHA, cifrado CRM, escáner, reuniones, observabilidad e IA siguen pendientes y sus funciones continúan apagadas.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend no puede usarse como remitente de producción sin un dominio propio verificable; por decisión del propietario no se compra uno ahora. Zoom y OpenAI aún no tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
 
 ## Rotación de credenciales del 2026-07-22
 
@@ -101,9 +101,9 @@ Fecha de corte: 2026-07-22.
 ## Pasos externos pendientes
 
 1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
-2. Iniciar sesión como `admin@aumprodz.com`, cambiar la contraseña temporal y verificar TOTP/AAL2.
-3. Configurar SMTP propio y CAPTCHA antes de admitir registros públicos; el SMTP predeterminado no es apto para producción.
-4. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
+2. Verificar un dominio remitente propio en Resend y configurar CAPTCHA antes de admitir registros públicos; `vercel.app` no es un dominio remitente controlado por el proyecto.
+3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
+4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
 5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
 
 ## Reversión

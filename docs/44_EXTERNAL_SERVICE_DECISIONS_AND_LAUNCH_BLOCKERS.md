@@ -4,18 +4,18 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 ## Decisiones obligatorias
 
-| Área | Decisión/evidencia necesaria | Estado inicial | Efecto |
+| Área | Decisión/evidencia necesaria | Estado actual | Efecto |
 |---|---|---|---|
-| Marca | nombre comercial, logo, dominio, colores definitivos | pendiente | usar identidad provisional no registrable |
+| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial; se mantiene la URL de Vercel |
 | Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
 | Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
-| Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | pendiente | `feature_payments=false` |
-| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | pendiente | sólo notificaciones en app |
+| Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
+| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | Resend elegido; no existe un dominio propio y `vercel.app` no puede verificarse como dominio remitente propio | registro público y email desactivados; sólo notificaciones en app |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
-| Video | proveedor/URL segura, política de grabación y DPA | pendiente | `feature_appointments=false` o enlace manual restringido |
-| IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | pendiente | `feature_ai_assistant=false` |
+| Video | proveedor/URL segura, política de grabación y DPA | Zoom elegido; faltan credenciales, política de grabación y revisión de privacidad | `feature_appointments=false` o enlace manual restringido |
+| IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | OpenAI elegido; faltan clave del proyecto, modelo, evaluación, presupuesto y retención | `feature_ai_assistant=false` |
 | Moderación | responsables, horario, apelación, SLAs y formación | pendiente | `feature_community=false` |
 | Analítica | herramienta, consentimiento, exclusiones y retención | pendiente | sólo métricas técnicas mínimas |
 | Observabilidad | proveedor, scrub de PII, alertas y retención | pendiente | bloquea go-live operativo completo |
@@ -23,7 +23,7 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 ## Lo que sí puede lanzarse primero
 
-Una versión informativa pública puede salir cuando se cumplan todos estos puntos:
+La versión informativa puede publicarse con las funciones sensibles cerradas. Para activar captación, cuentas públicas o servicios comerciales deben cumplirse estos puntos:
 
 - marca y contacto mínimos;
 - textos legales revisados para el país operativo;

@@ -19,11 +19,12 @@ type AuthFormProps = {
   dictionary: Dictionary;
   locale: Locale;
   mode: AuthMode;
+  registrationEnabled: boolean;
 };
 
 const initialState: AuthActionState = { status: "idle" };
 
-export function AuthForm({ dictionary, locale, mode }: AuthFormProps) {
+export function AuthForm({ dictionary, locale, mode, registrationEnabled }: AuthFormProps) {
   const action =
     mode === "sign-in"
       ? signInAction
@@ -121,7 +122,7 @@ export function AuthForm({ dictionary, locale, mode }: AuthFormProps) {
         {mode !== "sign-in" ? (
           <Link href={localizedPath(locale, "auth/sign-in")}>{dictionary.auth.sign_in}</Link>
         ) : null}
-        {mode !== "sign-up" ? (
+        {mode !== "sign-up" && registrationEnabled ? (
           <Link href={localizedPath(locale, "auth/sign-up")}>{dictionary.auth.sign_up}</Link>
         ) : null}
         {mode !== "forgot-password" ? (

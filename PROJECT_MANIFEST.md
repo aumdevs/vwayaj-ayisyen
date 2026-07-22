@@ -29,7 +29,7 @@ Este paquete incluye:
 - Contenido jurídico listo para publicar.
 - Datos personales reales.
 - Un dominio.
-- Una marca definitiva.
+- Activos definitivos de marca distintos del nombre oficial **Vwayaj Ayisyen**.
 - Compromiso de que una región, plan o función de terceros esté disponible sin verificarlo en el momento de implementación.
 
 ## Regla de verdad
