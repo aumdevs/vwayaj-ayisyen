@@ -37,7 +37,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### GitHub
 
 - Propietario: `aumdevs`
-- Repositorio privado: `haitian-legal-travel-platform`
+- Repositorio público con licencia propietaria de Aum Prodz: `haitian-legal-travel-platform`; conservar auditoría de secretos y controles de seguridad activos.
 - Rama principal: `main`
 - Activa las protecciones disponibles: PR obligatorio, checks, bloqueo de force-push, eliminación de rama tras merge, Dependabot, CodeQL, detección de secretos y reglas de revisión.
 - No introduzcas secretos en Git, commits, issues, PR, Actions logs o artefactos.

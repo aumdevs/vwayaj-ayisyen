@@ -4,11 +4,13 @@ Fecha de corte: 2026-07-22.
 
 ## Recursos
 
-- GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (privado).
+- GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (público, licencia propietaria de Aum Prodz).
 - Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform`; sin deployment activo y con Git desconectado hasta corregir la clasificación de entornos.
+- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), importado desde GitHub con `main` como Production; cero deployments y builds temporalmente bloqueados hasta cerrar CI.
 - Supabase remoto: `gaknpocbfmiamghpoqhw`, São Paulo, plan gratuito, creado mediante Vercel Marketplace.
-- GitHub Code Security: no disponible para Dependency Review ni CodeQL nativos; fallbacks de auditoría y análisis estático activos.
+- GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
+- GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
+- GitHub `main`: cambios sólo por PR, historial lineal, conversaciones resueltas, sin force-push ni borrado; Actions fijadas a SHA y workflows de forks sujetos a aprobación.
 - Supabase: PostgreSQL 17, SSL obligatorio, Auth endurecido y RLS validada local y remotamente.
 - Supabase Auth firma con ES256; la firma HS256 anterior y las API keys heredadas están revocadas/deshabilitadas.
 - Stripe: no configurado; pagos desactivados.
@@ -42,7 +44,7 @@ Fecha de corte: 2026-07-22.
 | Audit de dependencias | 0 vulnerabilidades conocidas tras remediación |
 | Clave privada nueva de Supabase | REST remoto `200` |
 | Contraseña rotada de Postgres | conexión SSL directa aprobada |
-| GitHub Actions | bloqueado antes de ejecutar por facturación/límite de gasto de la cuenta |
+| GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
 | Vercel | cero deployments; el dominio oficial responde `404` |
 
 ## Estado de funciones
@@ -70,7 +72,7 @@ Fecha de corte: 2026-07-22.
 
 ## Variables y gates
 
-- Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production.
+- Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
 - Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
 - Stripe, SMTP, CAPTCHA, cifrado CRM, escáner, reuniones, observabilidad e IA siguen pendientes y sus funciones continúan apagadas.
@@ -82,17 +84,24 @@ Fecha de corte: 2026-07-22.
 - Se creó una nueva API key privada, se revocó la anterior como comprometida y se deshabilitaron `anon`/`service_role` heredadas.
 - Se revocó la firma HS256 anterior; ES256 permanece activa.
 - Se rotó y verificó la contraseña de Postgres. Ningún valor se registró en el repositorio.
-- Se desactivó OIDC en el proyecto Vercel para impedir nuevas emisiones. El token temporal de Development ya emitido tiene TTL fijo de 12 horas y caduca el 2026-07-22 a las 12:19:48 de Santiago; no hay deployment ni proveedor cloud que lo consuma.
+- Se desactivó OIDC en el proyecto Vercel actual para impedir nuevas emisiones. El token temporal de Development ya emitido tiene TTL fijo de 12 horas y caduca el 2026-07-22 a las 12:19:48 de Santiago; no hay deployment ni proveedor cloud que lo consuma.
+
+## Publicación segura del repositorio
+
+- Antes del cambio de visibilidad, Gitleaks `8.30.1` revisó 17 commits y el escáner propio revisó el árbol actual sin detectar secretos.
+- Se compararon los 289 paths actuales con todo el historial: no existen dumps, respaldos, archivos borrados ocultos ni binarios sensibles.
+- Se revisaron 69 ejecuciones históricas de Actions y sus logs con Gitleaks; no se detectaron credenciales.
+- Los artifacts existentes son únicamente reportes SARIF de Gitleaks.
+- La visibilidad pública no concede una licencia open source: `LICENSE` conserva todos los derechos de Aum Prodz.
+- Los patrones no asociados a proveedores y los validity checks de Secret Protection requieren GitHub Team/Enterprise; Gitleaks y `check-no-secrets.sh` permanecen como cobertura adicional gratuita.
 
 ## Pasos externos pendientes
 
-1. Corregir `Billing & plans`/límite de gasto de GitHub y volver a ejecutar los checks de la PR `#9`.
-2. Reimportar o recrear el proyecto Vercel desde GitHub: el proyecto creado inicialmente por CLI etiquetó como Production incluso los despliegues de la rama de infraestructura. Todos esos despliegues fueron eliminados y Git quedó desconectado.
-3. Crear un backend aislado de staging antes de habilitar Preview funcional; no reutilizar Supabase de producción.
-4. Iniciar sesión como `admin@aumprodz.com`, cambiar la contraseña temporal y verificar TOTP/AAL2.
-5. Configurar SMTP propio y CAPTCHA antes de admitir registros públicos; el SMTP predeterminado no es apto para producción.
-6. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
-7. Ejecutar restore drill y pentest antes de aceptar documentos reales.
+1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
+2. Iniciar sesión como `admin@aumprodz.com`, cambiar la contraseña temporal y verificar TOTP/AAL2.
+3. Configurar SMTP propio y CAPTCHA antes de admitir registros públicos; el SMTP predeterminado no es apto para producción.
+4. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
+5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
 
 ## Reversión
 

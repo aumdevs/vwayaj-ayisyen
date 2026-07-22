@@ -92,7 +92,7 @@ El producto combinará información oficial, experiencia práctica, realidad com
 - Node.js LTS y pnpm
 - Supabase Auth, Postgres, Row Level Security, Storage, Realtime, Edge Functions y Cron
 - Vercel para hosting, funciones, previews, observabilidad y protección
-- GitHub privado para control de versiones y CI
+- GitHub público para control de versiones y CI, con licencia propietaria de Aum Prodz
 - Stripe Checkout para pagos
 - OpenAI u otro proveedor configurable para el asistente, sin acceso predeterminado a documentos privados
 - PWA instalable, accesible y optimizada para teléfonos económicos y conexiones lentas
@@ -354,7 +354,7 @@ Usa las sesiones existentes del navegador cuando estén disponibles.
 ### GitHub
 
 - Propietario: `aumdevs`
-- Repositorio privado: `haitian-legal-travel-platform`
+- Repositorio público con licencia propietaria de Aum Prodz: `haitian-legal-travel-platform`; conservar auditoría de secretos y controles de seguridad activos.
 - Rama principal: `main`
 - Activa las protecciones disponibles: PR obligatorio, checks, bloqueo de force-push, eliminación de rama tras merge, Dependabot, CodeQL, detección de secretos y reglas de revisión.
 - No introduzcas secretos en Git, commits, issues, PR, Actions logs o artefactos.
@@ -6096,7 +6096,7 @@ Este documento aplica cuando Codex dispone de sesiones ya iniciadas en Safari pa
 
 | Servicio | Cuenta/equipo | Recurso nuevo |
 |---|---|---|
-| GitHub | `aumdevs` | repositorio privado `haitian-legal-travel-platform` |
+| GitHub | `aumdevs` | repositorio `haitian-legal-travel-platform`; público sólo tras autorización y auditoría de secretos |
 | Supabase | `aumprodz Group` | proyecto `haitian-legal-travel-platform` |
 | Vercel | `aum prodz Group` | proyecto `haitian-legal-travel-platform` importado desde GitHub |
 
@@ -6111,7 +6111,7 @@ No modificar, borrar, transferir ni reutilizar recursos existentes que no hayan 
    - no importar datos ni cambiar ajustes;
    - inspeccionar sólo metadatos no sensibles suficientes para determinar si pertenece a este encargo;
    - registrar el conflicto en el informe final y detener únicamente esa operación.
-4. Confirmar que GitHub quede en modo **privado** antes del primer push.
+4. Confirmar que GitHub quede en modo **privado** antes del primer push; cualquier cambio posterior a público exige autorización expresa, auditoría del historial y licencia definida.
 5. Confirmar que Vercel y Supabase estén en el grupo indicado, no en una cuenta personal distinta.
 
 ## Acciones prohibidas
@@ -6121,7 +6121,7 @@ No modificar, borrar, transferir ni reutilizar recursos existentes que no hayan 
 - Guardar screenshots que muestren claves, códigos QR de MFA, tokens, credenciales o datos personales.
 - Pegar secretos en GitHub Issues, PR, commits, logs, chats o documentación.
 - Aceptar cambios de facturación, upgrades o compras no imprescindibles sin dejar la operación pendiente y documentada.
-- Crear recursos públicos por conveniencia.
+- Hacer público un recurso sin autorización expresa y auditoría previa.
 - Usar el navegador para eludir un paso de confirmación o una política del proveedor.
 
 ## MFA, passkeys y confirmaciones
@@ -6136,7 +6136,7 @@ Cuando el proveedor solicite MFA, passkey, captcha, verificación de email o con
 
 ## Secuencia recomendada
 
-1. Crear repositorio privado en GitHub.
+1. Crear el repositorio inicialmente privado en GitHub; cambiar su visibilidad sólo después de la auditoría autorizada.
 2. Subir una base mínima sin secretos y activar controles del repositorio.
 3. Crear proyecto Supabase y registrar sólo su `project_ref`, región y URLs públicas.
 4. Aplicar migraciones desde CLI/repo; evitar cambios manuales no versionados.
