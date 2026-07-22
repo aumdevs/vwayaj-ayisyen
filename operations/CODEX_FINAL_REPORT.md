@@ -82,6 +82,7 @@ Fecha de corte: 2026-07-22.
 - Se creó una nueva API key privada, se revocó la anterior como comprometida y se deshabilitaron `anon`/`service_role` heredadas.
 - Se revocó la firma HS256 anterior; ES256 permanece activa.
 - Se rotó y verificó la contraseña de Postgres. Ningún valor se registró en el repositorio.
+- Se desactivó OIDC en el proyecto Vercel para impedir nuevas emisiones. El token temporal de Development ya emitido tiene TTL fijo de 12 horas y caduca el 2026-07-22 a las 12:19:48 de Santiago; no hay deployment ni proveedor cloud que lo consuma.
 
 ## Pasos externos pendientes
 

@@ -41,6 +41,7 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 - Supabase local usa Colima. Analítica y Storage Vector locales están desactivados porque son opcionales y su contenedor requiere un montaje incompatible; esto no decide su configuración futura en producción.
 - GitHub Actions no llegó a ejecutar ningún paso de la PR `#9`: GitHub lo bloqueó por pagos recientes fallidos o límite de gasto. Es un bloqueo de cuenta, no un fallo del código.
 - El proyecto Vercel creado inicialmente por CLI clasificó despliegues de rama como Production. Los despliegues se eliminaron, el dominio quedó sin publicar y Git se desconectó hasta reimportar el repositorio correctamente.
+- OIDC quedó desactivado en ese proyecto Vercel después de retirar los archivos de entorno locales, por lo que no puede emitir nuevos tokens mientras permanezca en este estado.
 
 ## Política de release
 
