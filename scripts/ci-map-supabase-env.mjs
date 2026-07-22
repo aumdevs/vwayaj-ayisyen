@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import { readFile } from "node:fs/promises";
+import { appendFile, readFile } from "node:fs/promises";
 
 const file = process.argv[2];
 if (!file) throw new Error("Expected Supabase env output file.");
+const githubEnvFile = process.argv[3];
+if (!githubEnvFile) throw new Error("Expected the GitHub environment file path.");
 const text = await readFile(file, "utf8");
 const values = Object.fromEntries(
   text
@@ -22,7 +24,9 @@ const map = {
 
 for (const [key, value] of Object.entries(map)) {
   if (!value) throw new Error(`Supabase CLI did not provide required value for ${key}.`);
-  // GitHub masks are emitted before values are written to GITHUB_ENV.
+  if (/[\r\n]/.test(value)) throw new Error(`Unsafe newline in Supabase value for ${key}.`);
+
+  // Workflow commands must remain on stdout. Only KEY=VALUE lines belong in GITHUB_ENV.
   console.log(`::add-mask::${value}`);
-  console.log(`${key}=${value}`);
+  await appendFile(githubEnvFile, `${key}=${value}\n`, { encoding: "utf8", mode: 0o600 });
 }

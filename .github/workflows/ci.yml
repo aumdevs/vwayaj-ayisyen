@@ -92,7 +92,7 @@ jobs:
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env
-          node scripts/ci-map-supabase-env.mjs /tmp/supabase.env >> "$GITHUB_ENV"
+          node scripts/ci-map-supabase-env.mjs /tmp/supabase.env "$GITHUB_ENV"
       - run: pnpm test:e2e
       - if: always()
         run: supabase stop --no-backup
