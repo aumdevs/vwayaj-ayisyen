@@ -16,23 +16,9 @@ function required(name: string): string {
 
 function projectRefFromUrl(url: string): string {
   const host = new URL(url).hostname;
-  const match = host.match(/^([a-z0-9-]+)\.supabase\.co$/i);
-  if (!match) throw new Error("Supabase URL is not a recognized remote project URL.");
-  return match[1];
-}
-
-async function findUserByEmail(
-  admin: ReturnType<typeof createClient>,
-  email: string,
-): Promise<User | null> {
-  for (let page = 1; page <= 20; page += 1) {
-    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 100 });
-    if (error) throw error;
-    const found = data.users.find((user) => user.email?.toLowerCase() === email.toLowerCase());
-    if (found) return found;
-    if (data.users.length < 100) break;
-  }
-  return null;
+  const projectRef = host.match(/^([a-z0-9-]+)\.supabase\.co$/i)?.[1];
+  if (!projectRef) throw new Error("Supabase URL is not a recognized remote project URL.");
+  return projectRef;
 }
 
 async function main(): Promise<void> {
@@ -59,7 +45,7 @@ async function main(): Promise<void> {
 
   const admin = createClient(url, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
-    global: { headers: { "X-Client-Info": "admin-bootstrap/1.0" } },
+    global: { headers: { "X-Client-Info": "admin-bootstrap/1.0" } }
   });
 
   const { count: superAdminCount, error: countError } = await admin
@@ -71,10 +57,16 @@ async function main(): Promise<void> {
     throw new Error("Refusing: a super_admin already exists.");
   }
 
-  const existing = await findUserByEmail(admin, email);
+  let existing: User | null = null;
+  for (let page = 1; page <= 20; page += 1) {
+    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 100 });
+    if (error) throw error;
+    existing = data.users.find((user) => user.email?.toLowerCase() === email) ?? null;
+    if (existing || data.users.length < 100) break;
+  }
   if (existing) {
     throw new Error(
-      "Refusing: the bootstrap email already exists. Do not reset it automatically; investigate manually.",
+      "Refusing: the bootstrap email already exists. Do not reset it automatically; investigate manually."
     );
   }
 
@@ -83,7 +75,7 @@ async function main(): Promise<void> {
     password,
     email_confirm: true,
     user_metadata: { preferred_locale: "ht", bootstrap: true },
-    app_metadata: { bootstrap_source: "one-time-script" },
+    app_metadata: { bootstrap_source: "one-time-script" }
   });
   if (error || !data.user) throw error ?? new Error("User creation returned no user.");
 
@@ -91,7 +83,7 @@ async function main(): Promise<void> {
 
   const { error: bootstrapError } = await admin.rpc("bootstrap_initial_admin", {
     p_user_id: userId,
-    p_expected_email: email,
+    p_expected_email: email
   });
 
   if (bootstrapError) {
@@ -103,7 +95,7 @@ async function main(): Promise<void> {
       throw new Error(
         `Atomic role bootstrap failed and Auth cleanup also failed for user ${userId}. ` +
           "Stop and investigate before retrying.",
-        { cause: bootstrapError },
+        { cause: bootstrapError }
       );
     }
     throw bootstrapError;

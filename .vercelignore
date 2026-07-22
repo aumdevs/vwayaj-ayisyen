@@ -1,0 +1,6 @@
+.env*
+.supabase/
+PRIVATE_*
+playwright-report/
+test-results/
+coverage/
