@@ -1,6 +1,6 @@
 # Empieza aquí — paquete de entrega para Codex
 
-**Proyecto técnico provisional:** `haitian-legal-travel-platform`  
+**Proyecto técnico:** `vwayaj-ayisyen`
 **Fecha del documento:** 2026-07-21  
 **Propietario previsto del repositorio:** `aumdevs`  
 **Grupo de Supabase:** `aumprodz Group`  
@@ -12,7 +12,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 1. Leer primero `CODEX_MASTER_PROMPT.md`.
 2. Leer `AGENTS.md` y todos los documentos de `/docs`.
-3. Crear un repositorio **privado** llamado `haitian-legal-travel-platform` bajo `aumdevs`.
+3. Usar el repositorio **público con licencia propietaria** `aumdevs/vwayaj-ayisyen`.
 4. Crear el proyecto de Supabase dentro de `aumprodz Group`.
 5. Crear/importar el proyecto en Vercel dentro de `aum prodz Group`.
 6. Construir, probar, securizar, desplegar y documentar la aplicación.
@@ -40,7 +40,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 ## Advertencias importantes
 
-- El nombre público de la marca todavía no está definido. El slug técnico no debe mostrarse como marca final.
+- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL actual usa Vercel porque no se comprará un dominio propio por ahora.
 - El número de WhatsApp, dominio, entidad legal, dirección, correo de soporte, claves de Stripe, proveedor de correo y proveedor de IA no están incluidos.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.

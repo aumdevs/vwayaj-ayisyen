@@ -6,7 +6,7 @@ export function GET() {
   return NextResponse.json(
     {
       status: "ok",
-      service: "haitian-legal-travel-web",
+      service: "vwayaj-ayisyen",
       release: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "local",
       timestamp: new Date().toISOString()
     },

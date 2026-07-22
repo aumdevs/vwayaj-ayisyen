@@ -1,8 +1,8 @@
 {
-  "name": "haitian-legal-travel-platform",
+  "name": "vwayaj-ayisyen",
   "version": "0.1.0",
   "private": true,
-  "description": "Secure multilingual legal travel guidance platform for Haitian communities.",
+  "description": "Sit entènèt ofisyèl Vwayaj Ayisyen.",
   "license": "UNLICENSED",
   "packageManager": "pnpm@11.15.0",
   "engines": {
@@ -25,7 +25,9 @@
     "test:e2e:install": "playwright install chromium",
     "check:env": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.development.local scripts/verify-env.mjs",
     "check:secrets": "bash scripts/check-no-secrets.sh",
-    "check:all": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm check:secrets",
+    "integrity:check": "node scripts/refresh-package-integrity.mjs --check",
+    "integrity:refresh": "node scripts/refresh-package-integrity.mjs",
+    "check:all": "pnpm format:check && pnpm integrity:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm check:secrets",
     "audit:prod": "pnpm audit --prod",
     "db:start": "supabase start",
     "db:stop": "supabase stop",

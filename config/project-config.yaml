@@ -1,18 +1,19 @@
 project:
-  technical_slug: haitian-legal-travel-platform
-  public_brand_status: pending
+  technical_slug: vwayaj-ayisyen
+  public_brand: "Vwayaj Ayisyen"
+  public_brand_status: official
   github:
     owner: aumdevs
-    repository: haitian-legal-travel-platform
-    visibility: private
+    repository: vwayaj-ayisyen
+    visibility: public
     default_branch: main
   supabase:
     organization: "aumprodz Group"
-    project_name: haitian-legal-travel-platform
+    project_name: "Vwayaj Ayisyen"
     preferred_region: "South America; prefer São Paulo if available and approved"
   vercel:
     team: "aum prodz Group"
-    project_name: haitian-legal-travel-platform
+    project_name: vwayaj-ayisyen
 
 locales:
   default: ht
@@ -62,6 +63,9 @@ content:
 
 admin:
   bootstrap_email: admin@aumprodz.com
-  credentials_location: external_private_file
-  force_password_change: true
+  credentials_location: macos_keychain
+  password_rotated: true
+  force_password_change: false
   force_totp: true
+  totp_enrolled: true
+  current_aal: aal2

@@ -1,16 +1,19 @@
 # Informe de implementación
 
-Fecha de corte: 2026-07-21.
+Fecha de corte: 2026-07-22.
 
 ## Recursos
 
-- GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (privado).
-- Rama de implementación: `aumdevs/build-production-platform`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform`.
-- Supabase remoto: no creado; bloqueo externo documentado en `docs/DECISIONS_IMPLEMENTED.md`.
-- GitHub Code Security: no disponible para Dependency Review ni CodeQL nativos; fallbacks de auditoría y análisis estático activos.
-- Supabase local: PostgreSQL 17, región remota prevista São Paulo si el plan lo permite.
-- Stripe: no configurado; pagos desactivados.
+- GitHub: `https://github.com/aumdevs/vwayaj-ayisyen` (público, licencia propietaria de Aum Prodz).
+- Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
+- Vercel: equipo `Aum prodz Group`, proyecto `vwayaj-ayisyen` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview protegido por Vercel Authentication.
+- Supabase remoto: **Vwayaj Ayisyen** (`gaknpocbfmiamghpoqhw`), São Paulo, plan gratuito, creado mediante Vercel Marketplace.
+- GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
+- GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
+- GitHub `main`: cambios sólo por PR, historial lineal, conversaciones resueltas, sin force-push ni borrado; Actions fijadas a SHA y workflows de forks sujetos a aprobación.
+- Supabase: PostgreSQL 17, SSL obligatorio, Auth endurecido y RLS validada local y remotamente.
+- Supabase Auth firma con ES256; la firma HS256 anterior y las API keys heredadas están revocadas/deshabilitadas.
+- Proveedores elegidos: Stripe para pagos, Resend para email, Zoom para citas y OpenAI para IA. Sus funciones siguen desactivadas hasta completar credenciales, configuración comercial y gates de privacidad/seguridad.
 
 ## Implementación
 
@@ -26,11 +29,11 @@ Fecha de corte: 2026-07-21.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 14 aplicadas |
+| Migraciones desde base vacía | 16 aplicadas local y remotamente |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 15 aprobadas |
+| Pruebas pgTAP/RLS | 23 aprobadas local y remotamente |
 | Schema drift | vacío |
-| Unit tests | 23 aprobadas |
+| Unit tests | 26 aprobadas |
 | Cobertura del núcleo | 100% líneas, 97.29% ramas |
 | Playwright desktop/móvil | 16 aprobadas |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
@@ -39,6 +42,10 @@ Fecha de corte: 2026-07-21.
 | TypeScript/ESLint | aprobados |
 | Next.js production build | aprobado |
 | Audit de dependencias | 0 vulnerabilidades conocidas tras remediación |
+| Clave privada nueva de Supabase | REST remoto `200` |
+| Contraseña rotada de Postgres | conexión SSL directa aprobada |
+| GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
+| Vercel | Preview protegido verificado; publicación de Production reservada a un merge aprobado en `main` |
 
 ## Estado de funciones
 
@@ -47,34 +54,57 @@ Fecha de corte: 2026-07-21.
 | Contenido público | estructura activa, contenido real vacío | fuentes y revisión humana |
 | Comparación/evaluación | desactivada | método, datos y revisión |
 | Servicios/WhatsApp | desactivada | oferta, número, privacidad |
-| Pagos | desactivada | Stripe test, webhook, legal |
+| Pagos | desactivada | productos/precios, webhook y legal en Stripe |
 | Intake/CRM | desactivada | consentimiento, CAPTCHA, rate limit, cifrado |
 | Documentos | desactivada | escáner, restore, consentimiento, pentest |
-| Citas | desactivada | proveedor, privacidad, zonas horarias |
+| Citas | desactivada | credenciales Zoom, privacidad y zonas horarias |
 | Cursos | desactivada | contenido, transcripciones, accesibilidad |
 | Comunidad | desactivada | moderación, apelación, antiabuso |
-| IA | desactivada | DPA, RAG eval, PII, presupuesto |
+| IA | desactivada | credenciales OpenAI, DPA, RAG eval, PII y presupuesto |
 
 ## Administrador inicial
 
-- Email previsto: `admin@aumprodz.com`.
-- Usuario no creado porque no existe proyecto Supabase remoto.
-- La contraseña privada no se imprimió ni se añadió a Git.
-- Script transaccional, cambio obligatorio y enrolamiento TOTP están implementados, pero no pueden declararse verificados remotamente.
+- Email creado y confirmado: `admin@aumprodz.com`.
+- Roles verificados: `user`, `admin`, `super_admin`; cuenta activa, contraseña rotada y credencial temporal rechazada.
+- Las credenciales administrativas están únicamente en macOS Keychain bajo servicios `com.aumprodz.vwayaj-ayisyen.admin*`.
+- El permiso remoto de ejecución del bootstrap fue revocado incluso para `service_role` después del alta.
+- TOTP está enrolado y la sesión administrativa fue verificada en `aal2`; `force_password_change=false`.
 
-## Variables críticas faltantes
+## Variables y gates
 
-Sin valores: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL`. Las variables de Stripe, email, cifrado CRM, escáner, reuniones, observabilidad e IA permanecen pendientes porque sus funciones están apagadas.
+- Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
+- `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
+- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
+- El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
+- El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend no puede usarse como remitente de producción sin un dominio propio verificable; por decisión del propietario no se compra uno ahora. Zoom y OpenAI aún no tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
+
+## Rotación de credenciales del 2026-07-22
+
+- Una inspección local mostró accidentalmente credenciales de un archivo `.vercel/.env.preview.local` ignorado por Git.
+- Se eliminaron las copias locales `.env.local`, `.env.development.local` y `.vercel/.env.preview.local`.
+- Se creó una nueva API key privada, se revocó la anterior como comprometida y se deshabilitaron `anon`/`service_role` heredadas.
+- Se revocó la firma HS256 anterior; ES256 permanece activa.
+- Se rotó y verificó la contraseña de Postgres. Ningún valor se registró en el repositorio.
+- Se desactivó OIDC en el proyecto Vercel actual para impedir nuevas emisiones. El token temporal de Development ya emitido tiene TTL fijo de 12 horas y caduca el 2026-07-22 a las 12:19:48 de Santiago; no hay deployment ni proveedor cloud que lo consuma.
+- El smoke test de Preview generó tres bypass tokens de automatización; los tres fueron revocados y el mismo commit se reconstruyó sin esa variable antes del cierre.
+
+## Publicación segura del repositorio
+
+- Antes del cambio de visibilidad, Gitleaks `8.30.1` revisó 17 commits y el escáner propio revisó el árbol actual sin detectar secretos.
+- Se compararon los 289 paths actuales con todo el historial: no existen dumps, respaldos, archivos borrados ocultos ni binarios sensibles.
+- Se revisaron 69 ejecuciones históricas de Actions y sus logs con Gitleaks; no se detectaron credenciales.
+- Los artifacts existentes son únicamente reportes SARIF de Gitleaks.
+- La visibilidad pública no concede una licencia open source: `LICENSE` conserva todos los derechos de Aum Prodz.
+- Los patrones no asociados a proveedores y los validity checks de Secret Protection requieren GitHub Team/Enterprise; Gitleaks y `check-no-secrets.sh` permanecen como cobertura adicional gratuita.
 
 ## Pasos externos pendientes
 
-1. Liberar un cupo Supabase en la organización o autorizar un plan que permita crear el proyecto nuevo.
-2. Dar a la integración de Vercel acceso al repositorio privado.
-3. Crear/enlazar Supabase, aplicar migraciones, configurar Auth/SMTP/CAPTCHA y ejecutar pruebas RLS remotas.
-4. Configurar variables Preview/Production sin copiar secretos entre entornos.
-5. Ejecutar el bootstrap una vez, cambiar contraseña y verificar TOTP/AAL2; destruir el archivo temporal según runbook.
-6. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de go-live.
-7. Ejecutar restore drill y pentest antes de aceptar documentos reales.
+1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
+2. Verificar un dominio remitente propio en Resend y configurar CAPTCHA antes de admitir registros públicos; `vercel.app` no es un dominio remitente controlado por el proyecto.
+3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
+4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
+5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
 
 ## Reversión
 

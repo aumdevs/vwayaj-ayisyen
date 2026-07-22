@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { AuthForm } from "@/components/auth/auth-form";
 import { MfaPanel } from "@/components/auth/mfa-panel";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { isPublicRegistrationEnabled } from "@/lib/config/runtime";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import { getViewer } from "@/server/auth/viewer";
@@ -20,6 +21,7 @@ export default async function AuthPage({ params }: AuthPageProps) {
   if (!isLocale(locale) || !modes.some((item) => item === mode)) notFound();
   const authMode = mode as AuthMode;
   const dictionary = getDictionary(locale);
+  const registrationEnabled = isPublicRegistrationEnabled();
 
   if (authMode === "mfa") {
     const viewer = await getViewer();
@@ -44,9 +46,26 @@ export default async function AuthPage({ params }: AuthPageProps) {
     );
   }
 
+  if (authMode === "sign-up" && !registrationEnabled) {
+    return (
+      <div className="shell auth-shell">
+        <section className="auth-card">
+          <p className="eyebrow">{dictionary.security.do_not_share}</p>
+          <h1>{dictionary.auth.sign_up}</h1>
+          <p>{dictionary.errors.feature_unavailable}</p>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="shell auth-shell">
-      <AuthForm dictionary={dictionary} locale={locale} mode={authMode} />
+      <AuthForm
+        dictionary={dictionary}
+        locale={locale}
+        mode={authMode}
+        registrationEnabled={registrationEnabled}
+      />
     </div>
   );
 }

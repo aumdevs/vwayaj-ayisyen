@@ -3,10 +3,10 @@
 ## Repositorio
 
 - Propietario: `aumdevs`
-- Nombre: `haitian-legal-travel-platform`
-- Visibilidad: privada
+- Nombre: `vwayaj-ayisyen`
+- Visibilidad: pública con licencia propietaria de Aum Prodz
 - Rama principal: `main`
-- Licencia: privada/propietaria hasta decisión explícita
+- Licencia: propietaria; visibilidad pública no concede derechos de reutilización
 - No importar historial ni artefactos de otros proyectos.
 
 ## Reglas de rama

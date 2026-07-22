@@ -16,7 +16,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       locale={locale}
       title={copy.aboutTitle}
       description={copy.aboutBody}
-      draftTitle={copy.provisionalStatus}
+      draftTitle={copy.reviewBadge}
       unavailable={copy.legalDraft}
       draftDetail={dictionary.packages.not_guarantee}
       homeLabel={dictionary.nav.home}

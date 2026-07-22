@@ -11,6 +11,6 @@ export function createAdminSupabaseClient() {
 
   return createClient<Database>(publicConfig.url, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
-    global: { headers: { "X-Client-Info": "haitian-legal-travel-server/1.0" } }
+    global: { headers: { "X-Client-Info": "vwayaj-ayisyen/1.0" } }
   });
 }

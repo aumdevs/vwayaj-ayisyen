@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSiteUrl } from "@/lib/config/runtime";
+import { getSiteUrl, isPublicRegistrationEnabled } from "@/lib/config/runtime";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
@@ -53,6 +53,8 @@ export async function signUpAction(
   _previous: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  if (!isPublicRegistrationEnabled()) return { status: "unavailable" };
+
   const locale = readLocale(formData);
   const parsed = credentialsSchema.safeParse({
     email: formData.get("email"),

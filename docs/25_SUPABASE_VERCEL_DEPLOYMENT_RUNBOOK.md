@@ -11,7 +11,7 @@
 
 ## 1. Crear repositorio
 
-1. Crear repo privado `aumdevs/haitian-legal-travel-platform`.
+1. Verificar el repo público con licencia propietaria `aumdevs/vwayaj-ayisyen`.
 2. Inicializar desde el código generado.
 3. Configurar descripción técnica sin promesas comerciales.
 4. Subir `main`.
@@ -33,7 +33,7 @@
 
 ## 3. Crear Supabase
 
-1. En `aumprodz Group`, crear proyecto `haitian-legal-travel-platform`.
+1. En `aumprodz Group`, crear el proyecto **Vwayaj Ayisyen**.
 2. Elegir región disponible cercana a usuarios/operación, preferiblemente São Paulo si cumple requisitos; registrar decisión.
 3. Generar contraseña de DB con gestor seguro; no reutilizar.
 4. Guardar `project_ref` sin tratarlo como secreto.
@@ -49,6 +49,11 @@
    - MFA TOTP;
    - límites;
    - plantillas multilingües.
+   Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
+   `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
+   el endpoint público de Supabase Auth también debe permanecer cerrado.
+   En producción, permitir callbacks únicamente en `https://vwayaj-ayisyen.vercel.app/**`.
+   No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento.
 10. Activar backups/PITR según plan y criticidad.
@@ -59,7 +64,7 @@
 ## 4. Crear Vercel
 
 1. Importar repo bajo `aum prodz Group`.
-2. Nombre `haitian-legal-travel-platform`.
+2. Nombre `vwayaj-ayisyen`.
 3. Framework Next.js.
 4. Definir Node runtime compatible y pnpm.
 5. Configurar variables por Preview/Production.

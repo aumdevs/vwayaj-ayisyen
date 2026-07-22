@@ -1,6 +1,6 @@
 {
-  "project": "haitian-legal-travel-platform",
-  "generated_at": "2026-07-21",
+  "project": "vwayaj-ayisyen",
+  "generated_at": "2026-07-22",
   "package_expected_file_count": 166,
   "manifest_excludes": [
     "manifest.json",
@@ -9,18 +9,18 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1445,
-      "sha256": "329d5ea6c9118ef3364b8a070604be0b755c46cba913a67ea09b988a94cbbffc"
+      "size_bytes": 1616,
+      "sha256": "8f7752e9080f7283eb8ec0c3fec2c3286960c388ab57e37ec0a6f55b2170f351"
     },
     {
       "path": ".gitignore",
-      "size_bytes": 525,
-      "sha256": "6e62814b33aad0929b4b674bcc5a3864a4202912617bb85a6da2224a4ebfc2ad"
+      "size_bytes": 537,
+      "sha256": "6ef64bfae204ff8961c2d0779ef43ceb1117097b356d7ba6d5c38a98e50c877b"
     },
     {
       "path": "00_START_HERE.md",
-      "size_bytes": 3575,
-      "sha256": "49b2e3f4c8f754c001b609881525c1cf283bcb36c5908126ddadd2487d96518d"
+      "size_bytes": 3595,
+      "sha256": "523ca4aaf005ea772b39a345c14f8d4d0e4d13b332224b21891c40f6a7c5aae6"
     },
     {
       "path": "AGENTS.md",
@@ -29,13 +29,13 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 236502,
-      "sha256": "f78d12587a0e45fc967c4e56be8574ac51b9b98b3c6948f0f041e049f8de9303"
+      "size_bytes": 237365,
+      "sha256": "4cc55b7a5b902aad5cc938ce468863edeefd3ceeafb056e26fc634b2ab8bf625"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
-      "size_bytes": 19801,
-      "sha256": "a85b9c3376b7d3f354107cf1354f06aad10bf71559230e75b045ddf8876ea402"
+      "size_bytes": 19864,
+      "sha256": "25890998f851ba341f2917d6b841cd0f43ec70567d7fa972fd8acc62aa805f1f"
     },
     {
       "path": "FILE_INDEX.md",
@@ -49,18 +49,18 @@
     },
     {
       "path": "PROJECT_MANIFEST.md",
-      "size_bytes": 2482,
-      "sha256": "ab6ff97c14f0d727851617eb9a8ec474947369cf63d7ac9abb8589066a01b8fd"
+      "size_bytes": 2538,
+      "sha256": "375aa1c7a021075856880c4489464c4d81a35d773dec8b596a9bd3005984c7d3"
     },
     {
       "path": "README.md",
-      "size_bytes": 2280,
-      "sha256": "72663498851f02c34c8a46b71853029ce9cae16ffd017c7e7f7b104a28110426"
+      "size_bytes": 3778,
+      "sha256": "db67c00d1c4d8414daf39471485ccd9668e6fc6529ce1d4f0992ddfbfdd8b492"
     },
     {
       "path": "api/openapi.yaml",
-      "size_bytes": 5253,
-      "sha256": "8b8518547ebc42ab4ba509845a7d1a9b702a41cc82f50605ff05c80586e9887d"
+      "size_bytes": 5238,
+      "sha256": "30e226c9b0e4607f446575feee3dd329c3f331d0d624dda68be43b6967088ed6"
     },
     {
       "path": "checklists/CODEX_COMPLETION_CHECKLIST.md",
@@ -79,8 +79,8 @@
     },
     {
       "path": "checklists/MANUAL_ACCOUNT_SETUP.md",
-      "size_bytes": 2157,
-      "sha256": "ef54284bc142e85c8c707d703c814e229d06059f7229ddb468d94700a809fbf2"
+      "size_bytes": 2180,
+      "sha256": "379d781604f445e23d4f5ec36ccc0d42954d47bb23a19c4b4f79b9aec73b32ee"
     },
     {
       "path": "checklists/SECURITY_CHECKLIST.md",
@@ -99,8 +99,8 @@
     },
     {
       "path": "config/project-config.yaml",
-      "size_bytes": 1465,
-      "sha256": "203adcfb1c1a68d059341e79f54d71b721d642992d67ae8a3de92549ee6eb38b"
+      "size_bytes": 1501,
+      "sha256": "eb2cbeface7e42acd85e9f6ad20cc700138321651ab817438024ee5471914750"
     },
     {
       "path": "content/RESEARCH_RECORD_TEMPLATE.csv",
@@ -274,13 +274,13 @@
     },
     {
       "path": "docs/24_GITHUB_CI_CD_AND_REPOSITORY.md",
-      "size_bytes": 2670,
-      "sha256": "3541bb4ce503248bbf4672649480864eb1bc089c49a25461ccb3ef4ef2f3d405"
+      "size_bytes": 2719,
+      "sha256": "e9bd9c8ca983f0747156c66e7e2983df0dcbeb234b042c0e3eef43109435a545"
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 4162,
-      "sha256": "bf53a70558dfa05d5fe995af197fa74e6b28466847e059335986d26b5c82515d"
+      "size_bytes": 4584,
+      "sha256": "0829cb84d4d358a0277e3e956b37677cc0a8b67f730b1ad105497b1ded5d368a"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
@@ -314,8 +314,8 @@
     },
     {
       "path": "docs/32_ASSUMPTIONS_DECISIONS_AND_OPEN_ITEMS.md",
-      "size_bytes": 3172,
-      "sha256": "5ac4058495e840165eb772f742e69b05e39deec60fc08b788493257c4dcdee18"
+      "size_bytes": 3168,
+      "sha256": "289a28039fcc385fec2cf3c2337645167eba4c6dcb46670a11b6e51c78312b7b"
     },
     {
       "path": "docs/33_OFFICIAL_TECHNICAL_REFERENCES.md",
@@ -369,13 +369,13 @@
     },
     {
       "path": "docs/43_BROWSER_ACCOUNT_PROVISIONING_GUARDRAILS.md",
-      "size_bytes": 3920,
-      "sha256": "73c702f0cf469aea4c6a4c5caafef4f73f98cb3a298f09c103787417fb9a4cda"
+      "size_bytes": 4155,
+      "sha256": "e8a7f5784f160c9aca7bd1e771fccc36ca8cecb49d1a73e83fc01d76828950d7"
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3119,
-      "sha256": "ad144a5132c8e7ab67a8545b3d3eb902cbbc501a7a195bfbcb0869c1e5c79e9b"
+      "size_bytes": 3574,
+      "sha256": "4c6734bb12fb4531437e4359c7c676fc08131431bcb468af7c13f3333f84cdab"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -599,8 +599,8 @@
     },
     {
       "path": "repository/SECURITY.md",
-      "size_bytes": 1238,
-      "sha256": "17b425d15bcef6db09f2c5b16a8eb43737cf1b4b4b740d0e152b1c0c0ff379ce"
+      "size_bytes": 399,
+      "sha256": "8be81568eb7a8cfb9fdc88db56d8923d752004c659ab905532cbba6bf2bb6f79"
     },
     {
       "path": "schemas/ai-flow.mmd",
@@ -644,8 +644,8 @@
     },
     {
       "path": "scripts/bootstrap-admin.ts",
-      "size_bytes": 4268,
-      "sha256": "2ba390ef6d2fb2b5e4f34ba55627d4174a747120608f7650f665659a55ebf1fc"
+      "size_bytes": 4099,
+      "sha256": "d943ece01aacecd1a7a3afd5e230fa883c07619dc9b78c882a5a14d1e5b3048a"
     },
     {
       "path": "scripts/check-no-secrets.sh",
@@ -654,8 +654,8 @@
     },
     {
       "path": "scripts/ci-map-supabase-env.mjs",
-      "size_bytes": 889,
-      "sha256": "903e818d94847fec376e8a8cb1a83f92fe45f411b211cf85a9003624822dd9ea"
+      "size_bytes": 1192,
+      "sha256": "1849c15fafce2b3d2d645fb530b85d05ac91bff325c641af895e23c58578b76b"
     },
     {
       "path": "scripts/generate-secrets.mjs",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 1994,
-      "sha256": "edcd70ff0f495735b61db600c365d387a43912319a80cfa821646e357c48e763"
+      "size_bytes": 2207,
+      "sha256": "a3626b1bca98eabf2b39d69144d0fee34941863649d438255dddbc56b5c93d28"
     },
     {
       "path": "security/ABUSE_CASES.csv",
@@ -739,8 +739,8 @@
     },
     {
       "path": "supabase/config.toml.example",
-      "size_bytes": 954,
-      "sha256": "50a70f16b15d785ebcb45bf820862ee415ba79100ba2b82dd4ba50358698e733"
+      "size_bytes": 941,
+      "sha256": "8f008de2f96c9f105f20a2bd7b2db740bea2eda64362987078977fc7e17a154c"
     },
     {
       "path": "supabase/migrations/0001_extensions_schemas_and_types.sql",
@@ -809,8 +809,8 @@
     },
     {
       "path": "supabase/tests/0001_security_invariants.sql",
-      "size_bytes": 2183,
-      "sha256": "3174a2cecd0e79acbad8d20c4b89caf637799c16e01bb42d023749bc61b213f0"
+      "size_bytes": 4029,
+      "sha256": "17590440def9dcb9382b7df6a22e476b88b7bdc8c7b121bfb52acb7e0995d04b"
     },
     {
       "path": "supabase/tests/0002_public_content_rls.sql",

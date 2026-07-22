@@ -32,7 +32,7 @@ export function MfaPanel({ dictionary, locale }: { dictionary: Dictionary; local
     const { data, error } = await supabase.auth.mfa.enroll({
       factorType: "totp",
       friendlyName: "Authenticator",
-      issuer: "Sant enfòmasyon"
+      issuer: "Vwayaj Ayisyen"
     });
     if (error) {
       setStatus("error");
