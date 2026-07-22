@@ -26,6 +26,7 @@ env:
   DISABLE_WHATSAPP: "true"
   DISABLE_COURSES: "true"
   DISABLE_PROFESSIONAL_PORTAL: "true"
+  DISABLE_PUBLIC_REGISTRATION: "true"
 
 jobs:
   app:

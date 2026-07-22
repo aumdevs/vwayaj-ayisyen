@@ -29,11 +29,11 @@ Fecha de corte: 2026-07-22.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 15 aplicadas local y remotamente |
+| Migraciones desde base vacía | 16 aplicadas local y remotamente |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 21 aprobadas local y remotamente |
+| Pruebas pgTAP/RLS | 23 aprobadas local y remotamente |
 | Schema drift | vacío |
-| Unit tests | 24 aprobadas |
+| Unit tests | 25 aprobadas |
 | Cobertura del núcleo | 100% líneas, 97.29% ramas |
 | Playwright desktop/móvil | 16 aprobadas |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |

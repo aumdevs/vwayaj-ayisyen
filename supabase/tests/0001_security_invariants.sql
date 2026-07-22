@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(17);
+select plan(19);
 
 select ok(
   not exists (
@@ -121,6 +121,32 @@ select ok(
       and policyname = 'avatars_public_read'
   ),
   'Public avatar bucket cannot be listed through a broad policy'
+);
+
+select ok(
+  exists (
+    select 1 from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'content_media_staff_select'
+      and cmd = 'SELECT'
+      and 'authenticated' = any(roles)
+      and qual like '%can_manage_content%'
+  ),
+  'Content staff retain scoped SELECT access required for mutations'
+);
+
+select ok(
+  exists (
+    select 1 from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and policyname = 'avatars_owner_select'
+      and cmd = 'SELECT'
+      and 'authenticated' = any(roles)
+      and qual like '%auth.uid()%'
+  ),
+  'Avatar owners retain folder-scoped SELECT access required for mutations'
 );
 
 select * from finish();

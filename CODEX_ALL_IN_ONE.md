@@ -4290,6 +4290,9 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
    - MFA TOTP;
    - límites;
    - plantillas multilingües.
+   Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
+   `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
+   el endpoint público de Supabase Auth también debe permanecer cerrado.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento.
 10. Activar backups/PITR según plan y criticidad.
