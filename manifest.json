@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 237178,
-      "sha256": "e497903905ba594c1da16dd47a668d7c634bbf94eacccfe74034ad9203488065"
+      "size_bytes": 237365,
+      "sha256": "4cc55b7a5b902aad5cc938ce468863edeefd3ceeafb056e26fc634b2ab8bf625"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -279,8 +279,8 @@
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 4397,
-      "sha256": "57bfdc5da2a9e02389d78e912e6e0e3a0b272768bc8921d7d4585b706164dc93"
+      "size_bytes": 4584,
+      "sha256": "0829cb84d4d358a0277e3e956b37677cc0a8b67f730b1ad105497b1ded5d368a"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
@@ -739,8 +739,8 @@
     },
     {
       "path": "supabase/config.toml.example",
-      "size_bytes": 939,
-      "sha256": "380ec5eff3fd4665e128a17bb889a2e7e55d3668901c9007930f245999e3a5ed"
+      "size_bytes": 941,
+      "sha256": "8f008de2f96c9f105f20a2bd7b2db740bea2eda64362987078977fc7e17a154c"
     },
     {
       "path": "supabase/migrations/0001_extensions_schemas_and_types.sql",

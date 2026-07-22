@@ -33,7 +33,7 @@ Fecha de corte: 2026-07-22.
 | Lint PostgreSQL | sin hallazgos |
 | Pruebas pgTAP/RLS | 23 aprobadas local y remotamente |
 | Schema drift | vacío |
-| Unit tests | 25 aprobadas |
+| Unit tests | 26 aprobadas |
 | Cobertura del núcleo | 100% líneas, 97.29% ramas |
 | Playwright desktop/móvil | 16 aprobadas |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |

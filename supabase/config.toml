@@ -162,9 +162,6 @@ site_url = "https://vwayaj-ayisyen.vercel.app"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = [
   "https://vwayaj-ayisyen.vercel.app/**",
-  "https://*-aum-prodz-group.vercel.app/**",
-  "http://localhost:3000/**",
-  "http://127.0.0.1:3000/**",
 ]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
