@@ -32,6 +32,7 @@ Fecha de corte: 2026-07-21. Este documento registra decisiones técnicas; no sus
 - Repositorio privado creado en `aumdevs/haitian-legal-travel-platform`.
 - Proyecto Vercel creado bajo `Aum prodz Group` y enlazado localmente.
 - La importación automática desde GitHub está bloqueada porque la integración de Vercel no tiene acceso al repositorio privado.
+- Dependency Review nativo requiere GitHub Advanced Security en este repositorio privado; el workflow usa `pnpm audit --prod` como fallback y conserva el job nativo detrás de `ENABLE_GHAS_DEPENDENCY_REVIEW`.
 - La creación de Supabase bajo `Aum prodz Group` está bloqueada por el límite de dos proyectos gratuitos del miembro. No se pausó ni eliminó ningún proyecto existente y no se cambió el plan.
 - Sin Supabase remoto no se aplican migraciones remotas, no se crea el administrador y no se habilita producción.
 - Supabase local usa Colima. Analítica y Storage Vector locales están desactivados porque son opcionales y su contenedor requiere un montaje incompatible; esto no decide su configuración futura en producción.
