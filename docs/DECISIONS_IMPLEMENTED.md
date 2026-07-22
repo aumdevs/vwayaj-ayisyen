@@ -30,14 +30,17 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 ## Infraestructura y bloqueos
 
 - Repositorio privado creado en `aumdevs/haitian-legal-travel-platform`.
-- Proyecto Vercel creado bajo `Aum prodz Group`, enlazado localmente y con variables separadas por entorno.
+- Proyecto Vercel creado bajo `Aum prodz Group`; el recurso Supabase está conectado sólo a Production y únicamente exporta a runtime la URL pública y la clave publicable necesarias.
 - Proyecto Supabase `gaknpocbfmiamghpoqhw` creado mediante Vercel Marketplace en São Paulo, enlazado y migrado.
 - Auth exige contraseña robusta, confirmación de email, cambio seguro, rotación de refresh tokens y TOTP; la base exige SSL.
+- Supabase usa ES256 para firmar sesiones. La firma HS256 anterior, las API keys heredadas y la clave privada inicialmente emitida fueron revocadas; la contraseña de Postgres también fue rotada y verificada.
 - Los grants explícitos y RLS fueron verificados en el remoto con 21 pruebas pgTAP. Los buckets públicos permiten descarga directa sin permitir listados anónimos.
 - El administrador inicial fue creado de forma transaccional y el RPC de bootstrap quedó revocado después de usarlo.
 - Dependency Review nativo requiere GitHub Advanced Security en este repositorio privado; el workflow usa `pnpm audit --prod` como fallback y conserva el job nativo detrás de `ENABLE_GHAS_DEPENDENCY_REVIEW`.
 - CodeQL requiere GitHub Code Security en repositorios privados; el workflow mantiene CodeQL detrás de `ENABLE_GITHUB_CODE_SECURITY` y ejecuta lint, typecheck y detección de secretos como fallback gratuito.
 - Supabase local usa Colima. Analítica y Storage Vector locales están desactivados porque son opcionales y su contenedor requiere un montaje incompatible; esto no decide su configuración futura en producción.
+- GitHub Actions no llegó a ejecutar ningún paso de la PR `#9`: GitHub lo bloqueó por pagos recientes fallidos o límite de gasto. Es un bloqueo de cuenta, no un fallo del código.
+- El proyecto Vercel creado inicialmente por CLI clasificó despliegues de rama como Production. Los despliegues se eliminaron, el dominio quedó sin publicar y Git se desconectó hasta reimportar el repositorio correctamente.
 
 ## Política de release
 

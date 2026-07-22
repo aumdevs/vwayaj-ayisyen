@@ -6,10 +6,11 @@ Fecha de corte: 2026-07-22.
 
 - GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (privado).
 - Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform`.
+- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform`; sin deployment activo y con Git desconectado hasta corregir la clasificación de entornos.
 - Supabase remoto: `gaknpocbfmiamghpoqhw`, São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: no disponible para Dependency Review ni CodeQL nativos; fallbacks de auditoría y análisis estático activos.
 - Supabase: PostgreSQL 17, SSL obligatorio, Auth endurecido y RLS validada local y remotamente.
+- Supabase Auth firma con ES256; la firma HS256 anterior y las API keys heredadas están revocadas/deshabilitadas.
 - Stripe: no configurado; pagos desactivados.
 
 ## Implementación
@@ -39,6 +40,10 @@ Fecha de corte: 2026-07-22.
 | TypeScript/ESLint | aprobados |
 | Next.js production build | aprobado |
 | Audit de dependencias | 0 vulnerabilidades conocidas tras remediación |
+| Clave privada nueva de Supabase | REST remoto `200` |
+| Contraseña rotada de Postgres | conexión SSL directa aprobada |
+| GitHub Actions | bloqueado antes de ejecutar por facturación/límite de gasto de la cuenta |
+| Vercel | cero deployments; el dominio oficial responde `404` |
 
 ## Estado de funciones
 
@@ -65,17 +70,28 @@ Fecha de corte: 2026-07-22.
 
 ## Variables y gates
 
-- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY` y `DATABASE_URL` están configuradas en Vercel.
-- Preview, Production y Development conservan `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
+- Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production.
+- `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
+- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
 - Stripe, SMTP, CAPTCHA, cifrado CRM, escáner, reuniones, observabilidad e IA siguen pendientes y sus funciones continúan apagadas.
+
+## Rotación de credenciales del 2026-07-22
+
+- Una inspección local mostró accidentalmente credenciales de un archivo `.vercel/.env.preview.local` ignorado por Git.
+- Se eliminaron las copias locales `.env.local`, `.env.development.local` y `.vercel/.env.preview.local`.
+- Se creó una nueva API key privada, se revocó la anterior como comprometida y se deshabilitaron `anon`/`service_role` heredadas.
+- Se revocó la firma HS256 anterior; ES256 permanece activa.
+- Se rotó y verificó la contraseña de Postgres. Ningún valor se registró en el repositorio.
 
 ## Pasos externos pendientes
 
-1. Verificar preview, fusionar esta rama y conectar GitHub con Vercel para desplegar desde `main`.
-2. Iniciar sesión como `admin@aumprodz.com`, cambiar la contraseña temporal y verificar TOTP/AAL2.
-3. Configurar SMTP propio y CAPTCHA antes de admitir registros públicos; el SMTP predeterminado no es apto para producción.
-4. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
-5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
+1. Corregir `Billing & plans`/límite de gasto de GitHub y volver a ejecutar los checks de la PR `#9`.
+2. Reimportar o recrear el proyecto Vercel desde GitHub: el proyecto creado inicialmente por CLI etiquetó como Production incluso los despliegues de la rama de infraestructura. Todos esos despliegues fueron eliminados y Git quedó desconectado.
+3. Crear un backend aislado de staging antes de habilitar Preview funcional; no reutilizar Supabase de producción.
+4. Iniciar sesión como `admin@aumprodz.com`, cambiar la contraseña temporal y verificar TOTP/AAL2.
+5. Configurar SMTP propio y CAPTCHA antes de admitir registros públicos; el SMTP predeterminado no es apto para producción.
+6. Completar marca, contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
+7. Ejecutar restore drill y pentest antes de aceptar documentos reales.
 
 ## Reversión
 
