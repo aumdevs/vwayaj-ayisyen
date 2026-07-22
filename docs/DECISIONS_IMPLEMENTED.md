@@ -32,7 +32,7 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 - Repositorio público creado en `aumdevs/haitian-legal-travel-platform`, con licencia propietaria: público no significa open source ni autoriza reutilización.
 - El historial, los logs de 69 ejecuciones de Actions y los artifacts fueron auditados antes del cambio de visibilidad sin detectar secretos.
 - `main` exige PR, historial lineal y conversaciones resueltas; se bloquearon force-push y borrado. Secret scanning, push protection, Dependabot, reporte privado y aprobación de workflows externos están activos.
-- Proyecto Vercel `prj_7ypksu4QMxUZLss5pZGGTSIDBLXV` recreado bajo `Aum prodz Group` mediante importación GitHub; `main` es Production y las demás ramas son Preview.
+- Proyecto Vercel `prj_7ypksu4QMxUZLss5pZGGTSIDBLXV` recreado bajo `Aum prodz Group` y reconectado a GitHub; `main` es la única rama autorizada para Production.
 - El recurso Supabase está conectado sólo a Production y únicamente exporta a runtime la URL pública y la clave publicable necesarias. Las otras 14 variables añadidas por la integración fueron retiradas.
 - Proyecto Supabase `gaknpocbfmiamghpoqhw` creado mediante Vercel Marketplace en São Paulo, enlazado y migrado.
 - Auth exige contraseña robusta, confirmación de email, cambio seguro, rotación de refresh tokens y TOTP; la base exige SSL.
@@ -43,7 +43,7 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 - Supabase local usa Colima. Analítica y Storage Vector locales están desactivados porque son opcionales y su contenedor requiere un montaje incompatible; esto no decide su configuración futura en producción.
 - GitHub Actions fue bloqueado inicialmente por pagos recientes fallidos o límite de gasto de la cuenta privada. Después de la auditoría, el repositorio pasó a público y app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobaron en runners públicos.
 - Los patrones de secretos no asociados a proveedores y los validity checks requieren GitHub Team/Enterprise con Secret Protection; Gitleaks y el escáner propio cubren adicionalmente el plan gratuito.
-- El proyecto Vercel anterior, creado por CLI y con clasificación incorrecta, no tenía deployments útiles y fue reemplazado. El proyecto actual está conectado a GitHub, conserva cero deployments y bloquea builds temporalmente con `exit 0` hasta cerrar CI.
+- El primer webhook del proyecto actual etiquetó incorrectamente la rama de la PR como Production. La barrera previa lo canceló antes de publicar, Git fue reconectado y el Ignored Build Step ahora cancela permanentemente cualquier target `production` cuyo `VERCEL_GIT_COMMIT_REF` no sea exactamente `main`.
 - OIDC quedó desactivado en el proyecto Vercel actual después de retirar los archivos de entorno locales, por lo que no puede emitir nuevos tokens mientras permanezca en este estado.
 
 ## Política de release

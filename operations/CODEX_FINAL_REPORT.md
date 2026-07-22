@@ -6,7 +6,7 @@ Fecha de corte: 2026-07-22.
 
 - GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (público, licencia propietaria de Aum Prodz).
 - Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), importado desde GitHub con `main` como Production; cero deployments y builds temporalmente bloqueados hasta cerrar CI.
+- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production y una barrera que cancela cualquier target Production cuyo Git ref no sea `main`.
 - Supabase remoto: `gaknpocbfmiamghpoqhw`, São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
 - GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
@@ -45,7 +45,7 @@ Fecha de corte: 2026-07-22.
 | Clave privada nueva de Supabase | REST remoto `200` |
 | Contraseña rotada de Postgres | conexión SSL directa aprobada |
 | GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
-| Vercel | cero deployments; el dominio oficial responde `404` |
+| Vercel | cero deployments activos; la primera prueba de routing fue cancelada y el dominio oficial sigue sin publicación |
 
 ## Estado de funciones
 
@@ -75,6 +75,7 @@ Fecha de corte: 2026-07-22.
 - Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
 - Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
+- El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - Stripe, SMTP, CAPTCHA, cifrado CRM, escáner, reuniones, observabilidad e IA siguen pendientes y sus funciones continúan apagadas.
 
 ## Rotación de credenciales del 2026-07-22
