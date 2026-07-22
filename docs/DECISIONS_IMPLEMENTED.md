@@ -44,6 +44,7 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 - GitHub Actions fue bloqueado inicialmente por pagos recientes fallidos o límite de gasto de la cuenta privada. Después de la auditoría, el repositorio pasó a público y app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobaron en runners públicos.
 - Los patrones de secretos no asociados a proveedores y los validity checks requieren GitHub Team/Enterprise con Secret Protection; Gitleaks y el escáner propio cubren adicionalmente el plan gratuito.
 - El primer webhook del proyecto actual etiquetó incorrectamente la rama de la PR como Production. La barrera previa lo canceló antes de publicar, Git fue reconectado y el Ignored Build Step ahora cancela permanentemente cualquier target `production` cuyo `VERCEL_GIT_COMMIT_REF` no sea exactamente `main`.
+- La siguiente prueba Git fue clasificada correctamente como Preview. El deployment limpio `dpl_1445zFH6cV37jZ8Fsvn9iJTZFiPe` quedó `READY`, protegido por Vercel Authentication, sin Supabase, Postgres, alias de Production, OIDC ni bypass de automatización.
 - OIDC quedó desactivado en el proyecto Vercel actual después de retirar los archivos de entorno locales, por lo que no puede emitir nuevos tokens mientras permanezca en este estado.
 
 ## Política de release

@@ -6,7 +6,7 @@ Fecha de corte: 2026-07-22.
 
 - GitHub: `https://github.com/aumdevs/haitian-legal-travel-platform` (público, licencia propietaria de Aum Prodz).
 - Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
-- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production y una barrera que cancela cualquier target Production cuyo Git ref no sea `main`.
+- Vercel: equipo `Aum prodz Group`, proyecto `haitian-legal-travel-platform` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview limpio `dpl_1445zFH6cV37jZ8Fsvn9iJTZFiPe` en estado `READY`.
 - Supabase remoto: `gaknpocbfmiamghpoqhw`, São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
 - GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
@@ -45,7 +45,7 @@ Fecha de corte: 2026-07-22.
 | Clave privada nueva de Supabase | REST remoto `200` |
 | Contraseña rotada de Postgres | conexión SSL directa aprobada |
 | GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
-| Vercel | cero deployments activos; la primera prueba de routing fue cancelada y el dominio oficial sigue sin publicación |
+| Vercel | Preview `READY`, health `200`, home final `200`, `robots.txt` bloqueado y Production sin publicación |
 
 ## Estado de funciones
 
@@ -76,6 +76,7 @@ Fecha de corte: 2026-07-22.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
 - Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false` y todos los `DISABLE_*` en `true`.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
+- El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
 - Stripe, SMTP, CAPTCHA, cifrado CRM, escáner, reuniones, observabilidad e IA siguen pendientes y sus funciones continúan apagadas.
 
 ## Rotación de credenciales del 2026-07-22
@@ -86,6 +87,7 @@ Fecha de corte: 2026-07-22.
 - Se revocó la firma HS256 anterior; ES256 permanece activa.
 - Se rotó y verificó la contraseña de Postgres. Ningún valor se registró en el repositorio.
 - Se desactivó OIDC en el proyecto Vercel actual para impedir nuevas emisiones. El token temporal de Development ya emitido tiene TTL fijo de 12 horas y caduca el 2026-07-22 a las 12:19:48 de Santiago; no hay deployment ni proveedor cloud que lo consuma.
+- El smoke test de Preview generó tres bypass tokens de automatización; los tres fueron revocados y el mismo commit se reconstruyó sin esa variable antes del cierre.
 
 ## Publicación segura del repositorio
 
