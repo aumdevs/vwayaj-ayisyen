@@ -1,0 +1,34 @@
+{
+  "feature_payments": {
+    "default": false,
+    "launch_requirements": ["stripe_test_e2e", "webhook_verified", "refund_policy_approved", "live_keys_separated"]
+  },
+  "feature_document_uploads": {
+    "default": false,
+    "launch_requirements": ["private_scanner", "storage_backup_test", "consent_approved", "pentest_passed"]
+  },
+  "feature_ai_assistant": {
+    "default": false,
+    "launch_requirements": ["provider_dpa", "rag_eval_passed", "pii_controls", "cost_limits", "human_approval"]
+  },
+  "feature_community": {
+    "default": false,
+    "launch_requirements": ["guidelines_approved", "moderation_staffed", "report_appeal_tested", "anti_scam_controls"]
+  },
+  "feature_appointments": {
+    "default": false,
+    "launch_requirements": ["timezone_tests", "provider_configured", "cancel_policy_approved", "reminders_private"]
+  },
+  "feature_whatsapp": {
+    "default": false,
+    "launch_requirements": ["number_verified", "templates_reviewed", "privacy_notice"]
+  },
+  "feature_public_intake": {
+    "default": false,
+    "launch_requirements": ["consent_approved", "captcha", "rate_limit", "crm_encryption"]
+  },
+  "feature_courses": {
+    "default": true,
+    "launch_requirements": ["approved_course_content", "captions_transcripts"]
+  }
+}

@@ -1,0 +1,55 @@
+flowchart TB
+  U[Public / Registered User]
+  S[Advisor / Professional]
+  A[Editor / Moderator / Admin]
+
+  subgraph V[Vercel]
+    NX[Next.js App Router]
+    PUB[Public UI]
+    PORTAL[Authenticated Portals]
+    API[Route Handlers / Server Actions]
+    DAL[server-only DAL + DTO]
+    JOBS[Cron / Outbox Workers]
+  end
+
+  subgraph SB[Supabase]
+    AUTH[Auth + MFA]
+    DB[(Postgres + RLS)]
+    STQ[(Storage Quarantine)]
+    STC[(Storage Clean)]
+    STM[(Public/Course Media)]
+  end
+
+  STRIPE[Stripe Checkout/Webhooks]
+  MAIL[Email Provider]
+  SCAN[Private Malware Scanner]
+  MEET[Meeting Provider]
+  AI[AI Provider]
+  WA[WhatsApp]
+  OBS[Observability]
+
+  U --> PUB
+  U --> PORTAL
+  S --> PORTAL
+  A --> PORTAL
+  PUB --> NX
+  PORTAL --> NX
+  NX --> AUTH
+  NX --> API
+  API --> DAL
+  DAL --> DB
+  API --> STQ
+  STQ --> SCAN
+  SCAN --> STC
+  NX --> STM
+  API --> STRIPE
+  STRIPE -->|signed webhook| API
+  JOBS --> MAIL
+  API --> MEET
+  API --> AI
+  PUB -->|generic prefilled link| WA
+  NX --> OBS
+  DB --> OBS
+
+  classDef sensitive fill:#f6d8d8,stroke:#7a1f1f;
+  class DB,STQ,STC,DAL sensitive;

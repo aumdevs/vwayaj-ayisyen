@@ -1,0 +1,175 @@
+openapi: 3.1.0
+info:
+  title: Haitian Legal Travel Platform internal API
+  version: 0.1.0
+  description: |
+    Contract blueprint. Codex must align with implemented Route Handlers.
+    Authentication uses secure Supabase session cookies; privileged routes require aal2.
+servers:
+  - url: https://{host}/api
+    variables:
+      host:
+        default: example.invalid
+tags:
+  - name: Public
+  - name: Authenticated
+  - name: Staff
+  - name: Webhooks
+paths:
+  /health/live:
+    get:
+      tags: [Public]
+      responses:
+        "200": { description: Alive }
+  /countries:
+    get:
+      tags: [Public]
+      parameters:
+        - { name: locale, in: query, schema: { $ref: "#/components/schemas/Locale" } }
+      responses:
+        "200": { description: Published countries }
+  /compare:
+    get:
+      tags: [Public]
+      responses:
+        "200": { description: Published comparison data }
+  /assessment/sessions:
+    post:
+      tags: [Public]
+      description: Starts an expiring, rate-limited deterministic assessment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locale: { $ref: "#/components/schemas/Locale" }
+                consentVersion: { type: string, maxLength: 100 }
+              required: [locale, consentVersion]
+      responses:
+        "201": { description: Session created }
+        "429": { $ref: "#/components/responses/RateLimited" }
+  /assessment/sessions/{id}/answers:
+    post:
+      tags: [Public]
+      parameters:
+        - { $ref: "#/components/parameters/UuidId" }
+      responses:
+        "200": { description: Answer stored and result recalculated }
+  /intake:
+    post:
+      tags: [Public]
+      description: Public lead form; feature flagged, captcha and rate limited.
+      responses:
+        "202": { description: Accepted without revealing dedupe/account state }
+  /checkout:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      responses:
+        "200": { description: Stripe Checkout URL }
+  /webhooks/stripe:
+    post:
+      tags: [Webhooks]
+      description: Requires valid Stripe signature over raw body.
+      responses:
+        "200": { description: Event accepted or already processed }
+        "400": { description: Invalid signature or payload }
+  /cases:
+    get:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      responses:
+        "200": { description: Minimal authorized cases }
+  /cases/{id}:
+    get:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      parameters:
+        - { $ref: "#/components/parameters/UuidId" }
+      responses:
+        "200": { description: Authorized case DTO }
+        "404": { description: Not found or not authorized }
+  /cases/{id}/messages:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      parameters:
+        - { $ref: "#/components/parameters/UuidId" }
+      responses:
+        "201": { description: Message created }
+  /uploads/init:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      description: Creates quarantine upload authorization; disabled without scanner.
+      responses:
+        "201": { description: Signed upload data }
+        "503": { description: Feature unavailable }
+  /documents/{id}/download:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      parameters:
+        - { $ref: "#/components/parameters/UuidId" }
+      responses:
+        "200": { description: Short-lived signed URL after authorization and audit }
+        "404": { description: Not found or not authorized }
+  /appointments/availability:
+    get:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      responses:
+        "200": { description: Server-calculated slots }
+  /appointments:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      responses:
+        "201": { description: Reserved or held }
+        "409": { description: Slot no longer available }
+  /ai/chat:
+    post:
+      tags: [Authenticated]
+      security: [{ cookieSession: [] }]
+      description: Feature flagged RAG; no case or document context.
+      responses:
+        "200": { description: Structured cited answer }
+        "503": { description: Disabled/unavailable }
+  /admin/roles:
+    post:
+      tags: [Staff]
+      security: [{ cookieSession: [], aal2: [] }]
+      responses:
+        "204": { description: Role changed and audited }
+        "403": { description: Insufficient role or AAL }
+components:
+  securitySchemes:
+    cookieSession:
+      type: apiKey
+      in: cookie
+      name: sb-session
+    aal2:
+      type: apiKey
+      in: cookie
+      name: sb-session
+      description: Supabase session whose assurance level is aal2.
+  parameters:
+    UuidId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    RateLimited:
+      description: Too many requests
+      headers:
+        Retry-After: { schema: { type: integer } }
+  schemas:
+    Locale:
+      type: string
+      enum: [ht, fr, es, pt, en]
+    CountryCode:
+      type: string
+      enum: [usa, chile, brazil, mexico]

@@ -1,0 +1,41 @@
+{
+  "country_code": "usa|chile|brazil|mexico",
+  "locale": "ht",
+  "status": "draft",
+  "summary_easy": {
+    "title": "",
+    "body": "",
+    "information_type": "practical",
+    "sources": []
+  },
+  "sections": [
+    { "key": "overview", "required": true },
+    { "key": "who_it_may_suit", "required": true },
+    { "key": "who_it_may_not_suit", "required": true },
+    { "key": "legal_pathways", "required": true, "risk": "high" },
+    { "key": "haitian_community_reality", "required": true },
+    { "key": "work_and_income", "required": true },
+    { "key": "cost_of_living", "required": true },
+    { "key": "banking_and_money", "required": true },
+    { "key": "housing", "required": true },
+    { "key": "education", "required": true },
+    { "key": "health", "required": true },
+    { "key": "first_30_days", "required": true },
+    { "key": "scams_and_risks", "required": true },
+    { "key": "packages", "required": true },
+    { "key": "sources", "required": true }
+  ],
+  "review": {
+    "author_id": null,
+    "fact_reviewer_id": null,
+    "legal_reviewer_id": null,
+    "language_reviewer_id": null,
+    "last_verified_at": null,
+    "next_review_at": null
+  },
+  "publication_blockers": [
+    "missing_kreyol_review",
+    "missing_sources",
+    "missing_high_risk_review"
+  ]
+}

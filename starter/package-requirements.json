@@ -1,0 +1,42 @@
+{
+  "runtime": {
+    "node": "24 LTS or newer officially supported LTS",
+    "packageManager": "pnpm, exact version pinned",
+    "framework": "latest stable compatible Next.js App Router",
+    "language": "TypeScript strict"
+  },
+  "required": {
+    "react": "framework-compatible",
+    "react-dom": "framework-compatible",
+    "next": "stable",
+    "@supabase/supabase-js": "stable",
+    "@supabase/ssr": "stable",
+    "zod": "stable",
+    "react-hook-form": "stable",
+    "@hookform/resolvers": "stable",
+    "stripe": "stable official SDK",
+    "server-only": "stable"
+  },
+  "conditional": {
+    "ai": ["ai", "@ai-sdk/openai or official OpenAI SDK"],
+    "ui": ["selected Radix primitives", "lucide-react"],
+    "markdown": ["remark/rehype pipeline with explicit sanitization"],
+    "observability": ["approved provider SDK"],
+    "rate_limit": ["approved server-side provider/client"]
+  },
+  "dev": {
+    "vitest": "stable",
+    "@testing-library/react": "stable",
+    "@testing-library/jest-dom": "stable",
+    "@playwright/test": "stable",
+    "@axe-core/playwright": "stable",
+    "eslint": "framework-compatible",
+    "prettier": "stable"
+  },
+  "rules": [
+    "Resolve and pin exact compatible versions at implementation time.",
+    "Do not persist latest tags.",
+    "Review licenses and install scripts.",
+    "Do not add a dependency without a documented need."
+  ]
+}

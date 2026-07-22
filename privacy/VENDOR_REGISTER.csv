@@ -1,0 +1,10 @@
+Vendor,Purpose,Data Class,Location,Retention,Review Needed,Dependency,Status
+Supabase,"Auth, Postgres, Storage",C0-C3,[REQUIRED region],[REQUIRED],DPA/SCC/terms/security review,Required,Open
+Vercel,"Hosting, edge, logs",C0-C2; avoid C3 bodies/logs,[REQUIRED],[REQUIRED],DPA/region/log settings,Required,Open
+Stripe,Payments,C2,Provider regions,Provider policy/legal,DPA/terms/PCI/consumer,Required for payments,Open
+Email provider,Transactional email,C2 minimal,[REQUIRED],[REQUIRED],DPA/DKIM/DMARC,Required before launch,Open
+Malware scanner,Private document scanning,C3,[REQUIRED private region],Transient/[REQUIRED],DPA/no training/no sharing,Required for uploads,Open
+Meeting provider,Video URLs/participant metadata,C2,[REQUIRED],[REQUIRED],DPA/recording off,Optional,Open
+OpenAI/AI provider,Redacted questions/content,C1-C2 minimal,[REQUIRED],Short/no training config,DPA/data controls,Optional/off,Open
+Observability,Errors/metrics,C1-C2 redacted,[REQUIRED],Short,DPA/scrubbing,Recommended,Open
+WhatsApp/Meta,External communication,C2 user-provided,Provider regions,Provider policy,Notice/consent/no documents,Optional,Open

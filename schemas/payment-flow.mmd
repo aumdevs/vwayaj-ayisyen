@@ -1,0 +1,28 @@
+sequenceDiagram
+  autonumber
+  actor User
+  participant App as Next.js Server
+  participant DB as Postgres
+  participant Stripe
+  participant WH as Stripe Webhook
+
+  User->>App: Select package
+  App->>DB: Load active package_price
+  App->>DB: Create pending order + immutable item
+  App->>Stripe: Create Checkout Session with server price/idempotency
+  Stripe-->>User: Hosted checkout
+  Stripe-->>WH: Signed event
+  WH->>WH: Verify raw-body signature
+  WH->>DB: Insert unique stripe_event_id
+  alt new valid event
+    WH->>DB: Transition payment/order in transaction
+    WH->>DB: Outbox notification/case entitlement
+    WH-->>Stripe: 200
+  else replay
+    WH-->>Stripe: 200 without duplicate effects
+  else invalid
+    WH-->>Stripe: 400 + security event
+  end
+  User->>App: Return URL
+  App->>DB: Read order state
+  App-->>User: Pending/paid based on DB, never URL

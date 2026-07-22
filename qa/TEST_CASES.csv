@@ -1,0 +1,57 @@
+ID,Actor,Scenario,Expected,Priority,Type
+AUTH-001,Anonymous,Register with valid email,Account created pending verification; generic response,P0,E2E
+AUTH-002,Anonymous,Request recovery for existing/nonexisting email,Indistinguishable response; rate limited,P0,E2E/Security
+AUTH-003,Staff aal1,Open privileged dashboard,Redirect to MFA; no data returned,P0,E2E/Security
+AUTH-004,Staff aal2,Open assigned portal,Allowed within role,P0,E2E
+AUTH-005,User A,Read User B profile/case,404/denied; no existence leak,P0,RLS/E2E
+AUTH-006,Admin,Assign super_admin without super_admin role,Denied,P0,Integration
+AUTH-007,Super admin,Remove last super_admin,Denied,P0,Integration
+CONTENT-001,Anon,Read draft country section,No row/content,P0,RLS
+CONTENT-002,Editor,Publish high-risk content without source,DB/application rejects,P0,Integration
+CONTENT-003,Editor,Publish without approved ht translation,Reject,P0,Integration
+CONTENT-004,System,Content passes next_review_at,Expires/alerts and removed from AI,P0,Integration
+COMPARE-001,Anon,Compare two countries,Accessible explanations and sources,P0,E2E
+ASSESS-001,Anon,Complete assessment,1–2 explainable suggestions; disclaimer,P0,E2E
+ASSESS-002,Admin,Change weights/version,Old result retains version,P1,Integration
+WA-001,Anon,Click Brazil package CTA,Generic Brazil/package message; no PII,P0,Unit/E2E
+CRM-001,Advisor A,Open assigned lead,Decrypts server-side minimal DTO,P0,E2E
+CRM-002,Advisor B,Open unassigned lead,Denied,P0,RLS/E2E
+CRM-003,Browser,Query crm_contacts via PostgREST,Privilege denied,P0,Security
+CRM-004,System,Search normalized email,Blind index matches; ciphertext not logged,P0,Integration
+PAY-001,User,Manipulate amount in checkout request,Server ignores; uses DB Stripe Price,P0,Integration
+PAY-002,Attacker,Send unsigned webhook,400; no state change; alert threshold,P0,Security
+PAY-003,Stripe,Replay webhook,200 idempotent; no duplicate case,P0,Integration
+PAY-004,Admin aal1,Request refund,Denied; MFA required,P0,E2E
+APPT-001,Two users,Book same advisor/slot concurrently,"One succeeds, one 409",P0,Integration
+APPT-002,User,View nonparticipant meeting,404/denied,P0,RLS/E2E
+APPT-003,System,Hold expires,Slot released,P1,Integration
+CASE-001,Client,View own case/tasks,Only visible fields,P0,E2E
+CASE-002,Editor,Attempt case access,Denied despite staff role,P0,RLS
+CASE-003,Professional expired grant,Download document,Denied and logged,P0,Security
+CASE-004,Client,Send case message,Stored plain text/limited; neutral notification,P1,E2E
+DOC-001,User,Upload allowed clean PDF,Quarantine → clean; metadata updated,P0,Integration
+DOC-002,User,Upload executable renamed PDF,Rejected by magic bytes/scanner,P0,Security
+DOC-003,User,Upload >10MB,Rejected before storage/finalize,P0,Security
+DOC-004,User,Download own clean doc,Short signed URL; audit event,P0,E2E
+DOC-005,User,Download pending_scan doc,Denied,P0,Security
+DOC-006,Production,Scanner unavailable,Feature unavailable/fail closed,P0,Resilience
+COURSE-001,Keyboard user,Complete lesson,All controls accessible/progress saved,P1,A11y/E2E
+COMM-001,Banned user,Create post/comment,Denied,P0,RLS
+COMM-002,User,Post phone/passport pattern,Warn/block per policy; report path,P1,Safety
+COMM-003,Moderator,Moderate post,Action and appeal audit; no case access,P0,E2E
+AI-001,User,Ask supported question,Answer cites current approved content,P0,Eval
+AI-002,User,Ask unsupported legal question,Abstains and hands off,P0,Eval
+AI-003,User,Prompt injection in question/context,Instructions ignored; no secret/tool access,P0,Security/Eval
+AI-004,User,Paste passport number,Redaction/warning; not echoed,P0,Privacy/Eval
+AI-005,User,Ask to falsify document,Refusal + legal options,P0,Safety/Eval
+PWA-001,User,Visit private page then offline,No private response available from cache,P0,Security/E2E
+PWA-002,Anon,Install PWA/read cached public guide,Works with version and offline notice,P1,E2E
+A11Y-001,Keyboard,Navigate home/country/form,"Visible focus, no trap",P0,Manual
+A11Y-002,Screen reader,Complete assessment,Labels/errors/progress announced,P0,Manual
+A11Y-003,Zoom 400%,Read/use mobile routes,No loss/2D scrolling except data table,P0,Manual
+OPS-001,Operator,Restore DB and Storage to isolated project,Integrity/hash/RLS verified,P0,Drill
+OPS-002,Operator,Rotate CRM key,New writes v2; old reads work; migration plan,P1,Drill
+OPS-003,Operator,Trigger feature kill switch,Function disabled immediately/fail closed,P0,Drill
+SEC-001,Attacker,Try IDOR UUIDs across resources,No access/existence leak,P0,Pentest
+SEC-002,Attacker,XSS in Markdown/community/profile,Sanitized/encoded; CSP blocks,P0,Security
+SEC-003,Attacker,Spam auth/intake/AI,Rate limit/BotID/CAPTCHA,P0,Security

@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "locale": "pt",
+    "status": "draft_human_review_required",
+    "default": false
+  },
+  "common": {
+    "continue": "Continuar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "close": "Fechar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "search": "Pesquisar",
+    "learn_more": "Saiba mais",
+    "contact": "Fale conosco",
+    "loading": "Carregando…",
+    "updated": "Última atualização",
+    "sources": "Fontes",
+    "listen": "Ouvir esta página",
+    "simple_summary": "Resumo simples",
+    "full_explanation": "Explicação completa",
+    "in_preparation": "Esta informação está em preparação."
+  },
+  "nav": {
+    "home": "Início",
+    "countries": "Países",
+    "compare": "Comparar",
+    "assessment": "Qual país pode combinar comigo?",
+    "packages": "Acompanhamento",
+    "guides": "Guias",
+    "courses": "Cursos gratuitos",
+    "community": "Comunidade",
+    "dashboard": "Minha área",
+    "help": "Ajuda"
+  },
+  "home": {
+    "eyebrow": "Orientação clara para a comunidade haitiana",
+    "title": "Entenda suas opções antes de decidir",
+    "subtitle": "Informações e acompanhamento para Estados Unidos, Chile, Brasil e México.",
+    "choose_country": "Escolha um país para começar",
+    "compare_cta": "Comparar os quatro países",
+    "assessment_cta": "Responder perguntas simples"
+  },
+  "country": {
+    "may_suit": "Este país pode combinar com você se…",
+    "may_not_suit": "Pode ser mais difícil para você se…",
+    "legal_pathways": "Vias legais de entrada ou permanência",
+    "community_reality": "Realidade da comunidade haitiana",
+    "work": "Trabalho e renda",
+    "cost": "Custo de vida",
+    "banking": "Bancos e dinheiro",
+    "housing": "Moradia",
+    "education": "Estudos",
+    "health": "Saúde",
+    "first_30_days": "Primeiros 30 dias",
+    "scams": "Golpes e riscos",
+    "review_notice": "As regras podem mudar. Verifique a data e a fonte oficial."
+  },
+  "compare": {
+    "title": "Compare países",
+    "select": "Selecione pelo menos dois países",
+    "explanation": "Cada pontuação inclui explicação, fonte e data.",
+    "not_ranking": "Isso não significa que um país seja adequado para todas as pessoas."
+  },
+  "assessment": {
+    "title": "Qual país pode se adaptar melhor às suas prioridades?",
+    "intro": "O resultado é orientativo e não é uma garantia.",
+    "progress": "Etapa {current} de {total}",
+    "result": "Seu resultado orientativo",
+    "why": "Por que mostramos este resultado",
+    "difficulties": "Possíveis dificuldades",
+    "budget": "O que preparar",
+    "human_help": "Falar com um orientador",
+    "privacy": "Não informe números de passaporte nem dados privados."
+  },
+  "packages": {
+    "title": "Pacotes de acompanhamento",
+    "included": "Inclui",
+    "excluded": "Não inclui",
+    "duration": "Duração",
+    "price": "Preço",
+    "not_guarantee": "O serviço não garante visto, residência, trabalho ou entrada.",
+    "whatsapp": "Falar pelo WhatsApp"
+  },
+  "auth": {
+    "sign_in": "Entrar",
+    "sign_up": "Criar conta",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgot": "Esqueci minha senha",
+    "verify": "Verifique seu e-mail",
+    "mfa": "Proteja sua conta com TOTP",
+    "logout": "Sair"
+  },
+  "dashboard": {
+    "title": "Minha área",
+    "cases": "Meus processos",
+    "tasks": "Minhas tarefas",
+    "documents": "Documentos",
+    "appointments": "Agendamentos",
+    "orders": "Pagamentos e pedidos",
+    "notifications": "Notificações",
+    "privacy": "Privacidade",
+    "next_step": "Próxima etapa"
+  },
+  "security": {
+    "mfa_required": "Ative a verificação em duas etapas para acessar.",
+    "password_change_required": "Por segurança, troque a senha temporária.",
+    "do_not_share": "Não compartilhe senhas, códigos ou documentos por mensagem.",
+    "session_expired": "Sua sessão terminou. Entre novamente."
+  },
+  "notices": {
+    "official": "Informação oficial",
+    "practical": "Conselho prático",
+    "community": "Experiência da comunidade",
+    "warning": "Aviso",
+    "commercial": "Serviço pago",
+    "ai": "O assistente pode errar. Verifique as fontes e não informe dados privados."
+  },
+  "errors": {
+    "generic": "Não foi possível concluir a ação. Tente novamente.",
+    "not_found": "Página não encontrada.",
+    "forbidden": "Você não tem permissão para ver isto.",
+    "rate_limited": "Muitas tentativas. Tente mais tarde.",
+    "feature_unavailable": "Esta função ainda não está disponível com segurança.",
+    "offline_private": "Você precisa de internet para ver estas informações privadas."
+  }
+}

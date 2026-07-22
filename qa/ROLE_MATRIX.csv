@@ -1,0 +1,15 @@
+Resource,anonymous,user,advisor,professional,content_editor,moderator,admin,super_admin
+Published country content,R,R,R,R,R/W*,R,R/W,R/W
+Draft/editorial content,-,-,-,-,R/W,-,R/W,R/W
+Own profile,-,R/W,R/W,R/W,R/W,R/W,R/W,R/W
+User roles,-,own R,own R,own R,own R,own R,R/W*,R/W*
+Assigned CRM leads,-,-,R/W,-,-,-,R/W,R/W
+Own case,-,R,assigned R/W,grant R,-,-,exceptional R/W,exceptional R/W
+Case documents,-,own/grant R,assigned R/W,grant R/W,-,-,exceptional R/W,exceptional R/W
+Orders/payments,-,own R,-,-,-,-,R/W*,R/W*
+Appointments,-,own R/W,assigned R/W,participant R,-,-,R/W,R/W
+Courses,public R,R/progress,R,R,R/W*,R,R/W,R/W
+Community,-,R/W,R/W as user,R/W as user,R/W as user,moderate,moderate,moderate
+AI conversation,limited*,own R/W,own R/W,own R/W,own R/W,own R/W,own R/W,own R/W
+Audit/security,-,-,-,-,-,limited moderation audit,R,R
+Legend,R=read; W=write; *=MFA/controlled; exceptional=justified/audited,,,,,,,

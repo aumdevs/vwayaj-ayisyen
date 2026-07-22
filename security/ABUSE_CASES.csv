@@ -1,0 +1,21 @@
+ID,Abuse Case,Domain,Severity,Mitigations,Related Test
+AB-001,Credential stuffing,Auth,High,"BotID/CAPTCHA, IP/account rate limits, leaked passwords, alerts",AUTH-003
+AB-002,Password recovery abuse/enumeration,Auth,High,"Generic response, token TTL, rate limit, no email disclosure",AUTH-002
+AB-003,Privilege escalation by metadata/role API,AuthZ,Critical,"DB roles, RPC, aal2, super-admin rules, audit",AUTH-006
+AB-004,IDOR across cases/documents,Cases,Critical,RLS + DAL + UUID + negative matrix,SEC-001
+AB-005,Advisor browsing unassigned CRM,CRM,Critical,"assignment helper, server-only ciphertext, audit",CRM-002
+AB-006,Malicious/oversized/polyglot upload,Documents,Critical,type/size/magic/scan/quarantine,DOC-002
+AB-007,Signed URL sharing,Documents,High,"short TTL, participant auth, force download, access log",DOC-004
+AB-008,Stripe webhook spoof/replay,Payments,High,"raw signature, unique event, state validation",PAY-002
+AB-009,Checkout price manipulation,Payments,High,"server DB price, immutable order item",PAY-001
+AB-010,Double booking/race,Appointments,Medium,DB exclusion constraint and transaction,APPT-001
+AB-011,Community visa/job scam,Community,High,"no DMs/files, reporting, moderation, warnings",COMM-002
+AB-012,Doxxing in community,Community,High,"PII pattern guard, moderation, privacy UX",COMM-002
+AB-013,AI prompt injection,AI,High,"untrusted context, tool allowlist, schema validation",AI-003
+AB-014,AI legal hallucination,AI,High,"published RAG, citations, abstention, human handoff",AI-002
+AB-015,AI budget exhaustion,AI,Medium,"quotas, model tiers, global kill switch, alerts",OPS-003
+AB-016,Scraping public content,Public,Medium,"CDN/cache, reasonable rate limits, BotID, no sensitive public data",SEC-003
+AB-017,Form spam/lead poisoning,Intake,Medium,"honeypot, timing, CAPTCHA, rate, triage",SEC-003
+AB-018,Secret in commit/log,Supply chain,Critical,"push protection, gitleaks, redaction, separate credentials",OPS-002
+AB-019,Stale migration guidance causes harm,Content,Critical,"sources, review dates, expiry, urgent correction",CONTENT-004
+AB-020,Support impersonation/social engineering,Operations,High,"no OTP requests, portal verification, staff training",AUTH-003

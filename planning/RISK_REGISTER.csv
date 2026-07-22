@@ -1,0 +1,16 @@
+ID,Risk,Impact,Likelihood,Controls,Owner,Status
+R-001,Content becomes legally outdated,Critical,High,"Dates, sources, expiry, two-person review, urgent takedown",Editorial lead,Open
+R-002,Broken access control leaks cases,Critical,Medium,RLS + DAL + negative tests + pentest,Engineering,Open
+R-003,Malicious upload,Critical,High,"Private quarantine, magic bytes, scanner, feature off",Security,Open
+R-004,Admin takeover,Critical,Medium,"Strong unique password, TOTP aal2, reauth, audit",Owner,Open
+R-005,CRM PII leak,Critical,Medium,"AES-GCM, blind indexes, server-only, retention",Engineering,Open
+R-006,AI hallucinates legal guidance,High,High,"Approved RAG, citations, abstain, no case data, off by default",Product,Open
+R-007,Payment spoof/replay,High,Medium,"Signed raw webhook, idempotency, reconciliation",Engineering,Open
+R-008,Community fraud/scams,High,High,"Text-only, no DMs/files, reports, moderation, warnings",Moderation,Open
+R-009,Vendor/data transfer noncompliance,High,Medium,"DPA, inventory, legal review, minimization",Owner/Lawyer,Open
+R-010,Accessibility excludes elders,High,High,"WCAG, 18px, keyboard/SR, real-user tests",Design/QA,Open
+R-011,Wrong account/team deployment,High,Medium,Explicit org verification and project refs,Codex,Open
+R-012,Secrets committed,Critical,Medium,"Ignore, scans, push protection, separate credential file",Engineering,Open
+R-013,Storage objects absent from restore,Critical,Medium,Object backup inventory and restore drill,Operations,Open
+R-014,Double-booked appointment,Medium,Medium,"DB exclusion constraint, transactional holds",Engineering,Open
+R-015,Stereotyping in recommendations,High,Medium,"Concrete preferences, review, no protected traits",Editorial/Product,Open

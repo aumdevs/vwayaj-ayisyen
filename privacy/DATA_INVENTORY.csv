@@ -1,0 +1,14 @@
+Dataset,Class,System,Purpose,Access,Retention,Examples,Restrictions
+Account profile,C2,Supabase Auth/profiles,Auth and personalization,User + authorized shared context,Account life + required retention,"Email, display name, locale, timezone",No marketing by default
+Auth factors/session,Secret/C3,Supabase Auth,Security,User/Auth provider,Provider/session TTL,"Password hash, TOTP, tokens",Never application logs
+Public intake,C2,CRM encrypted,Qualification/contact,Assigned advisor/admin aal2,[REQUIRED],"Ranges, goals, contact",No documents
+CRM contact,C2,Encrypted DB fields,Service/contact,Assigned advisor/admin aal2,[REQUIRED],Name/email/phone,Blind index
+Case,C2,Postgres,Deliver service,Client/assigned staff,[REQUIRED],"Status, tasks, messages",No approval probability
+Case document,C3,Private Storage + metadata,Specific task,Explicit grant aal2,[REQUIRED],Identity/migration docs,No AI/analytics
+Payment,C2,Stripe + DB summary,Charge/refund/accounting,User/finance admin,[REQUIRED legal],Amount/status/IDs,No card data
+Appointment,C2,DB + provider,Schedule service,Participants,[REQUIRED],Time/provider URL encrypted,No reason in lock screen
+Course progress,C1/C2,Postgres,Learning,User/content aggregate,[REQUIRED],Completion,Not used for eligibility
+Community,C1/C2,Postgres,Peer support,Authenticated community,[REQUIRED],Public pseudonym/posts,No DMs/files
+AI conversation,C2,Postgres/provider,Information help,User/limited support,Short [REQUIRED],Redacted text/citations,No cases/docs
+Audit/security,C2,Postgres/observability,Security/compliance,Admin aal2/security,[REQUIRED],Actor/action/risk,Minimize IP/user agent
+Analytics,C1,Approved provider,Improve product,Aggregate team,Short [REQUIRED],Pseudonymous events,No sensitive pages/text

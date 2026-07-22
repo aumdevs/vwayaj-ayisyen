@@ -1,0 +1,32 @@
+sequenceDiagram
+  autonumber
+  actor User
+  participant App as Next.js Route
+  participant DB as Supabase Postgres
+  participant Q as Quarantine Bucket
+  participant Scan as Private Scanner
+  participant C as Clean Bucket
+
+  User->>App: POST /api/uploads/init (metadata + consent)
+  App->>DB: Verify session, case permission, feature/scanner health
+  DB-->>App: Authorized
+  App->>DB: Create document status=uploading, opaque path
+  App-->>User: Short signed upload authorization
+  User->>Q: Upload allowed type/size
+  User->>App: POST /api/uploads/finalize
+  App->>Q: Head/download server-side
+  App->>App: Validate size, extension, MIME, magic bytes, hash
+  App->>DB: status=pending_scan
+  App->>Scan: Scan private stream/object
+  Scan-->>App: clean/rejected/error
+  alt clean
+    App->>C: Copy to opaque clean path
+    App->>Q: Delete quarantine object
+    App->>DB: status=clean + clean path + audit
+  else rejected/infected
+    App->>Q: Delete or isolate per policy
+    App->>DB: status=rejected/infected + safe reason + alert
+  else scanner unavailable
+    App->>DB: status=error
+    App-->>User: Feature unavailable; no download
+  end

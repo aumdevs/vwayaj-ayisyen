@@ -1,0 +1,22 @@
+import "server-only";
+
+export class FeatureUnavailableError extends Error {
+  constructor(public readonly feature: string) {
+    super(`${feature} is unavailable`);
+  }
+}
+
+export type FeatureState = {
+  databaseEnabled: boolean;
+  environmentDisabled: boolean;
+  requirementsSatisfied: boolean;
+};
+
+export function assertFeatureEnabled(feature: string, state: FeatureState): void {
+  if (state.environmentDisabled || !state.databaseEnabled || !state.requirementsSatisfied) {
+    throw new FeatureUnavailableError(feature);
+  }
+}
+
+// Environment kill switch always wins. Missing provider/config means
+// requirementsSatisfied=false. There is no unsafe fallback.

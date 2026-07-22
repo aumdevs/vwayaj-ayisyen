@@ -1,0 +1,24 @@
+Area,Control,Requirement,Evidence,Verification,Priority,Status
+V1,Architecture,Trust boundaries and data flows documented,docs/10_TECHNICAL_ARCHITECTURE.md; schemas/*.mmd,Design review,P0,Open
+V1,Architecture,All sensitive features fail closed behind flags,config/feature-flags.json; starter/feature-gate.ts.template,Integration,P0,Open
+V2,Authentication,Email verification and safe recovery,docs/12_SUPABASE_AUTH_RLS_STORAGE.md,E2E,P0,Open
+V2,Authentication,Privileged TOTP and aal2,docs/04_USER_ROLES_AND_PERMISSIONS.md,E2E/RLS,P0,Open
+V2,Authentication,No account enumeration,docs/13_SECURITY_THREAT_MODEL.md,Security test,P0,Open
+V3,Session,Secure SSR cookies and session refresh,CODEX_MASTER_PROMPT.md,E2E,P0,Open
+V4,Access Control,RLS on every exposed table,supabase/migrations/0008_row_level_security.sql,SQL tests,P0,Open
+V4,Access Control,DAL and DTO minimum disclosure,docs/36_REPOSITORY_STRUCTURE_AND_BOUNDARIES.md,Code review,P0,Open
+V4,Access Control,Professional grants expire and audit,docs/18_CASES_DOCUMENTS_AND_TRACKING.md,RLS/E2E,P0,Open
+V5,Validation,Zod server validation and size limits,CODEX_MASTER_PROMPT.md,Unit/Fuzz,P0,Open
+V5,Validation,"Structured content, no free HTML",docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md,Unit/Security,P0,Open
+V6,Cryptography,AES-GCM and separate HMAC keys,starter/crypto.ts.template,Unit/Review,P0,Open
+V6,Cryptography,TLS and short signed URLs,docs/14_FILE_UPLOAD_SECURITY.md,E2E,P0,Open
+V7,Errors/Logs,Structured redacted logging,starter/redacted-logger.ts.template,Unit,P0,Open
+V8,Data Protection,"Retention, deletion and backups",docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md,Drill,P0,Open
+V9,Communications,CSP/HSTS/security headers,vercel/SECURITY_HEADERS.md,Header scan,P0,Open
+V10,Malicious Code,Supply-chain scans and lockfile,docs/37_DEPENDENCY_AND_SUPPLY_CHAIN_POLICY.md,CI,P0,Open
+V11,Business Logic,Stripe idempotency and state machines,docs/15_STRIPE_PAYMENTS.md,Integration,P0,Open
+V11,Business Logic,Concurrency-safe appointments,docs/17_APPOINTMENTS_AND_VIDEO.md,Integration,P0,Open
+V12,Files,"Quarantine, magic bytes and private scanner",docs/14_FILE_UPLOAD_SECURITY.md,Security/Pentest,P0,Open
+V13,API,"Rate limits, origin checks and generic errors",api/openapi.yaml,Security,P0,Open
+V14,Configuration,Env validation and no secrets in Git,docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md,CI,P0,Open
+AI,AI-specific,"RAG allowlist, citations, abstain, injection defense",docs/20_AI_ASSISTANT_SAFETY_AND_RAG.md,Eval,P0,Open

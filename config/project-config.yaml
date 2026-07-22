@@ -1,0 +1,67 @@
+project:
+  technical_slug: haitian-legal-travel-platform
+  public_brand_status: pending
+  github:
+    owner: aumdevs
+    repository: haitian-legal-travel-platform
+    visibility: private
+    default_branch: main
+  supabase:
+    organization: "aumprodz Group"
+    project_name: haitian-legal-travel-platform
+    preferred_region: "South America; prefer São Paulo if available and approved"
+  vercel:
+    team: "aum prodz Group"
+    project_name: haitian-legal-travel-platform
+
+locales:
+  default: ht
+  supported: [ht, fr, es, pt, en]
+  require_human_review: true
+
+countries:
+  - code: usa
+    iso2: US
+  - code: chile
+    iso2: CL
+  - code: brazil
+    iso2: BR
+  - code: mexico
+    iso2: MX
+
+security:
+  target: OWASP_ASVS_L2
+  privileged_mfa: required
+  privileged_aal: aal2
+  document_max_bytes: 10485760
+  document_allowed_mime:
+    - application/pdf
+    - image/jpeg
+    - image/png
+    - image/webp
+  fail_closed: true
+
+features:
+  payments: false
+  document_uploads: false
+  ai_assistant: false
+  community: false
+  appointments: false
+  courses: true
+  whatsapp: false
+  public_intake: false
+  staff_portals: true
+  pwa: true
+
+content:
+  legal_high_risk_review_days: 60
+  default_review_days: 90
+  allow_unreviewed_publication: false
+  allow_machine_translation_publication: false
+  ai_index_requires_published: true
+
+admin:
+  bootstrap_email: admin@aumprodz.com
+  credentials_location: external_private_file
+  force_password_change: true
+  force_totp: true

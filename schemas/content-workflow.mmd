@@ -1,0 +1,24 @@
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> FactCheck
+  FactCheck --> ChangesRequested
+  ChangesRequested --> Draft
+  FactCheck --> LegalReview: high-impact
+  FactCheck --> TranslationReview: low-impact
+  LegalReview --> ChangesRequested
+  LegalReview --> TranslationReview
+  TranslationReview --> ChangesRequested
+  TranslationReview --> Approved
+  Approved --> Scheduled
+  Approved --> Published
+  Scheduled --> Published
+  Published --> Expired: review date/change
+  Published --> Archived
+  Expired --> Draft: new version
+  Archived --> [*]
+
+  note right of Published
+    Requires approved Kreyòl,
+    sources for high risk,
+    reviewer and dates.
+  end note

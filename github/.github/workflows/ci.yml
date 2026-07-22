@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NODE_ENV: test
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-placeholder-publishable-key-not-a-secret
+      DISABLE_PAYMENTS: "true"
+      DISABLE_DOCUMENT_UPLOADS: "true"
+      DISABLE_AI_ASSISTANT: "true"
+      DISABLE_COMMUNITY: "true"
+      DISABLE_APPOINTMENTS: "true"
+      DISABLE_PUBLIC_INTAKE: "true"
+    steps:
+      # Codex: pin third-party Actions to reviewed full commit SHAs before production.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run format:check
+      - run: pnpm run lint
+      - run: pnpm run typecheck
+      - run: pnpm run test:unit -- --coverage
+      - run: node scripts/verify-env.mjs
+      - run: bash scripts/check-no-secrets.sh
+      - run: pnpm run build
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start local Supabase
+        run: supabase start
+      - name: Lint database
+        run: supabase db lint --local --level warning
+      - name: Test database and RLS
+        run: supabase test db
+      - name: Verify generated schema diff is clean
+        run: |
+          supabase db diff --local --schema public > /tmp/schema.diff.sql
+          test ! -s /tmp/schema.diff.sql || {
+            echo "Uncommitted local schema drift:"
+            cat /tmp/schema.diff.sql
+            exit 1
+          }
+      - if: always()
+        run: supabase stop --no-backup
+
+  e2e-smoke:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [app, database]
+    env:
+      NODE_ENV: test
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+      DISABLE_PAYMENTS: "true"
+      DISABLE_DOCUMENT_UPLOADS: "true"
+      DISABLE_AI_ASSISTANT: "true"
+      DISABLE_COMMUNITY: "true"
+      DISABLE_APPOINTMENTS: "true"
+      DISABLE_PUBLIC_INTAKE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: supabase start
+      - name: Export local Supabase variables
+        run: |
+          supabase status -o env > /tmp/supabase.env
+          # Codex: map current CLI output names into GITHUB_ENV without echoing values.
+          node scripts/ci-map-supabase-env.mjs /tmp/supabase.env >> "$GITHUB_ENV"
+      - run: pnpm run test:e2e:smoke
+      - if: always()
+        run: supabase stop --no-backup
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

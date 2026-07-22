@@ -1,0 +1,12 @@
+# Replace/add real reviewers as the team grows.
+* @aumdevs
+
+/supabase/migrations/ @aumdevs
+/supabase/tests/ @aumdevs
+/src/lib/auth/ @aumdevs
+/src/lib/security/ @aumdevs
+/src/lib/payments/ @aumdevs
+/src/lib/documents/ @aumdevs
+/src/lib/ai/ @aumdevs
+/.github/workflows/ @aumdevs
+/legal/ @aumdevs

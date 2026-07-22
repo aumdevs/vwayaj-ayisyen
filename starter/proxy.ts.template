@@ -1,0 +1,25 @@
+/**
+ * Verify the current Next.js proxy/middleware filename and API.
+ * This layer refreshes Supabase cookies and applies coarse redirects only.
+ * It is never the only authorization check.
+ */
+import { type NextRequest, NextResponse } from "next/server";
+
+export async function proxy(request: NextRequest): Promise<NextResponse> {
+  const response = NextResponse.next({ request });
+
+  // 1. Create Supabase SSR server client with request cookies.
+  // 2. Refresh/validate session using the current official Supabase pattern.
+  // 3. Generate a CSP nonce and set request/response headers.
+  // 4. Redirect unauthenticated users away from portal route groups.
+  // 5. Redirect privileged aal1 sessions to MFA.
+  // Do not query sensitive domain data or trust this as final authorization.
+
+  return response;
+}
+
+export const config = {
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif)$).*)"
+  ]
+};

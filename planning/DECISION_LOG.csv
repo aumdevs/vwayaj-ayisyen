@@ -1,0 +1,9 @@
+ID,Date,Decision,Status,Rationale,Revisit
+D-001,2026-07-21,"Use Next.js App Router, Supabase and Vercel",Accepted,Owner requirement and integrated stack,Revisit only for material blocker
+D-002,2026-07-21,Default locale Kreyòl,Accepted,Audience-first,Never downgrade launch requirement
+D-003,2026-07-21,Four countries only,Accepted,Product scope,New country requires explicit project decision
+D-004,2026-07-21,Questionnaire deterministic,Accepted,Explainability and risk,"AI may explain, never decide"
+D-005,2026-07-21,No AI access to cases/documents,Accepted,Data minimization,Requires new DPIA/threat model to change
+D-006,2026-07-21,Uploads fail closed without scanner,Accepted,Sensitive documents,No workaround
+D-007,2026-07-21,Community launches without DMs/attachments,Accepted,Fraud/moderation risk,Reassess after operating evidence
+D-008,2026-07-21,Admin credential outside ZIP/repo,Accepted,Secret hygiene,Delete after bootstrap

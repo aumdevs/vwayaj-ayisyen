@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "locale": "ht",
+    "status": "draft_human_review_required",
+    "default": true
+  },
+  "common": {
+    "continue": "Kontinye",
+    "back": "Retounen",
+    "next": "Pwochen",
+    "close": "Fèmen",
+    "save": "Anrejistre",
+    "cancel": "Anile",
+    "search": "Chèche",
+    "learn_more": "Aprann plis",
+    "contact": "Kontakte nou",
+    "loading": "Tanpri tann…",
+    "updated": "Dènye mizajou",
+    "sources": "Sous yo",
+    "listen": "Koute paj sa a",
+    "simple_summary": "Rezime fasil",
+    "full_explanation": "Eksplikasyon konplè",
+    "in_preparation": "Enfòmasyon sa a ap prepare."
+  },
+  "nav": {
+    "home": "Akèy",
+    "countries": "Peyi yo",
+    "compare": "Konpare peyi yo",
+    "assessment": "Ki peyi ki ka mache pou mwen?",
+    "packages": "Sèvis ak akonpayman",
+    "guides": "Gid yo",
+    "courses": "Kou gratis",
+    "community": "Kominote",
+    "dashboard": "Espas mwen",
+    "help": "Èd"
+  },
+  "home": {
+    "eyebrow": "Oryantasyon klè pou kominote ayisyèn nan",
+    "title": "Konprann opsyon ou yo anvan ou pran yon desizyon",
+    "subtitle": "Enfòmasyon ak akonpayman pou Etazini, Chili, Brezil ak Meksik.",
+    "choose_country": "Chwazi yon peyi pou kòmanse",
+    "compare_cta": "Konpare kat peyi yo",
+    "assessment_cta": "Reponn kèk kesyon senp"
+  },
+  "country": {
+    "may_suit": "Peyi sa a ka adapte ak ou si…",
+    "may_not_suit": "Li ka pi difisil pou ou si…",
+    "legal_pathways": "Fason legal pou antre oswa rete",
+    "community_reality": "Reyalite kominote ayisyèn nan",
+    "work": "Travay ak revni",
+    "cost": "Pri lavi",
+    "banking": "Bank ak lajan",
+    "housing": "Lojman",
+    "education": "Etid",
+    "health": "Sante",
+    "first_30_days": "Premye 30 jou yo",
+    "scams": "Fwod ak risk",
+    "review_notice": "Règ yo ka chanje. Verifye dat la ak sous ofisyèl la."
+  },
+  "compare": {
+    "title": "Konpare peyi yo",
+    "select": "Chwazi omwen de peyi",
+    "explanation": "Chak nòt gen yon eksplikasyon, yon sous ak yon dat.",
+    "not_ranking": "Sa pa vle di yon peyi bon pou tout moun."
+  },
+  "assessment": {
+    "title": "Ki peyi ki ka adapte pi byen ak sa w ap chèche?",
+    "intro": "Repons lan se yon oryantasyon, li pa yon garanti.",
+    "progress": "Etap {current} sou {total}",
+    "result": "Rezilta oryantasyon ou",
+    "why": "Poukisa nou montre rezilta sa a",
+    "difficulties": "Sa ki ka difisil",
+    "budget": "Sa pou prepare",
+    "human_help": "Pale ak yon konseye",
+    "privacy": "Pa antre nimewo paspò oswa lòt done prive."
+  },
+  "packages": {
+    "title": "Pakè akonpayman",
+    "included": "Sa ki ladan",
+    "excluded": "Sa ki pa ladan",
+    "duration": "Dire",
+    "price": "Pri",
+    "not_guarantee": "Sèvis la pa garanti viza, rezidans, travay oswa antre.",
+    "whatsapp": "Pale sou WhatsApp"
+  },
+  "auth": {
+    "sign_in": "Konekte",
+    "sign_up": "Kreye kont",
+    "email": "Imèl",
+    "password": "Modpas",
+    "forgot": "Mwen bliye modpas mwen",
+    "verify": "Verifye imèl ou",
+    "mfa": "Sekirize kont ou ak kòd TOTP",
+    "logout": "Dekonekte"
+  },
+  "dashboard": {
+    "title": "Espas mwen",
+    "cases": "Dosye mwen yo",
+    "tasks": "Sa mwen dwe fè",
+    "documents": "Dokiman",
+    "appointments": "Randevou",
+    "orders": "Peman ak kòmand",
+    "notifications": "Notifikasyon",
+    "privacy": "Konfidansyalite",
+    "next_step": "Pwochen etap"
+  },
+  "security": {
+    "mfa_required": "Ou dwe aktive verifikasyon an de etap pou antre isit la.",
+    "password_change_required": "Pou sekirite, chanje modpas tanporè a.",
+    "do_not_share": "Pa pataje modpas, kòd oswa dokiman pa mesaj.",
+    "session_expired": "Sesyon ou fini. Tanpri konekte ankò."
+  },
+  "notices": {
+    "official": "Enfòmasyon ofisyèl",
+    "practical": "Konsèy pratik",
+    "community": "Eksperyans kominote a",
+    "warning": "Avètisman",
+    "commercial": "Sèvis peye",
+    "ai": "Asistan an ka fè erè. Verifye sous yo epi pa antre done prive."
+  },
+  "errors": {
+    "generic": "Nou pa t kapab fini aksyon an. Eseye ankò.",
+    "not_found": "Nou pa jwenn paj sa a.",
+    "forbidden": "Ou pa gen pèmisyon pou wè sa.",
+    "rate_limited": "Gen twòp tantativ. Eseye pita.",
+    "feature_unavailable": "Fonksyon sa a poko disponib an sekirite.",
+    "offline_private": "Ou bezwen koneksyon entènèt pou wè enfòmasyon prive sa yo."
+  }
+}

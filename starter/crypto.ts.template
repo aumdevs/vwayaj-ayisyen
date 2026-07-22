@@ -1,0 +1,50 @@
+import "server-only";
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHmac,
+  randomBytes,
+  timingSafeEqual
+} from "node:crypto";
+
+type Encrypted = {
+  ciphertext: Buffer;
+  iv: Buffer;
+  tag: Buffer;
+  keyVersion: number;
+};
+
+function decodeKey(value: string): Buffer {
+  const key = Buffer.from(value, "base64url");
+  if (key.length !== 32) throw new Error("Expected a 32-byte AES key.");
+  return key;
+}
+
+export function encryptUtf8(plaintext: string, base64urlKey: string, keyVersion = 1): Encrypted {
+  const key = decodeKey(base64urlKey);
+  const iv = randomBytes(12);
+  const cipher = createCipheriv("aes-256-gcm", key, iv);
+  const ciphertext = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
+  return { ciphertext, iv, tag: cipher.getAuthTag(), keyVersion };
+}
+
+export function decryptUtf8(data: Encrypted, base64urlKey: string): string {
+  const key = decodeKey(base64urlKey);
+  const decipher = createDecipheriv("aes-256-gcm", key, data.iv);
+  decipher.setAuthTag(data.tag);
+  return Buffer.concat([decipher.update(data.ciphertext), decipher.final()]).toString("utf8");
+}
+
+export function blindIndex(normalized: string, base64urlKey: string): string {
+  const key = decodeKey(base64urlKey);
+  return createHmac("sha256", key).update(normalized, "utf8").digest("base64url");
+}
+
+export function constantTimeEqual(a: string, b: string): boolean {
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+  return left.length === right.length && timingSafeEqual(left, right);
+}
+
+// Never reuse encryption and blind-index keys. Add authenticated context/AAD
+// tying ciphertext to field/record if the final schema and rotation design support it.

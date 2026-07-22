@@ -1,0 +1,29 @@
+sequenceDiagram
+  autonumber
+  actor User
+  participant App as AI Route
+  participant Guard as Risk/PII Guard
+  participant Search as Approved Content Retrieval
+  participant Model as AI Provider
+  participant DB as Conversation Store
+
+  User->>App: Question
+  App->>App: Auth, rate/cost/feature checks
+  App->>Guard: Normalize, detect PII/risk/injection
+  alt prohibited or sensitive
+    Guard-->>App: Refuse/warn/handoff
+    App-->>User: Safe response
+  else permitted
+    Guard-->>App: Redacted query
+    App->>Search: Filter published, locale, country, date
+    Search-->>App: Approved chunks + source metadata
+    alt insufficient evidence
+      App-->>User: Abstain + handoff
+    else supported
+      App->>Model: System prompt + delimited untrusted chunks
+      Model-->>App: Structured answer
+      App->>App: Validate schema/citations/output
+      App->>DB: Store redacted, short-retention record
+      App-->>User: Answer + citations + date + disclaimer
+    end
+  end

@@ -1,0 +1,24 @@
+sequenceDiagram
+  autonumber
+  actor User
+  participant Browser
+  participant Next as Next.js
+  participant Auth as Supabase Auth
+  participant DB as Postgres/RLS
+
+  User->>Browser: Sign in
+  Browser->>Auth: Email + password + bot controls
+  Auth-->>Browser: Secure session cookies via SSR flow
+  Browser->>Next: Request portal
+  Next->>Auth: Validate/refresh session
+  Next->>DB: Load profile/roles under user session
+  alt normal user
+    DB-->>Next: own authorized data
+  else privileged aal1
+    Next-->>Browser: Require TOTP
+    Browser->>Auth: Verify TOTP
+    Auth-->>Browser: aal2 session
+    Browser->>Next: Retry
+    Next->>DB: DAL + RLS + aal2
+    DB-->>Next: role-scoped data
+  end

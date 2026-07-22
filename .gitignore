@@ -1,0 +1,46 @@
+# Dependencies/build
+node_modules/
+.next/
+out/
+dist/
+coverage/
+playwright-report/
+test-results/
+.turbo/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+.private/
+*ADMIN_CREDENTIALS*
+.env.bootstrap.local
+
+# Supabase local generated
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+supabase/.env.*
+!supabase/.env.example
+
+# Editors/OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Logs/data
+*.log
+*.sqlite
+*.db
+downloads/
+uploads/
+tmp/

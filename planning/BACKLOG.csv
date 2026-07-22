@@ -1,0 +1,62 @@
+Epic,Domain,Task,Priority,Size,Owner,Reference
+EPIC-00,Foundation,"Confirm technical slug, orgs and no cross-project reuse",P0,S,Codex,docs/32_ASSUMPTIONS_DECISIONS_AND_OPEN_ITEMS.md
+EPIC-00,Foundation,Create private GitHub repository under aumdevs,P0,S,Codex,checklists/MANUAL_ACCOUNT_SETUP.md
+EPIC-00,Foundation,Scaffold latest compatible Next.js App Router app,P0,M,Codex,docs/10_TECHNICAL_ARCHITECTURE.md
+EPIC-00,Foundation,Pin Node LTS and pnpm packageManager,P0,S,Codex,docs/24_GITHUB_CI_CD_AND_REPOSITORY.md
+EPIC-00,Foundation,"Configure strict TypeScript, lint, format and import boundaries",P0,M,Codex,AGENTS.md
+EPIC-00,Foundation,Create Supabase local project and apply migrations,P0,L,Codex,supabase/migrations
+EPIC-00,Foundation,"Create CI, CodeQL, dependency and secret scans",P0,M,Codex,github/.github/workflows
+EPIC-00,Foundation,Create Vercel preview and production projects,P0,M,Codex,docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md
+EPIC-01,Design/i18n,Implement semantic design tokens and accessible primitives,P0,L,Codex,docs/08_DESIGN_SYSTEM_ACCESSIBILITY.md
+EPIC-01,Design/i18n,Implement ht/fr/es/pt/en locale routing with ht default,P0,L,Codex,docs/09_I18N_CONTENT_WORKFLOW.md
+EPIC-01,Design/i18n,Implement language selector and fallback/status handling,P0,M,Codex,docs/09_I18N_CONTENT_WORKFLOW.md
+EPIC-01,Design/i18n,Implement low-data mode and listen-to-page progressive enhancement,P1,M,Codex,docs/08_DESIGN_SYSTEM_ACCESSIBILITY.md
+EPIC-02,Public content,Build home page and four country landing pages,P0,XL,Codex,docs/06_COUNTRY_CONTENT_MODEL.md
+EPIC-02,Public content,Build structured content renderer with source labels,P0,L,Codex,docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md
+EPIC-02,Public content,"Build guides, FAQ, glossary and search",P0,XL,Codex,docs/05_FEATURE_SPECIFICATIONS.md
+EPIC-02,Public content,Implement content expiry and stale warnings,P0,M,Codex,docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md
+EPIC-03,Comparison,Build country comparison UI and accessible table/cards,P0,L,Codex,docs/07_COMPARISON_AND_QUESTIONNAIRE.md
+EPIC-03,Assessment,Implement deterministic rules engine and explanations,P0,XL,Codex,docs/07_COMPARISON_AND_QUESTIONNAIRE.md
+EPIC-03,Assessment,Add versioned anonymous/auth sessions via server routes,P1,L,Codex,api/openapi.yaml
+EPIC-04,Packages/WhatsApp,Build package catalog and country/package CTAs,P0,L,Codex,docs/05_FEATURE_SPECIFICATIONS.md
+EPIC-04,Packages/WhatsApp,Implement safe dynamic WhatsApp links,P0,M,Codex,docs/16_WHATSAPP_CRM_AND_LEADS.md
+EPIC-05,CMS/admin,"Build content dashboard, versions, review and publishing",P0,XL,Codex,docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md
+EPIC-05,CMS/admin,"Build sources, translations, review deadlines and alerts",P0,XL,Codex,docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md
+EPIC-05,Admin,Build site settings and feature flag management,P0,L,Codex,config/feature-flags.json
+EPIC-06,Auth,"Implement Supabase SSR auth, email verification and recovery",P0,XL,Codex,docs/12_SUPABASE_AUTH_RLS_STORAGE.md
+EPIC-06,Auth,"Implement staff invitations, TOTP and aal2 gates",P0,XL,Codex,docs/04_USER_ROLES_AND_PERMISSIONS.md
+EPIC-06,Auth,Implement forced password change and admin bootstrap,P0,L,Codex,docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md
+EPIC-06,Auth,Implement account/profile/security/privacy pages,P0,L,Codex,docs/05_FEATURE_SPECIFICATIONS.md
+EPIC-07,CRM,Implement AES-GCM CRM encryption and HMAC blind indexes,P0,XL,Codex,docs/16_WHATSAPP_CRM_AND_LEADS.md
+EPIC-07,CRM,"Build lead intake, assignment, timeline, DNC and retention",P1,XL,Codex,docs/16_WHATSAPP_CRM_AND_LEADS.md
+EPIC-08,Payments,Implement server-priced Stripe Checkout,P0,L,Codex,docs/15_STRIPE_PAYMENTS.md
+EPIC-08,Payments,Implement signed idempotent webhook and reconciliation,P0,XL,Codex,docs/15_STRIPE_PAYMENTS.md
+EPIC-08,Payments,Implement admin refund flow with aal2 and audit,P1,L,Codex,docs/15_STRIPE_PAYMENTS.md
+EPIC-09,Appointments,"Build availability, holds and concurrency-safe booking",P1,XL,Codex,docs/17_APPOINTMENTS_AND_VIDEO.md
+EPIC-09,Appointments,Implement meeting provider adapter and secure join route,P1,L,Codex,docs/17_APPOINTMENTS_AND_VIDEO.md
+EPIC-10,Cases,Build user/advisor/professional case portals,P0,XL,Codex,docs/18_CASES_DOCUMENTS_AND_TRACKING.md
+EPIC-10,Cases,"Implement tasks, status history, messages and notes",P0,XL,Codex,docs/18_CASES_DOCUMENTS_AND_TRACKING.md
+EPIC-10,Cases,Implement scoped professional grants and access audits,P0,L,Codex,docs/18_CASES_DOCUMENTS_AND_TRACKING.md
+EPIC-11,Documents,Implement upload init/finalize with quarantine,P0,XL,Codex,docs/14_FILE_UPLOAD_SECURITY.md
+EPIC-11,Documents,Integrate private malware scanner and clean-copy workflow,P0,XL,Codex,docs/14_FILE_UPLOAD_SECURITY.md
+EPIC-11,Documents,Implement short signed download and access logging,P0,L,Codex,docs/14_FILE_UPLOAD_SECURITY.md
+EPIC-11,Documents,Implement retention and object backup/restore,P0,XL,Codex,docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md
+EPIC-12,Courses,"Build free course catalog, lessons and progress",P1,XL,Codex,docs/19_COURSES_AND_PRIVATE_COMMUNITY.md
+EPIC-12,Courses,Implement private assets and accessible media,P1,L,Codex,docs/19_COURSES_AND_PRIVATE_COMMUNITY.md
+EPIC-13,Community,Build text-only posts/comments/reactions/reporting,P1,XL,Codex,docs/19_COURSES_AND_PRIVATE_COMMUNITY.md
+EPIC-13,Community,"Build moderation, bans and appeals",P1,XL,Codex,docs/19_COURSES_AND_PRIVATE_COMMUNITY.md
+EPIC-14,AI,Build approved-content indexing and retrieval pipeline,P1,XL,Codex,docs/20_AI_ASSISTANT_SAFETY_AND_RAG.md
+EPIC-14,AI,"Build cited RAG chat, abstention and handoff",P1,XL,Codex,docs/20_AI_ASSISTANT_SAFETY_AND_RAG.md
+EPIC-14,AI,"Implement PII controls, quotas, evaluations and kill switch",P0,XL,Codex,docs/20_AI_ASSISTANT_SAFETY_AND_RAG.md
+EPIC-15,PWA/SEO,Implement safe PWA caching and offline public shell,P1,L,Codex,docs/21_PWA_PERFORMANCE_AND_SEO.md
+EPIC-15,PWA/SEO,"Implement metadata, hreflang, sitemap and robots",P1,M,Codex,docs/21_PWA_PERFORMANCE_AND_SEO.md
+EPIC-15,Performance,Meet performance budgets on low-end mobile,P0,L,Codex,docs/21_PWA_PERFORMANCE_AND_SEO.md
+EPIC-16,Security,Complete RLS role matrix and SQL tests,P0,XL,Codex,docs/23_TESTING_AND_QA_STRATEGY.md
+EPIC-16,Security,"Implement CSP, headers, rate limits and bot protection",P0,XL,Codex,docs/13_SECURITY_THREAT_MODEL.md
+EPIC-16,Security,Implement structured redacted logging and alerts,P0,L,Codex,docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md
+EPIC-16,Security,Complete ASVS review and external pentest,P0,XL,Owner/Vendor,checklists/SECURITY_CHECKLIST.md
+EPIC-17,Legal/content,"Complete legal entity, policies and provider contracts",P0,XL,Owner/Lawyer,docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md
+EPIC-17,Legal/content,Research and review all four countries in Kreyòl,P0,XL,Editorial/Legal,docs/35_CONTENT_SEED_AND_RESEARCH_GUIDE.md
+EPIC-18,Launch,Run accessibility testing with Haitian users and elders,P0,XL,Owner/QA,checklists/LAUNCH_CHECKLIST.md
+EPIC-18,Launch,"Restore drill, incident exercise and gradual flag rollout",P0,L,Codex/Owner,docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md
+EPIC-18,Launch,Produce completion report with evidence and blockers,P0,M,Codex,checklists/CODEX_COMPLETION_CHECKLIST.md

@@ -1,0 +1,16 @@
+Feature,Area,Priority,Launch State,MFA,Audience,Critical Rule
+Public country pages,Public,P0,On after approved content,No,Anon,Published content only
+Country comparison,Public,P0,On after criteria review,No,Anon,Explainable scores
+Assessment,Public,P0,On after rule review,No/optional,Anon/User,Deterministic; no sensitive scoring
+WhatsApp CTA,Public,P0,Off until number/privacy,No,Anon,No PII in URL
+User accounts,Portal,P0,On,No,User,Email verification
+Staff portals,Portal,P0,On after invite/MFA,Yes,Privileged,aal2
+Stripe payments,Commercial,P0,Off until test/legal,Yes,User/Admin,Webhook source of truth
+Appointments,Service,P1,Off until provider/tests,Yes,User/Staff,Concurrency-safe
+CRM,Operations,P0,Off public intake until encryption,Yes,Advisor/Admin,Server-only ciphertext
+Cases,Service,P0,On after auth/RLS tests,Yes,User/Assigned staff,No approval probability
+Document uploads,Sensitive,P0,Off until scanner/pentest,Yes,Case participants,Quarantine/clean
+Courses,Learning,P1,On after content,No,User/Anon optional,Free
+Community,Community,P1,Off until moderation,Yes,User/Moderator,Text-only; no DM/attachments
+AI assistant,AI,P1,Off until evaluation,Yes,User/Anon limited,RAG approved content only
+PWA,Platform,P1,On after cache tests,No,All,Never cache private data

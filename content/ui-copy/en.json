@@ -1,0 +1,129 @@
+{
+  "_meta": {
+    "locale": "en",
+    "status": "draft_human_review_required",
+    "default": false
+  },
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search",
+    "learn_more": "Learn more",
+    "contact": "Contact us",
+    "loading": "Loading…",
+    "updated": "Last updated",
+    "sources": "Sources",
+    "listen": "Listen to this page",
+    "simple_summary": "Easy summary",
+    "full_explanation": "Full explanation",
+    "in_preparation": "This information is being prepared."
+  },
+  "nav": {
+    "home": "Home",
+    "countries": "Countries",
+    "compare": "Compare",
+    "assessment": "Which country may fit me?",
+    "packages": "Support services",
+    "guides": "Guides",
+    "courses": "Free courses",
+    "community": "Community",
+    "dashboard": "My space",
+    "help": "Help"
+  },
+  "home": {
+    "eyebrow": "Clear guidance for the Haitian community",
+    "title": "Understand your options before deciding",
+    "subtitle": "Information and support for the United States, Chile, Brazil and Mexico.",
+    "choose_country": "Choose a country to begin",
+    "compare_cta": "Compare all four countries",
+    "assessment_cta": "Answer a few simple questions"
+  },
+  "country": {
+    "may_suit": "This country may fit you if…",
+    "may_not_suit": "It may be harder for you if…",
+    "legal_pathways": "Legal pathways to enter or stay",
+    "community_reality": "Haitian community reality",
+    "work": "Work and income",
+    "cost": "Cost of living",
+    "banking": "Banking and money",
+    "housing": "Housing",
+    "education": "Education",
+    "health": "Health",
+    "first_30_days": "First 30 days",
+    "scams": "Scams and risks",
+    "review_notice": "Rules can change. Check the date and official source."
+  },
+  "compare": {
+    "title": "Compare countries",
+    "select": "Select at least two countries",
+    "explanation": "Every score includes an explanation, source and date.",
+    "not_ranking": "This does not mean one country suits everyone."
+  },
+  "assessment": {
+    "title": "Which country may better match your priorities?",
+    "intro": "The result is guidance, not a guarantee.",
+    "progress": "Step {current} of {total}",
+    "result": "Your guidance result",
+    "why": "Why we show this result",
+    "difficulties": "Possible difficulties",
+    "budget": "What to prepare",
+    "human_help": "Speak with an advisor",
+    "privacy": "Do not enter passport numbers or private data."
+  },
+  "packages": {
+    "title": "Support packages",
+    "included": "Included",
+    "excluded": "Not included",
+    "duration": "Duration",
+    "price": "Price",
+    "not_guarantee": "The service does not guarantee a visa, residence, work or entry.",
+    "whatsapp": "Talk on WhatsApp"
+  },
+  "auth": {
+    "sign_in": "Sign in",
+    "sign_up": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot password",
+    "verify": "Verify your email",
+    "mfa": "Secure your account with TOTP",
+    "logout": "Sign out"
+  },
+  "dashboard": {
+    "title": "My space",
+    "cases": "My cases",
+    "tasks": "My tasks",
+    "documents": "Documents",
+    "appointments": "Appointments",
+    "orders": "Payments and orders",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "next_step": "Next step"
+  },
+  "security": {
+    "mfa_required": "Enable two-step verification to access this area.",
+    "password_change_required": "For security, change the temporary password.",
+    "do_not_share": "Do not share passwords, codes or documents by message.",
+    "session_expired": "Your session ended. Sign in again."
+  },
+  "notices": {
+    "official": "Official information",
+    "practical": "Practical advice",
+    "community": "Community experience",
+    "warning": "Warning",
+    "commercial": "Paid service",
+    "ai": "The assistant can make mistakes. Check sources and do not enter private data."
+  },
+  "errors": {
+    "generic": "We could not complete the action. Try again.",
+    "not_found": "We could not find this page.",
+    "forbidden": "You do not have permission to view this.",
+    "rate_limited": "Too many attempts. Try again later.",
+    "feature_unavailable": "This feature is not yet safely available.",
+    "offline_private": "You need an internet connection to view this private information."
+  }
+}
