@@ -80,6 +80,24 @@ for insert to authenticated with check (
   and consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
 );
 
+-- A case manager may withdraw or restore a case-linked, non-registration
+-- preference, but cannot rewrite its owner, type, policy, scope or evidence.
+-- Signed Terms and Privacy rows are immutable to every browser session.
+revoke update on public.consent_records from authenticated;
+grant update (granted, withdrawn_at) on public.consent_records to authenticated;
+
+drop policy if exists consent_admin_manage on public.consent_records;
+create policy consent_admin_manage on public.consent_records
+for update to authenticated using (
+  consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
+  and case_id is not null
+  and private.can_manage_case(case_id)
+) with check (
+  consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
+  and case_id is not null
+  and private.can_manage_case(case_id)
+);
+
 alter table public.consent_records
   drop constraint if exists legal_consent_requires_signed_provenance;
 alter table public.consent_records

@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(20);
+select plan(25);
 
 insert into auth.users(
   id,
@@ -273,6 +273,51 @@ values (
   'pgTAP privacy completion test'
 );
 
+insert into public.cases(
+  id,
+  client_user_id,
+  country_code,
+  title,
+  created_by
+)
+values (
+  '00000000-0000-4000-8000-000000000043'::uuid,
+  '00000000-0000-4000-8000-000000000041'::uuid,
+  'usa',
+  'Consent immutability regression case',
+  '00000000-0000-4000-8000-000000000042'::uuid
+);
+
+insert into public.consent_records(
+  id,
+  user_id,
+  case_id,
+  consent_type,
+  policy_version,
+  locale,
+  scope,
+  granted,
+  evidence_hash
+)
+values (
+  '00000000-0000-4000-8000-000000000044'::uuid,
+  '00000000-0000-4000-8000-000000000041'::uuid,
+  '00000000-0000-4000-8000-000000000043'::uuid,
+  'privacy',
+  'privacy-2026-07-23-v1',
+  'es',
+  '{
+    "acceptance_kind":"acknowledgement",
+    "document_hash":"0c36529aae6ae19eb47ac5423578522c11365c39ce50594166564169bf6215a8",
+    "document_hash_algorithm":"sha256",
+    "mechanism":"signup_privacy_acknowledgement_checkbox",
+    "provenance":"auth_hook_signed_v1",
+    "separate_acceptance":true
+  }'::jsonb,
+  true,
+  repeat('f', 64)
+);
+
 select set_config(
   'request.jwt.claim.sub',
   '00000000-0000-4000-8000-000000000042',
@@ -312,6 +357,81 @@ select set_config(
   true
 );
 set local role authenticated;
+
+select lives_ok(
+  $sql$
+    insert into public.consent_records(
+      id,
+      user_id,
+      case_id,
+      consent_type,
+      policy_version,
+      locale,
+      granted
+    )
+    values (
+      '00000000-0000-4000-8000-000000000045'::uuid,
+      auth.uid(),
+      '00000000-0000-4000-8000-000000000043'::uuid,
+      'marketing',
+      'marketing-case-v1',
+      'es',
+      true
+    )
+  $sql$,
+  'An AAL2 case manager can create their own non-registration preference'
+);
+
+select throws_ok(
+  $sql$
+    update public.consent_records
+    set
+      user_id = '00000000-0000-4000-8000-000000000041'::uuid,
+      consent_type = 'privacy',
+      policy_version = 'privacy-2026-07-23-v1',
+      scope = '{
+        "acceptance_kind":"acknowledgement",
+        "document_hash":"0c36529aae6ae19eb47ac5423578522c11365c39ce50594166564169bf6215a8",
+        "document_hash_algorithm":"sha256",
+        "mechanism":"signup_privacy_acknowledgement_checkbox",
+        "provenance":"auth_hook_signed_v1",
+        "separate_acceptance":true
+      }'::jsonb,
+      evidence_hash = repeat('e', 64)
+    where id = '00000000-0000-4000-8000-000000000045'::uuid
+  $sql$,
+  '42501',
+  null,
+  'A case manager cannot transform a preference into forged legal evidence'
+);
+
+select is_empty(
+  $sql$
+    update public.consent_records
+    set granted = false, withdrawn_at = clock_timestamp()
+    where id = '00000000-0000-4000-8000-000000000044'::uuid
+    returning id
+  $sql$,
+  'Signed legal evidence is immutable even through permitted status columns'
+);
+
+select lives_ok(
+  $sql$
+    update public.consent_records
+    set granted = false, withdrawn_at = clock_timestamp()
+    where id = '00000000-0000-4000-8000-000000000045'::uuid
+  $sql$,
+  'A case manager retains status management for non-registration preferences'
+);
+
+select ok(
+  (
+    select granted and withdrawn_at is null
+    from public.consent_records
+    where id = '00000000-0000-4000-8000-000000000044'::uuid
+  ),
+  'The protected legal evidence remains unchanged after both attack attempts'
+);
 
 select lives_ok(
   $sql$

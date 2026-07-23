@@ -377,7 +377,7 @@ async function createPage(options) {
   return { context, page };
 }
 
-function observeErrors(page, path) {
+function observeErrors(page) {
   const browserErrors = [];
   let ignoredDevelopmentCspMessages = 0;
   page.on("console", (message) => {
@@ -386,7 +386,6 @@ function observeErrors(page, path) {
       ignoredDevelopmentCspMessages += 1;
       return;
     }
-    if (path.includes("/portal") && message.text().includes("404")) return;
     browserErrors.push(message.text());
   });
   page.on("pageerror", (error) => browserErrors.push(error.message));
@@ -416,7 +415,7 @@ async function settle(page) {
 
 for (const scenario of scenarios) {
   const { context, page } = await createPage(scenario);
-  const errors = observeErrors(page, scenario.path);
+  const errors = observeErrors(page);
   const response = await page.goto(`${baseUrl}${scenario.path}`, { waitUntil: "networkidle" });
   await settle(page);
   if (scenario.action) {

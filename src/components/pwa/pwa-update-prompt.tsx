@@ -59,9 +59,10 @@ export function PwaUpdatePrompt({ locale }: { locale: Locale }) {
 
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
+    let disposed = false;
     const findWaiting = async () => {
       const current = await navigator.serviceWorker.getRegistration("/");
-      if (current?.waiting) setRegistration(current);
+      if (!disposed && current?.waiting) setRegistration(current);
     };
     void findWaiting();
     const onUpdate = (event: Event) => {
@@ -73,6 +74,7 @@ export function PwaUpdatePrompt({ locale }: { locale: Locale }) {
     window.addEventListener("vwayaj:sw-update", onUpdate);
     navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
     return () => {
+      disposed = true;
       window.removeEventListener("vwayaj:sw-update", onUpdate);
       navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
     };

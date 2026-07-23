@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-07-23",
-  "package_expected_file_count": 180,
+  "package_expected_file_count": 182,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 8826,
-      "sha256": "de0a4b92feea5c96c1f4ffea9bade7e4bf1f6893d48fee41c367cdeb2b20759a"
+      "size_bytes": 8961,
+      "sha256": "335d1641b9cc19598d0e2787f2121e0b7c083fff41e3eae0a24d92510f25dc23"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -859,8 +859,8 @@
     },
     {
       "path": "supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql",
-      "size_bytes": 3485,
-      "sha256": "5644955e00013ab8a6f6752995dad2b4baf4fc3dd205f69df9ac1dd8bf3124fb"
+      "size_bytes": 5484,
+      "sha256": "5c6d6ef8e328bbdf155e18f3392c642468e16d51192d872fe51c7acd628cd01b"
     },
     {
       "path": "supabase/migrations/0013_password_change_completion.sql",
@@ -884,8 +884,8 @@
     },
     {
       "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
-      "size_bytes": 12662,
-      "sha256": "689a66415a0e21037da595b713f9b863c75c059f5ac0728eace29b51ece72a0f"
+      "size_bytes": 13515,
+      "sha256": "60f6b0874cd52113495195d4357cad3d539097695aefaec922b1910173fdbdd4"
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
@@ -894,8 +894,18 @@
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 11516,
-      "sha256": "1a4fa0363aadc71f5c96d2cee42c888dc762f4503980ade160796c0dd392b59d"
+      "size_bytes": 14548,
+      "sha256": "8f25637e6ef32d53009711b5166126d7612511e489e2bc03b5e84cd03f250c43"
+    },
+    {
+      "path": "supabase/migrations/20260723200000_preserve_official_site_configuration.sql",
+      "size_bytes": 3257,
+      "sha256": "dfddd1aaed549db95ff1037d025195c8767da680be8e0fc3c8f9cf6dabb0d7ea"
+    },
+    {
+      "path": "supabase/tests/0005_site_settings_preservation.sql",
+      "size_bytes": 3892,
+      "sha256": "1f4b7bb45b678a8e264a2ec1d4dbc587210859baaeb5ba9f32a5fe33a86610eb"
     }
   ]
 }

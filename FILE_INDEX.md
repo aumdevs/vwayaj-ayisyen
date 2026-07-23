@@ -99,11 +99,13 @@ configuración local, seed, migraciones y pruebas SQL
 - `supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql`
 - `supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql`
 - `supabase/migrations/20260723194500_harden_privacy_request_intake.sql`
+- `supabase/migrations/20260723200000_preserve_official_site_configuration.sql`
 - `supabase/seed.sql`
 - `supabase/tests/0001_security_invariants.sql`
 - `supabase/tests/0002_public_content_rls.sql`
 - `supabase/tests/0003_registration_auth_hook.sql`
 - `supabase/tests/0004_consent_rls.sql`
+- `supabase/tests/0005_site_settings_preservation.sql`
 
 ## github
 

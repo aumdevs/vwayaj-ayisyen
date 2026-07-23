@@ -31,6 +31,11 @@ Fecha de corte: 2026-07-23.
 - Centro de privacidad con intake autenticado, cola administrativa y cierre
   exclusivo mediante acción admin+AAL2 y RPC AAL2 auditado con outbox; un
   reenvío actualiza los detalles de la solicitud abierta sin duplicarla.
+- Evidencia legal firmada inmutable para navegadores; los case managers
+  conservan sólo la actualización de estado/retiro para consentimientos no
+  legales y no pueden convertirlos en Términos o Privacidad.
+- Configuración oficial aplicada mediante merge idempotente que conserva
+  horario, WhatsApp, routing, logo personalizado, CNPJ y domicilio completados.
 - Portales de usuario, asesor, profesional, editor, moderación y admin protegidos por sesión, rol y AAL2 cuando corresponde.
 - Esquema completo para contenido, evaluación, CRM, casos, documentos, pagos, citas, notificaciones, cursos, comunidad e IA.
 - PWA, caché pública restringida, sitemap, robots, hreflang, health endpoint y cabeceras de seguridad.
@@ -40,11 +45,11 @@ Fecha de corte: 2026-07-23.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 22 aplicadas localmente; las dos últimas se aplican a remoto al publicar este release |
+| Migraciones desde base vacía | 23 aplicadas localmente; las tres últimas se aplican a remoto al publicar este release |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 81 aprobadas localmente |
+| Pruebas pgTAP/RLS | 91 aprobadas localmente |
 | Schema drift | vacío |
-| Unit tests | 80 aprobadas en 17 archivos |
+| Unit tests | 81 aprobadas en 18 archivos |
 | Cobertura del núcleo | 96.36% líneas, 97.43% ramas |
 | Playwright desktop/móvil | 33 aprobadas, 7 saltos intencionales por plataforma |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
