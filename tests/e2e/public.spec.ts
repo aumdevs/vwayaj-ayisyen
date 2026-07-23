@@ -403,6 +403,8 @@ test("public registration crosses the live Auth hook and persists verified terms
         scope: expect.objectContaining({
           age_capacity_mechanism: "signup_age_capacity_checkbox",
           age_capacity_confirmed_at: expect.any(String),
+          document_hash: expect.stringMatching(/^[0-9a-f]{64}$/),
+          document_hash_algorithm: "sha256",
           mechanism: "signup_terms_checkbox",
           provenance: "auth_hook_signed_v1",
           separate_acceptance: true
@@ -416,6 +418,8 @@ test("public registration crosses the live Auth hook and persists verified terms
         policy_version: privacyVersion,
         scope: expect.objectContaining({
           acceptance_kind: "acknowledgement",
+          document_hash: expect.stringMatching(/^[0-9a-f]{64}$/),
+          document_hash_algorithm: "sha256",
           mechanism: "signup_privacy_acknowledgement_checkbox",
           provenance: "auth_hook_signed_v1",
           separate_acceptance: true

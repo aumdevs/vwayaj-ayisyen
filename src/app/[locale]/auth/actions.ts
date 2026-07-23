@@ -134,11 +134,13 @@ export async function signUpAction(
         preferred_locale: locale,
         privacy_accepted_at: attestation.acceptedAt,
         privacy_acceptance_mechanism: attestation.privacyAcceptanceMechanism,
+        privacy_content_hash: attestation.privacyContentHash,
         privacy_version: attestation.privacyVersion,
         registration_nonce: attestation.registrationNonce,
         registration_signature: attestation.registrationSignature,
         terms_accepted_at: attestation.acceptedAt,
         terms_acceptance_mechanism: attestation.termsAcceptanceMechanism,
+        terms_content_hash: attestation.termsContentHash,
         terms_version: attestation.termsVersion
       }
     }

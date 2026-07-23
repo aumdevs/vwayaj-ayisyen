@@ -14,6 +14,7 @@ vi.mock("@/lib/supabase/server", () => ({
 }));
 
 import { forgotPasswordAction, signInAction, signUpAction } from "@/app/[locale]/auth/actions";
+import { getPublishedLegalDocumentHash } from "@/server/legal/document-hash";
 
 const strongPassword = "Valid-password-2026!";
 const registrationSigningKey = "test_registration_gate_signing_key_at_least_32_chars";
@@ -213,13 +214,17 @@ describe("Auth CAPTCHA enforcement", () => {
     });
 
     const metadata = signupRequest.options.data;
+    const termsContentHash = getPublishedLegalDocumentHash("terms", "es");
+    const privacyContentHash = getPublishedLegalDocumentHash("privacy", "es");
     expect(metadata).toMatchObject({
       age_capacity_mechanism: "signup_age_capacity_checkbox",
       legal_locale: "es",
       preferred_locale: "ht",
       privacy_acceptance_mechanism: "signup_privacy_acknowledgement_checkbox",
+      privacy_content_hash: privacyContentHash,
       privacy_version: privacyVersion,
       terms_acceptance_mechanism: "signup_terms_checkbox",
+      terms_content_hash: termsContentHash,
       terms_version: termsVersion
     });
     expect(metadata.registration_nonce).toMatch(
@@ -234,7 +239,9 @@ describe("Auth CAPTCHA enforcement", () => {
         [
           "new@example.com",
           metadata.terms_version,
+          metadata.terms_content_hash,
           metadata.privacy_version,
+          metadata.privacy_content_hash,
           metadata.legal_locale,
           metadata.terms_acceptance_mechanism,
           metadata.privacy_acceptance_mechanism,

@@ -9,6 +9,7 @@ import {
   getRegistrationTermsVersion,
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
+import { getPublishedLegalDocumentHash } from "@/server/legal/document-hash";
 
 const signingKey = "test_registration_gate_signing_key_at_least_32_chars";
 const privacyVersion = "privacy-2026-07-23-v1";
@@ -56,14 +57,18 @@ describe("server registration attestation", () => {
     const attestation = createRegistrationAttestation("  New@Example.COM ", "es");
 
     expect(attestation).not.toBeNull();
+    const termsContentHash = getPublishedLegalDocumentHash("terms", "es");
+    const privacyContentHash = getPublishedLegalDocumentHash("privacy", "es");
     expect(attestation).toMatchObject({
       acceptedAt: "2026-07-23T14:00:00.123Z",
       ageCapacityMechanism: "signup_age_capacity_checkbox",
       email: "new@example.com",
       legalLocale: "es",
       privacyAcceptanceMechanism: "signup_privacy_acknowledgement_checkbox",
+      privacyContentHash,
       privacyVersion,
       termsAcceptanceMechanism: "signup_terms_checkbox",
+      termsContentHash,
       termsVersion
     });
     const expectedSignature = createHmac("sha256", signingKey)
@@ -71,7 +76,9 @@ describe("server registration attestation", () => {
         [
           attestation?.email,
           attestation?.termsVersion,
+          attestation?.termsContentHash,
           attestation?.privacyVersion,
+          attestation?.privacyContentHash,
           attestation?.legalLocale,
           attestation?.termsAcceptanceMechanism,
           attestation?.privacyAcceptanceMechanism,

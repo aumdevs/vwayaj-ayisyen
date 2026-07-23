@@ -26,10 +26,11 @@ Fecha de corte: 2026-07-23.
 - CMS público conectado a vistas RLS; contenido sin aprobar nunca se renderiza.
 - Auth por email, verificación, recuperación, cambio de contraseña, cierre de sesión y TOTP implementados.
 - Alta con aceptación separada de Términos, reconocimiento de Privacidad y
-  confirmación 18+/capacidad; HMAC, timestamp y versiones activas se validan en
-  el hook de Auth.
+  confirmación 18+/capacidad; HMAC, timestamp, versiones activas y hash SHA-256
+  exacto del contenido oficial por idioma se validan en el hook de Auth.
 - Centro de privacidad con intake autenticado, cola administrativa y cierre
-  exclusivo mediante RPC AAL2 auditado con outbox.
+  exclusivo mediante acción admin+AAL2 y RPC AAL2 auditado con outbox; un
+  reenvío actualiza los detalles de la solicitud abierta sin duplicarla.
 - Portales de usuario, asesor, profesional, editor, moderación y admin protegidos por sesión, rol y AAL2 cuando corresponde.
 - Esquema completo para contenido, evaluación, CRM, casos, documentos, pagos, citas, notificaciones, cursos, comunidad e IA.
 - PWA, caché pública restringida, sitemap, robots, hreflang, health endpoint y cabeceras de seguridad.
@@ -41,9 +42,9 @@ Fecha de corte: 2026-07-23.
 |---|---|
 | Migraciones desde base vacía | 22 aplicadas localmente; las dos últimas se aplican a remoto al publicar este release |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 79 aprobadas localmente |
+| Pruebas pgTAP/RLS | 81 aprobadas localmente |
 | Schema drift | vacío |
-| Unit tests | 74 aprobadas en 16 archivos |
+| Unit tests | 80 aprobadas en 17 archivos |
 | Cobertura del núcleo | 96.36% líneas, 97.43% ramas |
 | Playwright desktop/móvil | 33 aprobadas, 7 saltos intencionales por plataforma |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
@@ -100,9 +101,10 @@ Fecha de corte: 2026-07-23.
   Vercel Production tiene el site key público. El alta está además protegida
   por un HMAC emitido sólo por el servidor y validado por el hook
   `private.before_user_created`; la versión, fecha, aceptación separada y
-  confirmación de edad/capacidad se conservan como evidencia. Las versiones
-  activas también están fijadas en una tabla privada de PostgreSQL. Zoom y
-  OpenAI no tienen credenciales del proyecto.
+  confirmación de edad/capacidad se conservan como evidencia. Cada registro
+  conserva además el hash SHA-256 canónico del documento oficial aceptado; las
+  versiones y cuatro hashes español/portugués están fijados en una tabla
+  privada de PostgreSQL. Zoom y OpenAI no tienen credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 

@@ -6,7 +6,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to current_user;
 set local search_path = extensions, public, pg_temp;
 
-select plan(27);
+select plan(29);
 
 select ok(
   has_function_privilege(
@@ -86,7 +86,11 @@ select ok(
 update private.registration_legal_versions
 set
   terms_version = 'terms-ci-v1',
+  terms_es_content_hash = repeat('a', 64),
+  terms_pt_content_hash = repeat('c', 64),
   privacy_version = 'privacy-ci-v1',
+  privacy_es_content_hash = repeat('b', 64),
+  privacy_pt_content_hash = repeat('d', 64),
   updated_at = clock_timestamp()
 where singleton;
 
@@ -151,8 +155,10 @@ create temporary table registration_test_vector (
   event jsonb not null,
   legal_locale text not null,
   nonce text not null,
+  privacy_content_hash text not null,
   privacy_version text not null,
   signature text not null,
+  terms_content_hash text not null,
   terms_version text not null,
   user_id uuid not null
 );
@@ -163,8 +169,10 @@ insert into registration_test_vector(
   event,
   legal_locale,
   nonce,
+  privacy_content_hash,
   privacy_version,
   signature,
+  terms_content_hash,
   terms_version,
   user_id
 )
@@ -177,7 +185,9 @@ with source as (
     'registration-test@example.invalid'::text as email,
     'es'::text as legal_locale,
     extensions.gen_random_uuid()::text as nonce,
+    repeat('b', 64)::text as privacy_content_hash,
     'privacy-ci-v1'::text as privacy_version,
+    repeat('a', 64)::text as terms_content_hash,
     'terms-ci-v1'::text as terms_version,
     extensions.gen_random_uuid() as user_id
 ),
@@ -190,7 +200,9 @@ signed as (
           E'\n',
           email,
           terms_version,
+          terms_content_hash,
           privacy_version,
+          privacy_content_hash,
           legal_locale,
           'signup_terms_checkbox',
           'signup_privacy_acknowledgement_checkbox',
@@ -229,6 +241,8 @@ select
         accepted_at,
         'privacy_acceptance_mechanism',
         'signup_privacy_acknowledgement_checkbox',
+        'privacy_content_hash',
+        privacy_content_hash,
         'privacy_version',
         privacy_version,
         'registration_nonce',
@@ -239,6 +253,8 @@ select
         accepted_at,
         'terms_acceptance_mechanism',
         'signup_terms_checkbox',
+        'terms_content_hash',
+        terms_content_hash,
         'terms_version',
         terms_version
       )
@@ -246,8 +262,10 @@ select
   ),
   legal_locale,
   nonce,
+  privacy_content_hash,
   privacy_version,
   signature,
+  terms_content_hash,
   terms_version,
   user_id
 from signed;
@@ -422,6 +440,66 @@ from registration_test_vector;
 
 select is(
   private.before_user_created(
+    event #- '{user,user_metadata,privacy_content_hash}'
+  ),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'Registration without the published privacy content hash is rejected'
+)
+from registration_test_vector;
+
+select is(
+  private.before_user_created(
+    jsonb_set(
+      jsonb_set(
+        event,
+        '{user,user_metadata,terms_content_hash}',
+        to_jsonb(repeat('e', 64))
+      ),
+      '{user,user_metadata,registration_signature}',
+      to_jsonb(
+        encode(
+          extensions.hmac(
+            concat_ws(
+              E'\n',
+              email,
+              terms_version,
+              repeat('e', 64),
+              privacy_version,
+              privacy_content_hash,
+              legal_locale,
+              'signup_terms_checkbox',
+              'signup_privacy_acknowledgement_checkbox',
+              'signup_age_capacity_checkbox',
+              accepted_at,
+              nonce
+            ),
+            'ci_registration_gate_signing_key_at_least_32_chars',
+            'sha256'
+          ),
+          'hex'
+        )
+      )
+    )
+  ),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'A correctly signed but unregistered legal content hash is rejected'
+)
+from registration_test_vector;
+
+select is(
+  private.before_user_created(
     event #- '{user,user_metadata,age_capacity_mechanism}'
   ),
   jsonb_build_object(
@@ -451,7 +529,9 @@ select is(
               E'\n',
               email,
               'terms-stale-v1',
+              terms_content_hash,
               privacy_version,
+              privacy_content_hash,
               legal_locale,
               'signup_terms_checkbox',
               'signup_privacy_acknowledgement_checkbox',
@@ -561,13 +641,16 @@ select ok(
       and c.locale::text = v.legal_locale
       and c.evidence_hash is not null
       and c.scope ->> 'separate_acceptance' = 'true'
+      and c.scope ->> 'document_hash_algorithm' = 'sha256'
       and case c.consent_type
         when 'terms'::public.consent_type
           then c.scope ->> 'mechanism' = 'signup_terms_checkbox'
+            and c.scope ->> 'document_hash' = v.terms_content_hash
             and c.scope ->> 'age_capacity_mechanism' = 'signup_age_capacity_checkbox'
             and c.scope ->> 'age_capacity_confirmed_at' = v.accepted_at
         when 'privacy'::public.consent_type
           then c.scope ->> 'mechanism' = 'signup_privacy_acknowledgement_checkbox'
+            and c.scope ->> 'document_hash' = v.privacy_content_hash
             and c.scope ->> 'acceptance_kind' = 'acknowledgement'
         else false
       end
@@ -575,7 +658,7 @@ select ok(
     from public.consent_records c
     where c.user_id = v.user_id
   ),
-  'Consent records preserve locale, mechanism and proportional evidence'
+  'Consent records preserve locale, document hash, mechanism and proportional evidence'
 )
 from registration_test_vector v;
 

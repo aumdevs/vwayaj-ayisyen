@@ -61,9 +61,18 @@ begin
     and request.request_type = p_request_type
     and request.status in ('received', 'identity_check', 'in_progress')
   order by request.created_at desc
-  limit 1;
+  limit 1
+  for update;
 
   if v_request_id is not null then
+    update public.data_subject_requests
+    set
+      description = coalesce(v_description, description),
+      locale = p_locale,
+      updated_at = clock_timestamp()
+    where id = v_request_id
+    returning locale into v_request_locale;
+
     insert into public.outbox_events(
       event_type,
       aggregate_type,

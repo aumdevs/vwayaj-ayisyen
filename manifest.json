@@ -844,8 +844,8 @@
     },
     {
       "path": "supabase/tests/0003_registration_auth_hook.sql",
-      "size_bytes": 15552,
-      "sha256": "c8bd91aa58dfd009c855db699766afeaa3b2b2fe353ffd8e7427fd09bd8ef768"
+      "size_bytes": 17949,
+      "sha256": "a2c85ef51216632bc3d46035c3cdbeb256107e90ea66a7e4191c9524f89bc3bc"
     },
     {
       "path": "scripts/lib/admin-provisioning-attestation.ts",
@@ -884,18 +884,18 @@
     },
     {
       "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
-      "size_bytes": 10505,
-      "sha256": "163cc774c74501a3cee5e87fa5d666de8b11199086a939c92b0e814afef3cffa"
+      "size_bytes": 12662,
+      "sha256": "689a66415a0e21037da595b713f9b863c75c059f5ac0728eace29b51ece72a0f"
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 7575,
-      "sha256": "5cff480e74691d7ad6f25fd9a7ffc5cef5e9973451235f381c370f3c699df793"
+      "size_bytes": 7829,
+      "sha256": "2b75eeb27be54b6bf26900611ea463bf2660cb0ef1503fae3d7cd5fb165c6d84"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 11456,
-      "sha256": "185f2603d6ac5d85836760a861a9b8a59a2a703b7a4864b306a93208d3967654"
+      "size_bytes": 11516,
+      "sha256": "1a4fa0363aadc71f5c96d2cee42c888dc762f4503980ade160796c0dd392b59d"
     }
   ]
 }

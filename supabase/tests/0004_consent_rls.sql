@@ -127,7 +127,7 @@ select lives_ok(
       'Retry after a lost response.'
     )
   $sql$,
-  'A repeated open request is handled as an idempotent retry'
+  'A repeated open request updates the existing queue record'
 );
 
 select is(
@@ -169,7 +169,8 @@ select ok(
       and bool_and(
         status = 'received'::public.data_request_status
         and identity_verification_method = 'authenticated_session'
-        and description = 'Send me my account data.'
+        and description = 'Retry after a lost response.'
+        and locale = 'pt'::public.app_locale
         and assigned_to is null
         and due_at is null
         and resolution_summary is null
@@ -179,7 +180,7 @@ select ok(
     where user_id = '00000000-0000-4000-8000-000000000041'::uuid
       and request_type = 'access'
   ),
-  'The RPC owns status, verification, assignment and resolution fields'
+  'The RPC preserves server-owned state while persisting repeated request details'
 );
 
 select throws_ok(
@@ -403,7 +404,7 @@ select ok(
       and bool_and(
         aggregate_type = 'data_subject_request'
         and payload =
-          '{"locale":"es","request_type":"access","status":"fulfilled"}'::jsonb
+          '{"locale":"pt","request_type":"access","status":"fulfilled"}'::jsonb
       )
     from public.outbox_events
     where event_type = 'privacy.data_subject_request.completed'

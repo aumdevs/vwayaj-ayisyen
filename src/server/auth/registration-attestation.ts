@@ -3,6 +3,10 @@ import "server-only";
 import { createHmac, randomUUID } from "node:crypto";
 import { LEGAL_VERSIONS, type OfficialLegalLocale } from "@/content/legal";
 import { getTurnstileSiteKey, isPublicRegistrationEnabled } from "@/lib/config/runtime";
+import {
+  arePublishedRegistrationLegalDocumentsPinned,
+  getPublishedLegalDocumentHash
+} from "@/server/legal/document-hash";
 
 const TERMS_VERSION_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const MINIMUM_SIGNING_KEY_LENGTH = 32;
@@ -16,10 +20,12 @@ export type RegistrationAttestation = {
   email: string;
   legalLocale: OfficialLegalLocale;
   privacyAcceptanceMechanism: typeof PRIVACY_ACCEPTANCE_MECHANISM;
+  privacyContentHash: string;
   privacyVersion: string;
   registrationNonce: string;
   registrationSignature: string;
   termsAcceptanceMechanism: typeof TERMS_ACCEPTANCE_MECHANISM;
+  termsContentHash: string;
   termsVersion: string;
 };
 
@@ -48,6 +54,7 @@ export function isPublicRegistrationReady(): boolean {
     getTurnstileSiteKey() !== null &&
     getRegistrationTermsVersion() !== null &&
     getRegistrationPrivacyVersion() !== null &&
+    arePublishedRegistrationLegalDocumentsPinned() &&
     getRegistrationSigningKey() !== null
   );
 }
@@ -60,8 +67,12 @@ export function createRegistrationAttestation(
 
   const termsVersion = getRegistrationTermsVersion();
   const privacyVersion = getRegistrationPrivacyVersion();
+  const termsContentHash = getPublishedLegalDocumentHash("terms", legalLocale);
+  const privacyContentHash = getPublishedLegalDocumentHash("privacy", legalLocale);
   const signingKey = getRegistrationSigningKey();
-  if (!termsVersion || !privacyVersion || !signingKey) return null;
+  if (!termsVersion || !privacyVersion || !termsContentHash || !privacyContentHash || !signingKey) {
+    return null;
+  }
 
   const normalizedEmail = email.trim().toLowerCase();
   const acceptedAt = new Date().toISOString();
@@ -69,7 +80,9 @@ export function createRegistrationAttestation(
   const payload = [
     normalizedEmail,
     termsVersion,
+    termsContentHash,
     privacyVersion,
+    privacyContentHash,
     legalLocale,
     TERMS_ACCEPTANCE_MECHANISM,
     PRIVACY_ACCEPTANCE_MECHANISM,
@@ -87,10 +100,12 @@ export function createRegistrationAttestation(
     email: normalizedEmail,
     legalLocale,
     privacyAcceptanceMechanism: PRIVACY_ACCEPTANCE_MECHANISM,
+    privacyContentHash,
     privacyVersion,
     registrationNonce,
     registrationSignature,
     termsAcceptanceMechanism: TERMS_ACCEPTANCE_MECHANISM,
+    termsContentHash,
     termsVersion
   };
 }

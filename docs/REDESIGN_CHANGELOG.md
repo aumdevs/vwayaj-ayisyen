@@ -56,11 +56,14 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 
 ## Seguridad y QA verificados
 
-- 77 pruebas unitarias aprobadas;
+- 80 pruebas unitarias aprobadas;
 - 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
-- 79 invariantes/RLS pgTAP aprobadas;
+- 81 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
 - schema drift vacío;
+- aceptación legal ligada por HMAC al hash SHA-256 exacto de cada documento oficial y locale;
+- cierre administrativo autorizado en la acción por rol y AAL2, además del RPC protegido;
+- reenvíos de una solicitud de privacidad conservan una sola fila y actualizan sus detalles;
 - 35 capturas finales sin error de navegador ni overflow;
 - integraciones riesgosas continúan fail-closed;
 - ningún secreto productivo se incorporó al cliente ni al repositorio.

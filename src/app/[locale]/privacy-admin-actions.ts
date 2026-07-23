@@ -36,7 +36,17 @@ export async function completePrivacyRequestAction(
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { status: "unavailable" };
   const { data, error: claimsError } = await supabase.auth.getClaims();
-  if (claimsError || typeof data?.claims?.sub !== "string") return { status: "unavailable" };
+  const claims = data?.claims;
+  const userId = typeof claims?.sub === "string" ? claims.sub : null;
+  if (claimsError || !userId || claims?.aal !== "aal2") return { status: "unavailable" };
+
+  const { data: roles, error: rolesError } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .in("role", ["admin", "super_admin"])
+    .limit(1);
+  if (rolesError || !roles?.[0]) return { status: "unavailable" };
 
   const { error } = await supabase.rpc("complete_data_subject_request", {
     p_identity_verification_method: parsed.data.identityVerificationMethod,

@@ -7,25 +7,45 @@ create table if not exists private.registration_legal_versions (
   singleton boolean primary key default true check (singleton),
   terms_version text not null
     check (terms_version ~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'),
+  terms_es_content_hash text not null
+    check (terms_es_content_hash ~ '^[0-9a-f]{64}$'),
+  terms_pt_content_hash text not null
+    check (terms_pt_content_hash ~ '^[0-9a-f]{64}$'),
   privacy_version text not null
     check (privacy_version ~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'),
+  privacy_es_content_hash text not null
+    check (privacy_es_content_hash ~ '^[0-9a-f]{64}$'),
+  privacy_pt_content_hash text not null
+    check (privacy_pt_content_hash ~ '^[0-9a-f]{64}$'),
   updated_at timestamptz not null default now()
 );
 
 insert into private.registration_legal_versions(
   singleton,
   terms_version,
-  privacy_version
+  terms_es_content_hash,
+  terms_pt_content_hash,
+  privacy_version,
+  privacy_es_content_hash,
+  privacy_pt_content_hash
 )
 values (
   true,
   'terms-2026-07-23-v1',
-  'privacy-2026-07-23-v1'
+  '6d551cabc0195bbba6e892e046ded9bbd39ef1c958b875cddf23ceaf931786e2',
+  'e5994facd4640c1293e87f04fb7dafa98f6247d5659db9044d0ec9253d8d9887',
+  'privacy-2026-07-23-v1',
+  '0c36529aae6ae19eb47ac5423578522c11365c39ce50594166564169bf6215a8',
+  'd4a372965e22713ae5f10c786b5f1e65985d76a97f732f1d186e01baaea262c9'
 )
 on conflict (singleton) do update
 set
   terms_version = excluded.terms_version,
+  terms_es_content_hash = excluded.terms_es_content_hash,
+  terms_pt_content_hash = excluded.terms_pt_content_hash,
   privacy_version = excluded.privacy_version,
+  privacy_es_content_hash = excluded.privacy_es_content_hash,
+  privacy_pt_content_hash = excluded.privacy_pt_content_hash,
   updated_at = clock_timestamp();
 
 revoke all on private.registration_legal_versions
@@ -75,6 +95,8 @@ alter table public.consent_records
         evidence_hash ~ '^[0-9a-f]{64}$'
         and scope ->> 'provenance' = 'auth_hook_signed_v1'
         and scope ->> 'separate_acceptance' = 'true'
+        and scope ->> 'document_hash' ~ '^[0-9a-f]{64}$'
+        and scope ->> 'document_hash_algorithm' = 'sha256'
         and (
           consent_type <> 'terms'::public.consent_type
           or (
@@ -117,9 +139,11 @@ declare
   v_payload text;
   v_privacy_acceptance_mechanism text;
   v_privacy_accepted_at_text text;
+  v_privacy_content_hash text;
   v_privacy_version text;
   v_signature text;
   v_terms_acceptance_mechanism text;
+  v_terms_content_hash text;
   v_terms_version text;
 begin
   v_email := lower(btrim(coalesce(p_email, '')));
@@ -132,15 +156,19 @@ begin
     coalesce(p_metadata ->> 'privacy_acceptance_mechanism', '');
   v_privacy_accepted_at_text := coalesce(p_metadata ->> 'privacy_accepted_at', '');
   v_nonce := coalesce(p_metadata ->> 'registration_nonce', '');
+  v_privacy_content_hash := coalesce(p_metadata ->> 'privacy_content_hash', '');
   v_privacy_version := coalesce(p_metadata ->> 'privacy_version', '');
   v_signature := coalesce(p_metadata ->> 'registration_signature', '');
   v_terms_acceptance_mechanism :=
     coalesce(p_metadata ->> 'terms_acceptance_mechanism', '');
+  v_terms_content_hash := coalesce(p_metadata ->> 'terms_content_hash', '');
   v_terms_version := coalesce(p_metadata ->> 'terms_version', '');
 
   if v_email = '' or char_length(v_email) > 254
     or v_terms_version !~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
     or v_privacy_version !~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
+    or v_terms_content_hash !~ '^[0-9a-f]{64}$'
+    or v_privacy_content_hash !~ '^[0-9a-f]{64}$'
     or v_legal_locale not in ('es', 'pt')
     or v_terms_acceptance_mechanism <> 'signup_terms_checkbox'
     or v_privacy_acceptance_mechanism <> 'signup_privacy_acknowledgement_checkbox'
@@ -156,6 +184,15 @@ begin
       where active_versions.singleton
         and active_versions.terms_version = v_terms_version
         and active_versions.privacy_version = v_privacy_version
+        and case v_legal_locale
+          when 'es' then
+            active_versions.terms_es_content_hash = v_terms_content_hash
+            and active_versions.privacy_es_content_hash = v_privacy_content_hash
+          when 'pt' then
+            active_versions.terms_pt_content_hash = v_terms_content_hash
+            and active_versions.privacy_pt_content_hash = v_privacy_content_hash
+          else false
+        end
     )
   then
     return false;
@@ -178,7 +215,9 @@ begin
     E'\n',
     v_email,
     v_terms_version,
+    v_terms_content_hash,
     v_privacy_version,
+    v_privacy_content_hash,
     v_legal_locale,
     v_terms_acceptance_mechanism,
     v_privacy_acceptance_mechanism,
@@ -283,6 +322,8 @@ begin
             new.raw_user_meta_data ->> 'age_capacity_confirmed_at',
           'age_capacity_mechanism',
             new.raw_user_meta_data ->> 'age_capacity_mechanism',
+          'document_hash', new.raw_user_meta_data ->> 'terms_content_hash',
+          'document_hash_algorithm', 'sha256',
           'mechanism', new.raw_user_meta_data ->> 'terms_acceptance_mechanism',
           'provenance', 'auth_hook_signed_v1',
           'separate_acceptance', true
@@ -298,6 +339,8 @@ begin
         v_legal_locale,
         jsonb_build_object(
           'acceptance_kind', 'acknowledgement',
+          'document_hash', new.raw_user_meta_data ->> 'privacy_content_hash',
+          'document_hash_algorithm', 'sha256',
           'mechanism', new.raw_user_meta_data ->> 'privacy_acceptance_mechanism',
           'provenance', 'auth_hook_signed_v1',
           'separate_acceptance', true

@@ -48,12 +48,14 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 - Supabase usa ES256 para firmar sesiones. La firma HS256 anterior, las API keys heredadas y la clave privada inicialmente emitida fueron revocadas; la contraseña de Postgres también fue rotada y verificada.
 - Los grants explícitos y RLS fueron verificados en el remoto con 21 pruebas pgTAP. Los buckets públicos permiten descarga directa sin permitir listados anónimos.
 - El alta exige tres controles separados: Términos, reconocimiento de Privacidad
-  y confirmación 18+/capacidad. El hook de Auth valida HMAC, marca de tiempo y
-  las versiones activas guardadas en una tabla privada, no sólo variables del
-  frontend.
-- Las solicitudes de privacidad sólo se completan mediante un RPC AAL2 que
-  bloquea la fila, registra verificación/resumen, emite auditoría y crea un
-  evento outbox.
+  y confirmación 18+/capacidad. El hook de Auth valida HMAC, marca de tiempo,
+  versiones y hashes SHA-256 exactos del contenido oficial español/portugués
+  fijados en una tabla privada, no sólo variables del frontend.
+- Las solicitudes de privacidad sólo se completan mediante una acción que
+  comprueba rol admin/super_admin y AAL2 antes de un RPC AAL2 independiente; el
+  RPC bloquea la fila, registra verificación/resumen, emite auditoría y crea un
+  evento outbox. Un reenvío actualiza el detalle de la solicitud abierta sin
+  crear una fila duplicada.
 - El administrador inicial fue creado de forma transaccional y el RPC de bootstrap quedó revocado después de usarlo.
 - Dependency Review y CodeQL nativos quedaron habilitados gratuitamente al convertir el repositorio a público; `ENABLE_GHAS_DEPENDENCY_REVIEW` y `ENABLE_GITHUB_CODE_SECURITY` están activos.
 - El runtime Colima se conserva, pero su VM local se eliminó para liberar espacio; GitHub Actions recrea el stack Supabase desde cero para las pruebas de migraciones y RLS. Analítica y Storage Vector locales son opcionales y permanecen fuera del baseline.
