@@ -46,7 +46,7 @@ describe("environment validation", () => {
       ALLOW_ADMIN_BOOTSTRAP: "true",
       SUPABASE_SERVICE_ROLE_KEY: "service-role-test",
       BOOTSTRAP_ADMIN_EMAIL: "admin@aumprodz.com",
-      BOOTSTRAP_ADMIN_PASSWORD: "a-long-test-password",
+      BOOTSTRAP_ADMIN_PASSWORD: "a".repeat(24),
       EXPECTED_SUPABASE_PROJECT_REF: "project-ref",
       REGISTRATION_GATE_SIGNING_KEY: "too-short"
     });
