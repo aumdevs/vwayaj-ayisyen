@@ -22,6 +22,7 @@ export type PrivacyAdminQueueData = {
   available: boolean;
   requests: {
     createdAt: string;
+    description: string | null;
     id: string;
     locale: "ht" | "fr" | "es" | "pt" | "en";
     requestType: PrivacyCenterData["requests"][number]["requestType"];

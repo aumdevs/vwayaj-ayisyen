@@ -56,7 +56,7 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 
 ## Seguridad y QA verificados
 
-- 76 pruebas unitarias aprobadas;
+- 77 pruebas unitarias aprobadas;
 - 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
 - 79 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
@@ -76,7 +76,8 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 - reintento offline nativo, funcional incluso sin hidratación de JavaScript;
 - invitación una vez por sesión y ocultamiento en standalone;
 - navegación inferior y App Bar en teléfono/tableta táctil, con acceso de cuenta dirigido al portal;
-- cola de privacidad localizada y auditoría terminal mínima, sin copiar texto libre ni método de verificación;
+- cola de privacidad localizada con detalle enviado visible sólo al administrador y auditoría terminal
+  mínima, sin copiar texto libre ni método de verificación;
 - evidencia en `docs/screenshots/pwa-acceptance/`.
 
 ## Preview verificado

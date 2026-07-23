@@ -11,7 +11,7 @@ export async function getAdminPrivacyRequestQueue(): Promise<PrivacyAdminQueueDa
 
   const { data, error } = await supabase
     .from("data_subject_requests")
-    .select("id, user_id, request_type, status, locale, created_at, updated_at")
+    .select("id, user_id, request_type, description, status, locale, created_at, updated_at")
     .in("status", openStatuses)
     .order("created_at", { ascending: true })
     .limit(100);
@@ -22,6 +22,7 @@ export async function getAdminPrivacyRequestQueue(): Promise<PrivacyAdminQueueDa
     available: true,
     requests: (data ?? []).map((request) => ({
       createdAt: request.created_at,
+      description: request.description,
       id: request.id,
       locale: request.locale,
       requestType: request.request_type,

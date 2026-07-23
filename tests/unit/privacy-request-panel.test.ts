@@ -106,12 +106,13 @@ describe("privacy center navigation", () => {
 });
 
 describe("privacy administrator queue", () => {
-  it("renders a durable open request without exposing its free-text description", () => {
+  it("renders the submitted request details in the privileged queue", () => {
     const data: PrivacyAdminQueueData = {
       available: true,
       requests: [
         {
           createdAt: "2026-07-23T23:59:59.000Z",
+          description: "Corrige mi apellido de Dupond a Dupont.",
           id: "00000000-0000-4000-8000-000000000124",
           locale: "pt",
           requestType: "access",
@@ -136,6 +137,7 @@ describe("privacy administrator queue", () => {
     expect(screen.getByText("Recibida · pt")).toBeVisible();
     expect(screen.queryByText("access")).not.toBeInTheDocument();
     expect(screen.queryByText("received · pt")).not.toBeInTheDocument();
+    expect(screen.getByText("Corrige mi apellido de Dupond a Dupont.")).toBeVisible();
     expect(screen.getByText("00000000-0000-4000-8000-000000000124")).toBeVisible();
     expect(screen.getByLabelText("Método de verificación")).toBeVisible();
     expect(screen.getByLabelText("Resolución y fundamento de la decisión")).toBeVisible();
@@ -152,6 +154,7 @@ describe("privacy administrator queue", () => {
       requests: [
         {
           createdAt: "2026-07-23T23:59:59.000Z",
+          description: null,
           id: "00000000-0000-4000-8000-000000000124",
           locale: "pt",
           requestType: "access",
@@ -173,5 +176,6 @@ describe("privacy administrator queue", () => {
 
     expect(screen.getByText("Aksè")).toBeVisible();
     expect(screen.getByText("Resevwa · pt")).toBeVisible();
+    expect(screen.getByText("Pa gen detay anplis.")).toBeVisible();
   });
 });

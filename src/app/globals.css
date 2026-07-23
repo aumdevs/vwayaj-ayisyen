@@ -4788,14 +4788,15 @@ small {
 }
 
 .privacy-admin-table {
-  min-width: 1540px;
+  min-width: 1840px;
 }
 
 .privacy-admin-table .staff-table-head,
 .privacy-admin-table-row {
   grid-template-columns:
     minmax(115px, 0.65fr) minmax(140px, 0.8fr) minmax(150px, 0.85fr)
-    minmax(235px, 1.3fr) minmax(235px, 1.3fr) minmax(420px, 2.3fr);
+    minmax(235px, 1.3fr) minmax(235px, 1.3fr) minmax(280px, 1.55fr)
+    minmax(420px, 2.3fr);
 }
 
 .privacy-admin-table-row {
@@ -4824,6 +4825,16 @@ small {
   font-size: 0.68rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.privacy-admin-description {
+  max-height: 12rem;
+  overflow: auto;
+  margin: 0;
+  color: var(--ink-700);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .privacy-admin-resolution-form {

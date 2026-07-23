@@ -27,6 +27,8 @@ const copy = {
     received: "Resevwa (UTC)",
     account: "Kont",
     reference: "Referans",
+    details: "Detay moun nan voye",
+    noDetails: "Pa gen detay anplis.",
     resolution: "Fèmen",
     fallback: "Kanal eskalad"
   },
@@ -42,6 +44,8 @@ const copy = {
     received: "Reçue (UTC)",
     account: "Compte",
     reference: "Référence",
+    details: "Détails fournis",
+    noDetails: "Aucun détail supplémentaire.",
     resolution: "Clôture",
     fallback: "Canal d’escalade"
   },
@@ -57,6 +61,8 @@ const copy = {
     received: "Recibida (UTC)",
     account: "Cuenta",
     reference: "Referencia",
+    details: "Detalle enviado",
+    noDetails: "Sin detalles adicionales.",
     resolution: "Cierre",
     fallback: "Canal de escalamiento"
   },
@@ -72,6 +78,8 @@ const copy = {
     received: "Recebida (UTC)",
     account: "Conta",
     reference: "Referência",
+    details: "Detalhes enviados",
+    noDetails: "Sem detalhes adicionais.",
     resolution: "Encerramento",
     fallback: "Canal de escalonamento"
   },
@@ -87,6 +95,8 @@ const copy = {
     received: "Received (UTC)",
     account: "Account",
     reference: "Reference",
+    details: "Submitted details",
+    noDetails: "No additional details.",
     resolution: "Completion",
     fallback: "Escalation channel"
   }
@@ -222,6 +232,7 @@ export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyA
             <span role="columnheader">{text.received}</span>
             <span role="columnheader">{text.account}</span>
             <span role="columnheader">{text.reference}</span>
+            <span role="columnheader">{text.details}</span>
             <span role="columnheader">{text.resolution}</span>
           </div>
           {data.requests.map((request) => (
@@ -235,6 +246,9 @@ export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyA
               </time>
               <code role="cell">{request.userId ?? "—"}</code>
               <code role="cell">{request.id}</code>
+              <p className="privacy-admin-description" role="cell">
+                {request.description?.trim() || text.noDetails}
+              </p>
               <div role="cell">
                 <PrivacyAdminResolutionForm
                   action={action}
