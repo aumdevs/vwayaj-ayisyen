@@ -29,7 +29,10 @@ Configuración recomendada:
 El alta pública queda disponible únicamente cuando coinciden los tres controles:
 `enable_signup=true` en Supabase, `DISABLE_PUBLIC_REGISTRATION=false` en
 Producción y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` configurada. Supabase mantiene el
-secreto de Turnstile y la contraseña SMTP fuera de Vercel.
+secreto de Turnstile y la contraseña SMTP fuera de Vercel. El
+`supabase/config.toml` versionado es exclusivamente local/CI, usa callbacks
+locales, el buzón de pruebas y mantiene `enable_signup=false`; la configuración
+remota de Producción se aplica y verifica de forma explícita.
 
 ## MFA
 

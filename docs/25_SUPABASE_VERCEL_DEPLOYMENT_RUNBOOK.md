@@ -52,17 +52,21 @@
    Antes del lanzamiento, mantener `enable_signup=false` tanto en `[auth]` como
    en `[auth.email]` mientras `DISABLE_PUBLIC_REGISTRATION=true`. Para abrir el
    registro, configurar primero SMTP propio y Turnstile, comprobar confirmación
-   y recuperación de correo, aplicar `supabase/config.toml` y sólo entonces
-   cambiar el kill switch de Producción a `false`. La aplicación además exige
-   `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; si falta, el alta continúa cerrada.
+   y recuperación de correo, habilitar el proveedor remoto de forma explícita y
+   sólo entonces cambiar el kill switch de Producción a `false`. La aplicación
+   además exige `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; si falta, Auth falla cerrado.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
+   El `supabase/config.toml` versionado no se debe empujar a Producción: es el
+   perfil local/CI, mantiene el alta desactivada, permite únicamente callbacks
+   locales y entrega email al buzón local de pruebas.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento. Para Resend: host
-   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña mediante
-   `RESEND_SMTP_PASSWORD`, remitente
+   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña recuperada del
+   gestor seguro y aplicada sólo en el control plane de Supabase, remitente
    `Vwayaj Ayisyen <noreply@vwayajayisyen.com>`. La contraseña se usa al aplicar
-   la configuración de Supabase y no se copia a Vercel.
+   la configuración remota y no se copia al repositorio, a `.env.local`, a CI
+   ni a Vercel.
 10. Activar backups/PITR según plan y criticidad.
 11. Configurar logs/alertas y políticas de red disponibles.
 12. Verificar RLS en todas las tablas expuestas.

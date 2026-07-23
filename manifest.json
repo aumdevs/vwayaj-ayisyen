@@ -9,8 +9,8 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1792,
-      "sha256": "90600e98fbed34c92d1a5f680236470b04bab0dfe68647ea07088e9317e930ce"
+      "size_bytes": 1753,
+      "sha256": "f21ecded0d33eaeb290e8c343ff2aa1fd7fedf05e5386d01d5f2a1e79c8e76b2"
     },
     {
       "path": ".gitignore",
@@ -214,8 +214,8 @@
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 3753,
-      "sha256": "f78034853fd8a6641f2aafe6e97151693d9ee81a25966e042c30182a7b41f5d9"
+      "size_bytes": 3978,
+      "sha256": "c47b80759be63a3c4c9294b46daf46b71675ea4b8e9ecf6832f3cbfb219dc342"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -279,13 +279,13 @@
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 5077,
-      "sha256": "160d0738a7eebef74f1bdab14f5e1b2ae42f67ba1225e08d5950c4c96f73b30e"
+      "size_bytes": 5388,
+      "sha256": "761f6341d9c2563285c293175b830ea87b0d1b95c95738f57502adf581155488"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
-      "size_bytes": 3938,
-      "sha256": "30cd1fd802607317e5931db73a26399cbd08e9c0db0d93a64d812f6adcae059d"
+      "size_bytes": 4072,
+      "sha256": "8439cc49175d67513d020b8495724b40ec502d59ef497e6bf5856281cb28bb63"
     },
     {
       "path": "docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3752,
-      "sha256": "3a09c8daf2a4fe36b9770e1fe6b51a3430b1bf3d3b92bd1a7e1266c0910e498f"
+      "size_bytes": 3763,
+      "sha256": "b7cce75ba09cdace17db6bfbd18b98a4ad7cbf55d3d7f205abb6bb4950df3244"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 2312,
-      "sha256": "5003f67c757b307d501245589ddccfc8bbbd79807b25856445ca3b1311ba6e6c"
+      "size_bytes": 2333,
+      "sha256": "6cfdbb6667cb05f7aa94191d18c2a97a85c923b89e22a3a0de1b279fc249cd61"
     },
     {
       "path": "security/ABUSE_CASES.csv",

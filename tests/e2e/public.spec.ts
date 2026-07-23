@@ -39,6 +39,7 @@ test("public registration renders the protected account form when launch gates a
   await expect(page.getByRole("heading", { name: "Kreye kont" })).toBeVisible();
   await expect(page.locator("#auth-email")).toBeVisible();
   await expect(page.locator("#auth-password")).toBeVisible();
+  await expect(page.locator('input[name="accept_terms"]')).toBeVisible();
   await expect(page.locator(".auth-turnstile")).toBeVisible();
   await expect(page.getByRole("button", { name: "Kreye kont" })).toBeEnabled({
     timeout: 20_000

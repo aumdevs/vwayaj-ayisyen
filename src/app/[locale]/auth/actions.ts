@@ -37,8 +37,7 @@ function readLocale(formData: FormData): Locale | null {
   return typeof locale === "string" && isLocale(locale) ? locale : null;
 }
 
-function readCaptchaToken(formData: FormData): string | null | undefined {
-  if (!getTurnstileSiteKey()) return undefined;
+function readCaptchaToken(formData: FormData): string | null {
   const parsed = captchaTokenSchema.safeParse(formData.get("captcha_token"));
   return parsed.success ? parsed.data : null;
 }
@@ -47,20 +46,22 @@ export async function signInAction(
   _previous: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  if (!getTurnstileSiteKey()) return { status: "unavailable" };
+
   const locale = readLocale(formData);
   const parsed = credentialsSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password")
   });
   const captchaToken = readCaptchaToken(formData);
-  if (!locale || !parsed.success || captchaToken === null) return { status: "invalid" };
+  if (!locale || !parsed.success || !captchaToken) return { status: "invalid" };
 
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { status: "unavailable" };
   const { error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
-    options: captchaToken ? { captchaToken } : undefined
+    options: { captchaToken }
   });
   if (error) return { status: "invalid" };
   redirect(localizedPath(locale, "portal"));
@@ -78,7 +79,7 @@ export async function signUpAction(
     password: formData.get("password"),
     captchaToken: formData.get("captcha_token")
   });
-  const accepted = formData.get("accept_account_use") === "yes";
+  const accepted = formData.get("accept_terms") === "yes";
   if (!locale || !parsed.success || !accepted) return { status: "invalid" };
 
   const supabase = await createServerSupabaseClient();
@@ -104,21 +105,24 @@ export async function forgotPasswordAction(
   _previous: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
+  if (!getTurnstileSiteKey()) return { status: "unavailable" };
+
   const locale = readLocale(formData);
   const email = formData.get("email");
   const parsed = z.email().max(254).safeParse(email);
   const captchaToken = readCaptchaToken(formData);
-  if (!locale || captchaToken === null) return { status: "invalid" };
+  if (!locale || !captchaToken) return { status: "invalid" };
 
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { status: "unavailable" };
   if (parsed.success) {
     const callback = new URL(localizedPath(locale, "auth/callback"), getSiteUrl());
     callback.searchParams.set("next", localizedPath(locale, "auth/reset-password"));
-    await supabase.auth.resetPasswordForEmail(parsed.data, {
+    const { error } = await supabase.auth.resetPasswordForEmail(parsed.data, {
       captchaToken,
       redirectTo: callback.toString()
     });
+    if (error?.code === "captcha_failed") return { status: "invalid" };
   }
 
   // Do not disclose whether the address exists or whether delivery was attempted.

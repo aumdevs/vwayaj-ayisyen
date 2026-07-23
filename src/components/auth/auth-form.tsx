@@ -62,13 +62,18 @@ export function AuthForm({
         : mode === "forgot-password"
           ? dictionary.auth.forgot
           : dictionary.security.password_change_required;
+  const needsCaptcha = mode === "sign-in" || mode === "sign-up" || mode === "forgot-password";
+  const captchaRequired = needsCaptcha;
+  const captchaConfigured = !needsCaptcha || turnstileSiteKey !== null;
+  const displayedStatus =
+    needsCaptcha && !captchaConfigured ? ("unavailable" as const) : state.status;
 
   const message =
-    state.status === "invalid"
+    displayedStatus === "invalid"
       ? dictionary.errors.generic
-      : state.status === "unavailable"
+      : displayedStatus === "unavailable"
         ? dictionary.errors.feature_unavailable
-        : state.status === "check_email"
+        : displayedStatus === "check_email"
           ? dictionary.auth.verify
           : null;
   const rules = [
@@ -79,8 +84,6 @@ export function AuthForm({
     { label: "!@#", valid: /[^A-Za-z0-9]/.test(password) }
   ];
   const showChecklist = !isEmailOnly && (passwordFocused || password.length > 0);
-  const needsCaptcha = mode === "sign-in" || mode === "sign-up" || mode === "forgot-password";
-  const captchaRequired = needsCaptcha && turnstileSiteKey !== null;
 
   useEffect(() => {
     if (!pending && state.status !== "idle" && captchaRequired) {
@@ -99,8 +102,8 @@ export function AuthForm({
       <p className="auth-card-intro">{copy.body}</p>
       {message ? (
         <p
-          className={`auth-message auth-message-${state.status}`}
-          role={state.status === "invalid" ? "alert" : "status"}
+          className={`auth-message auth-message-${displayedStatus}`}
+          role={displayedStatus === "invalid" ? "alert" : "status"}
         >
           {message}
         </p>
@@ -179,7 +182,7 @@ export function AuthForm({
         ) : null}
         {mode === "sign-up" ? (
           <label className="check-option auth-terms">
-            <input name="accept_account_use" required type="checkbox" value="yes" />
+            <input name="accept_terms" required type="checkbox" value="yes" />
             <span>{copy.acceptTerms}</span>
           </label>
         ) : null}
@@ -222,7 +225,7 @@ export function AuthForm({
         ) : null}
         <button
           className="button auth-submit"
-          disabled={pending || (captchaRequired && !captchaToken)}
+          disabled={pending || !captchaConfigured || (captchaRequired && !captchaToken)}
           type="submit"
         >
           {pending ? dictionary.common.loading : title}

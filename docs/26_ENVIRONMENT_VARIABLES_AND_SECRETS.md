@@ -46,10 +46,9 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `NEXT_PUBLIC_SITE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | No | todos | app |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | producción | Auth antiabuso |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | todos los entornos con Auth | Auth antiabuso |
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | server | tareas privilegiadas |
 | `SUPABASE_AUTH_CAPTCHA_SECRET` | Sí | CLI/Supabase | aplicar Turnstile en Auth |
-| `RESEND_SMTP_PASSWORD` | Sí | CLI/Supabase | aplicar SMTP de Auth |
 | `DATABASE_URL` | Sí | CI/admin | migración controlada |
 | `STRIPE_SECRET_KEY` | Sí | server | pagos |
 | `STRIPE_WEBHOOK_SECRET` | Sí | server | webhook |
@@ -83,8 +82,11 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 - `.env.example` sólo nombres y comentarios.
 - `.env.local` ignorado y permisos 600.
 - No ejecutar `printenv`.
-- No guardar `SUPABASE_AUTH_CAPTCHA_SECRET` ni `RESEND_SMTP_PASSWORD` en
-  Vercel: pertenecen a la configuración de Supabase Auth.
+- No guardar `SUPABASE_AUTH_CAPTCHA_SECRET` en Vercel: pertenece a la
+  configuración local/remota de Supabase Auth.
+- La contraseña SMTP de Resend no es una variable de la aplicación. Se conserva
+  en el gestor seguro y se aplica directamente al control plane de Supabase; no
+  se copia a `.env.local`, CI ni Vercel.
 - En scripts, nunca `console.log` secretos.
 - Redactar headers/cookies.
 - En Vercel, limitar variables a entornos y scopes necesarios.

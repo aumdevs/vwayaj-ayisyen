@@ -40,7 +40,25 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
-        accept_account_use: "yes",
+        accept_terms: "yes",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("requires explicit terms acceptance before calling Supabase signup", async () => {
+    vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+
+    const result = await signUpAction(
+      { status: "idle" },
+      formData({
+        captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
         password: strongPassword
@@ -59,7 +77,7 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
-        accept_account_use: "yes",
+        accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
@@ -97,5 +115,70 @@ describe("Auth CAPTCHA enforcement", () => {
       )
     ).toEqual({ status: "invalid" });
     expect(auth.resetPasswordForEmail).not.toHaveBeenCalled();
+  });
+
+  it("fails closed when Auth CAPTCHA is enabled without a public site key", async () => {
+    expect(
+      await signInAction(
+        { status: "idle" },
+        formData({
+          captcha_token: "unusable-without-site-key",
+          email: "user@example.com",
+          locale: "es",
+          password: strongPassword
+        })
+      )
+    ).toEqual({ status: "unavailable" });
+    expect(auth.signInWithPassword).not.toHaveBeenCalled();
+
+    expect(
+      await forgotPasswordAction(
+        { status: "idle" },
+        formData({
+          captcha_token: "unusable-without-site-key",
+          email: "user@example.com",
+          locale: "es"
+        })
+      )
+    ).toEqual({ status: "unavailable" });
+    expect(auth.resetPasswordForEmail).not.toHaveBeenCalled();
+  });
+
+  it("reports CAPTCHA rejection instead of claiming a recovery email was sent", async () => {
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+    auth.resetPasswordForEmail.mockResolvedValue({
+      data: {},
+      error: { code: "captcha_failed" }
+    });
+
+    const result = await forgotPasswordAction(
+      { status: "idle" },
+      formData({
+        captcha_token: "expired-turnstile-token",
+        email: "user@example.com",
+        locale: "es"
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+  });
+
+  it("keeps non-CAPTCHA recovery failures enumeration-safe", async () => {
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+    auth.resetPasswordForEmail.mockResolvedValue({
+      data: {},
+      error: { code: "email_not_found" }
+    });
+
+    const result = await forgotPasswordAction(
+      { status: "idle" },
+      formData({
+        captcha_token: "verified-turnstile-token",
+        email: "unknown@example.com",
+        locale: "es"
+      })
+    );
+
+    expect(result).toEqual({ status: "check_email" });
   });
 });
