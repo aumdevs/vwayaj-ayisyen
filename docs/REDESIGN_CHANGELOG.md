@@ -57,6 +57,17 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 - integraciones riesgosas continúan fail-closed;
 - ningún secreto productivo se incorporó al cliente ni al repositorio.
 
+## Preview verificado
+
+- URL: `https://vwayaj-ayisyen-1hw65xw65-aum-prodz-group.vercel.app`;
+- commit final auditado: `40d58a8`;
+- 26 capturas públicas del Preview sin errores de consola ni overflow;
+- rutas principales en `200`, 404 real en la ruta inexistente y healthcheck en `200`;
+- cero errores de runtime en los logs revisados de Vercel;
+- Lighthouse móvil: 96 Performance, 100 Accessibility y 100 Best Practices;
+- Lighthouse escritorio: 99 Performance, 100 Accessibility y 100 Best Practices;
+- preparación SEO de producción: 100/100; el Preview conserva `noindex`.
+
 ## Evidencia relacionada
 
 - `docs/REDESIGN_AUDIT.md`

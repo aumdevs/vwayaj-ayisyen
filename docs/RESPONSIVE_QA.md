@@ -23,6 +23,9 @@ Resultado: **PASS**
 - Baseline previo en `docs/screenshots/redesign/before/`.
 - Reporte automatizado en `docs/screenshots/redesign/after/report.json`.
 - Resultado del reporte: 42 capturas, 0 fallos y 0 desbordamientos.
+- Preview final revisado en 26 combinaciones públicas.
+- Reporte del Preview en `docs/screenshots/redesign/preview/report.json`.
+- Resultado del Preview: 26 capturas, 0 errores de consola y 0 desbordamientos.
 
 Las capturas privadas se generaron con datos vacíos mediante un arnés exclusivo de desarrollo. El arnés fue retirado antes del commit y no forma parte de la aplicación desplegable.
 
@@ -40,6 +43,7 @@ Las capturas privadas se generaron con datos vacíos mediante un arnés exclusiv
 ## Correcciones realizadas durante QA
 
 - se fijó el posicionamiento CSS de imágenes `fill` para funcionar con la CSP estricta;
+- se autorizó únicamente el hash del estilo `fill` de Next/Image mediante `style-src-attr`, sin habilitar `unsafe-inline`;
 - se corrigió el recorte del hero de país;
 - se apiló correctamente la composición del estado de error;
 - se verificó la marca completa dentro de los shells privados;

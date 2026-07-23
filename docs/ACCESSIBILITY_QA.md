@@ -22,6 +22,9 @@ Resultado final:
 - foco inicial dentro del drawer y devolución al botón de apertura;
 - ausencia total del control de audio heredado.
 
+Lighthouse Accessibility obtuvo **100/100** tanto en el perfil móvil como en
+escritorio sobre el Preview final.
+
 ## Revisión de implementación
 
 - landmarks y headings con jerarquía;

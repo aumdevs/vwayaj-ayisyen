@@ -1,0 +1,292 @@
+{
+  "captures": 26,
+  "failures": [],
+  "findings": [
+    {
+      "name": "home",
+      "path": "/ht",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "countries",
+      "path": "/ht/countries",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "country",
+      "path": "/ht/countries/usa",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "compare",
+      "path": "/ht/compare",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "assessment",
+      "path": "/ht/find-my-country",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "services",
+      "path": "/ht/services",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "guides",
+      "path": "/ht/guides",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "login",
+      "path": "/ht/auth/sign-in",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "not-found",
+      "path": "/ht/page-that-does-not-exist",
+      "viewport": "1440x900",
+      "status": 404,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 1,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home",
+      "path": "/ht",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "countries",
+      "path": "/ht/countries",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "country",
+      "path": "/ht/countries/usa",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "compare",
+      "path": "/ht/compare",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "assessment",
+      "path": "/ht/find-my-country",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "services",
+      "path": "/ht/services",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "guides",
+      "path": "/ht/guides",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "login",
+      "path": "/ht/auth/sign-in",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "not-found",
+      "path": "/ht/page-that-does-not-exist",
+      "viewport": "390x844",
+      "status": 404,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 1,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-360x800",
+      "path": "/ht",
+      "viewport": "360x800",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-390x844",
+      "path": "/ht",
+      "viewport": "390x844",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-430x932",
+      "path": "/ht",
+      "viewport": "430x932",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-768x1024",
+      "path": "/ht",
+      "viewport": "768x1024",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-1024x768",
+      "path": "/ht",
+      "viewport": "1024x768",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-1280x800",
+      "path": "/ht",
+      "viewport": "1280x800",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-1440x900",
+      "path": "/ht",
+      "viewport": "1440x900",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    },
+    {
+      "name": "home-1728x1117",
+      "path": "/ht",
+      "viewport": "1728x1117",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "ignoredDevelopmentCspMessages": 0,
+      "ignoredExpectedNotFoundMessages": 0,
+      "horizontalOverflow": false,
+      "browserErrors": []
+    }
+  ]
+}
