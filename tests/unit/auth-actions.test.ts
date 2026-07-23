@@ -118,6 +118,8 @@ describe("Auth CAPTCHA enforcement", () => {
   });
 
   it("fails closed when Auth CAPTCHA is enabled without a public site key", async () => {
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "");
+
     expect(
       await signInAction(
         { status: "idle" },
