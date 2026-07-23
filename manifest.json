@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 238859,
-      "sha256": "c4fc81ce20fd5596640bd8fe1a5c7f422035afbf81cfd23eae418690347c2515"
+      "size_bytes": 240346,
+      "sha256": "8033156a7ea108810aaaeb056a32745669a802aef02d248fa4500b5194c9aa13"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -214,8 +214,8 @@
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 4450,
-      "sha256": "a52abe01e470454c34ab5592f8baa3690b0bb9110ca82eb69da788ca9e4124bd"
+      "size_bytes": 4739,
+      "sha256": "25e56b58803fa8ed7ea165a68bd0ea5a6867d29b6aa9d7f5bc199205b0eb5034"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -324,8 +324,8 @@
     },
     {
       "path": "docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md",
-      "size_bytes": 2963,
-      "sha256": "bbf09165401ab86b01f3f8e3a580fe89d80b8719c33c625274e1ed3caaec8477"
+      "size_bytes": 3312,
+      "sha256": "f9cdb53c12f21eb88d44e9e7256ce2a528bb59c192ea7da951e34c87cde3b92e"
     },
     {
       "path": "docs/35_CONTENT_SEED_AND_RESEARCH_GUIDE.md",
@@ -644,8 +644,8 @@
     },
     {
       "path": "scripts/bootstrap-admin.ts",
-      "size_bytes": 4099,
-      "sha256": "d943ece01aacecd1a7a3afd5e230fa883c07619dc9b78c882a5a14d1e5b3048a"
+      "size_bytes": 4414,
+      "sha256": "81c9b4c8654583bb74694af10eed2c628fa526de369abccd8bd047cb8512b305"
     },
     {
       "path": "scripts/check-no-secrets.sh",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 2483,
-      "sha256": "7bdba9668215dd6fbec4b519615df7d2249c230bc5441fc3a787eee70ea1473e"
+      "size_bytes": 2532,
+      "sha256": "6df04fb536d4e5f92e6cb9c9490fb958fbd23134a8399f670ab8169a729c8abe"
     },
     {
       "path": "security/ABUSE_CASES.csv",

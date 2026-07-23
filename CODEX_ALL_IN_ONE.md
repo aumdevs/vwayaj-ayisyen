@@ -4296,10 +4296,17 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
    - plantillas multilingües.
    Antes del lanzamiento, mantener `enable_signup=false` tanto en `[auth]` como
    en `[auth.email]` mientras `DISABLE_PUBLIC_REGISTRATION=true`. Para abrir el
-   registro, configurar primero SMTP propio y Turnstile, comprobar confirmación
-   y recuperación de correo, aplicar `supabase/config.toml` y sólo entonces
-   cambiar el kill switch de Producción a `false`. La aplicación además exige
-   `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; si falta, el alta continúa cerrada.
+   registro, configurar primero SMTP propio y Turnstile, aplicar las migraciones
+   del hook `private.before_user_created`, guardar una clave aleatoria de al
+   menos 32 bytes como `vwayaj_registration_gate_hmac` en Supabase Vault y
+   configurar la misma clave como `REGISTRATION_GATE_SIGNING_KEY` únicamente en
+   Vercel Production. La configuración remota de Auth se realiza en el control
+   plane; nunca se aplica el `supabase/config.toml` local/CI a Producción.
+   Publicar y revisar los textos legales, fijar su versión inmutable en
+   `REGISTRATION_TERMS_VERSION`, comprobar alta, confirmación y recuperación,
+   habilitar el proveedor remoto y sólo entonces cambiar el kill switch de
+   Producción a `false`. La aplicación exige además
+   `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; cualquier pieza ausente falla cerrado.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
 8. Crear/configurar buckets y límites.
@@ -4426,10 +4433,11 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `NEXT_PUBLIC_SITE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | No | todos | app |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | producción | Auth antiabuso |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | todos los entornos con Auth | Auth antiabuso |
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | server | tareas privilegiadas |
 | `SUPABASE_AUTH_CAPTCHA_SECRET` | Sí | CLI/Supabase | aplicar Turnstile en Auth |
-| `RESEND_SMTP_PASSWORD` | Sí | CLI/Supabase | aplicar SMTP de Auth |
+| `REGISTRATION_TERMS_VERSION` | No/operativo | server | identificar términos publicados aceptados |
+| `REGISTRATION_GATE_SIGNING_KEY` | Sí | Vercel server + Supabase Vault | impedir altas directas o manipuladas |
 | `DATABASE_URL` | Sí | CI/admin | migración controlada |
 | `STRIPE_SECRET_KEY` | Sí | server | pagos |
 | `STRIPE_WEBHOOK_SECRET` | Sí | server | webhook |
@@ -4463,8 +4471,15 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 - `.env.example` sólo nombres y comentarios.
 - `.env.local` ignorado y permisos 600.
 - No ejecutar `printenv`.
-- No guardar `SUPABASE_AUTH_CAPTCHA_SECRET` ni `RESEND_SMTP_PASSWORD` en
-  Vercel: pertenecen a la configuración de Supabase Auth.
+- No guardar `SUPABASE_AUTH_CAPTCHA_SECRET` en Vercel: pertenece a la
+  configuración local/remota de Supabase Auth.
+- Generar `REGISTRATION_GATE_SIGNING_KEY` con al menos 32 bytes aleatorios,
+  conservarla en Vercel Production y duplicarla en Supabase Vault bajo
+  `vwayaj_registration_gate_hmac`; nunca enviarla al navegador, Preview ni CI
+  real. `REGISTRATION_TERMS_VERSION` sólo se define después de publicar y
+  aprobar esa versión.
+- La contraseña SMTP de Resend se conserva en el gestor seguro y se aplica al
+  control plane de Supabase; no se copia a `.env.local`, CI ni Vercel.
 - En scripts, nunca `console.log` secretos.
 - Redactar headers/cookies.
 - En Vercel, limitar variables a entornos y scopes necesarios.
@@ -5379,6 +5394,8 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
 - Supabase remoto creado y migraciones aplicadas.
 - Script `scripts/bootstrap-admin.ts` revisado.
 - `profiles`, `user_roles` y trigger de alta funcionando.
+- Hook `private.before_user_created` activo y clave HMAC de registro disponible
+  en el gestor seguro del operador.
 - MFA TOTP habilitado.
 - La app fuerza cambio de contraseña y MFA.
 - Terminal en equipo confiable.
@@ -5392,11 +5409,15 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `BOOTSTRAP_ADMIN_EMAIL`
    - `BOOTSTRAP_ADMIN_PASSWORD`
+   - `EXPECTED_SUPABASE_PROJECT_REF`
+   - `REGISTRATION_GATE_SIGNING_KEY`
    - `ALLOW_ADMIN_BOOTSTRAP=true`
 2. Ejecutar el script sin imprimir variables.
 3. El script:
    - rechaza producción salvo flag explícito y email exacto;
    - comprueba que no exista otro super admin inesperado;
+   - firma propósito, email, fecha y nonce; Supabase Auth exige esa firma y
+     `app_metadata.bootstrap_source=one-time-script` antes de crear la identidad;
    - crea/confirma usuario;
    - establece `force_password_change=true`;
    - llama a una función SQL transaccional que actualiza el perfil, añade roles `admin` y `super_admin` y registra auditoría;

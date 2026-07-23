@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(10);
+select plan(15);
 
 select ok(
   has_function_privilege(
@@ -22,6 +22,24 @@ select ok(
     'EXECUTE'
   ),
   'Supabase Auth can validate a server attestation'
+);
+
+select ok(
+  has_function_privilege(
+    'supabase_auth_admin',
+    'private.admin_provisioning_attestation_is_valid(text,jsonb,jsonb)',
+    'EXECUTE'
+  ),
+  'Supabase Auth can validate signed administrator provisioning'
+);
+
+select ok(
+  not has_function_privilege(
+    'anon',
+    'private.admin_provisioning_attestation_is_valid(text,jsonb,jsonb)',
+    'EXECUTE'
+  ),
+  'Anon cannot execute the administrator provisioning validator'
 );
 
 select ok(
@@ -136,6 +154,100 @@ begin
 end;
 $$;
 
+create temporary table provisioning_test_vector (
+  email text not null,
+  event jsonb not null,
+  issued_at text not null,
+  nonce text not null,
+  signature text not null,
+  user_id uuid not null
+);
+
+insert into provisioning_test_vector(email, event, issued_at, nonce, signature, user_id)
+with source as (
+  select
+    'bootstrap-test@example.invalid'::text as email,
+    to_char(
+      clock_timestamp() at time zone 'UTC',
+      'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
+    ) as issued_at,
+    extensions.gen_random_uuid()::text as nonce,
+    extensions.gen_random_uuid() as user_id
+),
+signed as (
+  select
+    *,
+    encode(
+      extensions.hmac(
+        concat_ws(E'\n', 'admin-bootstrap', email, issued_at, nonce),
+        'ci_registration_gate_signing_key_at_least_32_chars',
+        'sha256'
+      ),
+      'hex'
+    ) as signature
+  from source
+)
+select
+  email,
+  jsonb_build_object(
+    'metadata',
+    jsonb_build_object('name', 'before-user-created'),
+    'user',
+    jsonb_build_object(
+      'email',
+      email,
+      'app_metadata',
+      jsonb_build_object(
+        'bootstrap_source',
+        'one-time-script',
+        'provider',
+        'email',
+        'providers',
+        jsonb_build_array('email')
+      ),
+      'user_metadata',
+      jsonb_build_object(
+        'preferred_locale',
+        'ht',
+        'provisioning_issued_at',
+        issued_at,
+        'provisioning_nonce',
+        nonce,
+        'provisioning_purpose',
+        'admin-bootstrap',
+        'provisioning_signature',
+        signature
+      )
+    )
+  ),
+  issued_at,
+  nonce,
+  signature,
+  user_id
+from signed;
+
+select is(
+  private.before_user_created(event),
+  '{}'::jsonb,
+  'A fresh signed administrator provisioning request is allowed'
+)
+from provisioning_test_vector;
+
+select is(
+  private.before_user_created(
+    jsonb_set(event, '{user,app_metadata}', '{}'::jsonb)
+  ),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'Provisioning without server-controlled app metadata is rejected'
+)
+from provisioning_test_vector;
+
 select is(
   private.before_user_created(event),
   '{}'::jsonb,
@@ -205,6 +317,39 @@ select is(
   'The verified terms acceptance timestamp is persisted on the profile'
 )
 from registration_test_vector v;
+
+insert into auth.users(
+  id,
+  instance_id,
+  aud,
+  role,
+  email,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  created_at,
+  updated_at
+)
+select
+  user_id,
+  '00000000-0000-0000-0000-000000000000'::uuid,
+  'authenticated',
+  'authenticated',
+  email,
+  event -> 'user' -> 'app_metadata',
+  event -> 'user' -> 'user_metadata',
+  clock_timestamp(),
+  clock_timestamp()
+from provisioning_test_vector;
+
+select ok(
+  (
+    select p.terms_version is null and p.terms_accepted_at is null
+    from public.profiles p
+    where p.id = v.user_id
+  ),
+  'Administrator provisioning does not fabricate public terms acceptance'
+)
+from provisioning_test_vector v;
 
 select * from finish();
 rollback;

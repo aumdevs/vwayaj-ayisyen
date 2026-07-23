@@ -36,6 +36,11 @@ servidor firma email, versión, fecha y nonce; el hook
 directa o manipulada. El trigger de perfil sólo conserva una versión y fecha de
 aceptación cuya firma siga siendo válida.
 
+El bootstrap inicial usa un payload HMAC distinto, con propósito
+`admin-bootstrap`, y además exige `app_metadata` que sólo puede establecer la
+Admin API. Esto mantiene operativo el aprovisionamiento documentado sin crear un
+bypass general ni fingir aceptación de términos públicos.
+
 Supabase mantiene el secreto de Turnstile, la contraseña SMTP y la copia HMAC de
 Vault fuera del navegador. El `supabase/config.toml` versionado es
 exclusivamente local/CI, usa callbacks locales, el buzón de pruebas, activa el

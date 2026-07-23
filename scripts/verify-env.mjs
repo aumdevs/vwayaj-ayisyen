@@ -49,6 +49,7 @@ if (env.ALLOW_ADMIN_BOOTSTRAP === "true") {
   requireValue("BOOTSTRAP_ADMIN_EMAIL");
   requireValue("BOOTSTRAP_ADMIN_PASSWORD");
   requireValue("EXPECTED_SUPABASE_PROJECT_REF");
+  requireValue("REGISTRATION_GATE_SIGNING_KEY");
   if (env.BOOTSTRAP_ADMIN_EMAIL !== "admin@aumprodz.com") {
     errors.push("BOOTSTRAP_ADMIN_EMAIL must be admin@aumprodz.com");
   }
