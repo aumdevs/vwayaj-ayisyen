@@ -6,13 +6,13 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 | Área | Decisión/evidencia necesaria | Estado actual | Efecto |
 |---|---|---|---|
-| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial; se mantiene la URL de Vercel |
+| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
 | Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
 | Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
-| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | Resend elegido y `vwayajayisyen.com` comprado; falta verificar un subdominio remitente y completar SPF/DKIM/DMARC | registro público y email desactivados; sólo notificaciones en app |
+| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; faltan DMARC, identidad remitente y credenciales API/SMTP | registro público y email desactivados; sólo notificaciones en app |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
 | Video | proveedor/URL segura, política de grabación y DPA | Zoom elegido; faltan credenciales, política de grabación y revisión de privacidad | `feature_appointments=false` o enlace manual restringido |
 | IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | OpenAI elegido; faltan clave del proyecto, modelo, evaluación, presupuesto y retención | `feature_ai_assistant=false` |

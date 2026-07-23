@@ -51,5 +51,5 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 
 - Preview puede publicarse únicamente sin datos reales, `noindex` y con todas las funciones riesgosas desactivadas; no recibe variables del Supabase de producción.
 - Producción debe salir de `main` tras CI; indexación y funciones sensibles permanecen apagadas hasta completar sus gates.
-- Resend, Stripe, Zoom y OpenAI son los proveedores elegidos, pero permanecen desactivados hasta contar con sus credenciales y gates completos. Un dominio remitente propio y CAPTCHA bloquean el registro público; no bloquean la publicación informativa segura.
+- Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX. Email permanece desactivado hasta configurar DMARC, identidad remitente, credenciales API/SMTP y sus gates; CAPTCHA todavía bloquea el registro público. Stripe, Zoom y OpenAI también permanecen desactivados hasta contar con sus credenciales y gates completos.
 - La activación pública exige completar la matriz de `docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md`.

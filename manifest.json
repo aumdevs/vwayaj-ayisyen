@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 237222,
-      "sha256": "b2a4642700f4e2ebd5c0c8543f82e5c1f97c121f934fe847ecbf9e6ab72f1a4e"
+      "size_bytes": 237346,
+      "sha256": "c97f7d2732f8c37b648cde2c5361b943cb74fedb70a3b16d2d612a3d8f391b39"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3578,
-      "sha256": "570f1a43bdc0b1212d14cdae040529e8a2d4bfd6be60e35668c04dd0fe605f4d"
+      "size_bytes": 3598,
+      "sha256": "531b9edbe07bc93c30be80180574ba74c73d342015739bcdc7261b42320cf312"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",

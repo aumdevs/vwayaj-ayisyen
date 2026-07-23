@@ -15,7 +15,7 @@ El rediseño y su Preview pueden publicarse sin resolver estos puntos. Las funci
 
 ## Proveedores
 
-- Resend: falta dominio remitente propio verificable; una URL `vercel.app` no es un dominio remitente controlado;
+- Resend: `vwayajayisyen.com` está verificado con DKIM, SPF y MX; faltan DMARC, identidad remitente, credenciales API/SMTP y CAPTCHA;
 - Stripe: faltan productos, precios, moneda, impuestos y política de reembolso aprobados;
 - Zoom: faltan credenciales, política de grabación y revisión de privacidad;
 - OpenAI: faltan proyecto, modelo, evaluación, presupuesto y política de retención;
