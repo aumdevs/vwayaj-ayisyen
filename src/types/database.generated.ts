@@ -4575,6 +4575,14 @@ export type Database = {
           title: string;
         }[];
       };
+      submit_data_subject_request: {
+        Args: {
+          p_description?: string;
+          p_locale: Database["public"]["Enums"]["app_locale"];
+          p_request_type: Database["public"]["Enums"]["data_request_type"];
+        };
+        Returns: string;
+      };
       update_my_profile: {
         Args: {
           p_country_of_residence?: string;

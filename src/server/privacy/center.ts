@@ -8,7 +8,11 @@ export async function getPrivacyCenterData(userId: string): Promise<PrivacyCente
   if (!supabase) return { available: false, profile: null, requests: [] };
 
   const [profileResult, requestsResult, consentsResult] = await Promise.all([
-    supabase.from("profiles").select("id").eq("id", userId).maybeSingle(),
+    supabase
+      .from("profiles")
+      .select("id, terms_version, privacy_version, terms_accepted_at, privacy_accepted_at")
+      .eq("id", userId)
+      .maybeSingle(),
     supabase
       .from("data_subject_requests")
       .select("id, request_type, status, created_at")
@@ -33,23 +37,37 @@ export async function getPrivacyCenterData(userId: string): Promise<PrivacyCente
   const privacyConsent = consentsResult.data?.find(
     ({ consent_type }) => consent_type === "privacy"
   );
+  const legacyTerms =
+    !termsConsent &&
+    Boolean(profileResult.data?.terms_version && profileResult.data.terms_accepted_at);
+  const legacyPrivacy =
+    !privacyConsent &&
+    Boolean(profileResult.data?.privacy_version && profileResult.data.privacy_accepted_at);
 
   return {
     available: true,
     profile: profileResult.data
       ? {
-          privacyAcceptedAt: privacyConsent?.granted_at ?? null,
+          privacyAcceptedAt:
+            privacyConsent?.granted_at ??
+            (legacyPrivacy ? profileResult.data.privacy_accepted_at : null),
+          privacyLegacy: legacyPrivacy,
           privacyLocale:
             privacyConsent?.locale === "es" || privacyConsent?.locale === "pt"
               ? privacyConsent.locale
               : null,
-          privacyVersion: privacyConsent?.policy_version ?? null,
-          termsAcceptedAt: termsConsent?.granted_at ?? null,
+          privacyVersion:
+            privacyConsent?.policy_version ??
+            (legacyPrivacy ? profileResult.data.privacy_version : null),
+          termsAcceptedAt:
+            termsConsent?.granted_at ?? (legacyTerms ? profileResult.data.terms_accepted_at : null),
+          termsLegacy: legacyTerms,
           termsLocale:
             termsConsent?.locale === "es" || termsConsent?.locale === "pt"
               ? termsConsent.locale
               : null,
-          termsVersion: termsConsent?.policy_version ?? null
+          termsVersion:
+            termsConsent?.policy_version ?? (legacyTerms ? profileResult.data.terms_version : null)
         }
       : null,
     requests: (requestsResult.data ?? []).map((request) => ({

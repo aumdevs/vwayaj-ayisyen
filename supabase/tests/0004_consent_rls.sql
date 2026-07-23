@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(3);
+select plan(6);
 
 insert into auth.users(
   id,
@@ -80,6 +80,65 @@ select lives_ok(
   'A separate non-registration opt-in remains available to its owner'
 );
 
+select throws_ok(
+  $sql$
+    insert into public.data_subject_requests(
+      user_id,
+      request_type,
+      status,
+      locale,
+      identity_verification_method,
+      assigned_to,
+      resolution_summary,
+      completed_at
+    )
+    values (
+      auth.uid(),
+      'access',
+      'fulfilled',
+      'es',
+      'forged',
+      auth.uid(),
+      'Forged resolution',
+      clock_timestamp()
+    )
+  $sql$,
+  '42501',
+  null,
+  'Authenticated users cannot forge privacy-request workflow state'
+);
+
+select lives_ok(
+  $sql$
+    select public.submit_data_subject_request(
+      'access',
+      'es',
+      '  Send me my account data.  '
+    )
+  $sql$,
+  'Authenticated users can submit a privacy request through the restricted RPC'
+);
+
 reset role;
+
+select ok(
+  (
+    select
+      count(*) = 1
+      and bool_and(
+        status = 'received'::public.data_request_status
+        and identity_verification_method = 'authenticated_session'
+        and description = 'Send me my account data.'
+        and assigned_to is null
+        and due_at is null
+        and resolution_summary is null
+        and completed_at is null
+      )
+    from public.data_subject_requests
+    where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+  ),
+  'The RPC owns status, verification, assignment and resolution fields'
+);
+
 select * from finish();
 rollback;

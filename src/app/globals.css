@@ -4298,7 +4298,8 @@ small {
   gap: 0.75rem;
 }
 
-.privacy-acceptance-grid > a {
+.privacy-acceptance-grid > a,
+.privacy-acceptance-grid > div {
   min-width: 0;
   display: grid;
   gap: 0.35rem;

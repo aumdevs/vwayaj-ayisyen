@@ -49,8 +49,10 @@ test("official legal center publishes Spanish and Portuguese documents without p
     "/pt/legal/terms?version=terms-2026-07-23-v1"
   );
 
-  const missingVersion = await page.goto("/es/legal/terms?version=terms-obsolete");
-  expect(missingVersion?.status()).toBe(404);
+  for (const invalidVersion of ["terms-obsolete", "__proto__"]) {
+    const missingVersion = await page.goto(`/es/legal/terms?version=${invalidVersion}`);
+    expect(missingVersion?.status()).toBe(404);
+  }
 });
 
 test("comparison accepts a safe selection without inventing scores", async ({ page }) => {
@@ -77,13 +79,15 @@ test("public registration renders the protected account form when launch gates a
   await expect(page.locator("#auth-password")).toBeVisible();
   await expect(page.locator('input[name="accept_terms"]')).toBeVisible();
   await expect(page.locator('input[name="accept_privacy"]')).toBeVisible();
+  await expect(page.locator('input[name="terms_version"]')).toHaveValue("terms-2026-07-23-v1");
+  await expect(page.locator('input[name="privacy_version"]')).toHaveValue("privacy-2026-07-23-v1");
   await expect(page.getByRole("link", { name: "Kondisyon itilizasyon" })).toHaveAttribute(
     "href",
-    "/ht/legal/terms"
+    "/ht/legal/terms?version=terms-2026-07-23-v1"
   );
   await expect(page.getByRole("link", { name: "Konfidansyalite" })).toHaveAttribute(
     "href",
-    "/ht/legal/privacy"
+    "/ht/legal/privacy?version=privacy-2026-07-23-v1"
   );
   await expect(page.getByText("terms-2026-07-23-v1")).toBeVisible();
   await expect(page.getByText("privacy-2026-07-23-v1")).toBeVisible();

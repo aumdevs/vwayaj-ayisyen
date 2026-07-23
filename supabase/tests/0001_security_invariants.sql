@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(21);
+select plan(25);
 
 select ok(
   not exists (
@@ -173,6 +173,40 @@ select ok(
       and with_check like '%privacy%'
   ),
   'Authenticated browser inserts exclude Terms and Privacy evidence'
+);
+
+select ok(
+  not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'data_subject_requests'
+      and policyname = 'dsr_own_insert'
+  ),
+  'The broad privacy-request insert policy is absent'
+);
+
+select ok(
+  not has_table_privilege('authenticated', 'public.data_subject_requests', 'INSERT'),
+  'Authenticated browsers cannot insert privacy workflow rows directly'
+);
+
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.submit_data_subject_request(public.data_request_type,public.app_locale,text)',
+    'EXECUTE'
+  ),
+  'Authenticated users can call the restricted privacy-request intake RPC'
+);
+
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.submit_data_subject_request(public.data_request_type,public.app_locale,text)',
+    'EXECUTE'
+  ),
+  'Anonymous users cannot call the privacy-request intake RPC'
 );
 
 select * from finish();

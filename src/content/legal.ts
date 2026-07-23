@@ -818,5 +818,6 @@ export function getLegalDocumentContent(
   locale: Locale,
   version: string = LEGAL_VERSIONS[document]
 ): LegalDocumentContent | null {
-  return legalContentByVersion[getOfficialLegalLocale(locale)][document][version] ?? null;
+  const versions = legalContentByVersion[getOfficialLegalLocale(locale)][document];
+  return Object.hasOwn(versions, version) ? (versions[version] ?? null) : null;
 }

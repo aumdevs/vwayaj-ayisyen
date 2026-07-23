@@ -24,6 +24,7 @@ const copy = {
     intro: "Jere dwa ou sou done yo epi konsilte prèv akseptasyon legal ou.",
     accepted: "Dokiman ou te aksepte",
     noAcceptance: "Pa gen akseptasyon legal anrejistre pou kont sa a.",
+    legacyAcceptance: "Prèv sa a soti nan yon ansyen rejis verifye; lang legal la pa t anrejistre.",
     terms: "Kondisyon",
     privacy: "Konfidansyalite",
     requestTitle: "Voye yon demann sou done ou",
@@ -61,6 +62,8 @@ const copy = {
       "Gérez vos droits sur les données et consultez la preuve de vos acceptations juridiques.",
     accepted: "Documents acceptés",
     noAcceptance: "Aucune acceptation juridique n’est enregistrée pour ce compte.",
+    legacyAcceptance:
+      "Cette preuve provient d’un ancien registre vérifié ; la langue juridique n’a pas été enregistrée.",
     terms: "Conditions",
     privacy: "Confidentialité",
     requestTitle: "Envoyer une demande relative à vos données",
@@ -98,6 +101,8 @@ const copy = {
     intro: "Gestiona tus derechos de datos y consulta la evidencia de tus aceptaciones legales.",
     accepted: "Documentos aceptados",
     noAcceptance: "Esta cuenta no tiene una aceptación legal registrada.",
+    legacyAcceptance:
+      "Esta evidencia procede de un registro verificado anterior; el idioma jurídico no quedó registrado.",
     terms: "Términos",
     privacy: "Privacidad",
     requestTitle: "Enviar una solicitud sobre tus datos",
@@ -134,6 +139,8 @@ const copy = {
     intro: "Gerencie seus direitos de dados e consulte a evidência dos seus aceites jurídicos.",
     accepted: "Documentos aceitos",
     noAcceptance: "Esta conta não possui aceite jurídico registrado.",
+    legacyAcceptance:
+      "Esta evidência vem de um registro verificado anterior; o idioma jurídico não foi registrado.",
     terms: "Termos",
     privacy: "Privacidade",
     requestTitle: "Enviar uma solicitação sobre seus dados",
@@ -171,6 +178,8 @@ const copy = {
     intro: "Manage your data rights and review evidence of your legal acceptances.",
     accepted: "Accepted documents",
     noAcceptance: "No legal acceptance is recorded for this account.",
+    legacyAcceptance:
+      "This evidence comes from a verified legacy record; the legal language was not recorded.",
     terms: "Terms",
     privacy: "Privacy",
     requestTitle: "Submit a request about your data",
@@ -209,6 +218,7 @@ const copy = {
     intro: string;
     accepted: string;
     noAcceptance: string;
+    legacyAcceptance: string;
     terms: string;
     privacy: string;
     requestTitle: string;
@@ -237,14 +247,14 @@ export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequest
   const [state, action, pending] = useActionState(submitPrivacyRequestAction, initialState);
   const text = copy[locale];
   const termsHref =
-    data.profile?.termsLocale && data.profile.termsVersion
+    !data.profile?.termsLegacy && data.profile?.termsLocale && data.profile.termsVersion
       ? {
           pathname: localizedPath(data.profile.termsLocale, "legal/terms"),
           query: { version: data.profile.termsVersion }
         }
       : null;
   const privacyHref =
-    data.profile?.privacyLocale && data.profile.privacyVersion
+    !data.profile?.privacyLegacy && data.profile?.privacyLocale && data.profile.privacyVersion
       ? {
           pathname: localizedPath(data.profile.privacyLocale, "legal/privacy"),
           query: { version: data.profile.privacyVersion }
@@ -269,29 +279,55 @@ export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequest
           <FileCheck2 aria-hidden="true" size={23} />
           <h2>{text.accepted}</h2>
         </header>
-        {termsHref || privacyHref ? (
+        {data.profile?.termsVersion || data.profile?.privacyVersion ? (
           <div className="privacy-acceptance-grid">
-            {termsHref ? (
-              <Link href={termsHref} hrefLang={data.profile?.termsLocale ?? undefined}>
-                <strong>{text.terms}</strong>
-                <code>{data.profile?.termsVersion}</code>
-                <small>
-                  {data.profile?.termsAcceptedAt
-                    ? formatDate(data.profile.termsAcceptedAt, locale)
-                    : "—"}
-                </small>
-              </Link>
+            {data.profile?.termsVersion ? (
+              termsHref ? (
+                <Link href={termsHref} hrefLang={data.profile.termsLocale ?? undefined}>
+                  <strong>{text.terms}</strong>
+                  <code>{data.profile.termsVersion}</code>
+                  <small>
+                    {data.profile.termsAcceptedAt
+                      ? formatDate(data.profile.termsAcceptedAt, locale)
+                      : "—"}
+                  </small>
+                </Link>
+              ) : (
+                <div>
+                  <strong>{text.terms}</strong>
+                  <code>{data.profile.termsVersion}</code>
+                  <small>
+                    {data.profile.termsAcceptedAt
+                      ? formatDate(data.profile.termsAcceptedAt, locale)
+                      : "—"}
+                  </small>
+                  <small>{text.legacyAcceptance}</small>
+                </div>
+              )
             ) : null}
-            {privacyHref ? (
-              <Link href={privacyHref} hrefLang={data.profile?.privacyLocale ?? undefined}>
-                <strong>{text.privacy}</strong>
-                <code>{data.profile?.privacyVersion}</code>
-                <small>
-                  {data.profile?.privacyAcceptedAt
-                    ? formatDate(data.profile.privacyAcceptedAt, locale)
-                    : "—"}
-                </small>
-              </Link>
+            {data.profile?.privacyVersion ? (
+              privacyHref ? (
+                <Link href={privacyHref} hrefLang={data.profile.privacyLocale ?? undefined}>
+                  <strong>{text.privacy}</strong>
+                  <code>{data.profile.privacyVersion}</code>
+                  <small>
+                    {data.profile.privacyAcceptedAt
+                      ? formatDate(data.profile.privacyAcceptedAt, locale)
+                      : "—"}
+                  </small>
+                </Link>
+              ) : (
+                <div>
+                  <strong>{text.privacy}</strong>
+                  <code>{data.profile.privacyVersion}</code>
+                  <small>
+                    {data.profile.privacyAcceptedAt
+                      ? formatDate(data.profile.privacyAcceptedAt, locale)
+                      : "—"}
+                  </small>
+                  <small>{text.legacyAcceptance}</small>
+                </div>
+              )
             ) : null}
           </div>
         ) : (

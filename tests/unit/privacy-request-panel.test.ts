@@ -18,9 +18,11 @@ describe("privacy center acceptance artifacts", () => {
       available: true,
       profile: {
         privacyAcceptedAt: "2026-07-23T14:00:00.123Z",
+        privacyLegacy: false,
         privacyLocale: "es",
         privacyVersion: "privacy-2026-07-23-v1",
         termsAcceptedAt: "2026-07-23T14:00:00.123Z",
+        termsLegacy: false,
         termsLocale: "pt",
         termsVersion: "terms-2026-07-23-v1"
       },
@@ -43,5 +45,34 @@ describe("privacy center acceptance artifacts", () => {
       "href",
       "/es/legal/privacy?version=privacy-2026-07-23-v1"
     );
+  });
+
+  it("shows verified legacy profile evidence without inventing an accepted locale", () => {
+    const data: PrivacyCenterData = {
+      available: true,
+      profile: {
+        privacyAcceptedAt: null,
+        privacyLegacy: false,
+        privacyLocale: null,
+        privacyVersion: null,
+        termsAcceptedAt: "2026-07-22T14:00:00.123Z",
+        termsLegacy: true,
+        termsLocale: null,
+        termsVersion: "terms-legacy-v1"
+      },
+      requests: []
+    };
+
+    render(
+      createElement(PrivacyRequestPanel, {
+        data,
+        legalEmail: "legal@vwayajayisyen.com",
+        locale: "es"
+      })
+    );
+
+    expect(screen.getByText("terms-legacy-v1")).toBeVisible();
+    expect(screen.getByText(/registro verificado anterior/)).toBeVisible();
+    expect(screen.queryByRole("link", { name: /Términos/ })).not.toBeInTheDocument();
   });
 });

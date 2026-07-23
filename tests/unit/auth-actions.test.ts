@@ -56,7 +56,9 @@ describe("Auth CAPTCHA enforcement", () => {
         accept_terms: "yes",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -74,7 +76,9 @@ describe("Auth CAPTCHA enforcement", () => {
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -92,7 +96,30 @@ describe("Auth CAPTCHA enforcement", () => {
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("rejects a stale legal version displayed before a deployment", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      { status: "idle" },
+      formData({
+        accept_privacy: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: "terms-previous"
       })
     );
 
@@ -112,7 +139,9 @@ describe("Auth CAPTCHA enforcement", () => {
         captcha_token: "verified-turnstile-token",
         email: "New@Example.COM",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -176,7 +205,9 @@ describe("Auth CAPTCHA enforcement", () => {
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 

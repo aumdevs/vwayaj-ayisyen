@@ -9,6 +9,8 @@ import { localizedPath } from "@/lib/i18n/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import {
   createRegistrationAttestation,
+  getRegistrationPrivacyVersion,
+  getRegistrationTermsVersion,
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
 import type { Locale } from "@/types/domain";
@@ -86,7 +88,20 @@ export async function signUpAction(
   });
   const acceptedTerms = formData.get("accept_terms") === "yes";
   const acknowledgedPrivacy = formData.get("accept_privacy") === "yes";
-  if (!locale || !parsed.success || !acceptedTerms || !acknowledgedPrivacy) {
+  const displayedTermsVersion = formData.get("terms_version");
+  const displayedPrivacyVersion = formData.get("privacy_version");
+  const currentTermsVersion = getRegistrationTermsVersion();
+  const currentPrivacyVersion = getRegistrationPrivacyVersion();
+  if (
+    !locale ||
+    !parsed.success ||
+    !acceptedTerms ||
+    !acknowledgedPrivacy ||
+    typeof displayedTermsVersion !== "string" ||
+    typeof displayedPrivacyVersion !== "string" ||
+    displayedTermsVersion !== currentTermsVersion ||
+    displayedPrivacyVersion !== currentPrivacyVersion
+  ) {
     return { status: "invalid" };
   }
 

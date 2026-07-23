@@ -546,7 +546,7 @@ for update to authenticated using (
 
 -- Audit, security, privacy, invitations
 grant select on public.audit_log, public.security_events, public.admin_invitations to authenticated;
-grant select, insert, update on public.data_subject_requests to authenticated;
+grant select, update on public.data_subject_requests to authenticated;
 
 create policy audit_admin_read on public.audit_log
 for select to authenticated using (private.is_admin_aal2());
@@ -557,8 +557,6 @@ for update to authenticated using (private.is_admin_aal2()) with check (private.
 
 create policy dsr_own_read on public.data_subject_requests
 for select to authenticated using (user_id = auth.uid() or private.is_admin_aal2());
-create policy dsr_own_insert on public.data_subject_requests
-for insert to authenticated with check (user_id = auth.uid());
 create policy dsr_admin_update on public.data_subject_requests
 for update to authenticated using (private.is_admin_aal2()) with check (private.is_admin_aal2());
 

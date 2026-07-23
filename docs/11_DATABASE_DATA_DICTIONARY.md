@@ -361,6 +361,8 @@ Eventos de riesgo.
 ### `data_subject_requests`
 
 Acceso, corrección, exportación o eliminación.
+La creación del titular pasa exclusivamente por `submit_data_subject_request`; estado, verificación,
+asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
 
 ### `admin_invitations`
 

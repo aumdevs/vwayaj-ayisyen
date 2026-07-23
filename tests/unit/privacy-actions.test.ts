@@ -1,9 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  from: vi.fn(),
-  getClaims: vi.fn(),
-  insert: vi.fn(),
+  rpc: vi.fn(),
   revalidatePath: vi.fn()
 }));
 
@@ -11,8 +9,7 @@ vi.mock("next/cache", () => ({ revalidatePath: mocks.revalidatePath }));
 vi.mock("server-only", () => ({}));
 vi.mock("@/lib/supabase/server", () => ({
   createServerSupabaseClient: vi.fn(async () => ({
-    auth: { getClaims: mocks.getClaims },
-    from: mocks.from
+    rpc: mocks.rpc
   }))
 }));
 
@@ -25,12 +22,7 @@ function formData(values: Record<string, string>): FormData {
 }
 
 beforeEach(() => {
-  mocks.from.mockReturnValue({ insert: mocks.insert });
-  mocks.getClaims.mockResolvedValue({
-    data: { claims: { sub: "00000000-0000-4000-8000-000000000123" } },
-    error: null
-  });
-  mocks.insert.mockResolvedValue({ error: null });
+  mocks.rpc.mockResolvedValue({ data: "00000000-0000-4000-8000-000000000124", error: null });
 });
 
 afterEach(() => {
@@ -38,7 +30,7 @@ afterEach(() => {
 });
 
 describe("privacy request action", () => {
-  it("stores an authenticated request through the user's RLS session", async () => {
+  it("submits only user-controlled fields through the restricted RPC", async () => {
     const result = await submitPrivacyRequestAction(
       { status: "idle" },
       formData({
@@ -49,13 +41,10 @@ describe("privacy request action", () => {
     );
 
     expect(result).toEqual({ status: "submitted" });
-    expect(mocks.from).toHaveBeenCalledWith("data_subject_requests");
-    expect(mocks.insert).toHaveBeenCalledWith({
-      description: "Quiero una copia de los datos de mi cuenta.",
-      identity_verification_method: "authenticated_session",
-      locale: "es",
-      request_type: "access",
-      user_id: "00000000-0000-4000-8000-000000000123"
+    expect(mocks.rpc).toHaveBeenCalledWith("submit_data_subject_request", {
+      p_description: "Quiero una copia de los datos de mi cuenta.",
+      p_locale: "es",
+      p_request_type: "access"
     });
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/es/portal/privacy");
   });
@@ -71,12 +60,14 @@ describe("privacy request action", () => {
     );
 
     expect(result).toEqual({ status: "invalid" });
-    expect(mocks.getClaims).not.toHaveBeenCalled();
-    expect(mocks.insert).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalled();
   });
 
-  it("fails closed without an authenticated user", async () => {
-    mocks.getClaims.mockResolvedValue({ data: { claims: {} }, error: null });
+  it("fails closed when the authenticated RPC rejects the request", async () => {
+    mocks.rpc.mockResolvedValue({
+      data: null,
+      error: { code: "42501", message: "Authentication required." }
+    });
 
     const result = await submitPrivacyRequestAction(
       { status: "idle" },
@@ -88,6 +79,10 @@ describe("privacy request action", () => {
     );
 
     expect(result).toEqual({ status: "unavailable" });
-    expect(mocks.insert).not.toHaveBeenCalled();
+    expect(mocks.rpc).toHaveBeenCalledWith("submit_data_subject_request", {
+      p_description: undefined,
+      p_locale: "pt",
+      p_request_type: "delete"
+    });
   });
 });

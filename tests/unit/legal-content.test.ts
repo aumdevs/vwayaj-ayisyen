@@ -15,6 +15,13 @@ describe("versioned legal content", () => {
     expect(getLegalDocumentContent("terms", "es", "terms-obsolete")).toBeNull();
   });
 
+  it.each(["__proto__", "constructor", "toString"])(
+    "rejects inherited object property %s as a legal version",
+    (version) => {
+      expect(getLegalDocumentContent("terms", "es", version)).toBeNull();
+    }
+  );
+
   it("uses the official Spanish artifact for courtesy-language routes", () => {
     expect(getLegalDocumentContent("privacy", "ht")?.title).toBe("Política de Privacidad");
   });

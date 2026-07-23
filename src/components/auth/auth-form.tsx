@@ -186,6 +186,8 @@ export function AuthForm({
         ) : null}
         {mode === "sign-up" ? (
           <>
+            <input name="terms_version" type="hidden" value={registrationTermsVersion ?? ""} />
+            <input name="privacy_version" type="hidden" value={registrationPrivacyVersion ?? ""} />
             <div className="check-option auth-terms">
               <input
                 aria-describedby="auth-terms-details"
@@ -198,7 +200,14 @@ export function AuthForm({
               <div className="auth-terms-copy" id="auth-terms-details">
                 <label htmlFor="auth-accept-terms">{copy.acceptTerms}</label>
                 <span className="auth-legal-links">
-                  <Link href={localizedPath(locale, "legal/terms")}>{copy.termsLink}</Link>
+                  <Link
+                    href={{
+                      pathname: localizedPath(locale, "legal/terms"),
+                      query: { version: registrationTermsVersion ?? "" }
+                    }}
+                  >
+                    {copy.termsLink}
+                  </Link>
                 </span>
                 {registrationTermsVersion ? (
                   <small className="auth-terms-version">
@@ -219,7 +228,14 @@ export function AuthForm({
               <div className="auth-terms-copy" id="auth-privacy-details">
                 <label htmlFor="auth-accept-privacy">{copy.acknowledgePrivacy}</label>
                 <span className="auth-legal-links">
-                  <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacyLink}</Link>
+                  <Link
+                    href={{
+                      pathname: localizedPath(locale, "legal/privacy"),
+                      query: { version: registrationPrivacyVersion ?? "" }
+                    }}
+                  >
+                    {copy.privacyLink}
+                  </Link>
                 </span>
                 {registrationPrivacyVersion ? (
                   <small className="auth-terms-version">
