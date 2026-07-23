@@ -56,8 +56,8 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 ## Advertencias importantes
 
-- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL actual usa Vercel porque no se comprará un dominio propio por ahora.
-- El número de WhatsApp, dominio, entidad legal, dirección, correo de soporte, claves de Stripe, proveedor de correo y proveedor de IA no están incluidos.
+- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL oficial es `https://vwayajayisyen.com`.
+- El número de WhatsApp, entidad legal, dirección, correo de soporte, claves de Stripe y credenciales de los proveedores externos no están incluidos.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
 - Todo contenido migratorio de alto impacto debe permanecer en borrador hasta ser revisado por una persona competente.
@@ -4292,7 +4292,7 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
    Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
    `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
    el endpoint público de Supabase Auth también debe permanecer cerrado.
-   En producción, permitir callbacks únicamente en `https://vwayaj-ayisyen.vercel.app/**`.
+   En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento.
@@ -6187,13 +6187,13 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 | Área | Decisión/evidencia necesaria | Estado inicial | Efecto |
 |---|---|---|---|
-| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial; se mantiene la URL de Vercel |
+| Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
 | Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
 | Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | pendiente | `feature_payments=false` |
-| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | pendiente | sólo notificaciones en app |
+| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; faltan DMARC, identidad remitente y credenciales API/SMTP | sólo notificaciones en app |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
 | Video | proveedor/URL segura, política de grabación y DPA | pendiente | `feature_appointments=false` o enlace manual restringido |
 | IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | pendiente | `feature_ai_assistant=false` |

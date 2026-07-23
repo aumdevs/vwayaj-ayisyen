@@ -20,7 +20,7 @@ Vwayaj Ayisyen combina el criterio de una revista de viajes, la claridad de una 
 - Nombre oficial: **Vwayaj Ayisyen**.
 - Identidad centralizada en `src/config/brand.ts`.
 - Se conserva el símbolo geométrico actual como marca provisional configurable.
-- No se introduce dominio propio ni otra marca.
+- Se conserva exclusivamente la marca Vwayaj Ayisyen y se usa `vwayajayisyen.com` como dominio oficial.
 
 ## Tipografía
 

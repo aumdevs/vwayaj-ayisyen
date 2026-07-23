@@ -72,7 +72,7 @@ Copia únicamente nombres y valores locales seguros desde `.env.example` a un ar
 - Las páginas de país leen sólo la vista RLS de contenido publicado y revisado.
 - Comparador y cuestionario no muestran puntuaciones hasta que reglas y fuentes estén validadas.
 - Pagos, documentos, IA, comunidad, citas, intake, WhatsApp, cursos y portal profesional usan kill switches cerrados.
-- Vwayaj Ayisyen es el nombre oficial; la URL pública usa Vercel mientras no exista un dominio propio.
+- Vwayaj Ayisyen es el nombre oficial y `https://vwayajayisyen.com` es la URL pública oficial.
 - Consulta `docs/DECISIONS_IMPLEMENTED.md` y `operations/CODEX_FINAL_REPORT.md` para el estado verificado y los bloqueos.
 
 ## Cómo usar este handoff

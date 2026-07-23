@@ -1,6 +1,6 @@
 # Informe de implementación
 
-Fecha de corte: 2026-07-22.
+Fecha de corte: 2026-07-23.
 
 ## Recursos
 
@@ -77,7 +77,7 @@ Fecha de corte: 2026-07-22.
 - Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
-- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend no puede usarse como remitente de producción sin un dominio propio verificable; por decisión del propietario no se compra uno ahora. Zoom y OpenAI aún no tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo; TLS está forzado y el seguimiento de aperturas/clics permanece apagado. Aún faltan DMARC, identidad remitente y credenciales API/SMTP de la aplicación. Zoom y OpenAI tampoco tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
 
 ## Rotación de credenciales del 2026-07-22
 
@@ -101,7 +101,7 @@ Fecha de corte: 2026-07-22.
 ## Pasos externos pendientes
 
 1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
-2. Verificar un dominio remitente propio en Resend y configurar CAPTCHA antes de admitir registros públicos; `vercel.app` no es un dominio remitente controlado por el proyecto.
+2. Configurar DMARC, identidad remitente, credenciales API/SMTP de Resend y CAPTCHA antes de admitir registros públicos o enviar correo desde la aplicación.
 3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
 4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
 5. Ejecutar restore drill y pentest antes de aceptar documentos reales.

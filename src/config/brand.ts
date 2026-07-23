@@ -4,7 +4,7 @@ export const BRAND = {
   name: "Vwayaj Ayisyen",
   shortName: "Vwayaj Ayisyen",
   organizationName: "Vwayaj Ayisyen",
-  siteUrl: "https://vwayaj-ayisyen.vercel.app",
+  siteUrl: "https://vwayajayisyen.com",
   logoLabel: "Vwayaj Ayisyen",
   contact: {
     email: null,
