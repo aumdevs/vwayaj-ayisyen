@@ -40,8 +40,8 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 ## Advertencias importantes
 
-- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL actual usa Vercel porque no se comprará un dominio propio por ahora.
-- El número de WhatsApp, dominio, entidad legal, dirección, correo de soporte, claves de Stripe, proveedor de correo y proveedor de IA no están incluidos.
+- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL oficial es `https://vwayajayisyen.com`.
+- El número de WhatsApp, entidad legal, dirección, correo de soporte, claves de Stripe y credenciales de los proveedores externos no están incluidos.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
 - Todo contenido migratorio de alto impacto debe permanecer en borrador hasta ser revisado por una persona competente.

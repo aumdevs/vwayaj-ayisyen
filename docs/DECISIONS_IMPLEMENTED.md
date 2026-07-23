@@ -1,6 +1,6 @@
 # Decisiones implementadas
 
-Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sustituye aprobaciones legales, editoriales o comerciales.
+Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sustituye aprobaciones legales, editoriales o comerciales.
 
 ## Plataforma
 
@@ -13,7 +13,7 @@ Fecha de corte: 2026-07-22. Este documento registra decisiones técnicas; no sus
 
 ## Producto y contenido
 
-- **Vwayaj Ayisyen** es la identidad textual oficial. Mientras no se compre un dominio propio, la URL pública es `https://vwayaj-ayisyen.vercel.app`.
+- **Vwayaj Ayisyen** es la identidad textual oficial. El dominio propio y la URL pública oficial son `vwayajayisyen.com` y `https://vwayajayisyen.com`.
 - Kreyòl es el locale predeterminado; los cinco diccionarios conservan la misma estructura.
 - No se sembraron afirmaciones migratorias, costos, salarios, testimonios ni puntuaciones.
 - Comparador y recomendador muestran su estructura, pero quedan bloqueados hasta revisión especializada.

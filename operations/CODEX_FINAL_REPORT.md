@@ -1,6 +1,6 @@
 # Informe de implementación
 
-Fecha de corte: 2026-07-22.
+Fecha de corte: 2026-07-23.
 
 ## Recursos
 
@@ -77,7 +77,7 @@ Fecha de corte: 2026-07-22.
 - Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
-- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend no puede usarse como remitente de producción sin un dominio propio verificable; por decisión del propietario no se compra uno ahora. Zoom y OpenAI aún no tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. El dominio `vwayajayisyen.com` ya fue comprado; Resend sigue pendiente de verificar un subdominio remitente y completar SPF/DKIM/DMARC. Zoom y OpenAI aún no tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
 
 ## Rotación de credenciales del 2026-07-22
 

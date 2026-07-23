@@ -40,11 +40,11 @@ describe("Supabase Auth launch gate", () => {
     expect(readTomlBoolean(config, "auth.email", "enable_signup")).toBe(false);
   });
 
-  it("allows production Auth callbacks only on the official Vercel URL", () => {
+  it("allows production Auth callbacks only on the official domain", () => {
     const config = readFileSync("supabase/config.toml", "utf8");
 
     expect(readTomlStringArray(config, "auth", "additional_redirect_urls")).toEqual([
-      "https://vwayaj-ayisyen.vercel.app/**"
+      "https://vwayajayisyen.com/**"
     ]);
   });
 });

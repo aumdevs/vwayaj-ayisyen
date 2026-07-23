@@ -52,7 +52,7 @@
    Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
    `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
    el endpoint público de Supabase Auth también debe permanecer cerrado.
-   En producción, permitir callbacks únicamente en `https://vwayaj-ayisyen.vercel.app/**`.
+   En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento.
