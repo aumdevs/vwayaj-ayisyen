@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { Check, Eye, EyeOff, LockKeyhole } from "lucide-react";
 import {
   forgotPasswordAction,
   resetPasswordAction,
@@ -10,6 +11,7 @@ import {
   type AuthActionState
 } from "@/app/[locale]/auth/actions";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
+import type { ExperienceCopy } from "@/lib/i18n/experience-copy";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 
@@ -20,11 +22,12 @@ type AuthFormProps = {
   locale: Locale;
   mode: AuthMode;
   registrationEnabled: boolean;
+  copy: ExperienceCopy["auth"];
 };
 
 const initialState: AuthActionState = { status: "idle" };
 
-export function AuthForm({ dictionary, locale, mode, registrationEnabled }: AuthFormProps) {
+export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }: AuthFormProps) {
   const action =
     mode === "sign-in"
       ? signInAction
@@ -34,6 +37,9 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled }: Auth
           ? forgotPasswordAction
           : resetPasswordAction;
   const [state, formAction, pending] = useActionState(action, initialState);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [password, setPassword] = useState("");
   const isEmailOnly = mode === "forgot-password";
   const isReset = mode === "reset-password";
   const title =
@@ -53,13 +59,27 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled }: Auth
         : state.status === "check_email"
           ? dictionary.auth.verify
           : null;
+  const rules = [
+    { label: "12+", valid: password.length >= 12 },
+    { label: "A–Z", valid: /[A-Z]/.test(password) },
+    { label: "a–z", valid: /[a-z]/.test(password) },
+    { label: "0–9", valid: /[0-9]/.test(password) },
+    { label: "!@#", valid: /[^A-Za-z0-9]/.test(password) }
+  ];
+  const showChecklist = !isEmailOnly && (passwordFocused || password.length > 0);
 
   return (
-    <section className="auth-card">
-      <p className="eyebrow">{dictionary.security.do_not_share}</p>
-      <h1>{title}</h1>
+    <section className="auth-card" aria-labelledby="auth-title">
+      <p className="eyebrow">
+        <LockKeyhole aria-hidden="true" size={15} /> {copy.kicker}
+      </p>
+      <h2 id="auth-title">{title}</h2>
+      <p className="auth-card-intro">{copy.body}</p>
       {message ? (
-        <p className="auth-message" role="status">
+        <p
+          className={`auth-message auth-message-${state.status}`}
+          role={state.status === "invalid" ? "alert" : "status"}
+        >
           {message}
         </p>
       ) : null}
@@ -82,16 +102,43 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled }: Auth
         {!isEmailOnly ? (
           <div className="field">
             <label htmlFor="auth-password">{dictionary.auth.password}</label>
-            <input
-              autoComplete={isReset || mode === "sign-up" ? "new-password" : "current-password"}
-              id="auth-password"
-              maxLength={72}
-              minLength={12}
-              name="password"
-              required
-              type="password"
-            />
-            <span className="field-help">12–72 · A–Z · a–z · 0–9 · !@#</span>
+            <div className="password-control">
+              <input
+                autoComplete={isReset || mode === "sign-up" ? "new-password" : "current-password"}
+                id="auth-password"
+                maxLength={72}
+                minLength={12}
+                name="password"
+                onBlur={() => setPasswordFocused(false)}
+                onChange={(event) => setPassword(event.target.value)}
+                onFocus={() => setPasswordFocused(true)}
+                required
+                type={passwordVisible ? "text" : "password"}
+              />
+              <button
+                aria-label={passwordVisible ? copy.hidePassword : copy.showPassword}
+                onClick={() => setPasswordVisible((visible) => !visible)}
+                type="button"
+              >
+                {passwordVisible ? (
+                  <EyeOff aria-hidden="true" size={19} />
+                ) : (
+                  <Eye aria-hidden="true" size={19} />
+                )}
+              </button>
+            </div>
+            {showChecklist ? (
+              <div className="password-checklist" aria-label={copy.passwordHelp}>
+                <small>{copy.passwordHelp}</small>
+                <ul>
+                  {rules.map((rule) => (
+                    <li className={rule.valid ? "password-rule-valid" : ""} key={rule.label}>
+                      <Check aria-hidden="true" size={13} /> {rule.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
         ) : null}
         {isReset ? (
@@ -104,17 +151,17 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled }: Auth
               minLength={12}
               name="password_confirmation"
               required
-              type="password"
+              type={passwordVisible ? "text" : "password"}
             />
           </div>
         ) : null}
         {mode === "sign-up" ? (
-          <label className="check-option space-bottom-sm">
+          <label className="check-option auth-terms">
             <input name="accept_terms" required type="checkbox" value="yes" />
-            <span>{dictionary.common.continue}</span>
+            <span>{copy.acceptTerms}</span>
           </label>
         ) : null}
-        <button className="button" disabled={pending} type="submit">
+        <button className="button auth-submit" disabled={pending} type="submit">
           {pending ? dictionary.common.loading : title}
         </button>
       </form>

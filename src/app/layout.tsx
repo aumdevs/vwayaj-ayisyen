@@ -1,35 +1,35 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { Atkinson_Hyperlegible, Manrope } from "next/font/google";
+import { Manrope, Newsreader } from "next/font/google";
 import type { ReactNode } from "react";
 import { NetworkStatus } from "@/components/pwa/network-status";
 import { ServiceWorkerRegister } from "@/components/pwa/service-worker-register";
 import { getSiteUrl, isIndexingAllowed } from "@/lib/config/runtime";
 import { normalizeLocale } from "@/lib/i18n/config";
+import { BRAND } from "@/config/brand";
 import "./globals.css";
 
-const bodyFont = Atkinson_Hyperlegible({
+const bodyFont = Manrope({
   subsets: ["latin"],
-  weight: ["400", "700"],
   variable: "--font-body",
   display: "swap"
 });
 
-const headingFont = Manrope({
+const editorialFont = Newsreader({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--font-editorial",
   display: "swap"
 });
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: "Vwayaj Ayisyen",
-    template: "%s · Vwayaj Ayisyen"
+    default: BRAND.name,
+    template: `%s · ${BRAND.name}`
   },
   description:
     "Yon platfòm enfòmasyon ak preparasyon pou kominote ayisyèn nan, ak sous, dat ak limit ki vizib.",
-  applicationName: "Vwayaj Ayisyen",
+  applicationName: BRAND.name,
   category: "education",
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "ht_HT",
-    title: "Vwayaj Ayisyen",
+    title: BRAND.name,
     description: "Enfòmasyon estriktire, onèt ak aksesib pou kominote ayisyèn nan."
   }
 };
@@ -51,14 +51,14 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#0e4a3e",
+  themeColor: "#0B1324",
   colorScheme: "light"
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const locale = normalizeLocale((await headers()).get("x-locale"));
   return (
-    <html className={`${bodyFont.variable} ${headingFont.variable}`} id="page-top" lang={locale}>
+    <html className={`${bodyFont.variable} ${editorialFont.variable}`} id="page-top" lang={locale}>
       <body>
         <a className="skip-link" href="#main-content">
           Ale dirèk nan kontni an

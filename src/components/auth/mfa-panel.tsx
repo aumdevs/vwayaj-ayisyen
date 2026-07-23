@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ShieldCheck, Smartphone } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/browser";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -67,10 +68,13 @@ export function MfaPanel({ dictionary, locale }: { dictionary: Dictionary; local
   }
 
   return (
-    <section className="auth-card">
+    <section className="auth-card mfa-card">
+      <span className="mfa-card-icon" aria-hidden="true">
+        <ShieldCheck size={28} />
+      </span>
       <p className="eyebrow">{dictionary.auth.mfa}</p>
-      <h1>{dictionary.security.mfa_required}</h1>
-      <p>{dictionary.security.do_not_share}</p>
+      <h2>{dictionary.security.mfa_required}</h2>
+      <p className="auth-card-intro">{dictionary.security.do_not_share}</p>
       {status === "error" ? (
         <p className="auth-message" role="alert">
           {dictionary.errors.generic}
@@ -84,10 +88,16 @@ export function MfaPanel({ dictionary, locale }: { dictionary: Dictionary; local
         </button>
       ) : null}
       {enrollment ? (
-        <div>
-          <Image alt="TOTP QR" height={240} src={enrollment.qrCode} unoptimized width={240} />
+        <div className="mfa-enrollment">
+          <Image
+            alt={dictionary.auth.mfa}
+            height={240}
+            src={enrollment.qrCode}
+            unoptimized
+            width={240}
+          />
           <p className="field-help">
-            <span>{enrollment.secret}</span>
+            <Smartphone aria-hidden="true" size={16} /> <code>{enrollment.secret}</code>
           </p>
         </div>
       ) : null}
@@ -106,7 +116,7 @@ export function MfaPanel({ dictionary, locale }: { dictionary: Dictionary; local
               required
             />
           </div>
-          <button className="button" disabled={status === "working"} type="submit">
+          <button className="button auth-submit" disabled={status === "working"} type="submit">
             {status === "working" ? dictionary.common.loading : dictionary.common.continue}
           </button>
         </form>

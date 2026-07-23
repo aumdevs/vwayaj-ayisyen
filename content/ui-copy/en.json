@@ -17,7 +17,6 @@
     "loading": "Loading…",
     "updated": "Last updated",
     "sources": "Sources",
-    "listen": "Listen to this page",
     "simple_summary": "Easy summary",
     "full_explanation": "Full explanation",
     "in_preparation": "This information is being prepared."
@@ -123,7 +122,7 @@
     "not_found": "We could not find this page.",
     "forbidden": "You do not have permission to view this.",
     "rate_limited": "Too many attempts. Try again later.",
-    "feature_unavailable": "This feature is not yet safely available.",
+    "feature_unavailable": "We can’t complete this action right now. Please try again later.",
     "offline_private": "You need an internet connection to view this private information."
   }
 }
