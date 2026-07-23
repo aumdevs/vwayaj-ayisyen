@@ -8,7 +8,6 @@ import {
   forgotPasswordAction,
   resetPasswordAction,
   signInAction,
-  signUpAction,
   type AuthActionState
 } from "@/app/[locale]/auth/actions";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -25,6 +24,7 @@ type AuthFormProps = {
   registrationEnabled: boolean;
   registrationPrivacyVersion: string | null;
   registrationTermsVersion: string | null;
+  signUpAction: (_previous: AuthActionState, formData: FormData) => Promise<AuthActionState>;
   turnstileSiteKey: string | null;
   copy: ExperienceCopy["auth"];
 };
@@ -38,6 +38,7 @@ export function AuthForm({
   registrationEnabled,
   registrationPrivacyVersion,
   registrationTermsVersion,
+  signUpAction,
   turnstileSiteKey,
   copy
 }: AuthFormProps) {

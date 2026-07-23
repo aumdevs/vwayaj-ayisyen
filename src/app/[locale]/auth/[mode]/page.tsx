@@ -15,6 +15,7 @@ import {
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
 import { getViewer } from "@/server/auth/viewer";
+import { signUpAction } from "@/app/[locale]/auth/actions";
 
 const modes = ["sign-in", "sign-up", "verify", "forgot-password", "reset-password", "mfa"] as const;
 type AuthMode = (typeof modes)[number];
@@ -35,6 +36,7 @@ export default async function AuthPage({ params }: AuthPageProps) {
   const registrationEnabled = isPublicRegistrationReady();
   const registrationPrivacyVersion = getRegistrationPrivacyVersion();
   const registrationTermsVersion = getRegistrationTermsVersion();
+  const localizedSignUpAction = signUpAction.bind(null, locale);
 
   if (authMode === "mfa") {
     const viewer = await getViewer();
@@ -93,6 +95,7 @@ export default async function AuthPage({ params }: AuthPageProps) {
         registrationEnabled={registrationEnabled}
         registrationPrivacyVersion={registrationPrivacyVersion}
         registrationTermsVersion={registrationTermsVersion}
+        signUpAction={localizedSignUpAction}
         turnstileSiteKey={turnstileSiteKey}
       />
     </AuthShell>

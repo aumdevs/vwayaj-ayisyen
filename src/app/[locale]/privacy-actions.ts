@@ -37,6 +37,10 @@ export async function submitPrivacyRequestAction(
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { status: "unavailable" };
 
+  const { data: claimsData, error: claimsError } = await supabase.auth.getClaims();
+  const userId = typeof claimsData?.claims?.sub === "string" ? claimsData.claims.sub : null;
+  if (claimsError || !userId) return { status: "unavailable" };
+
   const { error } = await supabase.rpc("submit_data_subject_request", {
     p_description: parsed.data.description ?? undefined,
     p_locale: parsed.data.locale as Locale,

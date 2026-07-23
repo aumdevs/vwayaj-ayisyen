@@ -75,12 +75,13 @@ export async function signInAction(
 }
 
 export async function signUpAction(
+  renderedLocale: Locale,
   _previous: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
   if (!isPublicRegistrationReady()) return { status: "unavailable" };
 
-  const locale = readLocale(formData);
+  const submittedLocale = readLocale(formData);
   const parsed = signupSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -93,7 +94,9 @@ export async function signUpAction(
   const currentTermsVersion = getRegistrationTermsVersion();
   const currentPrivacyVersion = getRegistrationPrivacyVersion();
   if (
-    !locale ||
+    !isLocale(renderedLocale) ||
+    !submittedLocale ||
+    submittedLocale !== renderedLocale ||
     !parsed.success ||
     !acceptedTerms ||
     !acknowledgedPrivacy ||
@@ -104,6 +107,7 @@ export async function signUpAction(
   ) {
     return { status: "invalid" };
   }
+  const locale = renderedLocale;
 
   const attestation = createRegistrationAttestation(
     parsed.data.email,

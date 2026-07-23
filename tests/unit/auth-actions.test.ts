@@ -50,6 +50,7 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_privacy: "yes",
@@ -70,6 +71,7 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_privacy: "yes",
@@ -90,6 +92,7 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_terms: "yes",
@@ -110,6 +113,7 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_privacy: "yes",
@@ -127,11 +131,34 @@ describe("Auth CAPTCHA enforcement", () => {
     expect(auth.signUp).not.toHaveBeenCalled();
   });
 
+  it("rejects a submitted locale that differs from the server-bound signup route", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "pt",
+      { status: "idle" },
+      formData({
+        accept_privacy: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "es",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
   it("passes CAPTCHA, callback and a valid legal attestation to Supabase signup", async () => {
     enableRegistration();
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://vwayajayisyen.com");
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_privacy: "yes",
@@ -198,6 +225,7 @@ describe("Auth CAPTCHA enforcement", () => {
     vi.stubEnv("REGISTRATION_GATE_SIGNING_KEY", "");
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
         accept_privacy: "yes",
