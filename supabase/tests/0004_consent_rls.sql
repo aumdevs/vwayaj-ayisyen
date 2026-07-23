@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(6);
+select plan(8);
 
 insert into auth.users(
   id,
@@ -119,6 +119,28 @@ select lives_ok(
   'Authenticated users can submit a privacy request through the restricted RPC'
 );
 
+select lives_ok(
+  $sql$
+    select public.submit_data_subject_request(
+      'access',
+      'pt',
+      'Retry after a lost response.'
+    )
+  $sql$,
+  'A repeated open request is handled as an idempotent retry'
+);
+
+select is(
+  (
+    select count(*)
+    from public.data_subject_requests
+    where user_id = auth.uid()
+      and request_type = 'access'
+  ),
+  1::bigint,
+  'Repeated submissions cannot flood the queue with the same open request type'
+);
+
 reset role;
 
 select ok(
@@ -136,6 +158,7 @@ select ok(
       )
     from public.data_subject_requests
     where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+      and request_type = 'access'
   ),
   'The RPC owns status, verification, assignment and resolution fields'
 );

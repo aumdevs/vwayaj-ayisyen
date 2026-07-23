@@ -5195,7 +5195,7 @@ small {
     left: 0.75rem;
     min-height: 64px;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     padding: 0.4rem;
     border: 1px solid var(--border);
     border-radius: 18px;

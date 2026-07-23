@@ -2,14 +2,19 @@
 
 import "@testing-library/jest-dom/vitest";
 import { createElement } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/app/[locale]/privacy-actions", () => ({
   submitPrivacyRequestAction: vi.fn(async () => ({ status: "idle" }))
 }));
+vi.mock("@/app/[locale]/auth/actions", () => ({
+  signOutAction: vi.fn(async () => undefined)
+}));
 
+import { PrivateAreaShell } from "@/components/private/private-area-shell";
 import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import type { PrivacyCenterData } from "@/types/privacy";
 
 describe("privacy center acceptance artifacts", () => {
@@ -74,5 +79,28 @@ describe("privacy center acceptance artifacts", () => {
     expect(screen.getByText("terms-legacy-v1")).toBeVisible();
     expect(screen.getByText(/registro verificado anterior/)).toBeVisible();
     expect(screen.queryByRole("link", { name: /Términos/ })).not.toBeInTheDocument();
+  });
+});
+
+describe("privacy center navigation", () => {
+  it("keeps the privacy center discoverable in the mobile portal navigation", () => {
+    const { container } = render(
+      createElement(PrivateAreaShell, {
+        area: "portal",
+        assuranceLevel: "aal1",
+        dictionary: getDictionary("ht"),
+        email: "traveler@example.com",
+        locale: "ht",
+        path: [],
+        privacyCenterData: null
+      })
+    );
+
+    const mobileNavigation = container.querySelector<HTMLElement>(".portal-mobile-nav");
+    expect(mobileNavigation).not.toBeNull();
+    expect(within(mobileNavigation!).getAllByRole("link")).toHaveLength(5);
+    expect(
+      within(mobileNavigation!).getByRole("link", { name: "Konfidansyalite" })
+    ).toHaveAttribute("href", "/ht/portal/privacy");
   });
 });

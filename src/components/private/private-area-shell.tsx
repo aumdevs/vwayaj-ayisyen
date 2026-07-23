@@ -226,7 +226,7 @@ function PortalShell({
   const selectedIcon = routeIcons[section] ?? LayoutGrid;
   const SelectedIcon = selectedIcon;
   const mobileRoutes = definition.routes.filter(({ path }) =>
-    ["", "cases", "appointments", "profile"].includes(path)
+    ["", "cases", "appointments", "privacy", "profile"].includes(path)
   );
 
   return (

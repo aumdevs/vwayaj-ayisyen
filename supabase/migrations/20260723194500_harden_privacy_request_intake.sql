@@ -7,6 +7,10 @@ begin;
 revoke insert on public.data_subject_requests from authenticated;
 drop policy if exists dsr_own_insert on public.data_subject_requests;
 
+create index if not exists dsr_user_open_type_idx
+on public.data_subject_requests(user_id, request_type, created_at desc)
+where status in ('received', 'identity_check', 'in_progress');
+
 create or replace function public.submit_data_subject_request(
   p_request_type public.data_request_type,
   p_locale public.app_locale,
@@ -31,6 +35,26 @@ begin
     raise string_data_right_truncation using message = 'Description is too long.';
   end if;
   v_description := nullif(btrim(coalesce(p_description, '')), '');
+
+  -- Serialize intake per account, then make retries idempotent while the same
+  -- right is already open. With six request types this also bounds each user
+  -- to at most six simultaneous open queue rows.
+  perform pg_catalog.pg_advisory_xact_lock(
+    pg_catalog.hashtextextended(v_user_id::text, 20260723)
+  );
+
+  select request.id
+  into v_request_id
+  from public.data_subject_requests as request
+  where request.user_id = v_user_id
+    and request.request_type = p_request_type
+    and request.status in ('received', 'identity_check', 'in_progress')
+  order by request.created_at desc
+  limit 1;
+
+  if v_request_id is not null then
+    return v_request_id;
+  end if;
 
   insert into public.data_subject_requests(
     user_id,
