@@ -67,7 +67,7 @@ Los ítems generales no marcados debajo bloquean la función correspondiente, no
 - [ ] Pentest.
 - [ ] Backups/restore.
 - [ ] Incident drill.
-- [x] Scanner.
+- [ ] Scanner privado.
 - [x] CSP.
 - [x] Secret scan.
 - [ ] Rate limits.

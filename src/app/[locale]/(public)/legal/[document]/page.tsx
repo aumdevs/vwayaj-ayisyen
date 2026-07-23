@@ -176,7 +176,7 @@ export default async function LegalPage({ params, searchParams }: LegalPageProps
                   <div>
                     <strong>{published.languageLabel}</strong>
                     <p>{published.languageNotice}</p>
-                    <p>{officialLanguageNotice[locale]}</p>
+                    <p lang={locale}>{officialLanguageNotice[locale]}</p>
                     <span>
                       <Link
                         href={{

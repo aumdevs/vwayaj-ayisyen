@@ -1,14 +1,11 @@
 # Handoff narrativo consolidado para Codex
 
 **Proyecto técnico:** `vwayaj-ayisyen`
-**Generado:** 2026-07-21
+**Generado:** 2026-07-23
 
-Este archivo reúne la documentación narrativa para facilitar una sola lectura. Los archivos individuales del ZIP siguen siendo la fuente autoritativa; las migraciones SQL, workflows, CSV, JSON, YAML, plantillas TypeScript, OpenAPI y diagramas no se duplican aquí.
+Este archivo reúne la documentación narrativa para facilitar una sola lectura. Los archivos individuales del repositorio siguen siendo la fuente autoritativa; las migraciones SQL, workflows, CSV, JSON, YAML, plantillas TypeScript, OpenAPI y diagramas no se duplican aquí.
 
-La credencial temporal del administrador **no está incluida** en este archivo ni en el ZIP.
-
----
-
+La credencial temporal del administrador **no está incluida** en este archivo ni en el repositorio.
 
 ---
 
@@ -66,14 +63,13 @@ Este paquete contiene la especificación completa para construir desde cero una 
 
 Entregar a Codex el ZIP completo. Como alternativa, `CODEX_ALL_IN_ONE.md` reúne la documentación narrativa, pero las migraciones, esquemas, CSV, plantillas y workflows del ZIP siguen siendo la fuente ejecutable.
 
-
 ---
 
 # Archivo: `README.md`
 
-# vwayaj-ayisyen
+# Vwayaj Ayisyen
 
-Paquete de especificación y handoff para que Codex construya una plataforma web completa con Next.js, Supabase, Vercel, GitHub, Stripe, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
+Aplicación y handoff de una plataforma web multilingüe construida con Next.js, Supabase, Vercel, GitHub, PWA, CRM, expedientes, cursos, comunidad privada y asistente de inteligencia artificial.
 
 ## Propósito del producto
 
@@ -110,18 +106,53 @@ El producto combinará información oficial, experiencia práctica, realidad com
 9. No publicar contenido generado automáticamente sin revisión.
 10. Diseño premium sin sacrificar simplicidad.
 
+## Licencia y seguridad
+
+El repositorio es públicamente visible, pero no es open source. El código y la
+documentación permanecen bajo la licencia propietaria de `LICENSE`; no se
+autoriza su uso, copia, despliegue o redistribución sin permiso escrito de Aum
+Prodz.
+
+Los hallazgos de seguridad deben enviarse mediante **Security > Advisories >
+Report a vulnerability**. No publiques secretos ni datos personales en issues.
+
 Consulta `00_START_HERE.md` para el orden de lectura.
+
+## Desarrollo local
+
+Requisitos: Node `24.18.0`, pnpm `11.15.0`, Supabase CLI y un runtime Docker compatible.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm db:start
+pnpm db:reset
+pnpm db:lint
+pnpm db:test
+pnpm db:types
+pnpm check:all
+pnpm test:e2e
+```
+
+Copia únicamente nombres y valores locales seguros desde `.env.example` a un archivo `.env.local` ignorado. Nunca uses secretos de producción en desarrollo o preview.
+
+## Estado seguro por defecto
+
+- Kreyòl es el idioma inicial; también existen francés, español, portugués e inglés.
+- Las páginas de país leen sólo la vista RLS de contenido publicado y revisado.
+- Comparador y cuestionario no muestran puntuaciones hasta que reglas y fuentes estén validadas.
+- Pagos, documentos, IA, comunidad, citas, intake, WhatsApp, cursos y portal profesional usan kill switches cerrados.
+- Vwayaj Ayisyen es el nombre oficial y `https://vwayajayisyen.com` es la URL pública oficial.
+- Consulta `docs/DECISIONS_IMPLEMENTED.md` y `operations/CODEX_FINAL_REPORT.md` para el estado verificado y los bloqueos.
 
 ## Cómo usar este handoff
 
 1. Abrir `00_START_HERE.md`.
 2. Dar a Codex `CODEX_MASTER_PROMPT.md` y el ZIP completo.
-3. Mantener el archivo privado de credenciales fuera del repositorio.
+3. Mantener todas las credenciales fuera del repositorio y de los logs de CI.
 4. Exigir que Codex complete `operations/CODEX_FINAL_REPORT_TEMPLATE.md`.
 5. No activar pagos, documentos, IA, comunidad, citas o intake hasta cumplir sus gates.
 
 `CODEX_ALL_IN_ONE.md` ofrece una lectura consolidada. `FILE_INDEX.md` explica la estructura completa.
-
 
 ---
 
@@ -185,7 +216,6 @@ El ZIP final contiene **166 archivos**:
 - 5 catálogos iniciales de copy por idioma.
 - Contrato OpenAPI, configuraciones, plantillas de código, hashes e índice completo.
 
-
 ---
 
 # Archivo: `PACKAGE_VALIDATION.md`
@@ -239,7 +269,6 @@ Los marcadores `[REQUIRED]`, precios, textos legales finales, retención, entida
 ## Conclusión
 
 El paquete está listo para entregarse como especificación de construcción. No representa una certificación de seguridad ni una aplicación ya desplegada. La aceptación final depende de ejecutar CI, pruebas RLS/E2E, revisión jurídica/editorial, verificación de accesibilidad, restore drill y revisión de seguridad sobre la implementación real.
-
 
 ---
 
@@ -309,7 +338,6 @@ Cada PR debe incluir:
 - Plan de rollback
 - Variables de entorno nuevas
 - Riesgos pendientes
-
 
 ---
 
@@ -848,7 +876,6 @@ No concluyas hasta entregar:
 
 Ante una incompatibilidad entre documentos, gana la opción más segura y el requisito más específico. Registra la decisión en `docs/DECISIONS_IMPLEMENTED.md`.
 
-
 ---
 
 # Archivo: `docs/01_PRODUCT_REQUIREMENTS.md`
@@ -982,7 +1009,6 @@ No recopilar métricas sensibles. Indicadores agregados:
 - No lanzar documentos privados sin análisis antimalware.
 - No usar testimonios inventados.
 
-
 ---
 
 # Archivo: `docs/02_SCOPE_AND_NON_GOALS.md`
@@ -1068,7 +1094,6 @@ La primera versión incluye todos los módulos solicitados, pero las integracion
 - `professional_portal_enabled`
 
 Las funciones de alto riesgo empiezan desactivadas en producción hasta superar su checklist.
-
 
 ---
 
@@ -1255,7 +1280,6 @@ No revelar si un correo existe durante recuperación o invitación.
 - El panel privado usa navegación por rol, no muestra opciones sin permiso.
 - Ningún error debe revelar IDs internos, roles, SQL o stack traces.
 
-
 ---
 
 # Archivo: `docs/04_USER_ROLES_AND_PERMISSIONS.md`
@@ -1306,7 +1330,6 @@ Una persona puede tener más de un rol. Los roles nunca se aceptan desde el clie
 - Un admin normal no puede quitar el último `super_admin`.
 - Cambios de rol y concesiones generan evento de auditoría.
 - La desactivación de un empleado revoca sesiones y permisos de inmediato.
-
 
 ---
 
@@ -1455,7 +1478,6 @@ Una persona puede tener más de un rol. Los roles nunca se aceptan desde el clie
 - Acciones destructivas con confirmación y reautenticación.
 - Exportación limitada.
 - Audit trail.
-
 
 ---
 
@@ -1699,7 +1721,6 @@ translations:
     body_markdown:
 ```
 
-
 ---
 
 # Archivo: `docs/07_COMPARISON_AND_QUESTIONNAIRE.md`
@@ -1820,7 +1841,6 @@ Debe incluir:
 - No guardar respuestas más de 30 días sin consentimiento.
 - Usuario autenticado puede guardar o borrar.
 
-
 ---
 
 # Archivo: `docs/08_DESIGN_SYSTEM_ACCESSIBILITY.md`
@@ -1878,7 +1898,6 @@ La marca es editable desde settings. Evitar usar la bandera haitiana como decora
 - Package card.
 - WhatsApp CTA.
 - Breadcrumb.
-- Audio/read control.
 - Empty state.
 - Skeleton.
 - Error state.
@@ -1938,7 +1957,6 @@ La marca es editable desde settings. Evitar usar la bandera haitiana como decora
 - Dispositivo Android de gama baja o emulación.
 - Pruebas con usuarios haitianos mayores antes de lanzamiento.
 
-
 ---
 
 # Archivo: `docs/09_I18N_CONTENT_WORKFLOW.md`
@@ -1973,7 +1991,6 @@ La marca es editable desde settings. Evitar usar la bandera haitiana como decora
 - Si falta traducción, mostrar idioma disponible con aviso.
 - Contenido legal de otro idioma no se publica como traducción automática definitiva.
 - Términos como PIX, RUT, CPF, SSN, ITIN, CURP, RFC, CLABE y SPEI se mantienen y se explican.
-- Lectura de página usa la voz disponible del navegador; si no existe voz en kreyòl, informar.
 
 ## Estados de traducción
 
@@ -2011,7 +2028,6 @@ Tabla central con:
 ## Copy inicial
 
 No publicar textos extensos en kreyòl sin revisión humana competente. Codex puede crear claves y borradores claramente marcados.
-
 
 ---
 
@@ -2246,7 +2262,6 @@ Los jobs deben ser idempotentes y autenticados con secreto rotatable.
 ## Diagramas
 
 Ver `/schemas/architecture.mmd` y `/schemas/er-diagram.mmd`.
-
 
 ---
 
@@ -2615,11 +2630,12 @@ Eventos de riesgo.
 ### `data_subject_requests`
 
 Acceso, corrección, exportación o eliminación.
+La creación del titular pasa exclusivamente por `submit_data_subject_request`; estado, verificación,
+asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
 
 ### `admin_invitations`
 
 Invitaciones de personal, hash de token y expiración.
-
 
 ---
 
@@ -2653,10 +2669,30 @@ Configuración recomendada:
 - Cloudflare Turnstile en registro, conexión y recuperación; el token se valida en Supabase Auth, no sólo en el navegador.
 - Mensajes que eviten enumeración.
 
-El alta pública queda disponible únicamente cuando coinciden los tres controles:
-`enable_signup=true` en Supabase, `DISABLE_PUBLIC_REGISTRATION=false` en
-Producción y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` configurada. Supabase mantiene el
-secreto de Turnstile y la contraseña SMTP fuera de Vercel.
+El alta pública queda disponible únicamente cuando coinciden todos los
+controles: proveedor remoto habilitado, `DISABLE_PUBLIC_REGISTRATION=false`,
+Turnstile listo, `REGISTRATION_TERMS_VERSION` y
+`REGISTRATION_PRIVACY_VERSION` fijadas exactamente a las versiones publicadas,
+y la misma clave HMAC disponible como `REGISTRATION_GATE_SIGNING_KEY` en el
+servidor y como `vwayaj_registration_gate_hmac` en Supabase Vault. La acción de
+servidor firma email, ambas versiones, idioma jurídico, mecanismo, fecha y
+nonce; el hook
+`private.before_user_created` rechaza dentro de Supabase Auth cualquier alta
+directa o manipulada. El trigger de perfil sólo conserva una versión y fecha de
+aceptación cuya firma siga siendo válida y crea registros separados de
+consentimiento para Términos y Privacidad con evidencia criptográfica
+proporcional.
+
+El bootstrap inicial usa un payload HMAC distinto, con propósito
+`admin-bootstrap`, y además exige `app_metadata` que sólo puede establecer la
+Admin API. Esto mantiene operativo el aprovisionamiento documentado sin crear un
+bypass general ni fingir aceptación de términos públicos.
+
+Supabase mantiene el secreto de Turnstile, la contraseña SMTP y la copia HMAC de
+Vault fuera del navegador. El `supabase/config.toml` versionado es
+exclusivamente local/CI, usa callbacks locales, el buzón de pruebas, activa el
+hook y mantiene `enable_signup=false`; la configuración remota de Producción se
+aplica y verifica de forma explícita.
 
 ## MFA
 
@@ -2762,7 +2798,6 @@ passport-john-doe.pdf
 - No registrar.
 - No usar para “arreglar” RLS.
 - Rotar si se expone.
-
 
 ---
 
@@ -3004,7 +3039,6 @@ P0/P1 bloquean producción.
 - Prueba de restauración trimestral.
 - Pentest externo antes de escalar documentos reales.
 
-
 ---
 
 # Archivo: `docs/14_FILE_UPLOAD_SECURITY.md`
@@ -3114,7 +3148,6 @@ Alternativa: servicio ClamAV aislado y mantenido, fuera del runtime normal de Ve
 ## Nombre original
 
 Guardar cifrado sólo si es necesario para mostrarlo. Al descargar, usar un nombre seguro construido por la app, sin caracteres de control.
-
 
 ---
 
@@ -3226,7 +3259,6 @@ Codex debe validar la lista contra la versión de API seleccionada y fijar expl�
 - Entornos test/producción no comparten claves, productos ni webhooks.
 - Ningún log contiene secretos o información de tarjeta.
 - Disputa suspende la activación automática según regla de negocio.
-
 
 ---
 
@@ -3347,7 +3379,6 @@ El CRM administra relaciones y trabajo comercial sin convertirse en un depósito
 - No exponer segmentos pequeños que permitan reidentificación.
 - No usar origen nacional, raza u otras características sensibles para publicidad discriminatoria.
 
-
 ---
 
 # Archivo: `docs/17_APPOINTMENTS_AND_VIDEO.md`
@@ -3429,7 +3460,6 @@ Implementación inicial puede ser `ManualMeetingProvider`, donde un administrado
 - Cita cancelada invalida acceso.
 - Pago fallido libera hold.
 - Recordatorios respetan idioma, zona horaria y preferencias.
-
 
 ---
 
@@ -3560,7 +3590,6 @@ Mostrar al usuario:
 
 Nunca mostrar un porcentaje engañoso de “probabilidad de aprobación”.
 
-
 ---
 
 # Archivo: `docs/19_COURSES_AND_PRIVATE_COMMUNITY.md`
@@ -3658,7 +3687,6 @@ Prohibido:
 - Evitar rankings que premien contenido sensacionalista.
 - Mostrar fecha y país en discusiones donde la normativa cambia.
 - Recordatorios visibles: no enviar dinero ni documentos a desconocidos.
-
 
 ---
 
@@ -3776,7 +3804,6 @@ Métricas mínimas:
 
 Revisión humana obligatoria y aprobación de seguridad/producto antes de `true`.
 
-
 ---
 
 # Archivo: `docs/21_PWA_PERFORMANCE_AND_SEO.md`
@@ -3872,7 +3899,6 @@ Sólo contenido público indexable.
 - No capturar campos, query params con PII, contenido de comunidad o chat.
 - Eventos: visita a país, comparador iniciado/completado, CTA, curso, conversión.
 - Identificadores rotables y minimizados.
-
 
 ---
 
@@ -3985,7 +4011,6 @@ La auditoría es append-only y no editable desde UI.
 - Confirmación escribiendo un identificador para acciones destructivas.
 - “Impersonation” no permitida inicialmente; soporte mediante vistas auditadas.
 - No exponer service role ni consultas directas desde navegador.
-
 
 ---
 
@@ -4131,7 +4156,6 @@ Un PR no puede fusionarse si falla:
 
 Producción exige checklist, migración revisada, rollback y aprobación.
 
-
 ---
 
 # Archivo: `docs/24_GITHUB_CI_CD_AND_REPOSITORY.md`
@@ -4238,7 +4262,6 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
 - ADR para decisiones importantes.
 - Changelog de seguridad sin detalles explotables.
 
-
 ---
 
 # Archivo: `docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md`
@@ -4296,25 +4319,34 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
    - plantillas multilingües.
    Antes del lanzamiento, mantener `enable_signup=false` tanto en `[auth]` como
    en `[auth.email]` mientras `DISABLE_PUBLIC_REGISTRATION=true`. Para abrir el
-   registro, configurar primero SMTP propio y Turnstile, aplicar las migraciones
+   registro, configurar primero SMTP propio y Turnstile, aplicar la migración
    del hook `private.before_user_created`, guardar una clave aleatoria de al
-   menos 32 bytes como `vwayaj_registration_gate_hmac` en Supabase Vault y
-   configurar la misma clave como `REGISTRATION_GATE_SIGNING_KEY` únicamente en
-   Vercel Production. La configuración remota de Auth se realiza en el control
-   plane; nunca se aplica el `supabase/config.toml` local/CI a Producción.
-   Publicar y revisar los textos legales, fijar su versión inmutable en
-   `REGISTRATION_TERMS_VERSION`, comprobar alta, confirmación y recuperación,
-   habilitar el proveedor remoto y sólo entonces cambiar el kill switch de
-   Producción a `false`. La aplicación exige además
+   menos 32 bytes con el nombre `vwayaj_registration_gate_hmac` en Supabase
+   Vault y configurar la misma clave como
+   `REGISTRATION_GATE_SIGNING_KEY` únicamente en Vercel Production. Activar el
+   hook remoto mientras el proveedor continúa cerrado.
+   Publicar y revisar los textos legales, asignar sus identificadores
+   inmutables a `REGISTRATION_TERMS_VERSION` y
+   `REGISTRATION_PRIVACY_VERSION`, comprobar alta, confirmación, recuperación y
+   persistencia de ambos consentimientos, habilitar el proveedor remoto de
+   forma explícita y sólo entonces cambiar el kill switch de Producción a
+   `false`. La aplicación exige además
    `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; cualquier pieza ausente falla cerrado.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
+   El `supabase/config.toml` versionado no se debe empujar a Producción: es el
+   perfil local/CI, mantiene el alta desactivada, permite únicamente callbacks
+   locales, valida el mismo hook y entrega email al buzón local de pruebas.
 8. Crear/configurar buckets y límites.
 9. Configurar SMTP propio antes del lanzamiento. Para Resend: host
-   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña mediante
-   `RESEND_SMTP_PASSWORD`, remitente
+   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña recuperada del
+   gestor seguro y aplicada sólo en el control plane de Supabase, remitente
    `Vwayaj Ayisyen <noreply@vwayajayisyen.com>`. La contraseña se usa al aplicar
-   la configuración de Supabase y no se copia a Vercel.
+   la configuración remota y no se copia al repositorio, a `.env.local`, a CI
+   ni a Vercel. SMTP saliente no crea buzones entrantes. La recepción usa Proton
+   Mail y quedó verificada el 2026-07-23 mediante tres mensajes externos:
+   `support@vwayajayisyen.com`, `legal@vwayajayisyen.com` y
+   `promo@vwayajayisyen.com`.
 10. Activar backups/PITR según plan y criticidad.
 11. Configurar logs/alertas y políticas de red disponibles.
 12. Verificar RLS en todas las tablas expuestas.
@@ -4380,7 +4412,6 @@ Para cada una: cuenta, DPA/términos, secretos, staging, pruebas, kill switch y 
 - No publicar contenido legal de relleno.
 - No activar uploads sin escáner.
 
-
 ---
 
 # Archivo: `docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md`
@@ -4437,6 +4468,7 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | server | tareas privilegiadas |
 | `SUPABASE_AUTH_CAPTCHA_SECRET` | Sí | CLI/Supabase | aplicar Turnstile en Auth |
 | `REGISTRATION_TERMS_VERSION` | No/operativo | server | identificar términos publicados aceptados |
+| `REGISTRATION_PRIVACY_VERSION` | No/operativo | server | identificar política de privacidad publicada aceptada |
 | `REGISTRATION_GATE_SIGNING_KEY` | Sí | Vercel server + Supabase Vault | impedir altas directas o manipuladas |
 | `DATABASE_URL` | Sí | CI/admin | migración controlada |
 | `STRIPE_SECRET_KEY` | Sí | server | pagos |
@@ -4476,10 +4508,12 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 - Generar `REGISTRATION_GATE_SIGNING_KEY` con al menos 32 bytes aleatorios,
   conservarla en Vercel Production y duplicarla en Supabase Vault bajo
   `vwayaj_registration_gate_hmac`; nunca enviarla al navegador, Preview ni CI
-  real. `REGISTRATION_TERMS_VERSION` sólo se define después de publicar y
-  aprobar esa versión.
-- La contraseña SMTP de Resend se conserva en el gestor seguro y se aplica al
-  control plane de Supabase; no se copia a `.env.local`, CI ni Vercel.
+  real. `REGISTRATION_TERMS_VERSION` y `REGISTRATION_PRIVACY_VERSION` deben
+  coincidir exactamente con las versiones publicadas en código; cualquier
+  diferencia mantiene el registro cerrado.
+- La contraseña SMTP de Resend no es una variable de la aplicación. Se conserva
+  en el gestor seguro y se aplica directamente al control plane de Supabase; no
+  se copia a `.env.local`, CI ni Vercel.
 - En scripts, nunca `console.log` secretos.
 - Redactar headers/cookies.
 - En Vercel, limitar variables a entornos y scopes necesarios.
@@ -4509,7 +4543,6 @@ El archivo privado entregado con este paquete no se incluye en el ZIP. Codex deb
 5. borrar variables temporales;
 6. eliminar el archivo local de forma segura;
 7. verificar que nunca entró a Git.
-
 
 ---
 
@@ -4686,26 +4719,35 @@ Antes del lanzamiento y cada seis meses:
 - disputa de pago;
 - contenido legal urgente desactualizado.
 
-
 ---
 
 # Archivo: `docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md`
 
 # Privacidad, legal y cumplimiento — requisitos de revisión profesional
 
-> Este documento es una lista de producto/ingeniería, no asesoría jurídica. La entidad operadora, jurisdicción, contratos y países de usuarios no están definidos. Un abogado competente debe revisar los documentos y flujos antes de aceptar clientes o datos sensibles.
+> Este documento es una lista de producto/ingeniería, no asesoría jurídica. El propietario confirmó los datos públicos mínimos del operador el 23 de julio de 2026. La publicación actual se limita al sitio informativo, cuentas protegidas y ejercicio de derechos de privacidad. Un abogado competente debe revisar los documentos y flujos antes de vender servicios o aceptar documentos/datos sensibles.
 
-## Bloqueos de lanzamiento
+## Datos confirmados para el lanzamiento limitado de cuentas
 
-Definir y publicar:
+- nombre legal: `Vwayaj ayisyen`;
+- tipo y país: `Ltda.`, Brasil;
+- domicilio público: São Paulo, Brasil;
+- ley: Brasil y cualquier norma imperativa aplicable;
+- foro: São Paulo, sin excluir el foro obligatorio del consumidor;
+- idiomas jurídicos oficiales: portugués y español;
+- contactos públicos: `support@vwayajayisyen.com`, `legal@vwayajayisyen.com` y `promo@vwayajayisyen.com`;
+- alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
+- Términos, Privacidad y Cookies publicados con fecha y versión;
+- Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- pagos, documentos, citas, comunidad, IA y video desactivados.
 
-- nombre legal y comercial;
-- país/domicilio de la entidad;
-- datos de contacto y responsable;
-- naturaleza exacta del servicio;
+## Bloqueos del lanzamiento comercial o de funciones de alto riesgo
+
+Antes de activar la función afectada, completar y revisar:
+
+- CNPJ/identificador fiscal y domicilio registral completo para facturación y comercio;
 - países desde los que se venderá;
-- si se presta asesoría legal o sólo orientación;
-- profesionales autorizados y jurisdicciones;
+- profesionales autorizados, contratos, licencias y jurisdicciones si se ofrece un servicio profesional;
 - impuestos/facturación;
 - política de precios/reembolsos;
 - WhatsApp, Stripe, email, IA, video y otros encargados;
@@ -4715,6 +4757,8 @@ Definir y publicar:
 - transferencia internacional de datos;
 - procedimiento para menores;
 - seguro/responsabilidad profesional cuando aplique.
+
+Estos pendientes no autorizan a activar pagos, documentos sensibles ni servicios profesionales. Las banderas de esas funciones deben seguir cerradas.
 
 ## Mensajes que deben evitarse
 
@@ -4813,9 +4857,9 @@ La plataforma no debe permitir que menores contraten o carguen documentos por s�
 - chargebacks;
 - consumidor local.
 
-## Documentos legales incluidos como plantillas
+## Estado de los documentos legales
 
-Ver `/legal`. Cada archivo contiene marcadores `[REQUIRED]` y no debe publicarse sin completar/revisar.
+Términos, Privacidad y Cookies se publican en `/legal` en español y portugués, con versiones inmutables. Reembolsos, IA, Comunidad y Editorial continúan como estados informativos sin texto contractual y no deben presentarse como políticas vigentes hasta su revisión.
 
 ## Registro de decisiones
 
@@ -4840,7 +4884,6 @@ Conservar:
 - entrenamiento del personal;
 - tabla de retención;
 - simulacro de solicitud y borrado.
-
 
 ---
 
@@ -4994,7 +5037,6 @@ Código presente no equivale a función lanzada. Cada fase debe tener:
 - flag;
 - responsable operativo.
 
-
 ---
 
 # Archivo: `docs/30_ACCEPTANCE_CRITERIA.md`
@@ -5101,7 +5143,6 @@ Código presente no equivale a función lanzada. Cada fase debe tener:
 - [ ] Revisión legal/privacidad.
 - [ ] WCAG 2.2 AA validada.
 
-
 ---
 
 # Archivo: `docs/31_DEFINITION_OF_DONE.md`
@@ -5190,7 +5231,6 @@ Una historia, ruta o función no está terminada hasta cumplir lo aplicable.
 - fecha/revisor para contenido.
 
 Nada se declara “production-ready” sólo porque `pnpm build` termina.
-
 
 ---
 
@@ -5288,7 +5328,6 @@ El asistente no necesita expedientes para cumplir su objetivo; excluirlos reduce
 
 Reduce acoso, fraude y moderación. Reconsiderar tras evidencia y threat model nuevo.
 
-
 ---
 
 # Archivo: `docs/33_OFFICIAL_TECHNICAL_REFERENCES.md`
@@ -5376,7 +5415,6 @@ Estas fuentes justifican decisiones técnicas, pero no sustituyen pruebas. Al fi
 - razón;
 - plan de actualización.
 
-
 ---
 
 # Archivo: `docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md`
@@ -5385,7 +5423,8 @@ Estas fuentes justifican decisiones técnicas, pero no sustituyen pruebas. Al fi
 
 ## Identidad
 
-El correo privado del propietario se proporciona mediante el entorno protegido y no se publica.
+El correo privado del propietario se proporciona temporalmente mediante
+`BOOTSTRAP_ADMIN_EMAIL`; no debe documentarse ni publicarse en el repositorio.
 
 La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo no debe copiarse al repositorio, tickets, chats, notas compartidas ni variables permanentes.
 
@@ -5463,7 +5502,6 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
 ## Importante
 
 La credencial entregada no representa una cuenta existente. La cuenta existirá sólo después de que Codex ejecute el bootstrap en el proyecto correcto.
-
 
 ---
 
@@ -5595,7 +5633,6 @@ Las reglas se validan con especialistas y usuarios. Nunca penalizar por raza, di
 - no pagar sin divulgación;
 - evitar fotos/ubicación sin necesidad.
 
-
 ---
 
 # Archivo: `docs/36_REPOSITORY_STRUCTURE_AND_BOUNDARIES.md`
@@ -5724,7 +5761,6 @@ Configurar ESLint:
 - `community` no importa CRM/cases.
 - `content` no importa pagos.
 
-
 ---
 
 # Archivo: `docs/37_DEPENDENCY_AND_SUPPLY_CHAIN_POLICY.md`
@@ -5817,7 +5853,6 @@ Añadir sólo tras justificar. Evitar paquetes pequeños para tareas triviales.
 - Librerías que envían telemetría no documentada.
 - Copiar código sin licencia.
 
-
 ---
 
 # Archivo: `docs/38_EMAIL_AND_NOTIFICATION_CONTENT.md`
@@ -5902,7 +5937,6 @@ Outbox transaccional:
 
 Idempotency key por evento/canal.
 
-
 ---
 
 # Archivo: `docs/39_SEARCH_AND_DISCOVERY.md`
@@ -5943,7 +5977,6 @@ Buscar sólo contenido público aprobado: países, guías, FAQ, glosario y curso
 - “No encontramos información verificada” y rutas alternativas.
 - Historial local opcional y claro, no servidor por defecto.
 - Teclado/lector.
-
 
 ---
 
@@ -6003,7 +6036,6 @@ Configurar según revisión legal. La app funciona sin analítica no esencial. D
 - Duración/stop rule.
 - Segmentos no sensibles.
 - Resultado registrado.
-
 
 ---
 
@@ -6089,7 +6121,6 @@ Mostrar horarios/tiempos reales. No prometer 24/7. Colas por país/idioma/urgenc
 - incidentes;
 - derivación profesional.
 
-
 ---
 
 # Archivo: `docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md`
@@ -6125,7 +6156,6 @@ Mostrar horarios/tiempos reales. No prometer 24/7. Colas por país/idioma/urgenc
 - Hash/inventario de objetos.
 - Métricas sin PII.
 - Confirmar eliminación a usuario cuando proceda.
-
 
 ---
 
@@ -6213,7 +6243,6 @@ El informe puede contener:
 - Ejecutar secret scan antes del push final.
 - No cerrar sesión ni modificar la cuenta global salvo que sea necesario para la operación solicitada.
 
-
 ---
 
 # Archivo: `docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md`
@@ -6224,26 +6253,28 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 
 ## Decisiones obligatorias
 
-| Área | Decisión/evidencia necesaria | Estado inicial | Efecto |
+| Área | Decisión/evidencia necesaria | Estado actual | Efecto |
 |---|---|---|---|
 | Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
-| Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
+| Entidad legal | razón social, país, dirección, registro, contacto | parcial: Vwayaj ayisyen, Ltda., Brasil; domicilio público São Paulo; soporte y legal definidos; faltan CNPJ y dirección comercial completa | permite documentos informativos y Auth; bloquea venta y facturación |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
-| Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
+| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada y DSR autenticado implementado; faltan calendario definitivo, contratos/DPA y validación de transferencias | permite cuenta mínima; bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
-| Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | pendiente | `feature_payments=false` |
-| Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP y CAPTCHA | Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; el código integra `noreply@vwayajayisyen.com`, SMTP Resend y Turnstile sin secretos; faltan publicar DMARC y guardar las credenciales SMTP/Turnstile en Supabase | `DISABLE_PUBLIC_REGISTRATION=true` hasta probar alta, confirmación y recuperación reales |
+| Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
+| Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP, recepción, CAPTCHA y gate de Auth | completo el 2026-07-23: Resend verificado para envío; Proton Mail recibe los tres alias oficiales; tres mensajes externos de prueba llegaron; Supabase usa SMTP, confirmación, Turnstile y hook HMAC; versiones legales exactas configuradas en Vercel | registro habilitado sólo en Production; Preview y Development permanecen cerrados |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
-| Video | proveedor/URL segura, política de grabación y DPA | pendiente | `feature_appointments=false` o enlace manual restringido |
-| IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | pendiente | `feature_ai_assistant=false` |
+| Video | proveedor/URL segura, política de grabación y DPA | Zoom elegido; faltan credenciales, política de grabación y revisión de privacidad | `feature_appointments=false` o enlace manual restringido |
+| IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | OpenAI elegido; faltan clave del proyecto, modelo, evaluación, presupuesto y retención | `feature_ai_assistant=false` |
 | Moderación | responsables, horario, apelación, SLAs y formación | pendiente | `feature_community=false` |
 | Analítica | herramienta, consentimiento, exclusiones y retención | pendiente | sólo métricas técnicas mínimas |
 | Observabilidad | proveedor, scrub de PII, alertas y retención | pendiente | bloquea go-live operativo completo |
-| Soporte | correo, horario, idiomas, escalamiento y emergencias | pendiente | debe publicarse antes del lanzamiento |
+| Soporte | correo, horario, idiomas, escalamiento y emergencias | `support@`, `legal@` y `promo@vwayajayisyen.com` activos en Proton Mail; recepción verificada; aviso de no-emergencia publicado; no se promete un horario o SLA todavía | permite cuenta mínima; servicios pagados y de alto riesgo siguen cerrados |
 
 ## Lo que sí puede lanzarse primero
 
-Una versión informativa pública puede salir cuando se cumplan todos estos puntos:
+La versión informativa y la cuenta mínima pueden publicarse con las funciones
+sensibles cerradas. Pagos, documentos, IA, citas, comunidad y prestación
+profesional requieren completar sus bloqueadores específicos antes de activarse.
 
 - marca y contacto mínimos;
 - textos legales revisados para el país operativo;
@@ -6267,7 +6298,6 @@ Para activar una función se requieren simultáneamente:
 6. Entrada en auditoría con responsable, fecha y evidencia.
 
 La ausencia de configuración produce **función no disponible**, nunca un fallback inseguro.
-
 
 ---
 
@@ -6345,7 +6375,6 @@ Ante una señal seria, priorizar:
 5. investigar y corregir;
 6. notificar según obligaciones aplicables;
 7. restaurar gradualmente con pruebas.
-
 
 ---
 
@@ -6432,7 +6461,6 @@ Cada Production debe registrar:
 - fecha UTC;
 - incidencias y rollback/forward-fix.
 
-
 ---
 
 # Archivo: `docs/47_COST_AND_CAPACITY_GUARDRAILS.md`
@@ -6494,7 +6522,6 @@ Mostrar sin exponer datos personales:
 - Stripe por estado de orden;
 - flags y límites efectivos;
 - alertas y responsable.
-
 
 ---
 
@@ -6565,7 +6592,6 @@ Devuelve el esquema definido por la aplicación:
 
 Si `confidence=unsupported`, no des una respuesta sustantiva basada en conocimiento externo.
 
-
 ---
 
 # Archivo: `prompts/CODEX_PHASE_PROMPTS.md`
@@ -6606,7 +6632,6 @@ Implementa RAG sólo con contenido aprobado, citas, abstención, privacidad, eva
 
 Hardening, pruebas completas, accesibilidad con usuarios, observabilidad, restore drill, legal/content readiness y lanzamiento gradual. Entrega evidencia conforme a `CODEX_COMPLETION_CHECKLIST.md`.
 
-
 ---
 
 # Archivo: `prompts/CONTENT_REVIEW_PROMPT.md`
@@ -6638,7 +6663,6 @@ Reglas:
 - No elimines advertencias por razones comerciales.
 - Señala incertidumbre.
 - Entrega JSON validable según el esquema interno.
-
 
 ---
 
@@ -6685,7 +6709,6 @@ Devuelve:
 
 No incluyas payloads destructivos ni secretos. Si una cuestión no puede verificarse, márcala como pendiente en lugar de declarar seguridad.
 
-
 ---
 
 # Archivo: `repository/ARCHITECTURE_DECISIONS.md`
@@ -6710,7 +6733,6 @@ Create `/docs/adr/NNNN-title.md` using:
 - Revisit trigger:
 
 Initial decisions are summarized in `docs/32_ASSUMPTIONS_DECISIONS_AND_OPEN_ITEMS.md`.
-
 
 ---
 
@@ -6777,56 +6799,18 @@ Explain new dependency, license, maintenance and security. Prefer platform/nativ
 
 Treat secret detection, authorization failure, missing scanner and invalid webhook tests as merge blockers.
 
-
 ---
 
 # Archivo: `repository/SECURITY.md`
 
 # Security Policy
 
-## Supported versions
+La política activa y reconocida por GitHub vive en `.github/SECURITY.md`.
 
-Only the current production branch and explicitly maintained release receive security fixes.
-
-## Report privately
-
-Do not open a public issue. Send a report to `[REQUIRED: security contact]` or use GitHub private vulnerability reporting once enabled.
-
-Include:
-
-- affected URL/component;
-- impact;
-- safe reproduction using synthetic data;
-- browser/version;
-- suggested mitigation;
-- whether personal data may be involved.
-
-Do not include real user documents, passwords, tokens, database dumps or destructive payloads.
-
-## Safe harbor
-
-[REQUIRED: legal review.] Good-faith research must avoid:
-
-- accessing/changing third-party data;
-- social engineering;
-- denial of service;
-- persistence;
-- data exfiltration;
-- public disclosure before remediation;
-- testing vendors without permission.
-
-## Response targets
-
-[REQUIRED: acknowledge/triage/remediate timelines.] Targets are goals, not guarantees.
-
-## Scope
-
-[REQUIRED: production domain/API.] Out of scope: third-party services, physical attacks, spam, already known low-impact headers and rate-limit testing beyond safe thresholds.
-
-## Disclosure
-
-Coordinate a timeline. Security fixes and user notifications follow incident policy and law.
-
+No abras un issue público para informar una vulnerabilidad. Usa **Security >
+Advisories > Report a vulnerability**, habilitado para este repositorio, y
+trabaja únicamente con datos sintéticos. Nunca incluyas documentos reales,
+contraseñas, tokens, volcados de base de datos ni payloads destructivos.
 
 ---
 
@@ -6872,7 +6856,6 @@ Contraseñas, OTP, service role, Stripe/OpenAI/API keys, claves de cifrado y tok
 
 Cada tabla/campo/evento/archivo debe indicar clase, propietario, retención y consumidores. La clase más alta domina un objeto compuesto.
 
-
 ---
 
 # Archivo: `legal/AI_ASSISTANT_DISCLAIMER.md`
@@ -6891,7 +6874,6 @@ El asistente ayuda a encontrar y explicar contenido aprobado de la plataforma. P
 - Para una decisión importante, revise la fuente oficial y consulte a un profesional autorizado.
 
 [REQUIRED: proveedor, tratamiento/retención y contacto para reportar.]
-
 
 ---
 
@@ -6948,7 +6930,6 @@ Reporte contenido; no confronte estafadores. Para peligro inmediato, contacte se
 
 Advertencia, restricción, suspensión o cierre según gravedad/reincidencia. [REQUIRED: plazos/apelación.]
 
-
 ---
 
 # Archivo: `legal/COOKIE_POLICY_TEMPLATE.md`
@@ -6997,7 +6978,6 @@ Desactivadas inicialmente. No añadir píxeles publicitarios sin revisión y con
 
 [REQUIRED.]
 
-
 ---
 
 # Archivo: `legal/DOCUMENT_PROCESSING_CONSENT_TEMPLATE.md`
@@ -7033,7 +7013,6 @@ Transferencias/proveedores: [REQUIRED]
 - [ ] Autorizo transferencia internacional indicada, cuando sea la base apropiada.
 
 No preseleccionar. Registrar versión, locale, timestamp y alcance. Si no existe base/consentimiento, no habilitar subida.
-
 
 ---
 
@@ -7077,7 +7056,6 @@ Mostrar cuándo existe comisión y cómo se verificó al proveedor. Una alianza 
 ## Independencia
 
 [REQUIRED: gobierno editorial, financiadores y conflictos.]
-
 
 ---
 
@@ -7201,25 +7179,31 @@ Fecha, historial y aviso de cambios materiales.
 
 [REQUIRED: privacidad, DPO, autoridad, representante internacional.]
 
-
 ---
 
 # Archivo: `legal/README.md`
 
-# Plantillas legales — no publicar sin revisión
+# Plantillas jurídicas internas — no son la versión publicada
 
-Estos documentos son borradores operativos para que el equipo jurídico conozca los flujos del producto. No constituyen asesoría jurídica ni están adaptados a una jurisdicción porque la entidad operadora todavía no está definida.
+Los archivos Markdown de esta carpeta siguen siendo plantillas internas con
+marcadores y no se renderizan en la aplicación.
+
+La versión pública vigente de Términos, Privacidad y Cookies está estructurada
+en `src/content/legal.ts`, en portugués y español, con versión inmutable y fecha
+de vigencia. La entidad informada es **Vwayaj ayisyen**, tipo **Ltda.**, Brasil,
+con domicilio público en São Paulo, Brasil.
 
 ## Reglas
 
 - Todo marcador `[REQUIRED: ...]` debe completarse.
-- Un abogado competente debe revisar cada idioma y jurisdicción.
+- Un abogado competente debe revisar cambios que amplíen el servicio o activen
+  pagos, documentos, asesoría profesional, IA, citas o comunidad.
 - La versión publicada debe almacenarse con ID, fecha, locale y hash.
 - Cambios materiales requieren nueva aceptación cuando corresponda.
-- Kreyòl debe estar disponible antes del lanzamiento.
+- Portugués y español son los idiomas jurídicos oficiales y equivalentes. Las
+  rutas en otros idiomas muestran claramente una versión oficial de respaldo.
 - No traducir automáticamente y publicar sin revisión.
 - La UI debe enlazar la versión aceptada por el usuario.
-
 
 ---
 
@@ -7296,7 +7280,6 @@ Canal de soporte/queja antes de chargeback, sin impedir derechos. [REQUIRED.]
 ## 10. Excepciones legales
 
 Nada limita derechos irrenunciables.
-
 
 ---
 
@@ -7446,7 +7429,6 @@ Se conservarán versiones. Cambios materiales se comunicarán y solicitarán nue
 
 [REQUIRED: soporte, legal, privacidad, quejas y autoridad de consumo.]
 
-
 ---
 
 # Archivo: `checklists/CODEX_COMPLETION_CHECKLIST.md`
@@ -7482,7 +7464,6 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 - [ ] `git status` limpio.
 - [ ] Secret scan de historial.
 - [ ] No mezcla con otros proyectos.
-
 
 ---
 
@@ -7548,28 +7529,42 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 - [ ] WhatsApp real.
 - [ ] Alianzas divulgadas.
 
-
 ---
 
 # Archivo: `checklists/LAUNCH_CHECKLIST.md`
 
 # Checklist de lanzamiento
 
+## Hito actual: sitio informativo y cuentas protegidas
+
+- [x] Dominio `vwayajayisyen.com` y marca Vwayaj Ayisyen.
+- [x] Identidad pública mínima del operador confirmada por el propietario.
+- [x] Términos, Privacidad y Cookies oficiales en español y portugués, con versión.
+- [x] Aceptaciones de Términos y Privacidad separadas, explícitas y firmadas.
+- [x] Registro, confirmación por email, Turnstile y centro de privacidad.
+- [x] Email oficial de envío y recepción para soporte/legal/promoción.
+- [x] RLS, CSP, secret scan, pruebas de base de datos, unitarias y E2E.
+- [x] Pagos, documentos, citas, comunidad, IA, video e intake público cerrados.
+- [ ] Revisión jurídica profesional antes de comercio o datos sensibles.
+- [ ] CNPJ, domicilio registral completo, fiscalidad y contratos antes de comercio.
+
+Los ítems generales no marcados debajo bloquean la función correspondiente, no el hito limitado descrito arriba.
+
 ## Propiedad y legal
 
-- [ ] Marca/dominio.
-- [ ] Entidad legal.
-- [ ] Alcance profesional.
-- [ ] Términos.
-- [ ] Privacidad.
+- [x] Marca/dominio.
+- [x] Entidad legal básica para identificación pública.
+- [x] Alcance actual definido como informativo, sin asesoría profesional.
+- [x] Términos.
+- [x] Privacidad.
 - [ ] Reembolsos.
-- [ ] Cookies.
-- [ ] Consentimientos.
+- [x] Cookies.
+- [x] Consentimientos de registro.
 - [ ] Comunidad.
 - [ ] IA.
 - [ ] Proveedores/DPA.
 - [ ] Facturación/impuestos.
-- [ ] Menores.
+- [x] Menores: cuentas 18+; funciones de datos sensibles desactivadas.
 - [ ] Retención.
 
 ## Producto
@@ -7580,12 +7575,12 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 - [ ] Cuestionario.
 - [ ] Paquetes.
 - [ ] WhatsApp.
-- [ ] Auth/portal.
+- [x] Auth/portal.
 - [ ] Admin.
 - [ ] Help/FAQ.
 - [ ] PWA.
-- [ ] Email.
-- [ ] Support.
+- [x] Email.
+- [x] Support.
 
 ## Contenido
 
@@ -7601,17 +7596,17 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 ## Seguridad
 
 - [ ] `SECURITY_CHECKLIST.md`.
-- [ ] RLS tests.
+- [x] RLS tests.
 - [ ] Auth/MFA.
 - [ ] Admin password changed.
 - [ ] Pentest.
 - [ ] Backups/restore.
 - [ ] Incident drill.
-- [ ] Scanner.
-- [ ] CSP.
-- [ ] Secret scan.
+- [ ] Scanner privado.
+- [x] CSP.
+- [x] Secret scan.
 - [ ] Rate limits.
-- [ ] Bot protection.
+- [x] Bot protection.
 - [ ] Access review.
 
 ## Pagos/operación
@@ -7630,8 +7625,8 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 
 ## Calidad
 
-- [ ] CI verde.
-- [ ] E2E.
+- [x] CI verde.
+- [x] E2E.
 - [ ] Navegadores/dispositivos.
 - [ ] WCAG.
 - [ ] Rendimiento.
@@ -7651,7 +7646,6 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 - [ ] Monitoreo.
 - [ ] Canal incidentes.
 - [ ] Revisión 24h/7d/30d.
-
 
 ---
 
@@ -7742,7 +7736,6 @@ Codex debe intentar ejecutar estos pasos con las sesiones autorizadas existentes
 - [ ] DPA/contratos.
 - [ ] Lista de subencargados.
 - [ ] Kill switches.
-
 
 ---
 
@@ -7896,7 +7889,6 @@ Codex debe intentar ejecutar estos pasos con las sesiones autorizadas existentes
 - [ ] vulnerability disclosure.
 - [ ] patch cadence.
 
-
 ---
 
 # Archivo: `planning/IMPLEMENTATION_PLAN.md`
@@ -7957,7 +7949,6 @@ Cada fase produce:
 - rollback;
 - bloqueos humanos.
 
-
 ---
 
 # Archivo: `qa/QA_README.md`
@@ -7969,7 +7960,6 @@ Cada fase produce:
 - Ningún test usa datos reales.
 - Los tests de seguridad negativos son bloqueantes.
 - Pruebas manuales de accesibilidad con hablantes de kreyòl son obligatorias antes del lanzamiento.
-
 
 ---
 
@@ -8050,7 +8040,6 @@ Alertas, runbooks, rollback, on-call/soporte.
 
 Ser exacto; no declarar lo que no se verificó.
 
-
 ---
 
 # Archivo: `operations/DEPLOYMENT_REPORT_TEMPLATE.md`
@@ -8093,7 +8082,6 @@ Métricas, alertas y ventana de observación.
 ## Resultado
 
 Éxito/rollback/degradado. Incidentes o follow-ups.
-
 
 ---
 
@@ -8154,7 +8142,6 @@ Revisar con abogado. No incluir datos personales innecesarios en este registro.
 
 Qué funcionó, qué falló, cambios sistémicos y fecha de revisión.
 
-
 ---
 
 # Archivo: `operations/KEY_ROTATION_RUNBOOK.md`
@@ -8211,7 +8198,6 @@ Qué funcionó, qué falló, cambios sistémicos y fecha de revisión.
 - No imprimir plaintext.
 - Proceso resumible.
 
-
 ---
 
 # Archivo: `operations/MAINTENANCE_SCHEDULE.md`
@@ -8267,7 +8253,6 @@ Qué funcionó, qué falló, cambios sistémicos y fecha de revisión.
 - licencias;
 - formación del personal.
 
-
 ---
 
 # Archivo: `operations/RESTORE_DRILL_TEMPLATE.md`
@@ -8309,7 +8294,6 @@ Qué funcionó, qué falló, cambios sistémicos y fecha de revisión.
 ## Hallazgos/acciones
 
 No guardar datos reales restaurados más tiempo del necesario.
-
 
 ---
 
@@ -8372,7 +8356,6 @@ Evitar:
 - Confirmar acciones.
 - Ofrecer resumen y detalle.
 
-
 ---
 
 # Archivo: `vercel/SECURITY_HEADERS.md`
@@ -8409,7 +8392,6 @@ Allowlist mínima para:
 
 Recoger reportes CSP en endpoint que no registre PII y aplicar rate limit.
 
-
 ---
 
 # Archivo: `starter/README.md`
@@ -8427,7 +8409,6 @@ Estos archivos no son una aplicación terminada. Codex debe crear el proyecto co
 5. Ejecutar tests/build.
 6. No pegar secretos.
 7. No usar una plantilla de otro proyecto.
-
 
 ---
 

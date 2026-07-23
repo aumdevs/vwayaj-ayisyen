@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 240510,
-      "sha256": "44085ceab24352f5b6d4b88ebd71c8d931d38960caed83f8b394dfb3edd136c3"
+      "size_bytes": 247050,
+      "sha256": "d894f817b5b0e18bc5875d0d92511b3c4d4648809a9aed2ceca20dcf97311ae0"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -74,8 +74,8 @@
     },
     {
       "path": "checklists/LAUNCH_CHECKLIST.md",
-      "size_bytes": 2705,
-      "sha256": "3c71c36b8896b1aa410d976c3b6a63d0a1c7d11cdf22f1f83fbf8f53bc37458c"
+      "size_bytes": 2713,
+      "sha256": "f7165dbb6ed5f9531de7eedcec30ff2201ba9071488d562e39a29eecdd5e9c2d"
     },
     {
       "path": "checklists/MANUAL_ACCOUNT_SETUP.md",
