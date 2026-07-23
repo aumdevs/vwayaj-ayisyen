@@ -51,7 +51,6 @@ La marca es editable desde settings. Evitar usar la bandera haitiana como decora
 - Package card.
 - WhatsApp CTA.
 - Breadcrumb.
-- Audio/read control.
 - Empty state.
 - Skeleton.
 - Error state.

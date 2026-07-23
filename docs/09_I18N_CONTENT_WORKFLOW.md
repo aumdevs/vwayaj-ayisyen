@@ -28,7 +28,6 @@
 - Si falta traducción, mostrar idioma disponible con aviso.
 - Contenido legal de otro idioma no se publica como traducción automática definitiva.
 - Términos como PIX, RUT, CPF, SSN, ITIN, CURP, RFC, CLABE y SPEI se mantienen y se explican.
-- Lectura de página usa la voz disponible del navegador; si no existe voz en kreyòl, informar.
 
 ## Estados de traducción
 

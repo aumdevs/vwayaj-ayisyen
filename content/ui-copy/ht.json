@@ -17,7 +17,6 @@
     "loading": "Tanpri tann…",
     "updated": "Dènye mizajou",
     "sources": "Sous yo",
-    "listen": "Koute paj sa a",
     "simple_summary": "Rezime fasil",
     "full_explanation": "Eksplikasyon konplè",
     "in_preparation": "Enfòmasyon sa a ap prepare."
@@ -123,7 +122,7 @@
     "not_found": "Nou pa jwenn paj sa a.",
     "forbidden": "Ou pa gen pèmisyon pou wè sa.",
     "rate_limited": "Gen twòp tantativ. Eseye pita.",
-    "feature_unavailable": "Fonksyon sa a poko disponib an sekirite.",
+    "feature_unavailable": "Nou pa kapab fini aksyon sa a kounye a. Eseye ankò pita.",
     "offline_private": "Ou bezwen koneksyon entènèt pou wè enfòmasyon prive sa yo."
   }
 }

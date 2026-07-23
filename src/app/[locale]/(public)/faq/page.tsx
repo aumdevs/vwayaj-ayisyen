@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { PageIntro } from "@/components/ui/page-intro";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 import { isLocale } from "@/lib/i18n/config";
 import { getProductCopy } from "@/lib/i18n/product-copy";
 
@@ -10,27 +10,38 @@ export default async function FaqPage({ params }: FaqPageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const dictionary = getDictionary(locale);
+  const experience = getExperienceCopy(locale);
   const copy = getProductCopy(locale);
   const items = [
     { question: copy.aboutTitle, answer: copy.aboutBody },
-    { question: copy.draftTitle, answer: copy.draftBody },
-    { question: dictionary.assessment.title, answer: copy.assessmentUnavailable },
-    { question: dictionary.packages.title, answer: copy.servicesBody }
+    { question: dictionary.nav.compare, answer: experience.compare.body },
+    { question: dictionary.assessment.title, answer: experience.assessment.pendingBody },
+    { question: dictionary.packages.title, answer: experience.services.availability },
+    { question: copy.privacyFirst, answer: copy.privacyFirstBody }
   ];
 
   return (
-    <div className="narrow-shell page-section">
-      <PageIntro title="FAQ" description={copy.reviewedOnlyBody} />
-      <div className="card-grid">
-        {items.map((item) => (
-          <details className="content-card" key={item.question}>
-            <summary>
-              <strong>{item.question}</strong>
-            </summary>
-            <p className="space-top-sm">{item.answer}</p>
-          </details>
-        ))}
-      </div>
-    </div>
+    <>
+      <section className="page-hero page-hero-faq">
+        <div className="shell page-hero-inner">
+          <p className="eyebrow">{dictionary.common.learn_more}</p>
+          <h1>FAQ</h1>
+          <p className="page-lede">{copy.reviewedOnlyBody}</p>
+        </div>
+      </section>
+      <section className="section section-white">
+        <div className="narrow-shell public-faq-list">
+          {items.map((item, index) => (
+            <details key={item.question}>
+              <summary>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {item.question}
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }

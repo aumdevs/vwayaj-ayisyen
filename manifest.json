@@ -1,6 +1,6 @@
 {
   "project": "vwayaj-ayisyen",
-  "generated_at": "2026-07-22",
+  "generated_at": "2026-07-23",
   "package_expected_file_count": 166,
   "manifest_excludes": [
     "manifest.json",
@@ -29,13 +29,13 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 237365,
-      "sha256": "4cc55b7a5b902aad5cc938ce468863edeefd3ceeafb056e26fc634b2ab8bf625"
+      "size_bytes": 237265,
+      "sha256": "9bb269e644267b51fb4216e6ff8e0162b3d7615fb617d256c402d8471c968f9c"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
-      "size_bytes": 19864,
-      "sha256": "25890998f851ba341f2917d6b841cd0f43ec70567d7fa972fd8acc62aa805f1f"
+      "size_bytes": 19764,
+      "sha256": "68bfdbabfbab34a09ce87e672480c249a9d299f07c324db0f5546843d64aecb3"
     },
     {
       "path": "FILE_INDEX.md",
@@ -124,28 +124,28 @@
     },
     {
       "path": "content/ui-copy/en.json",
-      "size_bytes": 4408,
-      "sha256": "38c11c7e58f8aaa49f4cd8c54364091ce5534daad3c44f90d2f994aa3955d170"
+      "size_bytes": 4396,
+      "sha256": "cc60a7e5c1878d10ad317ad4253257995e37b3e3650ea2d96a4d2ebbf8796044"
     },
     {
       "path": "content/ui-copy/es.json",
-      "size_bytes": 4693,
-      "sha256": "0df8e6cc4773cfb4de9914e986a3e30fc5997174284f743a05ad3de6aa3e3773"
+      "size_bytes": 4667,
+      "sha256": "b0fe31077a3bda63b39bc58234d31e363ea92c12b912ca6b6f0d1895e48b1b69"
     },
     {
       "path": "content/ui-copy/fr.json",
-      "size_bytes": 4857,
-      "sha256": "dda4078503a6b32986a6aa031f2305e430d92311c497500dab7a6ab532384e46"
+      "size_bytes": 4836,
+      "sha256": "271328db3459d9162cefc02530cedbc2a7a9f3b5c6cbf64c3828c2f1aae25e62"
     },
     {
       "path": "content/ui-copy/ht.json",
-      "size_bytes": 4376,
-      "sha256": "e730b19e896b25cd7ccb8e9f093294cd1be1a6f3488eca7c559bfa4fc1cdc6c3"
+      "size_bytes": 4361,
+      "sha256": "7087e940174ef80f9cff650ccf3d14c25475aab20fe1da65aad2fa22f67e75f2"
     },
     {
       "path": "content/ui-copy/pt.json",
-      "size_bytes": 4651,
-      "sha256": "229dcb6ea0a036a9fbb37254ede30a07c012521812ca8443b597383a6c40f4d3"
+      "size_bytes": 4631,
+      "sha256": "6fc35de82c7636b2cac8fd81b331a78f96cef25d4a6b67598f69eae155d9615a"
     },
     {
       "path": "design/COPY_AND_UX_GUIDELINES.md",
@@ -194,13 +194,13 @@
     },
     {
       "path": "docs/08_DESIGN_SYSTEM_ACCESSIBILITY.md",
-      "size_bytes": 2674,
-      "sha256": "5de32be000d46c1335f4f21fd7e8c79810e900d37bb24492785cdaf9317cdd61"
+      "size_bytes": 2652,
+      "sha256": "246cbd07f6fed91ed2513577231e5b59ac21974ac4cba6d70a666a6800b580ce"
     },
     {
       "path": "docs/09_I18N_CONTENT_WORKFLOW.md",
-      "size_bytes": 1666,
-      "sha256": "0f7ec59da3a614a4d6863bd776882c8e8428ffe658940a7a199a83e9e1ab6b5b"
+      "size_bytes": 1569,
+      "sha256": "d901449f6e6f9aa5f527a840f31f5e0476b54877344cc09ac35e8e39151aff57"
     },
     {
       "path": "docs/10_TECHNICAL_ARCHITECTURE.md",

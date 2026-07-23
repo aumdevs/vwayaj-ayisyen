@@ -447,7 +447,6 @@ Requisitos:
 - Videos con subtítulos y transcripción.
 - Botón WhatsApp persistente sin bloquear contenido.
 - Modo de bajo consumo de datos.
-- Opción “escuchar” mediante SpeechSynthesis como mejora progresiva, nunca como único acceso.
 - No depender sólo de colores, banderas o iconos.
 - Prueba con viewport móvil pequeño y conexión lenta.
 

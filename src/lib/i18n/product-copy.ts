@@ -2,7 +2,6 @@ import type { Locale } from "@/types/domain";
 
 type ProductCopy = {
   productName: string;
-  reviewBadge: string;
   reviewedOnly: string;
   reviewedOnlyBody: string;
   plainLanguage: string;
@@ -23,7 +22,6 @@ type ProductCopy = {
   draftTitle: string;
   draftBody: string;
   draftDetail: string;
-  noSources: string;
   compareBody: string;
   compareUnavailable: string;
   assessmentUnavailable: string;
@@ -34,14 +32,12 @@ type ProductCopy = {
   aboutBody: string;
   contactTitle: string;
   contactBody: string;
-  legalDraft: string;
   backToCountry: string;
 };
 
 const copy = {
   ht: {
     productName: "Vwayaj Ayisyen",
-    reviewBadge: "Revizyon obligatwa",
     reviewedOnly: "Sous ak dat vizib",
     reviewedOnlyBody:
       "Nou pibliye enfòmasyon sansib sèlman lè ekip la verifye sous, dat ak limit li yo.",
@@ -75,7 +71,6 @@ const copy = {
       "Estrikti a disponib, men ekip la dwe ajoute sous prensipal, dat ak revizyon pwofesyonèl anvan nenpòt enfòmasyon operasyonèl parèt.",
     draftDetail:
       "Nou pa ranpli espas sa a ak konsèy legal, pri oswa eksperyans kominotè ki pa verifye.",
-    noSources: "Pa gen sous apwouve ki pibliye pou seksyon sa a ankò.",
     compareBody: "Chwazi de a kat peyi. Chak nòt dwe gen eksplikasyon, sous ak dat.",
     compareUnavailable:
       "Done konparezon yo rete fèmen jiskaske metòd la, sous yo ak nòt yo fin revize.",
@@ -90,12 +85,10 @@ const copy = {
       "Platfòm sa a fèt pou ede kominote ayisyèn nan konprann opsyon, sous ak limit. Li pa ranplase konsèy yon pwofesyonèl otorize.",
     contactTitle: "Kontakte ekip la",
     contactBody: "Chanèl piblik la poko aktive. Pa voye dokiman, modpas, kòd oswa lòt done sansib.",
-    legalDraft: "Tèks sa a se yon espas teknik. Li dwe revize epi apwouve anvan lansman piblik.",
     backToCountry: "Retounen nan paj peyi a"
   },
   fr: {
     productName: "Vwayaj Ayisyen",
-    reviewBadge: "Révision obligatoire",
     reviewedOnly: "Sources et dates visibles",
     reviewedOnlyBody:
       "Les informations sensibles ne sont publiées qu’après vérification des sources, dates et limites.",
@@ -130,7 +123,6 @@ const copy = {
       "La structure est disponible, mais des sources primaires, des dates et une révision professionnelle sont requises.",
     draftDetail:
       "Aucun conseil juridique, prix ou témoignage communautaire non vérifié ne remplit cet espace.",
-    noSources: "Aucune source approuvée n’est encore publiée pour cette section.",
     compareBody:
       "Choisissez deux à quatre pays. Chaque note doit inclure une explication, une source et une date.",
     compareUnavailable:
@@ -149,13 +141,10 @@ const copy = {
     contactTitle: "Contacter l’équipe",
     contactBody:
       "Le canal public n’est pas encore activé. N’envoyez aucun document, mot de passe, code ou donnée sensible.",
-    legalDraft:
-      "Ce texte est un espace technique. Il doit être révisé et approuvé avant le lancement public.",
     backToCountry: "Retour au pays"
   },
   es: {
     productName: "Vwayaj Ayisyen",
-    reviewBadge: "Revisión obligatoria",
     reviewedOnly: "Fuentes y fechas visibles",
     reviewedOnlyBody:
       "La información sensible se publica solo después de verificar sus fuentes, fechas y límites.",
@@ -188,7 +177,6 @@ const copy = {
       "La estructura está disponible, pero faltan fuentes primarias, fechas y revisión profesional.",
     draftDetail:
       "No completamos este espacio con asesoría legal, precios ni experiencias comunitarias sin verificar.",
-    noSources: "Todavía no hay fuentes aprobadas publicadas para esta sección.",
     compareBody:
       "Elige entre dos y cuatro países. Cada nota debe incluir explicación, fuente y fecha.",
     compareUnavailable:
@@ -206,13 +194,10 @@ const copy = {
     contactTitle: "Contactar al equipo",
     contactBody:
       "El canal público aún no está activo. No envíes documentos, contraseñas, códigos ni datos sensibles.",
-    legalDraft:
-      "Este texto es un espacio técnico. Debe revisarse y aprobarse antes del lanzamiento público.",
     backToCountry: "Volver al país"
   },
   pt: {
     productName: "Vwayaj Ayisyen",
-    reviewBadge: "Revisão obrigatória",
     reviewedOnly: "Fontes e datas visíveis",
     reviewedOnlyBody:
       "Informações sensíveis só são publicadas após a verificação de fontes, datas e limites.",
@@ -244,7 +229,6 @@ const copy = {
       "A estrutura está disponível, mas faltam fontes primárias, datas e revisão profissional.",
     draftDetail:
       "Não preenchemos este espaço com orientação jurídica, preços ou relatos comunitários sem verificação.",
-    noSources: "Ainda não há fontes aprovadas publicadas para esta seção.",
     compareBody:
       "Escolha de dois a quatro países. Cada nota deve incluir explicação, fonte e data.",
     compareUnavailable:
@@ -262,13 +246,10 @@ const copy = {
     contactTitle: "Falar com a equipe",
     contactBody:
       "O canal público ainda não está ativo. Não envie documentos, senhas, códigos ou dados sensíveis.",
-    legalDraft:
-      "Este texto é um espaço técnico. Deve ser revisado e aprovado antes do lançamento público.",
     backToCountry: "Voltar ao país"
   },
   en: {
     productName: "Vwayaj Ayisyen",
-    reviewBadge: "Review required",
     reviewedOnly: "Visible sources and dates",
     reviewedOnlyBody:
       "Sensitive information is published only after its sources, dates and limits are verified.",
@@ -299,7 +280,6 @@ const copy = {
       "The structure is available, but primary sources, dates and professional review are still required.",
     draftDetail:
       "We do not fill this space with unverified legal guidance, prices or community experiences.",
-    noSources: "No approved sources have been published for this section yet.",
     compareBody:
       "Choose two to four countries. Every score must include an explanation, source and date.",
     compareUnavailable: "Data remains closed until the method, sources and scores are validated.",
@@ -316,8 +296,6 @@ const copy = {
     contactTitle: "Contact the team",
     contactBody:
       "The public channel is not active yet. Do not send documents, passwords, codes or sensitive data.",
-    legalDraft:
-      "This text is a technical placeholder. It must be reviewed and approved before public launch.",
     backToCountry: "Back to the country"
   }
 } satisfies Record<Locale, ProductCopy>;
