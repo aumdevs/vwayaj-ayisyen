@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-07-23",
-  "package_expected_file_count": 167,
+  "package_expected_file_count": 171,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 7931,
-      "sha256": "3d9fc118d6766cce0298f1b89876f73cd9df49894fe8b66ebdb2b23d472dd561"
+      "size_bytes": 8179,
+      "sha256": "f63883a620cf0905835842b5afb397e3e8213df5dfa17c7f5193821534249d62"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -831,6 +831,26 @@
       "path": "scripts/ci-enable-auth-signup.mjs",
       "size_bytes": 1354,
       "sha256": "26840a261722153993afe1fbda78d34c8f0c5eacd43f577a2bcbd1780b43aa90"
+    },
+    {
+      "path": "supabase/migrations/20260723140000_secure_registration_boundary.sql",
+      "size_bytes": 5180,
+      "sha256": "40d7e0b46c54e184fdf11990060f7cb423c92cce06a52e0feca16018073a33e0"
+    },
+    {
+      "path": "supabase/migrations/20260723143000_allow_signed_admin_provisioning.sql",
+      "size_bytes": 3015,
+      "sha256": "e54bdd51f07c37d80b7b3416df9a1849b7997aaa90101de548649731b82be65f"
+    },
+    {
+      "path": "supabase/tests/0003_registration_auth_hook.sql",
+      "size_bytes": 7900,
+      "sha256": "d2e4a7620f818c64703a42037540ed262474ca84338324a78dbbfffac12f6485"
+    },
+    {
+      "path": "scripts/lib/admin-provisioning-attestation.ts",
+      "size_bytes": 1269,
+      "sha256": "ccf86f92086dcf2cc1f8de4de5aa41fbfcd079dfb4e34b125a5f85527eb39357"
     }
   ]
 }
