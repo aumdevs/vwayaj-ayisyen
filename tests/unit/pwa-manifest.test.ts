@@ -30,6 +30,12 @@ describe("PWA manifest", () => {
       orientation: "any"
     });
     expect(value.shortcuts).toHaveLength(4);
+    expect(value.shortcuts).toContainEqual(
+      expect.objectContaining({
+        short_name: "Kont",
+        url: "/ht/portal?source=pwa-shortcut"
+      })
+    );
   });
 
   it("ships every required normal, maskable, monochrome and Apple icon size", () => {

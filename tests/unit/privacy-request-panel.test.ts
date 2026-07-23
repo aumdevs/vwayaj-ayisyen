@@ -132,6 +132,10 @@ describe("privacy administrator queue", () => {
     );
 
     expect(screen.getByRole("table", { name: "Solicitudes de privacidad abiertas" })).toBeVisible();
+    expect(screen.getByText("Acceso")).toBeVisible();
+    expect(screen.getByText("Recibida · pt")).toBeVisible();
+    expect(screen.queryByText("access")).not.toBeInTheDocument();
+    expect(screen.queryByText("received · pt")).not.toBeInTheDocument();
     expect(screen.getByText("00000000-0000-4000-8000-000000000124")).toBeVisible();
     expect(screen.getByLabelText("Método de verificación")).toBeVisible();
     expect(screen.getByLabelText("Resolución y fundamento de la decisión")).toBeVisible();
@@ -140,5 +144,34 @@ describe("privacy administrator queue", () => {
       "href",
       "mailto:legal@vwayajayisyen.com"
     );
+  });
+
+  it("uses Haitian Creole labels for request and status enums on the default admin route", () => {
+    const data: PrivacyAdminQueueData = {
+      available: true,
+      requests: [
+        {
+          createdAt: "2026-07-23T23:59:59.000Z",
+          id: "00000000-0000-4000-8000-000000000124",
+          locale: "pt",
+          requestType: "access",
+          status: "received",
+          updatedAt: "2026-07-23T23:59:59.000Z",
+          userId: "00000000-0000-4000-8000-000000000123"
+        }
+      ]
+    };
+
+    render(
+      createElement(PrivacyAdminQueue, {
+        action,
+        data,
+        legalEmail: "legal@vwayajayisyen.com",
+        locale: "ht"
+      })
+    );
+
+    expect(screen.getByText("Aksè")).toBeVisible();
+    expect(screen.getByText("Resevwa · pt")).toBeVisible();
   });
 });

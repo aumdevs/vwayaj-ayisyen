@@ -107,7 +107,7 @@ export default function manifest(): MetadataRoute.Manifest {
         name: "Kont mwen",
         short_name: "Kont",
         description: "Louvri aksè kont lan.",
-        url: "/ht/auth/sign-in?source=pwa-shortcut",
+        url: "/ht/portal?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
     ]

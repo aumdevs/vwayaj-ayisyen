@@ -35,7 +35,7 @@ export function MobileBottomNavigation({ locale }: { locale: Locale }) {
       key: "guides"
     },
     {
-      href: localizedPath(locale, "auth/sign-in"),
+      href: localizedPath(locale, "portal"),
       icon: CircleUserRound,
       label: copy[4],
       key: "account"

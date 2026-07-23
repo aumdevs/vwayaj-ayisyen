@@ -206,17 +206,15 @@ begin
     p_action => 'privacy_request_completed',
     p_target_table => 'data_subject_requests',
     p_target_id => p_request_id::text,
-    p_reason => v_resolution_summary,
+    p_reason => concat('terminal_status:', v_after.status::text),
     p_before => jsonb_build_object(
       'assigned_to', v_before.assigned_to,
       'completed_at', v_before.completed_at,
-      'identity_verification_method', v_before.identity_verification_method,
       'status', v_before.status
     ),
     p_after => jsonb_build_object(
       'assigned_to', v_after.assigned_to,
       'completed_at', v_after.completed_at,
-      'identity_verification_method', v_after.identity_verification_method,
       'status', v_after.status
     ),
     p_risk => 'high',

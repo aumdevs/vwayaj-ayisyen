@@ -373,6 +373,17 @@ select ok(
         actor_id = '00000000-0000-4000-8000-000000000042'::uuid
         and actor_role = 'admin'::public.app_role
         and risk_level = 'high'::public.risk_level
+        and reason = 'terminal_status:fulfilled'
+        and not (before_data ? 'identity_verification_method')
+        and not (after_data ? 'identity_verification_method')
+        and position(
+          'Identity was verified and the requested account data was delivered.'
+          in concat_ws(' ', reason, before_data::text, after_data::text, metadata::text)
+        ) = 0
+        and position(
+          'MFA session and email challenge'
+          in concat_ws(' ', reason, before_data::text, after_data::text, metadata::text)
+        ) = 0
       )
     from public.audit_log
     where action = 'privacy_request_completed'

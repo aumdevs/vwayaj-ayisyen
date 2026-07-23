@@ -20,7 +20,8 @@ const copy = {
     verification: "Metòd verifikasyon",
     verificationPlaceholder: "Eg.: sesyon MFA + konfimasyon imèl",
     summary: "Rezolisyon ak baz desizyon an",
-    summaryPlaceholder: "Ekri sa ki te verifye, sa ki te fèt ak rezon rezilta a.",
+    summaryPlaceholder: "Ekri aksyon an, rezilta a ak baz operasyonèl ki pa sansib.",
+    summaryHelp: "Pa mete pyès idantite, adrès, imèl oswa lòt done pèsonèl.",
     status: "Rezilta final",
     fulfilled: "Akonpli",
     denied: "Refize",
@@ -34,7 +35,9 @@ const copy = {
     verification: "Méthode de vérification",
     verificationPlaceholder: "Ex. : session MFA + confirmation par e-mail",
     summary: "Résolution et fondement de la décision",
-    summaryPlaceholder: "Indiquez ce qui a été vérifié, l’action réalisée et le motif du résultat.",
+    summaryPlaceholder: "Indiquez l’action, le résultat et le fondement opérationnel non sensible.",
+    summaryHelp:
+      "N’ajoutez ni pièce d’identité, ni adresse, ni e-mail, ni autre donnée personnelle.",
     status: "Résultat final",
     fulfilled: "Traitée",
     denied: "Refusée",
@@ -48,7 +51,8 @@ const copy = {
     verification: "Método de verificación",
     verificationPlaceholder: "Ej.: sesión MFA + confirmación por correo",
     summary: "Resolución y fundamento de la decisión",
-    summaryPlaceholder: "Registra qué se verificó, qué se hizo y el motivo del resultado.",
+    summaryPlaceholder: "Registra la acción, el resultado y el fundamento operativo no sensible.",
+    summaryHelp: "No incluyas identificaciones, direcciones, correos ni otros datos personales.",
     status: "Resultado final",
     fulfilled: "Atendida",
     denied: "Denegada",
@@ -62,7 +66,8 @@ const copy = {
     verification: "Método de verificação",
     verificationPlaceholder: "Ex.: sessão MFA + confirmação por e-mail",
     summary: "Resolução e fundamento da decisão",
-    summaryPlaceholder: "Registre o que foi verificado, a ação tomada e o motivo do resultado.",
+    summaryPlaceholder: "Registre a ação, o resultado e o fundamento operacional não sensível.",
+    summaryHelp: "Não inclua documentos, endereços, e-mails ou outros dados pessoais.",
     status: "Resultado final",
     fulfilled: "Atendida",
     denied: "Negada",
@@ -77,7 +82,8 @@ const copy = {
     verification: "Verification method",
     verificationPlaceholder: "Example: MFA session + email confirmation",
     summary: "Resolution and decision basis",
-    summaryPlaceholder: "Record what was verified, what was done, and why.",
+    summaryPlaceholder: "Record the action, outcome, and non-sensitive operational basis.",
+    summaryHelp: "Do not include IDs, addresses, email addresses, or other personal data.",
     status: "Final outcome",
     fulfilled: "Fulfilled",
     denied: "Denied",
@@ -96,6 +102,7 @@ export function PrivacyAdminResolutionForm({
 }: PrivacyAdminResolutionFormProps) {
   const [state, formAction, pending] = useActionState(action, initialState);
   const text = copy[locale];
+  const summaryHelpId = `privacy-summary-help-${requestId}`;
   const message =
     state.status === "invalid"
       ? text.invalid
@@ -122,6 +129,7 @@ export function PrivacyAdminResolutionForm({
       <label>
         <span>{text.summary}</span>
         <textarea
+          aria-describedby={summaryHelpId}
           maxLength={2000}
           minLength={10}
           name="resolution_summary"
@@ -130,6 +138,7 @@ export function PrivacyAdminResolutionForm({
           rows={3}
         />
       </label>
+      <small id={summaryHelpId}>{text.summaryHelp}</small>
       <label>
         <span>{text.status}</span>
         <select defaultValue="fulfilled" name="terminal_status" required>

@@ -92,6 +92,95 @@ const copy = {
   }
 } satisfies Record<Locale, Record<string, string>>;
 
+const requestTypeLabels = {
+  ht: {
+    access: "Aksè",
+    correct: "Koreksyon",
+    delete: "Efase",
+    export: "Pòtabilite / ekspòtasyon",
+    restrict: "Restriksyon",
+    object: "Opozisyon"
+  },
+  fr: {
+    access: "Accès",
+    correct: "Correction",
+    delete: "Suppression",
+    export: "Portabilité / export",
+    restrict: "Limitation",
+    object: "Opposition"
+  },
+  es: {
+    access: "Acceso",
+    correct: "Corrección",
+    delete: "Eliminación",
+    export: "Portabilidad / exportación",
+    restrict: "Restricción",
+    object: "Oposición"
+  },
+  pt: {
+    access: "Acesso",
+    correct: "Correção",
+    delete: "Eliminação",
+    export: "Portabilidade / exportação",
+    restrict: "Restrição",
+    object: "Oposição"
+  },
+  en: {
+    access: "Access",
+    correct: "Correction",
+    delete: "Deletion",
+    export: "Portability / export",
+    restrict: "Restriction",
+    object: "Objection"
+  }
+} satisfies Record<
+  Locale,
+  Record<PrivacyAdminQueueData["requests"][number]["requestType"], string>
+>;
+
+const requestStatusLabels = {
+  ht: {
+    received: "Resevwa",
+    identity_check: "Verifikasyon idantite",
+    in_progress: "An kou",
+    fulfilled: "Konplete",
+    denied: "Refize",
+    cancelled: "Anile"
+  },
+  fr: {
+    received: "Reçue",
+    identity_check: "Vérification d’identité",
+    in_progress: "En cours",
+    fulfilled: "Traitée",
+    denied: "Refusée",
+    cancelled: "Annulée"
+  },
+  es: {
+    received: "Recibida",
+    identity_check: "Verificación de identidad",
+    in_progress: "En proceso",
+    fulfilled: "Atendida",
+    denied: "Denegada",
+    cancelled: "Cancelada"
+  },
+  pt: {
+    received: "Recebida",
+    identity_check: "Verificação de identidade",
+    in_progress: "Em andamento",
+    fulfilled: "Atendida",
+    denied: "Negada",
+    cancelled: "Cancelada"
+  },
+  en: {
+    received: "Received",
+    identity_check: "Identity check",
+    in_progress: "In progress",
+    fulfilled: "Fulfilled",
+    denied: "Denied",
+    cancelled: "Cancelled"
+  }
+} satisfies Record<Locale, Record<PrivacyAdminQueueData["requests"][number]["status"], string>>;
+
 function formatTimestamp(value: string, locale: Locale) {
   const language = locale === "ht" ? "fr" : locale;
   return new Intl.DateTimeFormat(language, {
@@ -137,9 +226,9 @@ export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyA
           </div>
           {data.requests.map((request) => (
             <div className="privacy-admin-table-row" key={request.id} role="row">
-              <strong role="cell">{request.requestType}</strong>
+              <strong role="cell">{requestTypeLabels[locale][request.requestType]}</strong>
               <span role="cell">
-                {request.status} · {request.locale}
+                {requestStatusLabels[locale][request.status]} · {request.locale}
               </span>
               <time dateTime={request.createdAt} role="cell">
                 {formatTimestamp(request.createdAt, locale)}

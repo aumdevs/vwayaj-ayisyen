@@ -42,4 +42,12 @@ describe("offline cache policy", () => {
     expect(source).toContain("/_next/static/");
     expect(source).toContain("/images/");
   });
+
+  it("removes the legacy worker cache and reads fallbacks only from current caches", () => {
+    expect(source).toContain('const LEGACY_CACHE_NAMES = ["public-shell-v1"]');
+    expect(source).toContain("LEGACY_CACHE_NAMES.includes(key)");
+    expect(source).toContain("await pageCache.match(request)");
+    expect(source).toContain("await staticCache.match(OFFLINE_URL)");
+    expect(source).not.toContain("await caches.match(OFFLINE_URL)");
+  });
 });

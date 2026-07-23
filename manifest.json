@@ -889,13 +889,13 @@
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 7700,
-      "sha256": "6db53fa2206a91edc27cf92dd3bc7d1b65df304a4daa906ce0be0743cdeb4dab"
+      "size_bytes": 7575,
+      "sha256": "5cff480e74691d7ad6f25fd9a7ffc5cef5e9973451235f381c370f3c699df793"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 10908,
-      "sha256": "63b36096659c9cfd3d422a5f302bda0e19c5d0265ed5f0cf805e46660baa40fc"
+      "size_bytes": 11456,
+      "sha256": "185f2603d6ac5d85836760a861a9b8a59a2a703b7a4864b306a93208d3967654"
     }
   ]
 }

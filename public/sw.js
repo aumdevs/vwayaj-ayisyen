@@ -1,7 +1,8 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v3";
+const CACHE_VERSION = "v4";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
+const LEGACY_CACHE_NAMES = ["public-shell-v1"];
 const OFFLINE_URL = "/offline";
 const PRECACHE_URLS = [
   OFFLINE_URL,
@@ -48,7 +49,12 @@ async function networkFirst(request) {
     }
     return response;
   } catch {
-    return (await caches.match(request)) ?? (await caches.match(OFFLINE_URL));
+    const pageCache = await caches.open(PAGE_CACHE);
+    const cachedPage = await pageCache.match(request);
+    if (cachedPage) return cachedPage;
+
+    const staticCache = await caches.open(STATIC_CACHE);
+    return (await staticCache.match(OFFLINE_URL)) ?? Response.error();
   }
 }
 
@@ -80,7 +86,9 @@ self.addEventListener("activate", (event) => {
         Promise.all(
           keys
             .filter(
-              (key) => key.startsWith(CACHE_PREFIX) && ![STATIC_CACHE, PAGE_CACHE].includes(key)
+              (key) =>
+                LEGACY_CACHE_NAMES.includes(key) ||
+                (key.startsWith(CACHE_PREFIX) && ![STATIC_CACHE, PAGE_CACHE].includes(key))
             )
             .map((key) => caches.delete(key))
         )

@@ -28,9 +28,17 @@ test("desktop and mobile expose their intended navigation shells", async ({ page
     await expect(bottomNavigation).toBeVisible();
     await expect(desktopHeader).toBeHidden();
     await expect(bottomNavigation.getByRole("link")).toHaveCount(5);
+    await expect(bottomNavigation.getByRole("link", { name: "Kont" })).toHaveAttribute(
+      "href",
+      "/ht/portal"
+    );
     await page.getByRole("button", { name: "Plis" }).click();
     await expect(page.getByRole("dialog", { name: "Plis" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Konfidansyalite" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Kont mwen" })).toHaveAttribute(
+      "href",
+      "/ht/portal"
+    );
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog", { name: "Plis" })).toHaveCount(0);
   } else {
@@ -80,11 +88,22 @@ test("manifest exposes install assets and the controlled offline surface", async
 }) => {
   const manifest = await request.get("/manifest.webmanifest");
   expect(manifest.ok()).toBe(true);
-  await expect.poll(async () => (await manifest.json()).display).toBe("standalone");
+  const manifestBody = (await manifest.json()) as {
+    display?: string;
+    shortcuts?: { short_name?: string; url?: string }[];
+  };
+  expect(manifestBody.display).toBe("standalone");
+  expect(manifestBody.shortcuts).toContainEqual(
+    expect.objectContaining({
+      short_name: "Kont",
+      url: "/ht/portal?source=pwa-shortcut"
+    })
+  );
 
   await page.goto("/offline");
   await expect(page.getByRole("heading", { name: "Ou pa konekte kounye a" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Eseye ankò" })).toBeVisible();
+  await expect(page.locator("form[data-offline-retry]")).toHaveAttribute("action", "");
   await expect(page.getByRole("link", { name: /Gade kontni/ })).toHaveAttribute(
     "href",
     "/ht/guides"

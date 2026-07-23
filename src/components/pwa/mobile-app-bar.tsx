@@ -164,7 +164,7 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
     [text.faq, "faq"],
     [text.contact, "contact"],
     [text.about, "about"],
-    [text.account, "auth/sign-in"],
+    [text.account, "portal"],
     [text.privacy, "legal/privacy"],
     [text.terms, "legal/terms"],
     [text.editorial, "legal/editorial"]

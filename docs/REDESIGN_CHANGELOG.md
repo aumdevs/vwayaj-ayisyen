@@ -56,7 +56,7 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 
 ## Seguridad y QA verificados
 
-- 74 pruebas unitarias aprobadas;
+- 76 pruebas unitarias aprobadas;
 - 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
 - 79 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
@@ -70,10 +70,13 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 - manifest con `id`, scope, standalone, tema blanco, shortcuts, iconos y screenshots;
 - iconos 48–512, maskable, monochrome, favicon y Apple Touch Icon;
 - caché versionada sólo para navegación/activos públicos;
+- limpieza explícita de cachés heredadas y fallback limitado a la versión vigente;
 - exclusión de APIs, Auth, privado, Authorization, `private` y `no-store`;
 - actualización sólo tras acción explícita;
+- reintento offline nativo, funcional incluso sin hidratación de JavaScript;
 - invitación una vez por sesión y ocultamiento en standalone;
-- navegación inferior y App Bar en teléfono/tableta táctil;
+- navegación inferior y App Bar en teléfono/tableta táctil, con acceso de cuenta dirigido al portal;
+- cola de privacidad localizada y auditoría terminal mínima, sin copiar texto libre ni método de verificación;
 - evidencia en `docs/screenshots/pwa-acceptance/`.
 
 ## Preview verificado
