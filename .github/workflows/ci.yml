@@ -106,6 +106,11 @@ jobs:
             docker exec -i supabase_db_vwayaj-ayisyen \
               psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
               --set registration_key="$REGISTRATION_GATE_SIGNING_KEY"
+      - name: Allow terms verification only in the ephemeral E2E stack
+        run: |
+          docker exec supabase_db_vwayaj-ayisyen \
+            psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
+            --command "grant select (id, terms_version, terms_accepted_at) on public.profiles to service_role;"
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env
