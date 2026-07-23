@@ -1,8 +1,16 @@
--- Bind public signup to the published Terms and Privacy Policy and persist
--- an auditable consent record for each document. Administrator provisioning
--- remains allowed by the separate signed bootstrap attestation and never
--- fabricates public legal acceptance.
+-- Require distinct Terms and Privacy controls in the signed registration
+-- attestation. Registration evidence remains server-verified, and browser
+-- sessions cannot create their own Terms or Privacy consent records.
 begin;
+
+drop policy if exists consent_insert_self on public.consent_records;
+drop policy if exists consent_insert_self_non_registration on public.consent_records;
+
+create policy consent_insert_self_non_registration on public.consent_records
+for insert to authenticated with check (
+  user_id = auth.uid()
+  and consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
+);
 
 create or replace function private.registration_attestation_is_valid(
   p_email text,

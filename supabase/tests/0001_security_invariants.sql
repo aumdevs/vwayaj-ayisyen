@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(19);
+select plan(21);
 
 select ok(
   not exists (
@@ -147,6 +147,32 @@ select ok(
       and qual like '%auth.uid()%'
   ),
   'Avatar owners retain folder-scoped SELECT access required for mutations'
+);
+
+select ok(
+  not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'consent_records'
+      and policyname = 'consent_insert_self'
+  ),
+  'The broad self-service consent insert policy is absent'
+);
+
+select ok(
+  exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'consent_records'
+      and policyname = 'consent_insert_self_non_registration'
+      and cmd = 'INSERT'
+      and 'authenticated' = any(roles)
+      and with_check like '%terms%'
+      and with_check like '%privacy%'
+  ),
+  'Authenticated browser inserts exclude Terms and Privacy evidence'
 );
 
 select * from finish();

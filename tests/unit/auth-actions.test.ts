@@ -52,6 +52,7 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
+        accept_privacy: "yes",
         accept_terms: "yes",
         email: "new@example.com",
         locale: "ht",
@@ -69,6 +70,25 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
+        accept_privacy: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("requires a distinct privacy acknowledgement before calling Supabase signup", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      { status: "idle" },
+      formData({
+        accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
@@ -87,6 +107,7 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
+        accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "New@Example.COM",
@@ -109,10 +130,11 @@ describe("Auth CAPTCHA enforcement", () => {
 
     const metadata = signupRequest.options.data;
     expect(metadata).toMatchObject({
-      acceptance_mechanism: "signup_checkbox",
       legal_locale: "es",
       preferred_locale: "ht",
+      privacy_acceptance_mechanism: "signup_privacy_acknowledgement_checkbox",
       privacy_version: privacyVersion,
+      terms_acceptance_mechanism: "signup_terms_checkbox",
       terms_version: termsVersion
     });
     expect(metadata.registration_nonce).toMatch(
@@ -128,7 +150,8 @@ describe("Auth CAPTCHA enforcement", () => {
           metadata.terms_version,
           metadata.privacy_version,
           metadata.legal_locale,
-          metadata.acceptance_mechanism,
+          metadata.terms_acceptance_mechanism,
+          metadata.privacy_acceptance_mechanism,
           metadata.terms_accepted_at,
           metadata.registration_nonce
         ].join("\n"),
@@ -148,6 +171,7 @@ describe("Auth CAPTCHA enforcement", () => {
     const result = await signUpAction(
       { status: "idle" },
       formData({
+        accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",

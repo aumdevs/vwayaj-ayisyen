@@ -2,8 +2,10 @@ export type PrivacyCenterData = {
   available: boolean;
   profile: {
     privacyAcceptedAt: string | null;
+    privacyLocale: "es" | "pt" | null;
     privacyVersion: string | null;
     termsAcceptedAt: string | null;
+    termsLocale: "es" | "pt" | null;
     termsVersion: string | null;
   } | null;
   requests: {

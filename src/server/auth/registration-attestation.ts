@@ -6,16 +6,18 @@ import { getTurnstileSiteKey, isPublicRegistrationEnabled } from "@/lib/config/r
 
 const TERMS_VERSION_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const MINIMUM_SIGNING_KEY_LENGTH = 32;
-const ACCEPTANCE_MECHANISM = "signup_checkbox";
+const TERMS_ACCEPTANCE_MECHANISM = "signup_terms_checkbox";
+const PRIVACY_ACCEPTANCE_MECHANISM = "signup_privacy_acknowledgement_checkbox";
 
 export type RegistrationAttestation = {
-  acceptanceMechanism: typeof ACCEPTANCE_MECHANISM;
   acceptedAt: string;
   email: string;
   legalLocale: OfficialLegalLocale;
+  privacyAcceptanceMechanism: typeof PRIVACY_ACCEPTANCE_MECHANISM;
   privacyVersion: string;
   registrationNonce: string;
   registrationSignature: string;
+  termsAcceptanceMechanism: typeof TERMS_ACCEPTANCE_MECHANISM;
   termsVersion: string;
 };
 
@@ -67,7 +69,8 @@ export function createRegistrationAttestation(
     termsVersion,
     privacyVersion,
     legalLocale,
-    ACCEPTANCE_MECHANISM,
+    TERMS_ACCEPTANCE_MECHANISM,
+    PRIVACY_ACCEPTANCE_MECHANISM,
     acceptedAt,
     registrationNonce
   ].join("\n");
@@ -76,13 +79,14 @@ export function createRegistrationAttestation(
     .digest("hex");
 
   return {
-    acceptanceMechanism: ACCEPTANCE_MECHANISM,
     acceptedAt,
     email: normalizedEmail,
     legalLocale,
+    privacyAcceptanceMechanism: PRIVACY_ACCEPTANCE_MECHANISM,
     privacyVersion,
     registrationNonce,
     registrationSignature,
+    termsAcceptanceMechanism: TERMS_ACCEPTANCE_MECHANISM,
     termsVersion
   };
 }

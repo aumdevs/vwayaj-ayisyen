@@ -74,8 +74,8 @@
     },
     {
       "path": "checklists/LAUNCH_CHECKLIST.md",
-      "size_bytes": 1614,
-      "sha256": "6d497b4d784a0e812015f084380939d550bdd4c14224ec5b2e28cde2a0661622"
+      "size_bytes": 2705,
+      "sha256": "3c71c36b8896b1aa410d976c3b6a63d0a1c7d11cdf22f1f83fbf8f53bc37458c"
     },
     {
       "path": "checklists/MANUAL_ACCOUNT_SETUP.md",
@@ -294,8 +294,8 @@
     },
     {
       "path": "docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md",
-      "size_bytes": 4414,
-      "sha256": "d1814b0c70d8f019dc395eb07d69f95a12f36ba11f9a51567638b5985dec85f7"
+      "size_bytes": 5773,
+      "sha256": "8daeeaa937854e6a2c7b63e1fb7d9402499bc8449465848946a8e2b3e9a60bbe"
     },
     {
       "path": "docs/29_IMPLEMENTATION_ROADMAP.md",
@@ -779,8 +779,8 @@
     },
     {
       "path": "supabase/migrations/0008_row_level_security.sql",
-      "size_bytes": 41688,
-      "sha256": "5057c30045062726e1ab7c9c0cf2fd2cd07b8c38acd8cd8d9528d8942935fe1e"
+      "size_bytes": 41798,
+      "sha256": "d1804ce13d23a1d64f502e9a385d499133838fd49eaecb3aac1c8657cc307710"
     },
     {
       "path": "supabase/migrations/0009_storage_buckets_and_policies.sql",
@@ -809,8 +809,8 @@
     },
     {
       "path": "supabase/tests/0001_security_invariants.sql",
-      "size_bytes": 4029,
-      "sha256": "17590440def9dcb9382b7df6a22e476b88b7bdc8c7b121bfb52acb7e0995d04b"
+      "size_bytes": 4680,
+      "sha256": "734d4c57582732a124e82438fd4e2769d7c312337a6486d06800c60d2670a069"
     },
     {
       "path": "supabase/tests/0002_public_content_rls.sql",
@@ -844,8 +844,8 @@
     },
     {
       "path": "supabase/tests/0003_registration_auth_hook.sql",
-      "size_bytes": 12423,
-      "sha256": "233c5289824f64fc0fc25585684963019091db319426ef74e21b85d31eda1736"
+      "size_bytes": 12890,
+      "sha256": "e6b1bc722cdbd506e778713a4c4e6f0aceba041885782cb7a4a526d29b7002cf"
     },
     {
       "path": "scripts/lib/admin-provisioning-attestation.ts",
@@ -854,8 +854,8 @@
     },
     {
       "path": "supabase/migrations/20260723165325_persist_versioned_terms_and_privacy_acceptance.sql",
-      "size_bytes": 5590,
-      "sha256": "83f17c7b791748d6bbf7cc309c4726485d899dbe51594173c1e1966be01abed5"
+      "size_bytes": 5951,
+      "sha256": "b4bf4ffd1caac5e6524f21573e5b30e89e9b1d826e6df8ebce0304c293d09a13"
     },
     {
       "path": "supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql",

@@ -161,7 +161,8 @@ signed as (
           terms_version,
           privacy_version,
           legal_locale,
-          'signup_checkbox',
+          'signup_terms_checkbox',
+          'signup_privacy_acknowledgement_checkbox',
           accepted_at,
           nonce
         ),
@@ -184,14 +185,14 @@ select
       email,
       'user_metadata',
       jsonb_build_object(
-        'acceptance_mechanism',
-        'signup_checkbox',
         'legal_locale',
         legal_locale,
         'preferred_locale',
         'ht',
         'privacy_accepted_at',
         accepted_at,
+        'privacy_acceptance_mechanism',
+        'signup_privacy_acknowledgement_checkbox',
         'privacy_version',
         privacy_version,
         'registration_nonce',
@@ -200,6 +201,8 @@ select
         signature,
         'terms_accepted_at',
         accepted_at,
+        'terms_acceptance_mechanism',
+        'signup_terms_checkbox',
         'terms_version',
         terms_version
       )
@@ -463,8 +466,15 @@ select ok(
       c.granted
       and c.locale::text = v.legal_locale
       and c.evidence_hash is not null
-      and c.scope ->> 'mechanism' = 'signup_checkbox'
-      and c.scope ->> 'combined_acceptance' = 'true'
+      and c.scope ->> 'separate_acceptance' = 'true'
+      and case c.consent_type
+        when 'terms'::public.consent_type
+          then c.scope ->> 'mechanism' = 'signup_terms_checkbox'
+        when 'privacy'::public.consent_type
+          then c.scope ->> 'mechanism' = 'signup_privacy_acknowledgement_checkbox'
+            and c.scope ->> 'acceptance_kind' = 'acknowledgement'
+        else false
+      end
     )
     from public.consent_records c
     where c.user_id = v.user_id

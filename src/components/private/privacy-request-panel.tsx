@@ -236,6 +236,20 @@ function formatDate(value: string, locale: Locale) {
 export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequestPanelProps) {
   const [state, action, pending] = useActionState(submitPrivacyRequestAction, initialState);
   const text = copy[locale];
+  const termsHref =
+    data.profile?.termsLocale && data.profile.termsVersion
+      ? {
+          pathname: localizedPath(data.profile.termsLocale, "legal/terms"),
+          query: { version: data.profile.termsVersion }
+        }
+      : null;
+  const privacyHref =
+    data.profile?.privacyLocale && data.profile.privacyVersion
+      ? {
+          pathname: localizedPath(data.profile.privacyLocale, "legal/privacy"),
+          query: { version: data.profile.privacyVersion }
+        }
+      : null;
   const message = !data.available
     ? text.unavailable
     : state.status === "submitted"
@@ -255,26 +269,30 @@ export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequest
           <FileCheck2 aria-hidden="true" size={23} />
           <h2>{text.accepted}</h2>
         </header>
-        {data.profile?.termsVersion || data.profile?.privacyVersion ? (
+        {termsHref || privacyHref ? (
           <div className="privacy-acceptance-grid">
-            <Link href={localizedPath(locale, "legal/terms")}>
-              <strong>{text.terms}</strong>
-              <code>{data.profile.termsVersion ?? "—"}</code>
-              <small>
-                {data.profile.termsAcceptedAt
-                  ? formatDate(data.profile.termsAcceptedAt, locale)
-                  : "—"}
-              </small>
-            </Link>
-            <Link href={localizedPath(locale, "legal/privacy")}>
-              <strong>{text.privacy}</strong>
-              <code>{data.profile.privacyVersion ?? "—"}</code>
-              <small>
-                {data.profile.privacyAcceptedAt
-                  ? formatDate(data.profile.privacyAcceptedAt, locale)
-                  : "—"}
-              </small>
-            </Link>
+            {termsHref ? (
+              <Link href={termsHref} hrefLang={data.profile?.termsLocale ?? undefined}>
+                <strong>{text.terms}</strong>
+                <code>{data.profile?.termsVersion}</code>
+                <small>
+                  {data.profile?.termsAcceptedAt
+                    ? formatDate(data.profile.termsAcceptedAt, locale)
+                    : "—"}
+                </small>
+              </Link>
+            ) : null}
+            {privacyHref ? (
+              <Link href={privacyHref} hrefLang={data.profile?.privacyLocale ?? undefined}>
+                <strong>{text.privacy}</strong>
+                <code>{data.profile?.privacyVersion}</code>
+                <small>
+                  {data.profile?.privacyAcceptedAt
+                    ? formatDate(data.profile.privacyAcceptedAt, locale)
+                    : "—"}
+                </small>
+              </Link>
+            ) : null}
           </div>
         ) : (
           <p>{text.noAcceptance}</p>

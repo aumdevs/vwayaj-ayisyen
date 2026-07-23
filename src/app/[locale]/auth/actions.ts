@@ -84,8 +84,11 @@ export async function signUpAction(
     password: formData.get("password"),
     captchaToken: formData.get("captcha_token")
   });
-  const accepted = formData.get("accept_terms") === "yes";
-  if (!locale || !parsed.success || !accepted) return { status: "invalid" };
+  const acceptedTerms = formData.get("accept_terms") === "yes";
+  const acknowledgedPrivacy = formData.get("accept_privacy") === "yes";
+  if (!locale || !parsed.success || !acceptedTerms || !acknowledgedPrivacy) {
+    return { status: "invalid" };
+  }
 
   const attestation = createRegistrationAttestation(
     parsed.data.email,
@@ -104,14 +107,15 @@ export async function signUpAction(
       captchaToken: parsed.data.captchaToken,
       emailRedirectTo: callback.toString(),
       data: {
-        acceptance_mechanism: attestation.acceptanceMechanism,
         legal_locale: attestation.legalLocale,
         preferred_locale: locale,
         privacy_accepted_at: attestation.acceptedAt,
+        privacy_acceptance_mechanism: attestation.privacyAcceptanceMechanism,
         privacy_version: attestation.privacyVersion,
         registration_nonce: attestation.registrationNonce,
         registration_signature: attestation.registrationSignature,
         terms_accepted_at: attestation.acceptedAt,
+        terms_acceptance_mechanism: attestation.termsAcceptanceMechanism,
         terms_version: attestation.termsVersion
       }
     }

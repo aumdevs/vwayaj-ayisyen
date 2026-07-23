@@ -789,19 +789,19 @@ const portugueseCookies: LegalDocumentContent = {
   ]
 };
 
-const legalContent: Record<
+const legalContentByVersion: Record<
   OfficialLegalLocale,
-  Record<PublishedLegalDocument, LegalDocumentContent>
+  Record<PublishedLegalDocument, Readonly<Record<string, LegalDocumentContent>>>
 > = {
   es: {
-    terms: spanishTerms,
-    privacy: spanishPrivacy,
-    cookies: spanishCookies
+    terms: { [spanishTerms.version]: spanishTerms },
+    privacy: { [spanishPrivacy.version]: spanishPrivacy },
+    cookies: { [spanishCookies.version]: spanishCookies }
   },
   pt: {
-    terms: portugueseTerms,
-    privacy: portuguesePrivacy,
-    cookies: portugueseCookies
+    terms: { [portugueseTerms.version]: portugueseTerms },
+    privacy: { [portuguesePrivacy.version]: portuguesePrivacy },
+    cookies: { [portugueseCookies.version]: portugueseCookies }
   }
 };
 
@@ -815,7 +815,8 @@ export function getOfficialLegalLocale(locale: Locale): OfficialLegalLocale {
 
 export function getLegalDocumentContent(
   document: PublishedLegalDocument,
-  locale: Locale
-): LegalDocumentContent {
-  return legalContent[getOfficialLegalLocale(locale)][document];
+  locale: Locale,
+  version: string = LEGAL_VERSIONS[document]
+): LegalDocumentContent | null {
+  return legalContentByVersion[getOfficialLegalLocale(locale)][document][version] ?? null;
 }

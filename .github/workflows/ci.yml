@@ -111,7 +111,7 @@ jobs:
         run: |
           docker exec supabase_db_vwayaj-ayisyen \
             psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
-            --command "grant select (id, terms_version, privacy_version, terms_accepted_at, privacy_accepted_at) on public.profiles to service_role; grant select (user_id, consent_type, policy_version, locale, granted, evidence_hash) on public.consent_records to service_role;"
+            --command "grant select (id, terms_version, privacy_version, terms_accepted_at, privacy_accepted_at) on public.profiles to service_role; grant select (user_id, consent_type, policy_version, locale, granted, evidence_hash, scope) on public.consent_records to service_role;"
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env

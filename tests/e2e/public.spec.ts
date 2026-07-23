@@ -29,7 +29,7 @@ test("official legal center publishes Spanish and Portuguese documents without p
   ] as const;
 
   for (const [path, heading, version] of documents) {
-    await page.goto(path);
+    await page.goto(`${path}?version=${version}`);
     await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
     await expect(page.getByText(version, { exact: true }).first()).toBeVisible();
     await expect(page.locator("body")).toContainText("legal@vwayajayisyen.com");
@@ -41,6 +41,16 @@ test("official legal center publishes Spanish and Portuguese documents without p
       true
     );
   }
+
+  await page.goto("/ht/legal/terms?version=terms-2026-07-23-v1");
+  await expect(page.locator(".page-hero-inner")).toHaveAttribute("lang", "es");
+  await expect(page.getByRole("link", { name: "Português" })).toHaveAttribute(
+    "href",
+    "/pt/legal/terms?version=terms-2026-07-23-v1"
+  );
+
+  const missingVersion = await page.goto("/es/legal/terms?version=terms-obsolete");
+  expect(missingVersion?.status()).toBe(404);
 });
 
 test("comparison accepts a safe selection without inventing scores", async ({ page }) => {
@@ -66,6 +76,7 @@ test("public registration renders the protected account form when launch gates a
   await expect(page.locator("#auth-email")).toBeVisible();
   await expect(page.locator("#auth-password")).toBeVisible();
   await expect(page.locator('input[name="accept_terms"]')).toBeVisible();
+  await expect(page.locator('input[name="accept_privacy"]')).toBeVisible();
   await expect(page.getByRole("link", { name: "Kondisyon itilizasyon" })).toHaveAttribute(
     "href",
     "/ht/legal/terms"
@@ -107,6 +118,7 @@ test("public registration crosses the live Auth hook and persists verified terms
     await page.locator("#auth-email").fill(email);
     await page.locator("#auth-password").fill("Secure-E2E-Password-2026!");
     await page.locator("#auth-accept-terms").check();
+    await page.locator("#auth-accept-privacy").check();
     await expect(page.getByRole("button", { name: "Kreye kont" })).toBeEnabled({
       timeout: 20_000
     });
@@ -136,7 +148,7 @@ test("public registration crosses the live Auth hook and persists verified terms
 
     const { data: consents, error: consentError } = await admin
       .from("consent_records")
-      .select("consent_type, policy_version, locale, granted, evidence_hash")
+      .select("consent_type, policy_version, locale, granted, evidence_hash, scope")
       .eq("user_id", userId!)
       .order("consent_type");
     expect(consentError).toBeNull();
@@ -146,14 +158,23 @@ test("public registration crosses the live Auth hook and persists verified terms
         evidence_hash: expect.any(String),
         granted: true,
         locale: "es",
-        policy_version: termsVersion
+        policy_version: termsVersion,
+        scope: expect.objectContaining({
+          mechanism: "signup_terms_checkbox",
+          separate_acceptance: true
+        })
       }),
       expect.objectContaining({
         consent_type: "privacy",
         evidence_hash: expect.any(String),
         granted: true,
         locale: "es",
-        policy_version: privacyVersion
+        policy_version: privacyVersion,
+        scope: expect.objectContaining({
+          acceptance_kind: "acknowledgement",
+          mechanism: "signup_privacy_acknowledgement_checkbox",
+          separate_acceptance: true
+        })
       })
     ]);
   } finally {

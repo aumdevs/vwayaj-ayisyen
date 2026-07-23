@@ -109,6 +109,7 @@ export type ExperienceCopy = {
     hidePassword: string;
     passwordHelp: string;
     acceptTerms: string;
+    acknowledgePrivacy: string;
     termsLink: string;
     privacyLink: string;
     termsVersionLabel: string;
@@ -278,6 +279,7 @@ const copy = {
       hidePassword: "Kache modpas",
       passwordHelp: "Omwen 12 karaktè ak yon lèt majiskil, yon miniskil, yon chif ak yon senbòl.",
       acceptTerms: "Mwen dakò kontinye selon kondisyon ki pibliye yo",
+      acknowledgePrivacy: "Mwen konfime mwen li politik konfidansyalite a",
       termsLink: "Kondisyon itilizasyon",
       privacyLink: "Konfidansyalite",
       termsVersionLabel: "Vèsyon kondisyon yo",
@@ -451,6 +453,7 @@ const copy = {
       hidePassword: "Masquer le mot de passe",
       passwordHelp: "Au moins 12 caractères, avec majuscule, minuscule, chiffre et symbole.",
       acceptTerms: "J’accepte de continuer selon les conditions publiées",
+      acknowledgePrivacy: "Je confirme avoir lu la politique de confidentialité",
       termsLink: "Conditions d’utilisation",
       privacyLink: "Confidentialité",
       termsVersionLabel: "Version des conditions",
@@ -626,6 +629,7 @@ const copy = {
       hidePassword: "Ocultar contraseña",
       passwordHelp: "Al menos 12 caracteres, con mayúscula, minúscula, número y símbolo.",
       acceptTerms: "Acepto continuar según las condiciones publicadas",
+      acknowledgePrivacy: "Confirmo que he leído la Política de Privacidad",
       termsLink: "Condiciones de uso",
       privacyLink: "Privacidad",
       termsVersionLabel: "Versión de las condiciones",
@@ -798,6 +802,7 @@ const copy = {
       hidePassword: "Ocultar senha",
       passwordHelp: "Pelo menos 12 caracteres, com maiúscula, minúscula, número e símbolo.",
       acceptTerms: "Aceito continuar conforme as condições publicadas",
+      acknowledgePrivacy: "Confirmo que li a Política de Privacidade",
       termsLink: "Termos de uso",
       privacyLink: "Privacidade",
       termsVersionLabel: "Versão dos termos",
@@ -961,6 +966,7 @@ const copy = {
       hidePassword: "Hide password",
       passwordHelp: "At least 12 characters with uppercase, lowercase, a number and a symbol.",
       acceptTerms: "I agree to continue under the published terms",
+      acknowledgePrivacy: "I confirm that I have read the Privacy Policy",
       termsLink: "Terms of use",
       privacyLink: "Privacy",
       termsVersionLabel: "Terms version",

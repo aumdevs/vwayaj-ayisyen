@@ -110,27 +110,36 @@ const officialLanguageNotice: Record<Locale, string> = {
   en: "Official legal documents are available in Spanish and Portuguese. This page shows the Spanish version."
 };
 
-type LegalPageProps = { params: Promise<{ locale: string; document: string }> };
+type LegalPageProps = {
+  params: Promise<{ locale: string; document: string }>;
+  searchParams: Promise<{ version?: string | string[] }>;
+};
 
 export function generateStaticParams() {
   return documents.map((document) => ({ document }));
 }
 
-export default async function LegalPage({ params }: LegalPageProps) {
+export default async function LegalPage({ params, searchParams }: LegalPageProps) {
   const { locale, document } = await params;
+  const query = await searchParams;
   if (!isLocale(locale) || !documents.some((item) => item === document)) notFound();
   const legalDocument = document as LegalDocument;
   const dictionary = getDictionary(locale);
   const status = legalStatus[locale];
-  const published = isPublishedLegalDocument(legalDocument)
-    ? getLegalDocumentContent(legalDocument, locale)
+  const hasAmbiguousVersion = Array.isArray(query.version);
+  const requestedVersion = typeof query.version === "string" ? query.version : undefined;
+  const isPublished = isPublishedLegalDocument(legalDocument);
+  if (isPublished && hasAmbiguousVersion) notFound();
+  const published = isPublished
+    ? getLegalDocumentContent(legalDocument, locale, requestedVersion)
     : null;
+  if (isPublished && !published) notFound();
   const officialLocale = getOfficialLegalLocale(locale);
 
   return (
     <>
       <section className="page-hero page-hero-legal">
-        <div className="shell page-hero-inner">
+        <div className="shell page-hero-inner" lang={published ? officialLocale : undefined}>
           <p className="eyebrow">{published?.kicker ?? status.kicker}</p>
           <h1>{published?.title ?? titles[legalDocument][locale]}</h1>
           <p className="page-lede">{published?.summary ?? status.body}</p>
@@ -169,8 +178,22 @@ export default async function LegalPage({ params }: LegalPageProps) {
                     <p>{published.languageNotice}</p>
                     <p>{officialLanguageNotice[locale]}</p>
                     <span>
-                      <Link href={localizedPath("es", `legal/${legalDocument}`)}>Español</Link>
-                      <Link href={localizedPath("pt", `legal/${legalDocument}`)}>Português</Link>
+                      <Link
+                        href={{
+                          pathname: localizedPath("es", `legal/${legalDocument}`),
+                          query: { version: published.version }
+                        }}
+                      >
+                        Español
+                      </Link>
+                      <Link
+                        href={{
+                          pathname: localizedPath("pt", `legal/${legalDocument}`),
+                          query: { version: published.version }
+                        }}
+                      >
+                        Português
+                      </Link>
                     </span>
                   </div>
                 </div>

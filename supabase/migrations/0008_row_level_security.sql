@@ -534,8 +534,11 @@ create policy consent_read on public.consent_records
 for select to authenticated using (
   user_id = auth.uid() or (case_id is not null and private.can_manage_case(case_id))
 );
-create policy consent_insert_self on public.consent_records
-for insert to authenticated with check (user_id = auth.uid());
+create policy consent_insert_self_non_registration on public.consent_records
+for insert to authenticated with check (
+  user_id = auth.uid()
+  and consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
+);
 create policy consent_admin_manage on public.consent_records
 for update to authenticated using (
   case_id is not null and private.can_manage_case(case_id)

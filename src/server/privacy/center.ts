@@ -7,32 +7,49 @@ export async function getPrivacyCenterData(userId: string): Promise<PrivacyCente
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { available: false, profile: null, requests: [] };
 
-  const [profileResult, requestsResult] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("terms_version, privacy_version, terms_accepted_at, privacy_accepted_at")
-      .eq("id", userId)
-      .maybeSingle(),
+  const [profileResult, requestsResult, consentsResult] = await Promise.all([
+    supabase.from("profiles").select("id").eq("id", userId).maybeSingle(),
     supabase
       .from("data_subject_requests")
       .select("id, request_type, status, created_at")
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
-      .limit(10)
+      .limit(10),
+    supabase
+      .from("consent_records")
+      .select("consent_type, policy_version, locale, granted_at")
+      .eq("user_id", userId)
+      .eq("granted", true)
+      .is("withdrawn_at", null)
+      .in("consent_type", ["terms", "privacy"])
+      .order("granted_at", { ascending: false })
   ]);
 
-  if (profileResult.error || requestsResult.error) {
+  if (profileResult.error || requestsResult.error || consentsResult.error) {
     return { available: false, profile: null, requests: [] };
   }
+
+  const termsConsent = consentsResult.data?.find(({ consent_type }) => consent_type === "terms");
+  const privacyConsent = consentsResult.data?.find(
+    ({ consent_type }) => consent_type === "privacy"
+  );
 
   return {
     available: true,
     profile: profileResult.data
       ? {
-          privacyAcceptedAt: profileResult.data.privacy_accepted_at,
-          privacyVersion: profileResult.data.privacy_version,
-          termsAcceptedAt: profileResult.data.terms_accepted_at,
-          termsVersion: profileResult.data.terms_version
+          privacyAcceptedAt: privacyConsent?.granted_at ?? null,
+          privacyLocale:
+            privacyConsent?.locale === "es" || privacyConsent?.locale === "pt"
+              ? privacyConsent.locale
+              : null,
+          privacyVersion: privacyConsent?.policy_version ?? null,
+          termsAcceptedAt: termsConsent?.granted_at ?? null,
+          termsLocale:
+            termsConsent?.locale === "es" || termsConsent?.locale === "pt"
+              ? termsConsent.locale
+              : null,
+          termsVersion: termsConsent?.policy_version ?? null
         }
       : null,
     requests: (requestsResult.data ?? []).map((request) => ({

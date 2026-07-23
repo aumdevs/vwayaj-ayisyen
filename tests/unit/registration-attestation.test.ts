@@ -57,11 +57,12 @@ describe("server registration attestation", () => {
 
     expect(attestation).not.toBeNull();
     expect(attestation).toMatchObject({
-      acceptanceMechanism: "signup_checkbox",
       acceptedAt: "2026-07-23T14:00:00.123Z",
       email: "new@example.com",
       legalLocale: "es",
+      privacyAcceptanceMechanism: "signup_privacy_acknowledgement_checkbox",
       privacyVersion,
+      termsAcceptanceMechanism: "signup_terms_checkbox",
       termsVersion
     });
     const expectedSignature = createHmac("sha256", signingKey)
@@ -71,7 +72,8 @@ describe("server registration attestation", () => {
           attestation?.termsVersion,
           attestation?.privacyVersion,
           attestation?.legalLocale,
-          attestation?.acceptanceMechanism,
+          attestation?.termsAcceptanceMechanism,
+          attestation?.privacyAcceptanceMechanism,
           attestation?.acceptedAt,
           attestation?.registrationNonce
         ].join("\n"),
