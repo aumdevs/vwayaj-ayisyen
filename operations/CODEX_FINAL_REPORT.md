@@ -39,6 +39,8 @@ Fecha de corte: 2026-07-23.
 - El merge conserva sólo valores aún presentes: no puede reconstruir una
   configuración sobrescrita antes de esta versión. Cualquier entorno afectado
   debe restaurarla desde un backup o exportación de auditoría anterior.
+- El bootstrap inicial serializa intentos válidos con un advisory lock de
+  transacción antes de comprobar que aún no existe un `super_admin`.
 - Portales de usuario, asesor, profesional, editor, moderación y admin protegidos por sesión, rol y AAL2 cuando corresponde.
 - Esquema completo para contenido, evaluación, CRM, casos, documentos, pagos, citas, notificaciones, cursos, comunidad e IA.
 - PWA, caché pública restringida, sitemap, robots, hreflang, health endpoint y cabeceras de seguridad.

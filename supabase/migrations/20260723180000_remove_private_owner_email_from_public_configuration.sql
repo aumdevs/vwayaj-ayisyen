@@ -120,6 +120,10 @@ begin
     raise exception 'bootstrap_user_email_mismatch' using errcode = '42501';
   end if;
 
+  perform pg_catalog.pg_advisory_xact_lock(
+    pg_catalog.hashtextextended('vwayaj.bootstrap_initial_admin', 20260723)
+  );
+
   select count(*)::integer into v_super_admin_count
   from public.user_roles
   where role = 'super_admin';

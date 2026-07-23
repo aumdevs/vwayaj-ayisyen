@@ -1,7 +1,6 @@
--- 0012_atomic_admin_bootstrap.sql
--- Transactionally grants the initial owner roles after the Auth user is created.
--- The function is callable only with the service_role API role and must be
--- removed or kept execute-revoked after the one-time bootstrap.
+-- Serialize valid one-time administrator bootstrap attempts so concurrent
+-- callers cannot both observe an empty super-admin set. CREATE OR REPLACE
+-- preserves an earlier service_role revocation after a completed bootstrap.
 begin;
 
 create or replace function public.bootstrap_initial_admin(
@@ -36,9 +35,6 @@ begin
     raise exception 'bootstrap_user_email_mismatch' using errcode = '42501';
   end if;
 
-  -- Serialize every valid bootstrap attempt before checking the singleton
-  -- condition. A transaction-scoped lock is released automatically on commit
-  -- or rollback, including when the second caller receives the duplicate error.
   perform pg_catalog.pg_advisory_xact_lock(
     pg_catalog.hashtextextended('vwayaj.bootstrap_initial_admin', 20260723)
   );
@@ -91,12 +87,10 @@ begin
 end;
 $$;
 
-revoke all on function public.bootstrap_initial_admin(uuid, text) from public;
-revoke all on function public.bootstrap_initial_admin(uuid, text) from anon;
-revoke all on function public.bootstrap_initial_admin(uuid, text) from authenticated;
-grant execute on function public.bootstrap_initial_admin(uuid, text) to service_role;
+revoke all on function public.bootstrap_initial_admin(uuid, text)
+  from public, anon, authenticated;
 
 comment on function public.bootstrap_initial_admin(uuid, text) is
-  'One-time initial owner bootstrap. Execute only with service_role, then revoke service_role execute after use.';
+  'One-time initial owner bootstrap serialized by transaction advisory lock. Owner email is supplied only through a protected environment.';
 
 commit;

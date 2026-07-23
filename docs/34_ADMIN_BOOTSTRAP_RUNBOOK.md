@@ -38,7 +38,8 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
      `app_metadata.bootstrap_source=one-time-script` antes de crear la identidad;
    - crea/confirma usuario;
    - establece `force_password_change=true`;
-   - llama a una función SQL transaccional que actualiza el perfil, añade roles `admin` y `super_admin` y registra auditoría;
+   - llama a una función SQL transaccional que serializa intentos concurrentes,
+     actualiza el perfil, añade roles `admin` y `super_admin` y registra auditoría;
    - elimina la identidad Auth recién creada si la transacción de roles falla;
    - termina con código no cero ante cualquier resultado no verificable.
 4. Revocar `EXECUTE` para `service_role` sobre `public.bootstrap_initial_admin(uuid,text)` o eliminar la función después de verificar el acceso.

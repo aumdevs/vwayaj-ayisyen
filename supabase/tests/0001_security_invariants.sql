@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(28);
+select plan(29);
 
 select ok(
   not exists (
@@ -81,6 +81,21 @@ select ok(
 select ok(
   not has_function_privilege('authenticated', 'public.bootstrap_initial_admin(uuid,text)', 'EXECUTE'),
   'Authenticated users cannot execute initial admin bootstrap'
+);
+
+select ok(
+  (
+    select
+      position('pg_catalog.pg_advisory_xact_lock' in p.prosrc) > 0
+      and position('pg_catalog.pg_advisory_xact_lock' in p.prosrc)
+        < position('select count(*)::integer into v_super_admin_count' in p.prosrc)
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.proname = 'bootstrap_initial_admin'
+      and pg_catalog.pg_get_function_identity_arguments(p.oid) = 'p_user_id uuid, p_expected_email text'
+  ),
+  'Initial admin bootstrap serializes callers before checking the singleton'
 );
 
 select ok(

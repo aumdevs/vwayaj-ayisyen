@@ -2,7 +2,7 @@
 
 Este índice enumera el contenido del ZIP. La credencial temporal del administrador está fuera del paquete y no aparece aquí.
 
-**Total previsto del paquete final:** 182 archivos, incluyendo este índice.
+**Total previsto del paquete final:** 183 archivos, incluyendo este índice.
 
 ## Raíz
 
@@ -100,6 +100,7 @@ configuración local, seed, migraciones y pruebas SQL
 - `supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql`
 - `supabase/migrations/20260723194500_harden_privacy_request_intake.sql`
 - `supabase/migrations/20260723200000_preserve_official_site_configuration.sql`
+- `supabase/migrations/20260723203000_serialize_initial_admin_bootstrap.sql`
 - `supabase/seed.sql`
 - `supabase/tests/0001_security_invariants.sql`
 - `supabase/tests/0002_public_content_rls.sql`

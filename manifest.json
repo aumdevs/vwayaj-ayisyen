@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-07-23",
-  "package_expected_file_count": 182,
+  "package_expected_file_count": 183,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 8961,
-      "sha256": "e09bc1ca241940de7e620c319165e7c7da6fa525e210380e9bc376354f09712c"
+      "size_bytes": 9038,
+      "sha256": "ceb38d1d633a913adb900958b3507062f93dffac12881ab8524c165ef33d8056"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -324,8 +324,8 @@
     },
     {
       "path": "docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md",
-      "size_bytes": 3418,
-      "sha256": "750963819f997ec32e0be1479a218280568e2b74e44256af978879017b37fae7"
+      "size_bytes": 3456,
+      "sha256": "bdebada05f79c21bfe7b75e3ba2d10ed78a305548c74474f59e1fa34a82195d5"
     },
     {
       "path": "docs/35_CONTENT_SEED_AND_RESEARCH_GUIDE.md",
@@ -799,8 +799,8 @@
     },
     {
       "path": "supabase/migrations/0012_atomic_admin_bootstrap.sql",
-      "size_bytes": 2811,
-      "sha256": "ecbef996aaa79ee5c00e96b3e280d4f5ee33e861582d527ab1786bd63e56e449"
+      "size_bytes": 3171,
+      "sha256": "c1721c983fce09f583430d1943ae9d1bb7b83cb0a959d83449aca37aaaadd1ef"
     },
     {
       "path": "supabase/seed.sql",
@@ -809,8 +809,8 @@
     },
     {
       "path": "supabase/tests/0001_security_invariants.sql",
-      "size_bytes": 6223,
-      "sha256": "4fa7a794b60b9a76a39a79cec579aad9559ce4478adc66eae982dfd7bd222b1e"
+      "size_bytes": 6828,
+      "sha256": "50f14aa47fd4891958589ae717a1e186321c421d83ba2d8cc2b1d123d82dc986"
     },
     {
       "path": "supabase/tests/0002_public_content_rls.sql",
@@ -859,8 +859,8 @@
     },
     {
       "path": "supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql",
-      "size_bytes": 5484,
-      "sha256": "5c6d6ef8e328bbdf155e18f3392c642468e16d51192d872fe51c7acd628cd01b"
+      "size_bytes": 5610,
+      "sha256": "304508d5813250d5300bf18b3a942d6f97d9d30a7e92e4839f0d9075fe683529"
     },
     {
       "path": "supabase/migrations/0013_password_change_completion.sql",
@@ -906,6 +906,11 @@
       "path": "supabase/tests/0005_site_settings_preservation.sql",
       "size_bytes": 3892,
       "sha256": "1f4b7bb45b678a8e264a2ec1d4dbc587210859baaeb5ba9f32a5fe33a86610eb"
+    },
+    {
+      "path": "supabase/migrations/20260723203000_serialize_initial_admin_bootstrap.sql",
+      "size_bytes": 2706,
+      "sha256": "b7320c5aca344f3133c5e3cd72189b57cf8c5f8a113e03b824677e44b0edc057"
     }
   ]
 }
