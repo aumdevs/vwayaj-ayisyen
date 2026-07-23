@@ -23,6 +23,7 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install chromium",
+    "visual:capture": "node scripts/capture-pwa-acceptance.mjs",
     "check:env": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.development.local scripts/verify-env.mjs",
     "check:secrets": "bash scripts/check-no-secrets.sh",
     "integrity:check": "node scripts/refresh-package-integrity.mjs --check",

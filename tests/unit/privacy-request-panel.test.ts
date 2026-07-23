@@ -8,6 +8,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/app/[locale]/privacy-actions", () => ({
   submitPrivacyRequestAction: vi.fn(async () => ({ status: "idle" }))
 }));
+vi.mock("@/app/[locale]/privacy-admin-actions", () => ({
+  completePrivacyRequestAction: vi.fn(async () => ({ status: "idle" }))
+}));
 
 import { PrivacyAdminQueue } from "@/components/private/privacy-admin-queue";
 import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel";
@@ -121,6 +124,7 @@ describe("privacy administrator queue", () => {
 
     render(
       createElement(PrivacyAdminQueue, {
+        action,
         data,
         legalEmail: "legal@vwayajayisyen.com",
         locale: "es"
@@ -129,6 +133,9 @@ describe("privacy administrator queue", () => {
 
     expect(screen.getByRole("table", { name: "Solicitudes de privacidad abiertas" })).toBeVisible();
     expect(screen.getByText("00000000-0000-4000-8000-000000000124")).toBeVisible();
+    expect(screen.getByLabelText("Método de verificación")).toBeVisible();
+    expect(screen.getByLabelText("Resolución y fundamento de la decisión")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Cerrar solicitud" })).toBeVisible();
     expect(screen.getByRole("link", { name: "legal@vwayajayisyen.com" })).toHaveAttribute(
       "href",
       "mailto:legal@vwayajayisyen.com"

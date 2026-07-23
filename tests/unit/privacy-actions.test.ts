@@ -15,6 +15,7 @@ vi.mock("@/lib/supabase/server", () => ({
   }))
 }));
 
+import { completePrivacyRequestAction } from "@/app/[locale]/privacy-admin-actions";
 import { submitPrivacyRequestAction } from "@/app/[locale]/privacy-actions";
 
 function formData(values: Record<string, string>): FormData {
@@ -142,5 +143,72 @@ describe("privacy request action", () => {
     expect(result).toEqual({ status: "invalid" });
     expect(mocks.getClaims).not.toHaveBeenCalled();
     expect(mocks.rpc).not.toHaveBeenCalled();
+  });
+});
+
+describe("privacy administrator completion action", () => {
+  it("submits only the validated terminal decision through the protected RPC", async () => {
+    mocks.rpc.mockResolvedValue({
+      data: { id: "00000000-0000-4000-8000-000000000124" },
+      error: null
+    });
+
+    const result = await completePrivacyRequestAction(
+      "es",
+      { status: "idle" },
+      formData({
+        identity_verification_method: "Sesión MFA y confirmación por correo",
+        request_id: "00000000-0000-4000-8000-000000000124",
+        resolution_summary: "Se verificó la identidad y se entregó la copia solicitada.",
+        terminal_status: "fulfilled"
+      })
+    );
+
+    expect(result).toEqual({ status: "resolved" });
+    expect(mocks.rpc).toHaveBeenCalledWith("complete_data_subject_request", {
+      p_identity_verification_method: "Sesión MFA y confirmación por correo",
+      p_request_id: "00000000-0000-4000-8000-000000000124",
+      p_resolution_summary: "Se verificó la identidad y se entregó la copia solicitada.",
+      p_terminal_status: "fulfilled"
+    });
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/es/admin/privacy-requests");
+  });
+
+  it("rejects non-terminal states and malformed request identifiers before the session", async () => {
+    const result = await completePrivacyRequestAction(
+      "pt",
+      { status: "idle" },
+      formData({
+        identity_verification_method: "MFA",
+        request_id: "not-a-uuid",
+        resolution_summary: "Resumo operacional suficiente.",
+        terminal_status: "in_progress"
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(mocks.getClaims).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalled();
+  });
+
+  it("fails closed when the RPC rejects an administrator without AAL2", async () => {
+    mocks.rpc.mockResolvedValue({
+      data: null,
+      error: { code: "42501", message: "Administrator AAL2 is required." }
+    });
+
+    const result = await completePrivacyRequestAction(
+      "en",
+      { status: "idle" },
+      formData({
+        identity_verification_method: "MFA session",
+        request_id: "00000000-0000-4000-8000-000000000124",
+        resolution_summary: "Identity checked and request resolved.",
+        terminal_status: "denied"
+      })
+    );
+
+    expect(result).toEqual({ status: "unavailable" });
+    expect(mocks.revalidatePath).not.toHaveBeenCalled();
   });
 });

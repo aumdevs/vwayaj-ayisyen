@@ -1,8 +1,14 @@
 import { Inbox, ShieldCheck } from "lucide-react";
+import type { PrivacyAdminActionState } from "@/app/[locale]/privacy-admin-actions";
+import { PrivacyAdminResolutionForm } from "@/components/private/privacy-admin-resolution-form";
 import type { Locale } from "@/types/domain";
 import type { PrivacyAdminQueueData } from "@/types/privacy";
 
 type PrivacyAdminQueueProps = {
+  action: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
   data: PrivacyAdminQueueData;
   legalEmail: string;
   locale: Locale;
@@ -21,6 +27,7 @@ const copy = {
     received: "Resevwa (UTC)",
     account: "Kont",
     reference: "Referans",
+    resolution: "Fèmen",
     fallback: "Kanal eskalad"
   },
   fr: {
@@ -35,6 +42,7 @@ const copy = {
     received: "Reçue (UTC)",
     account: "Compte",
     reference: "Référence",
+    resolution: "Clôture",
     fallback: "Canal d’escalade"
   },
   es: {
@@ -49,6 +57,7 @@ const copy = {
     received: "Recibida (UTC)",
     account: "Cuenta",
     reference: "Referencia",
+    resolution: "Cierre",
     fallback: "Canal de escalamiento"
   },
   pt: {
@@ -63,6 +72,7 @@ const copy = {
     received: "Recebida (UTC)",
     account: "Conta",
     reference: "Referência",
+    resolution: "Encerramento",
     fallback: "Canal de escalonamento"
   },
   en: {
@@ -77,6 +87,7 @@ const copy = {
     received: "Received (UTC)",
     account: "Account",
     reference: "Reference",
+    resolution: "Completion",
     fallback: "Escalation channel"
   }
 } satisfies Record<Locale, Record<string, string>>;
@@ -90,7 +101,7 @@ function formatTimestamp(value: string, locale: Locale) {
   }).format(new Date(value));
 }
 
-export function PrivacyAdminQueue({ data, legalEmail, locale }: PrivacyAdminQueueProps) {
+export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyAdminQueueProps) {
   const text = copy[locale];
 
   return (
@@ -122,6 +133,7 @@ export function PrivacyAdminQueue({ data, legalEmail, locale }: PrivacyAdminQueu
             <span role="columnheader">{text.received}</span>
             <span role="columnheader">{text.account}</span>
             <span role="columnheader">{text.reference}</span>
+            <span role="columnheader">{text.resolution}</span>
           </div>
           {data.requests.map((request) => (
             <div className="privacy-admin-table-row" key={request.id} role="row">
@@ -134,6 +146,13 @@ export function PrivacyAdminQueue({ data, legalEmail, locale }: PrivacyAdminQueu
               </time>
               <code role="cell">{request.userId ?? "—"}</code>
               <code role="cell">{request.id}</code>
+              <div role="cell">
+                <PrivacyAdminResolutionForm
+                  action={action}
+                  locale={locale}
+                  requestId={request.id}
+                />
+              </div>
             </div>
           ))}
         </div>

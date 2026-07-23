@@ -89,6 +89,7 @@ export async function signUpAction(
   });
   const acceptedTerms = formData.get("accept_terms") === "yes";
   const acknowledgedPrivacy = formData.get("accept_privacy") === "yes";
+  const confirmedAgeCapacity = formData.get("accept_age_capacity") === "yes";
   const displayedTermsVersion = formData.get("terms_version");
   const displayedPrivacyVersion = formData.get("privacy_version");
   const currentTermsVersion = getRegistrationTermsVersion();
@@ -100,6 +101,7 @@ export async function signUpAction(
     !parsed.success ||
     !acceptedTerms ||
     !acknowledgedPrivacy ||
+    !confirmedAgeCapacity ||
     typeof displayedTermsVersion !== "string" ||
     typeof displayedPrivacyVersion !== "string" ||
     displayedTermsVersion !== currentTermsVersion ||
@@ -126,6 +128,8 @@ export async function signUpAction(
       captchaToken: parsed.data.captchaToken,
       emailRedirectTo: callback.toString(),
       data: {
+        age_capacity_confirmed_at: attestation.acceptedAt,
+        age_capacity_mechanism: attestation.ageCapacityMechanism,
         legal_locale: attestation.legalLocale,
         preferred_locale: locale,
         privacy_accepted_at: attestation.acceptedAt,

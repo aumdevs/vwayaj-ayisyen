@@ -8,7 +8,7 @@ Los tokens viven en `src/app/globals.css` y usan nombres semánticos.
 
 | Token | Valor base | Uso |
 |---|---:|---|
-| `--ink-950` | `#0B1324` | títulos, footer y shell operativo |
+| `--ink-950` | `#0B1324` | títulos y texto de máximo contraste |
 | `--ink-800` | `#1C2A3A` | texto fuerte |
 | `--ink-600` | `#526170` | texto secundario |
 | `--canvas` | `#F6F7FB` | fondo de producto |
@@ -36,10 +36,15 @@ Los tokens viven en `src/app/globals.css` y usan nombres semánticos.
 ### Navegación
 
 - `SiteHeader`
+- `PublicNavigation` con mega-menús accesibles
 - `MobileNavigationDrawer`
 - `LanguageSwitcher`
 - `SiteFooter`
 - `ContextualAdvisorCTA`
+- `MobileAppBar`
+- `MobileBottomNavigation`
+- `InstallAppPrompt`
+- `PwaUpdatePrompt`
 
 ### Editorial y marketing
 
@@ -74,13 +79,33 @@ Los tokens viven en `src/app/globals.css` y usan nombres semánticos.
 
 Cada superficie contempla loading, vacío, primera vez, permiso insuficiente, sesión expirada, error, mantenimiento y éxito. Los estados públicos no exponen códigos internos; el ID de incidente sólo aparece cuando existe uno real.
 
+## Activación de App Shell
+
+Se activa con CSS y detección cliente cuando se cumple al menos una condición:
+
+- ancho menor o igual a 767 px;
+- ancho menor o igual a 1366 px con puntero `coarse` y sin hover;
+- `display-mode: standalone`;
+- `display-mode: fullscreen`.
+
+Una tableta táctil conserva el App Shell en vertical y horizontal. Laptop y
+escritorio con puntero preciso conservan la web normal. No se detecta el
+dispositivo por marca para decidir el layout.
+
 ## Accesibilidad
 
 - landmarks y jerarquía semántica;
 - foco de 3 px con offset;
-- drawer con Escape, bloqueo de scroll y retorno de foco;
+- drawer, mega-menú y bottom sheet con Escape y retorno de foco;
 - overlays con `aria-modal`;
 - `aria-live` sólo en feedback dinámico;
 - imágenes con alt contextual;
 - tablas con caption y encabezados;
 - reduced motion y zoom 200–400 %.
+
+## Regla de color
+
+No existen `dark:`, `.dark`, `prefers-color-scheme: dark` ni `color-scheme:
+dark`. Los fondos oscuros no se usan en páginas, cards, footer, login o
+dashboard. El azul intenso sólo se admite en botones/CTA cuya combinación de
+texto cumple contraste.

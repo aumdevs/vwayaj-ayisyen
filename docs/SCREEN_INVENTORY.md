@@ -1,10 +1,10 @@
-# Inventario de pantallas del rediseño
+# Inventario de pantallas web y PWA
 
 Fecha: 2026-07-22
 
 ## Público
 
-| Superficie | Ruta base | Estado previo | Resultado objetivo |
+| Superficie | Ruta base | Estado previo | Resultado implementado |
 |---|---|---|---|
 | Inicio | `/[locale]` | hero sin fotografía y avisos internos | narrativa editorial completa |
 | Países | `/[locale]/countries` | cuatro enlaces simples | índice visual con objetivos y guía de elección |
@@ -18,7 +18,7 @@ Fecha: 2026-07-22
 | About/FAQ/Contacto | rutas homónimas | cards genéricas | páginas editoriales coherentes |
 | Legal | `/[locale]/legal/[document]` | mensaje técnico | estado legal único, sobrio y no contractual |
 | Búsqueda | `/[locale]/search` | formulario básico | búsqueda editorial y vacío útil |
-| 404/Error/Offline | global | cards de Auth | estados de producto diferenciados |
+| 404/Error/Offline | global | cards de Auth | estados diferenciados, acciones seguras y offline público |
 
 ## Autenticación
 
@@ -30,6 +30,10 @@ Fecha: 2026-07-22
 - MFA TOTP.
 
 Todas usan un shell independiente y conservan las acciones Supabase actuales.
+
+El alta de cuenta en Production muestra aceptación separada de Términos,
+reconocimiento de Privacidad y confirmación de mayoría de edad/capacidad. Las
+versiones activas se verifican de nuevo dentro de PostgreSQL.
 
 ## Cliente
 
@@ -55,6 +59,20 @@ Todas usan un shell independiente y conservan las acciones Supabase actuales.
 - Admin: resumen y 24 módulos de configuración/operación.
 
 Las rutas privadas siguen usando la frontera `requireViewer` y sólo cambian de shell/presentación.
+
+## App Shell y estados PWA
+
+- home con tareas rápidas;
+- barra superior con idioma, atrás y “Más”;
+- navegación inferior: Inicio, Países, Comparar, Guías y Cuenta;
+- instalación Android;
+- instrucciones iPhone/iPad;
+- modo standalone sin invitación;
+- offline público;
+- aviso de actualización;
+- bloqueo de actualización con formulario en progreso;
+- red offline visible;
+- safe areas y teclado móvil.
 
 ## Viewports de aceptación
 

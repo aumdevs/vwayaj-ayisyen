@@ -3816,18 +3816,16 @@ Revisión humana obligatoria y aprobación de seguridad/producto antes de `true`
 
 ## PWA
 
-La aplicación será instalable, pero una PWA no debe ampliar el riesgo de datos privados.
+La aplicación es instalable, pero la PWA no amplía el riesgo de datos privados.
 
-### Manifest
+### Manifest implementado
 
-- nombre configurable;
-- `short_name`;
-- iconos adecuados;
-- `display: standalone`;
-- `start_url` locale-aware;
-- `scope`;
-- `theme_color` y `background_color`;
-- accesos directos sólo a rutas públicas seguras.
+- `id=/`, nombre `Vwayaj Ayisyen` y nombre corto `Vwayaj`;
+- `start_url=/ht?source=pwa`, `scope=/`, `display=standalone`;
+- tema y fondo blancos, orientación libre, locale kreyòl;
+- iconos normales 48–512, maskable, monochrome y Apple Touch Icon;
+- screenshots reales: home móvil, comparador móvil, país móvil y home tableta;
+- shortcuts a comparar, países, guías y cuenta.
 
 ### Service worker
 
@@ -3851,7 +3849,29 @@ Nunca cachear:
 - conversaciones IA;
 - datos personales.
 
-Usar `NetworkOnly` para superficies privadas y limpiar caches al cambiar versión. No implementar “offline sync” de formularios sensibles.
+La implementación usa network-first para navegación pública y
+stale-while-revalidate para activos públicos. No intercepta lo privado en
+absoluto; por tanto queda network-only por diseño. Los caches tienen prefijo y
+versión, y sólo se limpian los caches propios obsoletos. No existe
+sincronización offline de formularios.
+
+### App Shell e instalación
+
+- teléfono ≤767 px;
+- tableta táctil ≤1366 px sin hover, también horizontal;
+- `standalone` y `fullscreen`;
+- barra superior, idioma, atrás, menú “Más” y cinco destinos inferiores;
+- safe areas y ocultamiento de navegación cuando el teclado ocupa la pantalla;
+- aviso una vez por sesión después de 2,5 segundos;
+- Android usa `beforeinstallprompt` sólo después del botón;
+- iPhone/iPad reciben instrucciones;
+- no solicita notificaciones.
+
+### Actualización
+
+El worker espera. La interfaz anuncia una versión y ofrece “Actualizar” o “Más
+tarde”. Si cualquier formulario contiene progreso, no envía `SKIP_WAITING` y
+explica que primero debe finalizarse o guardarse.
 
 ## Rendimiento
 
@@ -4743,7 +4763,10 @@ Antes del lanzamiento y cada seis meses:
 - alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
 - Términos, Privacidad y Cookies publicados con fecha y versión;
 - Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- confirmación separada de 18+/capacidad en el alta, con fecha y mecanismo firmados;
+- versiones activas de Términos/Privacidad controladas por una tabla privada que el hook de Auth valida de forma fail-closed;
 - solicitudes de derechos autenticadas, limitadas, con evento durable y cola administrativa protegida por MFA;
+- cierre de solicitudes sólo mediante RPC AAL2, con verificación, resumen, auditoría y evento outbox;
 - pagos, documentos, citas, comunidad, IA y video desactivados.
 
 ## Bloqueos del lanzamiento comercial o de funciones de alto riesgo
@@ -6273,7 +6296,7 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 | Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
 | Entidad legal | razón social, país, dirección, registro, contacto | parcial: Vwayaj ayisyen, Ltda., Brasil; domicilio público São Paulo; soporte y legal definidos; faltan CNPJ y dirección comercial completa | permite documentos informativos y Auth; bloquea venta y facturación |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
-| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada, DSR autenticado, evento durable y cola administrativa AAL2 implementados; faltan calendario definitivo, contratos/DPA, validación de transferencias y revisión jurídica del procedimiento | permite cuenta mínima; bloquea formularios sensibles/documentos |
+| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada y 18+/capacidad firmada, DSR autenticado, evento durable, cola y cierre administrativo AAL2 implementados; faltan calendario definitivo, contratos/DPA, validación de transferencias y revisión jurídica del procedimiento | permite cuenta mínima; bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
 | Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP, recepción, CAPTCHA y gate de Auth | completo el 2026-07-23: Resend verificado para envío; Proton Mail recibe los tres alias oficiales; tres mensajes externos de prueba llegaron; Supabase usa SMTP, confirmación, Turnstile y hook HMAC; versiones legales exactas configuradas en Vercel | registro habilitado sólo en Production; Preview y Development permanecen cerrados |

@@ -1,11 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "14.5";
-  };
   public: {
     Tables: {
       admin_invitations: {
@@ -4553,6 +4548,35 @@ export type Database = {
       bootstrap_initial_admin: {
         Args: { p_expected_email: string; p_user_id: string };
         Returns: undefined;
+      };
+      complete_data_subject_request: {
+        Args: {
+          p_identity_verification_method: string;
+          p_request_id: string;
+          p_resolution_summary: string;
+          p_terminal_status: Database["public"]["Enums"]["data_request_status"];
+        };
+        Returns: {
+          assigned_to: string | null;
+          completed_at: string | null;
+          created_at: string;
+          description: string | null;
+          due_at: string | null;
+          id: string;
+          identity_verification_method: string | null;
+          locale: Database["public"]["Enums"]["app_locale"];
+          request_type: Database["public"]["Enums"]["data_request_type"];
+          resolution_summary: string | null;
+          status: Database["public"]["Enums"]["data_request_status"];
+          updated_at: string;
+          user_id: string | null;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "data_subject_requests";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
       };
       complete_privileged_onboarding: { Args: never; Returns: undefined };
       complete_required_password_change: { Args: never; Returns: undefined };

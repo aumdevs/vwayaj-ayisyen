@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(25);
+select plan(28);
 
 select ok(
   not exists (
@@ -192,6 +192,11 @@ select ok(
 );
 
 select ok(
+  not has_table_privilege('authenticated', 'public.data_subject_requests', 'UPDATE'),
+  'Authenticated browsers cannot update privacy workflow rows directly'
+);
+
+select ok(
   has_function_privilege(
     'authenticated',
     'public.submit_data_subject_request(public.data_request_type,public.app_locale,text)',
@@ -207,6 +212,24 @@ select ok(
     'EXECUTE'
   ),
   'Anonymous users cannot call the privacy-request intake RPC'
+);
+
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.complete_data_subject_request(uuid,public.data_request_status,text,text)',
+    'EXECUTE'
+  ),
+  'Authenticated sessions can reach the independently AAL2-gated completion RPC'
+);
+
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.complete_data_subject_request(uuid,public.data_request_status,text,text)',
+    'EXECUTE'
+  ),
+  'Anonymous users cannot call the privacy-request completion RPC'
 );
 
 select * from finish();

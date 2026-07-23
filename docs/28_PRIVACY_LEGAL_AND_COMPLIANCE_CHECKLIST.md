@@ -14,7 +14,10 @@
 - alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
 - Términos, Privacidad y Cookies publicados con fecha y versión;
 - Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- confirmación separada de 18+/capacidad en el alta, con fecha y mecanismo firmados;
+- versiones activas de Términos/Privacidad controladas por una tabla privada que el hook de Auth valida de forma fail-closed;
 - solicitudes de derechos autenticadas, limitadas, con evento durable y cola administrativa protegida por MFA;
+- cierre de solicitudes sólo mediante RPC AAL2, con verificación, resumen, auditoría y evento outbox;
 - pagos, documentos, citas, comunidad, IA y video desactivados.
 
 ## Bloqueos del lanzamiento comercial o de funciones de alto riesgo

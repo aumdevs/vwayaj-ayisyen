@@ -25,6 +25,7 @@ import {
   Users,
   type LucideIcon
 } from "lucide-react";
+import type { PrivacyAdminActionState } from "@/app/[locale]/privacy-admin-actions";
 import type { PrivacyRequestActionState } from "@/app/[locale]/privacy-actions";
 import { signOutAction } from "@/app/[locale]/auth/actions";
 import { LogoMark } from "@/components/brand/logo-mark";
@@ -44,6 +45,10 @@ type PrivateAreaShellProps = {
   path: readonly string[];
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyAdminAction: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
   privacyAdminQueueData: PrivacyAdminQueueData | null;
   privacyCenterData: PrivacyCenterData | null;
   privacyRequestAction: (
@@ -403,6 +408,7 @@ function StaffShell({
   title,
   email,
   assuranceLevel,
+  privacyAdminAction,
   privacyAdminQueueData
 }: {
   area: Exclude<PrivateArea, "portal">;
@@ -413,6 +419,10 @@ function StaffShell({
   title: string;
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyAdminAction: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
   privacyAdminQueueData: PrivacyAdminQueueData | null;
 }) {
   const copy = uiCopy[locale];
@@ -543,6 +553,7 @@ function StaffShell({
             </section>
           ) : area === "admin" && section === "privacy-requests" && privacyAdminQueueData ? (
             <PrivacyAdminQueue
+              action={privacyAdminAction}
               data={privacyAdminQueueData}
               legalEmail={BRAND.contact.legal}
               locale={locale}
@@ -587,6 +598,7 @@ export function PrivateAreaShell({
   path,
   email,
   assuranceLevel,
+  privacyAdminAction,
   privacyAdminQueueData,
   privacyCenterData,
   privacyRequestAction
@@ -620,6 +632,7 @@ export function PrivateAreaShell({
       dictionary={dictionary}
       email={email}
       locale={locale}
+      privacyAdminAction={privacyAdminAction}
       privacyAdminQueueData={privacyAdminQueueData}
       section={section}
       title={title}

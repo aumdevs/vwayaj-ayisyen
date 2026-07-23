@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(11);
+select plan(20);
 
 insert into auth.users(
   id,
@@ -141,6 +141,25 @@ select is(
   'Repeated submissions cannot flood the queue with the same open request type'
 );
 
+select throws_ok(
+  $sql$
+    select public.complete_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = auth.uid()
+          and request_type = 'access'
+      ),
+      'fulfilled',
+      'forged user verification',
+      'A browser user cannot resolve their own privacy request.'
+    )
+  $sql$,
+  '42501',
+  'Administrator AAL2 is required.',
+  'An ordinary authenticated user cannot complete a privacy request'
+);
+
 reset role;
 
 select ok(
@@ -221,6 +240,204 @@ select ok(
       )
   ),
   'The operations event contains only the minimal routing metadata'
+);
+
+insert into auth.users(
+  id,
+  instance_id,
+  aud,
+  role,
+  email,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  created_at,
+  updated_at
+)
+values (
+  '00000000-0000-4000-8000-000000000042'::uuid,
+  '00000000-0000-0000-0000-000000000000'::uuid,
+  'authenticated',
+  'authenticated',
+  'privacy-admin-test@example.invalid',
+  '{"provider":"email","providers":["email"]}'::jsonb,
+  '{}'::jsonb,
+  clock_timestamp(),
+  clock_timestamp()
+);
+
+insert into public.user_roles(user_id, role, reason)
+values (
+  '00000000-0000-4000-8000-000000000042'::uuid,
+  'admin',
+  'pgTAP privacy completion test'
+);
+
+select set_config(
+  'request.jwt.claim.sub',
+  '00000000-0000-4000-8000-000000000042',
+  true
+);
+select set_config('request.jwt.claim.role', 'authenticated', true);
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"00000000-0000-4000-8000-000000000042","role":"authenticated","aal":"aal1"}',
+  true
+);
+set local role authenticated;
+
+select throws_ok(
+  $sql$
+    select public.complete_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'fulfilled',
+      'email challenge',
+      'Identity verified and account data was delivered.'
+    )
+  $sql$,
+  '42501',
+  'Administrator AAL2 is required.',
+  'An administrator without AAL2 cannot complete a privacy request'
+);
+
+reset role;
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"00000000-0000-4000-8000-000000000042","role":"authenticated","aal":"aal2"}',
+  true
+);
+set local role authenticated;
+
+select lives_ok(
+  $sql$
+    select public.complete_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'fulfilled',
+      'MFA session and email challenge',
+      'Identity was verified and the requested account data was delivered.'
+    )
+  $sql$,
+  'An AAL2 administrator can complete a privacy request through the RPC'
+);
+
+select throws_ok(
+  $sql$
+    select public.complete_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'denied',
+      'MFA session',
+      'A completed request cannot be resolved a second time.'
+    )
+  $sql$,
+  '23514',
+  'Privacy request is already complete.',
+  'A terminal privacy request cannot be completed twice'
+);
+
+reset role;
+
+select ok(
+  (
+    select
+      status = 'fulfilled'::public.data_request_status
+      and assigned_to = '00000000-0000-4000-8000-000000000042'::uuid
+      and completed_at is not null
+      and identity_verification_method = 'MFA session and email challenge'
+      and resolution_summary =
+        'Identity was verified and the requested account data was delivered.'
+    from public.data_subject_requests
+    where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+      and request_type = 'access'
+  ),
+  'Completion fields are server-owned and persisted together'
+);
+
+select ok(
+  (
+    select count(*) = 1
+      and bool_and(
+        actor_id = '00000000-0000-4000-8000-000000000042'::uuid
+        and actor_role = 'admin'::public.app_role
+        and risk_level = 'high'::public.risk_level
+      )
+    from public.audit_log
+    where action = 'privacy_request_completed'
+      and target_id = (
+        select id::text
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      )
+  ),
+  'Completion creates an attributable high-risk audit record'
+);
+
+select ok(
+  (
+    select count(*) = 1
+      and bool_and(
+        aggregate_type = 'data_subject_request'
+        and payload =
+          '{"locale":"es","request_type":"access","status":"fulfilled"}'::jsonb
+      )
+    from public.outbox_events
+    where event_type = 'privacy.data_subject_request.completed'
+      and aggregate_id = (
+        select id::text
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      )
+  ),
+  'Completion emits exactly one minimal durable operations event'
+);
+
+select set_config(
+  'request.jwt.claim.sub',
+  '00000000-0000-4000-8000-000000000041',
+  true
+);
+select set_config(
+  'request.jwt.claims',
+  '{"sub":"00000000-0000-4000-8000-000000000041","role":"authenticated","aal":"aal1"}',
+  true
+);
+set local role authenticated;
+
+select lives_ok(
+  $sql$
+    select public.submit_data_subject_request(
+      'access',
+      'fr',
+      'A later request after the prior one was completed.'
+    )
+  $sql$,
+  'A completed request does not block a later request for the same right'
+);
+
+select is(
+  (
+    select count(*)
+    from public.data_subject_requests
+    where user_id = auth.uid()
+      and request_type = 'access'
+  ),
+  2::bigint,
+  'A new request receives its own durable workflow after the prior terminal request'
 );
 
 select * from finish();

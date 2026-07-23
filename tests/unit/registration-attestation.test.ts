@@ -58,6 +58,7 @@ describe("server registration attestation", () => {
     expect(attestation).not.toBeNull();
     expect(attestation).toMatchObject({
       acceptedAt: "2026-07-23T14:00:00.123Z",
+      ageCapacityMechanism: "signup_age_capacity_checkbox",
       email: "new@example.com",
       legalLocale: "es",
       privacyAcceptanceMechanism: "signup_privacy_acknowledgement_checkbox",
@@ -74,6 +75,7 @@ describe("server registration attestation", () => {
           attestation?.legalLocale,
           attestation?.termsAcceptanceMechanism,
           attestation?.privacyAcceptanceMechanism,
+          attestation?.ageCapacityMechanism,
           attestation?.acceptedAt,
           attestation?.registrationNonce
         ].join("\n"),

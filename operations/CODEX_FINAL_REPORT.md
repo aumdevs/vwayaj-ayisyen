@@ -5,7 +5,7 @@ Fecha de corte: 2026-07-23.
 ## Recursos
 
 - GitHub: `https://github.com/aumdevs/vwayaj-ayisyen` (público, licencia propietaria de Aum Prodz).
-- Rama de infraestructura: `aumdevs/connect-production-infrastructure`.
+- Rama de release: `agent/legal-center-production`; PR `#16`.
 - Vercel: equipo `Aum prodz Group`, proyecto `vwayaj-ayisyen` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview protegido por Vercel Authentication.
 - Supabase remoto: **Vwayaj Ayisyen** (`gaknpocbfmiamghpoqhw`), São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
@@ -17,9 +17,19 @@ Fecha de corte: 2026-07-23.
 
 ## Implementación
 
-- Shell público responsive y accesible, cinco locales, estructura uniforme para USA, Chile, Brasil y México.
+- Web pública clara para laptop/escritorio y App Shell PWA para teléfono,
+  tableta táctil y standalone, en cinco locales.
+- Mega-menús accesibles en escritorio; App Bar, menú “Más” y navegación inferior
+  de cinco destinos en la experiencia de aplicación.
+- Manifest completo, iconos propios, screenshots reales, instalación Android,
+  instrucciones iPhone/iPad, offline público y actualización controlada.
 - CMS público conectado a vistas RLS; contenido sin aprobar nunca se renderiza.
 - Auth por email, verificación, recuperación, cambio de contraseña, cierre de sesión y TOTP implementados.
+- Alta con aceptación separada de Términos, reconocimiento de Privacidad y
+  confirmación 18+/capacidad; HMAC, timestamp y versiones activas se validan en
+  el hook de Auth.
+- Centro de privacidad con intake autenticado, cola administrativa y cierre
+  exclusivo mediante RPC AAL2 auditado con outbox.
 - Portales de usuario, asesor, profesional, editor, moderación y admin protegidos por sesión, rol y AAL2 cuando corresponde.
 - Esquema completo para contenido, evaluación, CRM, casos, documentos, pagos, citas, notificaciones, cursos, comunidad e IA.
 - PWA, caché pública restringida, sitemap, robots, hreflang, health endpoint y cabeceras de seguridad.
@@ -29,16 +39,18 @@ Fecha de corte: 2026-07-23.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 16 aplicadas local y remotamente |
+| Migraciones desde base vacía | 22 aplicadas localmente; las dos últimas se aplican a remoto al publicar este release |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 23 aprobadas local y remotamente |
+| Pruebas pgTAP/RLS | 79 aprobadas localmente |
 | Schema drift | vacío |
-| Unit tests | 26 aprobadas |
-| Cobertura del núcleo | 100% líneas, 97.29% ramas |
-| Playwright desktop/móvil | 16 aprobadas |
+| Unit tests | 74 aprobadas en 16 archivos |
+| Cobertura del núcleo | 96.36% líneas, 97.43% ramas |
+| Playwright desktop/móvil | 33 aprobadas, 7 saltos intencionales por plataforma |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
+| Lighthouse móvil | rendimiento 96, accesibilidad 100, buenas prácticas 100 |
 | Lighthouse desktop | rendimiento 100, accesibilidad 100, buenas prácticas 100 |
-| Lighthouse SEO | 66, limitado intencionalmente por `noindex` previo al lanzamiento |
+| Lighthouse SEO | 69, limitado intencionalmente por `noindex` |
+| QA visual | 35 capturas, 0 errores de navegador, 0 overflow |
 | TypeScript/ESLint | aprobados |
 | Next.js production build | aprobado |
 | Audit de dependencias | 0 vulnerabilidades conocidas tras remediación |
@@ -51,7 +63,7 @@ Fecha de corte: 2026-07-23.
 
 | Función | Estado | Gate pendiente |
 |---|---|---|
-| Contenido público | estructura activa, contenido real vacío | fuentes y revisión humana |
+| Contenido público/PWA | activo | contenido migratorio sigue vacío hasta fuentes y revisión humana |
 | Comparación/evaluación | desactivada | método, datos y revisión |
 | Servicios/WhatsApp | desactivada | oferta, número, privacidad |
 | Pagos | desactivada | productos/precios, webhook y legal en Stripe |
@@ -76,8 +88,8 @@ Fecha de corte: 2026-07-23.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
 - Preview y Development no reciben credenciales de la base productiva.
   Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`,
-  `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los
-  demás `DISABLE_*` en `true`. Las URL y clave publicable de Supabase quedaron
+  `ALLOW_ADMIN_BOOTSTRAP=false`, registro habilitado exclusivamente en
+  Production y todos los demás `DISABLE_*` en `true`. Las URL y clave publicable de Supabase quedaron
   restauradas sólo en Production; Preview sigue aislado.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
@@ -85,13 +97,12 @@ Fecha de corte: 2026-07-23.
   aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo;
   DMARC está publicado, TLS está forzado y el seguimiento de aperturas/clics
   permanece apagado. Supabase Auth tiene SMTP Resend y el secreto de Turnstile;
-  Vercel Production tiene el site key público. El alta queda además protegida
+  Vercel Production tiene el site key público. El alta está además protegida
   por un HMAC emitido sólo por el servidor y validado por el hook
-  `private.before_user_created`; la versión y fecha aceptadas se conservan en el
-  perfil. El registro continúa apagado en la aplicación y en el proveedor hasta
-  publicar una versión revisada de términos, fijar
-  `REGISTRATION_TERMS_VERSION` y aprobar alta, confirmación y recuperación
-  reales. Zoom y OpenAI tampoco tienen credenciales del proyecto.
+  `private.before_user_created`; la versión, fecha, aceptación separada y
+  confirmación de edad/capacidad se conservan como evidencia. Las versiones
+  activas también están fijadas en una tabla privada de PostgreSQL. Zoom y
+  OpenAI no tienen credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 
@@ -115,12 +126,22 @@ Fecha de corte: 2026-07-23.
 ## Pasos externos pendientes
 
 1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
-2. Publicar términos y privacidad revisados; después aprobar alta, confirmación
-   y recuperación reales antes de abrir de forma coordinada Supabase y
-   `DISABLE_PUBLIC_REGISTRATION`.
-3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
-4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
+2. Obtener revisión jurídica externa, CNPJ/domicilio registral completo y
+   contratos/DPA antes de venta, documentos o tratamiento sensible.
+3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un
+   proyecto/API key de OpenAI antes de activar esas funciones.
+4. Completar contenido con fuentes, revisión humana de kreyòl, soporte operativo
+   y observabilidad antes de permitir indexación.
 5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
+
+## Evidencia visual PWA
+
+- `docs/screenshots/pwa-acceptance/desktop/`: web, mega-menús y rutas públicas;
+- `docs/screenshots/pwa-acceptance/mobile/`: App Shell, Más, instalación,
+  offline y actualización;
+- `docs/screenshots/pwa-acceptance/tablet/`: vertical, horizontal, país,
+  comparación e instalación;
+- `public/screenshots/pwa/`: cuatro capturas reales usadas por el manifest.
 
 ## Reversión
 

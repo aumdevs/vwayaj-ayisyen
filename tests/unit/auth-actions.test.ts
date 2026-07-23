@@ -53,6 +53,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         accept_terms: "yes",
         email: "new@example.com",
@@ -74,6 +75,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
@@ -95,6 +97,29 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("requires a separate 18+ and legal-capacity confirmation before signup", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "ht",
+      { status: "idle" },
+      formData({
+        accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
@@ -116,6 +141,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
@@ -138,6 +164,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "pt",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
@@ -161,6 +188,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
@@ -186,6 +214,7 @@ describe("Auth CAPTCHA enforcement", () => {
 
     const metadata = signupRequest.options.data;
     expect(metadata).toMatchObject({
+      age_capacity_mechanism: "signup_age_capacity_checkbox",
       legal_locale: "es",
       preferred_locale: "ht",
       privacy_acceptance_mechanism: "signup_privacy_acknowledgement_checkbox",
@@ -198,6 +227,7 @@ describe("Auth CAPTCHA enforcement", () => {
     );
     expect(new Date(metadata.terms_accepted_at).toISOString()).toBe(metadata.terms_accepted_at);
     expect(metadata.privacy_accepted_at).toBe(metadata.terms_accepted_at);
+    expect(metadata.age_capacity_confirmed_at).toBe(metadata.terms_accepted_at);
 
     const expectedSignature = createHmac("sha256", registrationSigningKey)
       .update(
@@ -208,6 +238,7 @@ describe("Auth CAPTCHA enforcement", () => {
           metadata.legal_locale,
           metadata.terms_acceptance_mechanism,
           metadata.privacy_acceptance_mechanism,
+          metadata.age_capacity_mechanism,
           metadata.terms_accepted_at,
           metadata.registration_nonce
         ].join("\n"),
@@ -228,6 +259,7 @@ describe("Auth CAPTCHA enforcement", () => {
       "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
         accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",

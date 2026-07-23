@@ -245,6 +245,18 @@ export function AuthForm({
                 ) : null}
               </div>
             </div>
+            <div className="check-option auth-terms">
+              <input
+                id="auth-accept-age-capacity"
+                name="accept_age_capacity"
+                required
+                type="checkbox"
+                value="yes"
+              />
+              <div className="auth-terms-copy">
+                <label htmlFor="auth-accept-age-capacity">{copy.confirmAgeCapacity}</label>
+              </div>
+            </div>
           </>
         ) : null}
         {needsCaptcha && turnstileSiteKey ? (

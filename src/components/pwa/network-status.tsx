@@ -1,8 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { Locale } from "@/types/domain";
 
-export function NetworkStatus() {
+const copy = {
+  ht: "Ou offline. Sèlman resous piblik ki te sove deja ka disponib.",
+  fr: "Vous êtes hors ligne. Seules les ressources publiques déjà enregistrées peuvent être disponibles.",
+  es: "Estás sin conexión. Sólo pueden estar disponibles los recursos públicos ya guardados.",
+  pt: "Você está offline. Somente recursos públicos já salvos podem estar disponíveis.",
+  en: "You are offline. Only previously saved public resources may be available."
+} satisfies Record<Locale, string>;
+
+export function NetworkStatus({ locale }: { locale: Locale }) {
   const [offline, setOffline] = useState(false);
 
   useEffect(() => {
@@ -19,7 +28,7 @@ export function NetworkStatus() {
   if (!offline) return null;
   return (
     <div className="offline-banner" role="status">
-      Ou offline. Sèlman resous piblik ki te sove deja ka disponib.
+      {copy[locale]}
     </div>
   );
 }

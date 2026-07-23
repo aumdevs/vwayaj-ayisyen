@@ -40,12 +40,13 @@ export default async function CountriesPage({ params }: CountriesPageProps) {
             title={copy.home.destinationsTitle}
           />
           <div className="country-grid country-grid-editorial">
-            {countries.map((country) => (
+            {countries.map((country, index) => (
               <CountryCard
                 actionLabel={copy.explore}
                 country={country}
                 key={country.code}
                 locale={locale}
+                preload={index === 0}
               />
             ))}
           </div>

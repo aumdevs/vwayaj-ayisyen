@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 248659,
-      "sha256": "eb87c587443cfdc5fd3ed39f537c5b133a4fdef7a3faa7aa698234db38a057dd"
+      "size_bytes": 250098,
+      "sha256": "51bddfea9c67cd0e1c04f28757e9fb27bbaaba6967f5d3d7bf93d0c5882737e0"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -259,8 +259,8 @@
     },
     {
       "path": "docs/21_PWA_PERFORMANCE_AND_SEO.md",
-      "size_bytes": 2603,
-      "sha256": "e7a64f57ef271fabcb0b5141d4362ed069f1ec2f0f0785d156e73628486a7d70"
+      "size_bytes": 3692,
+      "sha256": "950c9cad55873d1c2ffc015b3eddc17790482196f1285f6e3252a32375ee2a77"
     },
     {
       "path": "docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md",
@@ -294,8 +294,8 @@
     },
     {
       "path": "docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md",
-      "size_bytes": 5941,
-      "sha256": "8bb752a8211f06f137cc741c81cc59d4968d0096b90c9ce5bde11053a9594f52"
+      "size_bytes": 6259,
+      "sha256": "13cb3d4df962a8a4802d9494a2e0dac3239f45f5f9c3a0362773b0fa4b35b623"
     },
     {
       "path": "docs/29_IMPLEMENTATION_ROADMAP.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 4476,
-      "sha256": "4b00b43d70e7e84954c1590dd68cfc3567703ff79852e8611b93507fed6d2ca2"
+      "size_bytes": 4508,
+      "sha256": "b2b5911ce44f8ea0e2b89e2e69db158c2bf16d23ebb745d7b8441fd6e8b1a56f"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -809,8 +809,8 @@
     },
     {
       "path": "supabase/tests/0001_security_invariants.sql",
-      "size_bytes": 5571,
-      "sha256": "d264271cc42df4809749c5dd17aa83668efb8c6b72c944f09e63ca38fabb9bcd"
+      "size_bytes": 6223,
+      "sha256": "4fa7a794b60b9a76a39a79cec579aad9559ce4478adc66eae982dfd7bd222b1e"
     },
     {
       "path": "supabase/tests/0002_public_content_rls.sql",
@@ -844,8 +844,8 @@
     },
     {
       "path": "supabase/tests/0003_registration_auth_hook.sql",
-      "size_bytes": 12890,
-      "sha256": "e6b1bc722cdbd506e778713a4c4e6f0aceba041885782cb7a4a526d29b7002cf"
+      "size_bytes": 15552,
+      "sha256": "c8bd91aa58dfd009c855db699766afeaa3b2b2fe353ffd8e7427fd09bd8ef768"
     },
     {
       "path": "scripts/lib/admin-provisioning-attestation.ts",
@@ -884,18 +884,18 @@
     },
     {
       "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
-      "size_bytes": 8404,
-      "sha256": "7bb026327c3b0cccbb68b1319737237485e64931cca03d5963e41d7b71f8d7e7"
+      "size_bytes": 10505,
+      "sha256": "163cc774c74501a3cee5e87fa5d666de8b11199086a939c92b0e814afef3cffa"
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 3657,
-      "sha256": "2e43a43d7f74286dbeacaef743a6ada0bb32c129a221e101bf8fb7acb9fcc5ea"
+      "size_bytes": 7700,
+      "sha256": "6db53fa2206a91edc27cf92dd3bc7d1b65df304a4daa906ce0be0743cdeb4dab"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 5308,
-      "sha256": "5ed50d36f22db078b029b2ca879a6b9ca90bd4d9c931d950462b40031e19fbeb"
+      "size_bytes": 10908,
+      "sha256": "63b36096659c9cfd3d422a5f302bda0e19c5d0265ed5f0cf805e46660baa40fc"
     }
   ]
 }

@@ -12,18 +12,27 @@ type LanguageSwitcherProps = {
   placement?: "header" | "footer";
 };
 
+const choiceLabel = {
+  ht: "Chwazi lang",
+  fr: "Choisir la langue",
+  es: "Elegir idioma",
+  pt: "Escolher idioma",
+  en: "Choose language"
+} satisfies Record<Locale, string>;
+
 export function LanguageSwitcher({ locale, placement = "header" }: LanguageSwitcherProps) {
   const pathname = usePathname();
+  const label = choiceLabel[locale];
 
   return (
     <details className={`language-menu language-menu-${placement}`}>
-      <summary aria-label={`${localeNames[locale]} · Chwazi lang`}>
+      <summary aria-label={`${localeNames[locale]} · ${label}`}>
         <Globe2 aria-hidden="true" size={18} />
         <span className="language-current">{localeNames[locale]}</span>
         <ChevronDown aria-hidden="true" size={16} />
       </summary>
       <div className="language-popover">
-        <span className="language-popover-label">Chwazi lang</span>
+        <span className="language-popover-label">{label}</span>
         {SUPPORTED_LOCALES.map((option) => (
           <Link
             aria-current={option === locale ? "page" : undefined}

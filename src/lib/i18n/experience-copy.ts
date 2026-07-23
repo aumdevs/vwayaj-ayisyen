@@ -110,6 +110,7 @@ export type ExperienceCopy = {
     passwordHelp: string;
     acceptTerms: string;
     acknowledgePrivacy: string;
+    confirmAgeCapacity: string;
     termsLink: string;
     privacyLink: string;
     termsVersionLabel: string;
@@ -280,6 +281,8 @@ const copy = {
       passwordHelp: "Omwen 12 karaktè ak yon lèt majiskil, yon miniskil, yon chif ak yon senbòl.",
       acceptTerms: "Mwen dakò kontinye selon kondisyon ki pibliye yo",
       acknowledgePrivacy: "Mwen konfime mwen li politik konfidansyalite a",
+      confirmAgeCapacity:
+        "Mwen konfime mwen gen 18 an oswa plis epi mwen gen kapasite legal pou kreye kont sa a",
       termsLink: "Kondisyon itilizasyon",
       privacyLink: "Konfidansyalite",
       termsVersionLabel: "Vèsyon kondisyon yo",
@@ -454,6 +457,8 @@ const copy = {
       passwordHelp: "Au moins 12 caractères, avec majuscule, minuscule, chiffre et symbole.",
       acceptTerms: "J’accepte de continuer selon les conditions publiées",
       acknowledgePrivacy: "Je confirme avoir lu la politique de confidentialité",
+      confirmAgeCapacity:
+        "Je confirme avoir 18 ans ou plus et la capacité juridique de créer ce compte",
       termsLink: "Conditions d’utilisation",
       privacyLink: "Confidentialité",
       termsVersionLabel: "Version des conditions",
@@ -630,6 +635,8 @@ const copy = {
       passwordHelp: "Al menos 12 caracteres, con mayúscula, minúscula, número y símbolo.",
       acceptTerms: "Acepto continuar según las condiciones publicadas",
       acknowledgePrivacy: "Confirmo que he leído la Política de Privacidad",
+      confirmAgeCapacity:
+        "Confirmo que tengo 18 años o más y capacidad legal para crear esta cuenta",
       termsLink: "Condiciones de uso",
       privacyLink: "Privacidad",
       termsVersionLabel: "Versión de las condiciones",
@@ -803,6 +810,8 @@ const copy = {
       passwordHelp: "Pelo menos 12 caracteres, com maiúscula, minúscula, número e símbolo.",
       acceptTerms: "Aceito continuar conforme as condições publicadas",
       acknowledgePrivacy: "Confirmo que li a Política de Privacidade",
+      confirmAgeCapacity:
+        "Confirmo que tenho 18 anos ou mais e capacidade legal para criar esta conta",
       termsLink: "Termos de uso",
       privacyLink: "Privacidade",
       termsVersionLabel: "Versão dos termos",
@@ -967,6 +976,7 @@ const copy = {
       passwordHelp: "At least 12 characters with uppercase, lowercase, a number and a symbol.",
       acceptTerms: "I agree to continue under the published terms",
       acknowledgePrivacy: "I confirm that I have read the Privacy Policy",
+      confirmAgeCapacity: "I confirm that I am 18 or older and legally able to create this account",
       termsLink: "Terms of use",
       privacyLink: "Privacy",
       termsVersionLabel: "Terms version",

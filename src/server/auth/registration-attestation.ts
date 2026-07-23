@@ -8,9 +8,11 @@ const TERMS_VERSION_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const MINIMUM_SIGNING_KEY_LENGTH = 32;
 const TERMS_ACCEPTANCE_MECHANISM = "signup_terms_checkbox";
 const PRIVACY_ACCEPTANCE_MECHANISM = "signup_privacy_acknowledgement_checkbox";
+const AGE_CAPACITY_MECHANISM = "signup_age_capacity_checkbox";
 
 export type RegistrationAttestation = {
   acceptedAt: string;
+  ageCapacityMechanism: typeof AGE_CAPACITY_MECHANISM;
   email: string;
   legalLocale: OfficialLegalLocale;
   privacyAcceptanceMechanism: typeof PRIVACY_ACCEPTANCE_MECHANISM;
@@ -71,6 +73,7 @@ export function createRegistrationAttestation(
     legalLocale,
     TERMS_ACCEPTANCE_MECHANISM,
     PRIVACY_ACCEPTANCE_MECHANISM,
+    AGE_CAPACITY_MECHANISM,
     acceptedAt,
     registrationNonce
   ].join("\n");
@@ -80,6 +83,7 @@ export function createRegistrationAttestation(
 
   return {
     acceptedAt,
+    ageCapacityMechanism: AGE_CAPACITY_MECHANISM,
     email: normalizedEmail,
     legalLocale,
     privacyAcceptanceMechanism: PRIVACY_ACCEPTANCE_MECHANISM,

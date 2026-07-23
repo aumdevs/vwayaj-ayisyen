@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { completePrivacyRequestAction } from "@/app/[locale]/privacy-admin-actions";
 import { submitPrivacyRequestAction } from "@/app/[locale]/privacy-actions";
 import { PrivateAreaShell } from "@/components/private/private-area-shell";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -24,6 +25,7 @@ export default async function PrivatePage({ params }: PrivatePageProps) {
   if (!definition.routes.some((route) => route.path === topLevel)) notFound();
   const viewer = await requireViewer(locale, definition.allowedRoles);
   const dictionary = getDictionary(locale);
+  const localizedPrivacyAdminAction = completePrivacyRequestAction.bind(null, locale);
   const localizedPrivacyRequestAction = submitPrivacyRequestAction.bind(null, locale);
   const privacyCenterData =
     area === "portal" && topLevel === "privacy" ? await getPrivacyCenterData(viewer.id) : null;
@@ -40,6 +42,7 @@ export default async function PrivatePage({ params }: PrivatePageProps) {
       email={viewer.email}
       locale={locale}
       path={path}
+      privacyAdminAction={localizedPrivacyAdminAction}
       privacyAdminQueueData={privacyAdminQueueData}
       privacyCenterData={privacyCenterData}
       privacyRequestAction={localizedPrivacyRequestAction}
