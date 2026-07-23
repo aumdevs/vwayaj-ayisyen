@@ -23,7 +23,8 @@ export function AuthShell({ locale, copy, children }: AuthShellProps) {
           <Image
             alt=""
             fill
-            priority
+            fetchPriority="high"
+            preload
             sizes="(max-width: 900px) 100vw, 50vw"
             src={BRAND.editorialImages.hero}
           />

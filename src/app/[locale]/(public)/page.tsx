@@ -62,7 +62,8 @@ export default async function HomePage({ params }: HomePageProps) {
               <Image
                 alt={copy.home.heroAlt}
                 fill
-                priority
+                fetchPriority="high"
+                preload
                 sizes="(max-width: 899px) 100vw, 52vw"
                 src={BRAND.editorialImages.hero}
               />
