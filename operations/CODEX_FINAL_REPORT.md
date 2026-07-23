@@ -83,11 +83,12 @@ Fecha de corte: 2026-07-23.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
 - Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios
   aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo;
-  TLS está forzado y el seguimiento de aperturas/clics permanece apagado. El
-  código de Auth ya integra el remitente, SMTP Resend y Turnstile en registro,
-  conexión y recuperación. Faltan DMARC y guardar los secretos SMTP/Turnstile
-  directamente en Supabase; por eso el registro continúa apagado. Zoom y OpenAI
-  tampoco tienen credenciales del proyecto.
+  DMARC está publicado, TLS está forzado y el seguimiento de aperturas/clics
+  permanece apagado. Supabase Auth tiene SMTP Resend y el secreto de Turnstile;
+  Vercel Production tiene el site key público. El registro continúa apagado en
+  la aplicación y en el proveedor hasta publicar términos revisados y aprobar
+  alta, confirmación y recuperación reales. Zoom y OpenAI tampoco tienen
+  credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 
@@ -111,7 +112,9 @@ Fecha de corte: 2026-07-23.
 ## Pasos externos pendientes
 
 1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
-2. Configurar DMARC, identidad remitente, credenciales API/SMTP de Resend y CAPTCHA antes de admitir registros públicos o enviar correo desde la aplicación.
+2. Publicar términos y privacidad revisados; después aprobar alta, confirmación
+   y recuperación reales antes de abrir de forma coordinada Supabase y
+   `DISABLE_PUBLIC_REGISTRATION`.
 3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
 4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
 5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
