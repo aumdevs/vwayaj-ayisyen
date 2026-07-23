@@ -23,6 +23,7 @@ type AuthFormProps = {
   locale: Locale;
   mode: AuthMode;
   registrationEnabled: boolean;
+  registrationTermsVersion: string | null;
   turnstileSiteKey: string | null;
   copy: ExperienceCopy["auth"];
 };
@@ -34,6 +35,7 @@ export function AuthForm({
   locale,
   mode,
   registrationEnabled,
+  registrationTermsVersion,
   turnstileSiteKey,
   copy
 }: AuthFormProps) {
@@ -181,10 +183,29 @@ export function AuthForm({
           </div>
         ) : null}
         {mode === "sign-up" ? (
-          <label className="check-option auth-terms">
-            <input name="accept_terms" required type="checkbox" value="yes" />
-            <span>{copy.acceptTerms}</span>
-          </label>
+          <div className="check-option auth-terms">
+            <input
+              aria-describedby="auth-terms-details"
+              id="auth-accept-terms"
+              name="accept_terms"
+              required
+              type="checkbox"
+              value="yes"
+            />
+            <div className="auth-terms-copy" id="auth-terms-details">
+              <label htmlFor="auth-accept-terms">{copy.acceptTerms}</label>
+              <span className="auth-legal-links">
+                <Link href={localizedPath(locale, "legal/terms")}>{copy.termsLink}</Link>
+                <span aria-hidden="true">·</span>
+                <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacyLink}</Link>
+              </span>
+              {registrationTermsVersion ? (
+                <small className="auth-terms-version">
+                  {copy.termsVersionLabel}: <code>{registrationTermsVersion}</code>
+                </small>
+              ) : null}
+            </div>
+          </div>
         ) : null}
         {needsCaptcha && turnstileSiteKey ? (
           <div className="auth-turnstile">

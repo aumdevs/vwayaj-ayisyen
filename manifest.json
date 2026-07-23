@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-07-23",
-  "package_expected_file_count": 166,
+  "package_expected_file_count": 167,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 7893,
-      "sha256": "4ba041611e8d91f34058f545f568f7a4301d54c23fa2a6099ec3672bab60e8c8"
+      "size_bytes": 7931,
+      "sha256": "3d9fc118d6766cce0298f1b89876f73cd9df49894fe8b66ebdb2b23d472dd561"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 2532,
-      "sha256": "6df04fb536d4e5f92e6cb9c9490fb958fbd23134a8399f670ab8169a729c8abe"
+      "size_bytes": 3102,
+      "sha256": "ba0f3751163a0ea7a3b43f7e46f222acc44292b2816d763bf86c955c77559581"
     },
     {
       "path": "security/ABUSE_CASES.csv",
@@ -826,6 +826,11 @@
       "path": "vercel/vercel.json.example",
       "size_bytes": 205,
       "sha256": "1e81cec0c03b119e9255780d06d53e097eb528e2f5d4db53da3dda9890ed0483"
+    },
+    {
+      "path": "scripts/ci-enable-auth-signup.mjs",
+      "size_bytes": 1354,
+      "sha256": "26840a261722153993afe1fbda78d34c8f0c5eacd43f577a2bcbd1780b43aa90"
     }
   ]
 }

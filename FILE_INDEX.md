@@ -2,7 +2,7 @@
 
 Este índice enumera el contenido del ZIP. La credencial temporal del administrador está fuera del paquete y no aparece aquí.
 
-**Total previsto del paquete final:** 166 archivos, incluyendo este índice.
+**Total previsto del paquete final:** 167 archivos, incluyendo este índice.
 
 ## Raíz
 
@@ -113,6 +113,7 @@ bootstrap, validación, generación de secretos y tipos
 
 - `scripts/bootstrap-admin.ts`
 - `scripts/check-no-secrets.sh`
+- `scripts/ci-enable-auth-signup.mjs`
 - `scripts/ci-map-supabase-env.mjs`
 - `scripts/generate-secrets.mjs`
 - `scripts/generate-supabase-types.sh`

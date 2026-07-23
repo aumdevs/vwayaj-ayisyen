@@ -5,19 +5,40 @@ const errors = [];
 function requireValue(name) {
   if (!env[name]?.trim()) errors.push(`${name} is required`);
 }
+function requireValidValue(name, predicate, requirement) {
+  const value = env[name]?.trim();
+  if (!value) {
+    errors.push(`${name} is required`);
+  } else if (!predicate(value)) {
+    errors.push(`${name} ${requirement}`);
+  }
+}
 function featureEnabled(name) {
   // DISABLE_* flags are fail-closed: a feature is enabled only when explicitly false.
   return env[name] === "false";
 }
+
+const publicRegistrationEnabled = featureEnabled("DISABLE_PUBLIC_REGISTRATION");
+const adminBootstrapEnabled = env.ALLOW_ADMIN_BOOTSTRAP === "true";
 
 requireValue("NEXT_PUBLIC_SITE_URL");
 requireValue("NEXT_PUBLIC_SUPABASE_URL");
 requireValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
 // Supabase CAPTCHA also protects sign-in and recovery, not only registration.
 requireValue("NEXT_PUBLIC_TURNSTILE_SITE_KEY");
-if (featureEnabled("DISABLE_PUBLIC_REGISTRATION")) {
-  requireValue("REGISTRATION_TERMS_VERSION");
-  requireValue("REGISTRATION_GATE_SIGNING_KEY");
+if (publicRegistrationEnabled) {
+  requireValidValue(
+    "REGISTRATION_TERMS_VERSION",
+    (value) => /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/.test(value),
+    "must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+  );
+}
+if (publicRegistrationEnabled || adminBootstrapEnabled) {
+  requireValidValue(
+    "REGISTRATION_GATE_SIGNING_KEY",
+    (value) => value.length >= 32,
+    "must contain at least 32 characters"
+  );
 }
 if (featureEnabled("DISABLE_PAYMENTS")) {
   requireValue("STRIPE_SECRET_KEY");
@@ -44,12 +65,11 @@ if (featureEnabled("DISABLE_WHATSAPP")) {
 if (featureEnabled("DISABLE_APPOINTMENTS")) {
   requireValue("MEETING_PROVIDER");
 }
-if (env.ALLOW_ADMIN_BOOTSTRAP === "true") {
+if (adminBootstrapEnabled) {
   requireValue("SUPABASE_SERVICE_ROLE_KEY");
   requireValue("BOOTSTRAP_ADMIN_EMAIL");
   requireValue("BOOTSTRAP_ADMIN_PASSWORD");
   requireValue("EXPECTED_SUPABASE_PROJECT_REF");
-  requireValue("REGISTRATION_GATE_SIGNING_KEY");
   if (env.BOOTSTRAP_ADMIN_EMAIL !== "admin@aumprodz.com") {
     errors.push("BOOTSTRAP_ADMIN_EMAIL must be admin@aumprodz.com");
   }
@@ -69,4 +89,4 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log("Environment variable presence checks passed.");
+console.log("Environment variable checks passed.");

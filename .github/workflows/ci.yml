@@ -96,7 +96,16 @@ jobs:
           version: 2.109.1
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
+      - name: Enable Auth signup only in the ephemeral E2E stack
+        run: node scripts/ci-enable-auth-signup.mjs supabase/config.toml
       - run: supabase start
+      - name: Seed the ephemeral registration HMAC in Vault
+        run: |
+          printf '%s\n' \
+            "select vault.create_secret(:'registration_key', 'vwayaj_registration_gate_hmac', 'Ephemeral CI E2E registration key');" |
+            docker exec -i supabase_db_vwayaj-ayisyen \
+              psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
+              --set registration_key="$REGISTRATION_GATE_SIGNING_KEY"
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env

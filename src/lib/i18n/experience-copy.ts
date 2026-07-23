@@ -109,6 +109,9 @@ export type ExperienceCopy = {
     hidePassword: string;
     passwordHelp: string;
     acceptTerms: string;
+    termsLink: string;
+    privacyLink: string;
+    termsVersionLabel: string;
     securityCheck: string;
     securityCheckError: string;
     backHome: string;
@@ -275,6 +278,9 @@ const copy = {
       hidePassword: "Kache modpas",
       passwordHelp: "Omwen 12 karaktè ak yon lèt majiskil, yon miniskil, yon chif ak yon senbòl.",
       acceptTerms: "Mwen dakò kontinye selon kondisyon ki pibliye yo",
+      termsLink: "Kondisyon itilizasyon",
+      privacyLink: "Konfidansyalite",
+      termsVersionLabel: "Vèsyon kondisyon yo",
       securityCheck: "Verifikasyon sekirite",
       securityCheckError: "Verifikasyon an pa mache. Tanpri eseye ankò.",
       backHome: "Retounen sou sit la"
@@ -445,6 +451,9 @@ const copy = {
       hidePassword: "Masquer le mot de passe",
       passwordHelp: "Au moins 12 caractères, avec majuscule, minuscule, chiffre et symbole.",
       acceptTerms: "J’accepte de continuer selon les conditions publiées",
+      termsLink: "Conditions d’utilisation",
+      privacyLink: "Confidentialité",
+      termsVersionLabel: "Version des conditions",
       securityCheck: "Vérification de sécurité",
       securityCheckError: "La vérification a échoué. Veuillez réessayer.",
       backHome: "Retour au site"
@@ -617,6 +626,9 @@ const copy = {
       hidePassword: "Ocultar contraseña",
       passwordHelp: "Al menos 12 caracteres, con mayúscula, minúscula, número y símbolo.",
       acceptTerms: "Acepto continuar según las condiciones publicadas",
+      termsLink: "Condiciones de uso",
+      privacyLink: "Privacidad",
+      termsVersionLabel: "Versión de las condiciones",
       securityCheck: "Verificación de seguridad",
       securityCheckError: "La verificación falló. Inténtalo de nuevo.",
       backHome: "Volver al sitio"
@@ -786,6 +798,9 @@ const copy = {
       hidePassword: "Ocultar senha",
       passwordHelp: "Pelo menos 12 caracteres, com maiúscula, minúscula, número e símbolo.",
       acceptTerms: "Aceito continuar conforme as condições publicadas",
+      termsLink: "Termos de uso",
+      privacyLink: "Privacidade",
+      termsVersionLabel: "Versão dos termos",
       securityCheck: "Verificação de segurança",
       securityCheckError: "A verificação falhou. Tente novamente.",
       backHome: "Voltar ao site"
@@ -946,6 +961,9 @@ const copy = {
       hidePassword: "Hide password",
       passwordHelp: "At least 12 characters with uppercase, lowercase, a number and a symbol.",
       acceptTerms: "I agree to continue under the published terms",
+      termsLink: "Terms of use",
+      privacyLink: "Privacy",
+      termsVersionLabel: "Terms version",
       securityCheck: "Security verification",
       securityCheckError: "Verification failed. Please try again.",
       backHome: "Back to the site"

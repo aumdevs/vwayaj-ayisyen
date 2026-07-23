@@ -3509,6 +3509,43 @@ small {
   font-size: 0.82rem;
 }
 
+.auth-terms-copy {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.auth-terms-copy label {
+  color: var(--ink-800);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.auth-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.auth-legal-links a {
+  color: var(--brand-700);
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.auth-terms-version {
+  color: var(--ink-500);
+  overflow-wrap: anywhere;
+}
+
+.auth-terms-version code {
+  font: inherit;
+  font-weight: 750;
+}
+
 .auth-turnstile {
   display: grid;
   gap: 0.5rem;
