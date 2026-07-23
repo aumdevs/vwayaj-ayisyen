@@ -3,6 +3,8 @@ import { getSupabasePublicConfig } from "@/lib/config/runtime";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n/config";
 import { refreshAuthSession } from "@/lib/supabase/proxy";
 
+const NEXT_IMAGE_FILL_STYLE_SHA256 = "'sha256-ZDrxqUOB4m/L0JWL/+gS52g1CRH0l/qwMhjTw5Z/Fsc='";
+
 function buildContentSecurityPolicy(nonce: string): string {
   const isDevelopment = process.env.NODE_ENV === "development";
   const connectSources = ["'self'"];
@@ -18,6 +20,7 @@ function buildContentSecurityPolicy(nonce: string): string {
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDevelopment ? " 'unsafe-eval'" : ""}`,
     `style-src 'self' 'nonce-${nonce}'`,
+    `style-src-attr 'unsafe-hashes' ${NEXT_IMAGE_FILL_STYLE_SHA256}`,
     "img-src 'self' blob: data:",
     "font-src 'self' data:",
     `connect-src ${connectSources.join(" ")}`,

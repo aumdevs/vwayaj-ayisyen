@@ -3,7 +3,11 @@ import { resolve } from "node:path";
 import { chromium } from "@playwright/test";
 
 const baseUrl = process.env.VISUAL_BASE_URL ?? "http://127.0.0.1:3000";
-const outputRoot = resolve(process.cwd(), "docs/screenshots/redesign/after");
+const protectionBypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const outputRoot = resolve(
+  process.cwd(),
+  process.env.VISUAL_OUTPUT_ROOT ?? "docs/screenshots/redesign/after"
+);
 const routes = {
   home: "/ht",
   countries: "/ht/countries",
@@ -48,7 +52,13 @@ async function capture(name, path, viewport, group) {
     viewport,
     deviceScaleFactor: 1,
     reducedMotion: "reduce",
-    colorScheme: "light"
+    colorScheme: "light",
+    extraHTTPHeaders: protectionBypass
+      ? {
+          "x-vercel-protection-bypass": protectionBypass,
+          "x-vercel-set-bypass-cookie": "true"
+        }
+      : undefined
   });
   const page = await context.newPage();
   const browserErrors = [];
