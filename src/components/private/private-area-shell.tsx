@@ -25,15 +25,17 @@ import {
   Users,
   type LucideIcon
 } from "lucide-react";
+import type { PrivacyRequestActionState } from "@/app/[locale]/privacy-actions";
 import { signOutAction } from "@/app/[locale]/auth/actions";
 import { LogoMark } from "@/components/brand/logo-mark";
+import { PrivacyAdminQueue } from "@/components/private/privacy-admin-queue";
 import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel";
 import { BRAND } from "@/config/brand";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { portalMobileRoutes, privateAreas, type PrivateArea } from "@/lib/navigation/private";
 import type { Locale } from "@/types/domain";
-import type { PrivacyCenterData } from "@/types/privacy";
+import type { PrivacyAdminQueueData, PrivacyCenterData } from "@/types/privacy";
 
 type PrivateAreaShellProps = {
   area: PrivateArea;
@@ -42,7 +44,12 @@ type PrivateAreaShellProps = {
   path: readonly string[];
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyAdminQueueData: PrivacyAdminQueueData | null;
   privacyCenterData: PrivacyCenterData | null;
+  privacyRequestAction: (
+    _previous: PrivacyRequestActionState,
+    formData: FormData
+  ) => Promise<PrivacyRequestActionState>;
 };
 
 const routeIcons: Record<string, LucideIcon> = {
@@ -59,6 +66,7 @@ const routeIcons: Record<string, LucideIcon> = {
   ai: Sparkles,
   notifications: Bell,
   privacy: LockKeyhole,
+  "privacy-requests": LockKeyhole,
   leads: Users,
   contacts: Users,
   tasks: ClipboardList,
@@ -211,7 +219,8 @@ function PortalShell({
   title,
   email,
   assuranceLevel,
-  privacyCenterData
+  privacyCenterData,
+  privacyRequestAction
 }: {
   definition: (typeof privateAreas)["portal"];
   dictionary: Dictionary;
@@ -221,6 +230,10 @@ function PortalShell({
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
   privacyCenterData: PrivacyCenterData | null;
+  privacyRequestAction: (
+    _previous: PrivacyRequestActionState,
+    formData: FormData
+  ) => Promise<PrivacyRequestActionState>;
 }) {
   const copy = uiCopy[locale];
   const selectedIcon = routeIcons[section] ?? LayoutGrid;
@@ -309,6 +322,7 @@ function PortalShell({
             </div>
           ) : section === "privacy" && privacyCenterData ? (
             <PrivacyRequestPanel
+              action={privacyRequestAction}
               data={privacyCenterData}
               legalEmail={BRAND.contact.legal}
               locale={locale}
@@ -367,7 +381,8 @@ function groupRoutes(area: PrivateArea, routes: (typeof privateAreas)[PrivateAre
     "courses",
     "community",
     "ai",
-    "notifications"
+    "notifications",
+    "privacy-requests"
   ]);
   const system = new Set(["settings", "whatsapp", "audit", "security", "feature-flags"]);
   return [
@@ -387,7 +402,8 @@ function StaffShell({
   section,
   title,
   email,
-  assuranceLevel
+  assuranceLevel,
+  privacyAdminQueueData
 }: {
   area: Exclude<PrivateArea, "portal">;
   definition: (typeof privateAreas)[Exclude<PrivateArea, "portal">];
@@ -397,6 +413,7 @@ function StaffShell({
   title: string;
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyAdminQueueData: PrivacyAdminQueueData | null;
 }) {
   const copy = uiCopy[locale];
   const groups = groupRoutes(area, definition.routes);
@@ -524,6 +541,12 @@ function StaffShell({
                 </li>
               </ol>
             </section>
+          ) : area === "admin" && section === "privacy-requests" && privacyAdminQueueData ? (
+            <PrivacyAdminQueue
+              data={privacyAdminQueueData}
+              legalEmail={BRAND.contact.legal}
+              locale={locale}
+            />
           ) : (
             <section className="staff-table-panel">
               <header>
@@ -564,7 +587,9 @@ export function PrivateAreaShell({
   path,
   email,
   assuranceLevel,
-  privacyCenterData
+  privacyAdminQueueData,
+  privacyCenterData,
+  privacyRequestAction
 }: PrivateAreaShellProps) {
   const definition = privateAreas[area];
   const section = path[0] ?? "";
@@ -580,6 +605,7 @@ export function PrivateAreaShell({
         email={email}
         locale={locale}
         privacyCenterData={privacyCenterData}
+        privacyRequestAction={privacyRequestAction}
         section={section}
         title={title}
       />
@@ -594,6 +620,7 @@ export function PrivateAreaShell({
       dictionary={dictionary}
       email={email}
       locale={locale}
+      privacyAdminQueueData={privacyAdminQueueData}
       section={section}
       title={title}
     />

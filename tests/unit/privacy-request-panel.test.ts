@@ -2,16 +2,24 @@
 
 import "@testing-library/jest-dom/vitest";
 import { createElement } from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/app/[locale]/privacy-actions", () => ({
   submitPrivacyRequestAction: vi.fn(async () => ({ status: "idle" }))
 }));
 
+import { PrivacyAdminQueue } from "@/components/private/privacy-admin-queue";
 import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel";
-import { portalMobileRoutes } from "@/lib/navigation/private";
-import type { PrivacyCenterData } from "@/types/privacy";
+import { portalMobileRoutes, privateAreas } from "@/lib/navigation/private";
+import type { PrivacyAdminQueueData, PrivacyCenterData } from "@/types/privacy";
+
+const action = vi.fn(async () => ({ status: "idle" as const }));
+
+afterEach(() => {
+  cleanup();
+  vi.clearAllMocks();
+});
 
 describe("privacy center acceptance artifacts", () => {
   it("links to the exact accepted version in its recorded official locale", () => {
@@ -32,6 +40,7 @@ describe("privacy center acceptance artifacts", () => {
 
     render(
       createElement(PrivacyRequestPanel, {
+        action,
         data,
         legalEmail: "legal@vwayajayisyen.com",
         locale: "ht"
@@ -66,6 +75,7 @@ describe("privacy center acceptance artifacts", () => {
 
     render(
       createElement(PrivacyRequestPanel, {
+        action,
         data,
         legalEmail: "legal@vwayajayisyen.com",
         locale: "es"
@@ -85,5 +95,43 @@ describe("privacy center navigation", () => {
       label: "Konfidansyalite",
       path: "privacy"
     });
+    expect(privateAreas.admin.routes).toContainEqual({
+      label: "Demann konfidansyalite",
+      path: "privacy-requests"
+    });
+  });
+});
+
+describe("privacy administrator queue", () => {
+  it("renders a durable open request without exposing its free-text description", () => {
+    const data: PrivacyAdminQueueData = {
+      available: true,
+      requests: [
+        {
+          createdAt: "2026-07-23T23:59:59.000Z",
+          id: "00000000-0000-4000-8000-000000000124",
+          locale: "pt",
+          requestType: "access",
+          status: "received",
+          updatedAt: "2026-07-23T23:59:59.000Z",
+          userId: "00000000-0000-4000-8000-000000000123"
+        }
+      ]
+    };
+
+    render(
+      createElement(PrivacyAdminQueue, {
+        data,
+        legalEmail: "legal@vwayajayisyen.com",
+        locale: "es"
+      })
+    );
+
+    expect(screen.getByRole("table", { name: "Solicitudes de privacidad abiertas" })).toBeVisible();
+    expect(screen.getByText("00000000-0000-4000-8000-000000000124")).toBeVisible();
+    expect(screen.getByRole("link", { name: "legal@vwayajayisyen.com" })).toHaveAttribute(
+      "href",
+      "mailto:legal@vwayajayisyen.com"
+    );
   });
 });

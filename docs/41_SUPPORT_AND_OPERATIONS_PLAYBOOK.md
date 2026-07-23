@@ -62,6 +62,16 @@ Macros multilingües revisadas, sin diagnósticos ni garantías. Siempre persona
 
 Corrección editorial de alto riesgo puede despublicar primero y revisar después.
 
+## Solicitudes de privacidad
+
+- `https://vwayajayisyen.com/es/admin/privacy-requests` es la cola operativa de solicitudes abiertas.
+- Sólo personal administrador con MFA (`aal2`) puede verla; RLS vuelve a comprobar el rol en la base de datos.
+- Revisar la cola cada día hábil y al iniciar cada turno operativo. No se promete un SLA público hasta validarlo jurídicamente.
+- Cada alta genera en la misma transacción un evento `privacy.data_subject_request.received` en `outbox_events`; un reintento no duplica la solicitud ni el evento.
+- El listado omite la descripción libre y muestra sólo referencias mínimas para el triage. Consultar detalles únicamente cuando sean necesarios.
+- Si la cola no está disponible, escalar inmediatamente a `legal@vwayajayisyen.com` y registrar la incidencia.
+- No marcar una solicitud como atendida sin conservar la decisión, la verificación proporcional y la respuesta aplicable.
+
 ## Capacidad
 
 Mostrar horarios/tiempos reales. No prometer 24/7. Colas por país/idioma/urgencia. Evitar que un solo administrador sea punto único de fallo.

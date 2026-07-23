@@ -38,10 +38,10 @@ afterEach(() => {
 describe("privacy request action", () => {
   it("submits only user-controlled fields through the restricted RPC", async () => {
     const result = await submitPrivacyRequestAction(
+      "es",
       { status: "idle" },
       formData({
         description: "Quiero una copia de los datos de mi cuenta.",
-        locale: "es",
         request_type: "access"
       })
     );
@@ -57,10 +57,10 @@ describe("privacy request action", () => {
 
   it("rejects invalid input before reading the session", async () => {
     const result = await submitPrivacyRequestAction(
+      "es",
       { status: "idle" },
       formData({
         description: "x".repeat(2001),
-        locale: "es",
         request_type: "access"
       })
     );
@@ -74,10 +74,10 @@ describe("privacy request action", () => {
     mocks.getClaims.mockResolvedValue({ data: { claims: {} }, error: null });
 
     const result = await submitPrivacyRequestAction(
+      "pt",
       { status: "idle" },
       formData({
         description: "",
-        locale: "pt",
         request_type: "delete"
       })
     );
@@ -93,10 +93,10 @@ describe("privacy request action", () => {
     });
 
     const result = await submitPrivacyRequestAction(
+      "pt",
       { status: "idle" },
       formData({
         description: "",
-        locale: "pt",
         request_type: "delete"
       })
     );
@@ -107,5 +107,40 @@ describe("privacy request action", () => {
       p_locale: "pt",
       p_request_type: "delete"
     });
+  });
+
+  it("ignores a forged form locale and uses the server-bound route locale", async () => {
+    const result = await submitPrivacyRequestAction(
+      "pt",
+      { status: "idle" },
+      formData({
+        description: "",
+        locale: "es",
+        request_type: "export"
+      })
+    );
+
+    expect(result).toEqual({ status: "submitted" });
+    expect(mocks.rpc).toHaveBeenCalledWith("submit_data_subject_request", {
+      p_description: undefined,
+      p_locale: "pt",
+      p_request_type: "export"
+    });
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/pt/portal/privacy");
+  });
+
+  it("rejects an invalid server-bound locale before reading the session", async () => {
+    const result = await submitPrivacyRequestAction(
+      "invalid",
+      { status: "idle" },
+      formData({
+        description: "",
+        request_type: "access"
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(mocks.getClaims).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalled();
   });
 });

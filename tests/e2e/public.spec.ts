@@ -165,6 +165,7 @@ test("public registration crosses the live Auth hook and persists verified terms
         policy_version: termsVersion,
         scope: expect.objectContaining({
           mechanism: "signup_terms_checkbox",
+          provenance: "auth_hook_signed_v1",
           separate_acceptance: true
         })
       }),
@@ -177,6 +178,7 @@ test("public registration crosses the live Auth hook and persists verified terms
         scope: expect.objectContaining({
           acceptance_kind: "acknowledgement",
           mechanism: "signup_privacy_acknowledgement_checkbox",
+          provenance: "auth_hook_signed_v1",
           separate_acceptance: true
         })
       })

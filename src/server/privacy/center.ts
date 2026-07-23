@@ -25,7 +25,9 @@ export async function getPrivacyCenterData(userId: string): Promise<PrivacyCente
       .eq("user_id", userId)
       .eq("granted", true)
       .is("withdrawn_at", null)
+      .not("evidence_hash", "is", null)
       .in("consent_type", ["terms", "privacy"])
+      .contains("scope", { provenance: "auth_hook_signed_v1" })
       .order("granted_at", { ascending: false })
   ]);
 

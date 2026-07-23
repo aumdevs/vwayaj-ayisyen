@@ -3,6 +3,25 @@
 -- sessions cannot create their own Terms or Privacy consent records.
 begin;
 
+-- Before this hardening point, an older deployed policy could let a browser
+-- write Terms or Privacy rows. Preserve those rows for audit, but quarantine
+-- them from legal display and rely on the server-owned profile evidence as the
+-- legacy fallback.
+lock table public.consent_records in share row exclusive mode;
+
+update public.consent_records
+set
+  granted = false,
+  withdrawn_at = coalesce(withdrawn_at, clock_timestamp()),
+  scope = scope || jsonb_build_object(
+    'provenance', 'unverified_pre_hardening',
+    'quarantined_at', clock_timestamp()
+  )
+where consent_type in (
+  'terms'::public.consent_type,
+  'privacy'::public.consent_type
+);
+
 drop policy if exists consent_insert_self on public.consent_records;
 drop policy if exists consent_insert_self_non_registration on public.consent_records;
 
@@ -11,6 +30,36 @@ for insert to authenticated with check (
   user_id = auth.uid()
   and consent_type not in ('terms'::public.consent_type, 'privacy'::public.consent_type)
 );
+
+alter table public.consent_records
+  drop constraint if exists legal_consent_requires_signed_provenance;
+alter table public.consent_records
+  add constraint legal_consent_requires_signed_provenance
+  check (
+    consent_type not in (
+      'terms'::public.consent_type,
+      'privacy'::public.consent_type
+    )
+    or not granted
+    or coalesce(
+      (
+        evidence_hash ~ '^[0-9a-f]{64}$'
+        and scope ->> 'provenance' = 'auth_hook_signed_v1'
+        and scope ->> 'separate_acceptance' = 'true'
+        and (
+          (
+            consent_type = 'terms'::public.consent_type
+            and scope ->> 'mechanism' = 'signup_terms_checkbox'
+          )
+          or (
+            consent_type = 'privacy'::public.consent_type
+            and scope ->> 'mechanism' = 'signup_privacy_acknowledgement_checkbox'
+          )
+        )
+      ),
+      false
+    )
+  );
 
 create or replace function private.registration_attestation_is_valid(
   p_email text,
@@ -179,6 +228,7 @@ begin
         v_legal_locale,
         jsonb_build_object(
           'mechanism', new.raw_user_meta_data ->> 'terms_acceptance_mechanism',
+          'provenance', 'auth_hook_signed_v1',
           'separate_acceptance', true
         ),
         true,
@@ -193,6 +243,7 @@ begin
         jsonb_build_object(
           'acceptance_kind', 'acknowledgement',
           'mechanism', new.raw_user_meta_data ->> 'privacy_acceptance_mechanism',
+          'provenance', 'auth_hook_signed_v1',
           'separate_acceptance', true
         ),
         true,
@@ -213,5 +264,21 @@ revoke all on function private.registration_attestation_is_valid(text, jsonb)
   from public, anon, authenticated, service_role;
 grant execute on function private.registration_attestation_is_valid(text, jsonb)
   to supabase_auth_admin;
+
+-- CREATE OR REPLACE preserves a manual EXECUTE revocation. Repair the earlier
+-- production migration only when bootstrap has actually completed, while a
+-- fresh database with no super administrator keeps the original 0012 grant.
+do $$
+begin
+  if exists (
+    select 1
+    from public.user_roles
+    where role = 'super_admin'::public.app_role
+  ) then
+    execute
+      'revoke execute on function public.bootstrap_initial_admin(uuid, text) from service_role';
+  end if;
+end;
+$$;
 
 commit;

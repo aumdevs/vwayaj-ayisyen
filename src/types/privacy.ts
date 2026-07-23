@@ -17,3 +17,16 @@ export type PrivacyCenterData = {
     status: "received" | "identity_check" | "in_progress" | "fulfilled" | "denied" | "cancelled";
   }[];
 };
+
+export type PrivacyAdminQueueData = {
+  available: boolean;
+  requests: {
+    createdAt: string;
+    id: string;
+    locale: "ht" | "fr" | "es" | "pt" | "en";
+    requestType: PrivacyCenterData["requests"][number]["requestType"];
+    status: PrivacyCenterData["requests"][number]["status"];
+    updatedAt: string;
+    userId: string | null;
+  }[];
+};

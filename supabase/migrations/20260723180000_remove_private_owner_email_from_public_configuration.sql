@@ -111,8 +111,6 @@ $$;
 
 revoke all on function public.bootstrap_initial_admin(uuid, text)
   from public, anon, authenticated;
-grant execute on function public.bootstrap_initial_admin(uuid, text)
-  to service_role;
 
 comment on function public.bootstrap_initial_admin(uuid, text) is
   'One-time initial owner bootstrap. Owner email is supplied through a protected environment and is never public configuration.';

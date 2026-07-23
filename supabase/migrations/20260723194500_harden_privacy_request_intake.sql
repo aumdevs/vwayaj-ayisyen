@@ -11,6 +11,10 @@ create index if not exists dsr_user_open_type_idx
 on public.data_subject_requests(user_id, request_type, created_at desc)
 where status in ('received', 'identity_check', 'in_progress');
 
+create unique index if not exists outbox_privacy_request_received_unique_idx
+on public.outbox_events(event_type, aggregate_id)
+where event_type = 'privacy.data_subject_request.received';
+
 create or replace function public.submit_data_subject_request(
   p_request_type public.data_request_type,
   p_locale public.app_locale,
@@ -24,6 +28,7 @@ as $$
 declare
   v_description text;
   v_request_id uuid;
+  v_request_locale public.app_locale;
   v_user_id uuid;
 begin
   v_user_id := auth.uid();
@@ -43,8 +48,8 @@ begin
     pg_catalog.hashtextextended(v_user_id::text, 20260723)
   );
 
-  select request.id
-  into v_request_id
+  select request.id, request.locale
+  into v_request_id, v_request_locale
   from public.data_subject_requests as request
   where request.user_id = v_user_id
     and request.request_type = p_request_type
@@ -53,6 +58,23 @@ begin
   limit 1;
 
   if v_request_id is not null then
+    insert into public.outbox_events(
+      event_type,
+      aggregate_type,
+      aggregate_id,
+      payload
+    )
+    values (
+      'privacy.data_subject_request.received',
+      'data_subject_request',
+      v_request_id::text,
+      jsonb_build_object(
+        'locale', v_request_locale::text,
+        'request_type', p_request_type::text
+      )
+    )
+    on conflict do nothing;
+
     return v_request_id;
   end if;
 
@@ -73,6 +95,25 @@ begin
     'authenticated_session'
   )
   returning id into v_request_id;
+
+  v_request_locale := p_locale;
+
+  insert into public.outbox_events(
+    event_type,
+    aggregate_type,
+    aggregate_id,
+    payload
+  )
+  values (
+    'privacy.data_subject_request.received',
+    'data_subject_request',
+      v_request_id::text,
+      jsonb_build_object(
+      'locale', v_request_locale::text,
+      'request_type', p_request_type::text
+    )
+  )
+  on conflict do nothing;
 
   return v_request_id;
 end;

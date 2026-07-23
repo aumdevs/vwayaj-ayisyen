@@ -19,8 +19,8 @@
     },
     {
       "path": "00_START_HERE.md",
-      "size_bytes": 3560,
-      "sha256": "71bd1834ef82db3c17fe8c73a5c429de23168c918d45b3f04090de64593ce844"
+      "size_bytes": 3647,
+      "sha256": "f2c44dd7d8a87b96089bd68a7b29ec08973d1296187d8131af8c2798a9f56312"
     },
     {
       "path": "AGENTS.md",
@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 247050,
-      "sha256": "d894f817b5b0e18bc5875d0d92511b3c4d4648809a9aed2ceca20dcf97311ae0"
+      "size_bytes": 248659,
+      "sha256": "eb87c587443cfdc5fd3ed39f537c5b133a4fdef7a3faa7aa698234db38a057dd"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -74,8 +74,8 @@
     },
     {
       "path": "checklists/LAUNCH_CHECKLIST.md",
-      "size_bytes": 2713,
-      "sha256": "f7165dbb6ed5f9531de7eedcec30ff2201ba9071488d562e39a29eecdd5e9c2d"
+      "size_bytes": 2792,
+      "sha256": "fef4bcac282984cad59f0049c5cc33bfced515bcfc538555cb98263a1c44d513"
     },
     {
       "path": "checklists/MANUAL_ACCOUNT_SETUP.md",
@@ -169,8 +169,8 @@
     },
     {
       "path": "docs/03_INFORMATION_ARCHITECTURE_AND_ROUTES.md",
-      "size_bytes": 4245,
-      "sha256": "f17678b13e2c764aaabf1ff7f9a0e6bedce363287b00453fe0763e2e89adac3b"
+      "size_bytes": 4278,
+      "sha256": "e9b010d507d11c79cd843c909ec09d23a06d84fce422f6c3d6a0c8e8695d59d7"
     },
     {
       "path": "docs/04_USER_ROLES_AND_PERMISSIONS.md",
@@ -209,8 +209,8 @@
     },
     {
       "path": "docs/11_DATABASE_DATA_DICTIONARY.md",
-      "size_bytes": 5952,
-      "sha256": "9f9cf18c1c326657cab0f469f1a16776681904a45fb26b2917371dd3e6a3992e"
+      "size_bytes": 6213,
+      "sha256": "c640a25e00236351be8ad2161f58a37e91d5bcbc98c0ae2c0f64c42fb86b0233"
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
@@ -294,8 +294,8 @@
     },
     {
       "path": "docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md",
-      "size_bytes": 5773,
-      "sha256": "8daeeaa937854e6a2c7b63e1fb7d9402499bc8449465848946a8e2b3e9a60bbe"
+      "size_bytes": 5941,
+      "sha256": "8bb752a8211f06f137cc741c81cc59d4968d0096b90c9ce5bde11053a9594f52"
     },
     {
       "path": "docs/29_IMPLEMENTATION_ROADMAP.md",
@@ -359,8 +359,8 @@
     },
     {
       "path": "docs/41_SUPPORT_AND_OPERATIONS_PLAYBOOK.md",
-      "size_bytes": 1667,
-      "sha256": "579f190d9adb69159acf64b7ee72a7f5ef8be1151224f5f60be0bb05668d17df"
+      "size_bytes": 2594,
+      "sha256": "e2e7a7e77c69e69dd088b506ec6a5396926a267318c0e4e0855bdef0d8ceb096"
     },
     {
       "path": "docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 4394,
-      "sha256": "46d14ac0eced1dbc8efe93609bb7916de24188899bf584be6195baa905c19748"
+      "size_bytes": 4476,
+      "sha256": "4b00b43d70e7e84954c1590dd68cfc3567703ff79852e8611b93507fed6d2ca2"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -859,8 +859,8 @@
     },
     {
       "path": "supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql",
-      "size_bytes": 3573,
-      "sha256": "193afc106bfa37813702397e46195db7777c9450e3026222c6ae95171abafd56"
+      "size_bytes": 3485,
+      "sha256": "5644955e00013ab8a6f6752995dad2b4baf4fc3dd205f69df9ac1dd8bf3124fb"
     },
     {
       "path": "supabase/migrations/0013_password_change_completion.sql",
@@ -884,18 +884,18 @@
     },
     {
       "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
-      "size_bytes": 6294,
-      "sha256": "e3e66896c6dc7c993380f95b7bf4df8aac48886e4677a646d6e5b424c822d608"
+      "size_bytes": 8404,
+      "sha256": "7bb026327c3b0cccbb68b1319737237485e64931cca03d5963e41d7b71f8d7e7"
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 2612,
-      "sha256": "39f7282505c094b873ff8d7f5be5589c2355abbcf87e9b9000597be636fb6747"
+      "size_bytes": 3657,
+      "sha256": "2e43a43d7f74286dbeacaef743a6ada0bb32c129a221e101bf8fb7acb9fcc5ea"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 3770,
-      "sha256": "adbca5b5f01488f14cb88ba3e197476f324ad9bdab661d2609499386318767b7"
+      "size_bytes": 5308,
+      "sha256": "5ed50d36f22db078b029b2ca879a6b9ca90bd4d9c931d950462b40031e19fbeb"
     }
   ]
 }

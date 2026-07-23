@@ -14,6 +14,7 @@
 - alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
 - Términos, Privacidad y Cookies publicados con fecha y versión;
 - Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- solicitudes de derechos autenticadas, limitadas, con evento durable y cola administrativa protegida por MFA;
 - pagos, documentos, citas, comunidad, IA y video desactivados.
 
 ## Bloqueos del lanzamiento comercial o de funciones de alto riesgo
@@ -28,7 +29,7 @@ Antes de activar la función afectada, completar y revisar:
 - WhatsApp, Stripe, email, IA, video y otros encargados;
 - base jurídica/consentimientos;
 - plazos de retención;
-- mecanismo de solicitudes de privacidad;
+- validación jurídica de plazos, excepciones y procedimiento final de solicitudes de privacidad;
 - transferencia internacional de datos;
 - procedimiento para menores;
 - seguro/responsabilidad profesional cuando aplique.

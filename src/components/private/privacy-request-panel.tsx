@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { CheckCircle2, Clock3, FileCheck2, Send, ShieldCheck } from "lucide-react";
-import {
-  submitPrivacyRequestAction,
-  type PrivacyRequestActionState
-} from "@/app/[locale]/privacy-actions";
+import type { PrivacyRequestActionState } from "@/app/[locale]/privacy-actions";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 import type { PrivacyCenterData } from "@/types/privacy";
 
 type PrivacyRequestPanelProps = {
+  action: (
+    _previous: PrivacyRequestActionState,
+    formData: FormData
+  ) => Promise<PrivacyRequestActionState>;
   data: PrivacyCenterData;
   legalEmail: string;
   locale: Locale;
@@ -240,11 +241,18 @@ const copy = {
 
 function formatDate(value: string, locale: Locale) {
   const language = locale === "ht" ? "fr" : locale;
-  return new Intl.DateTimeFormat(language, { dateStyle: "medium" }).format(new Date(value));
+  return new Intl.DateTimeFormat(language, { dateStyle: "medium", timeZone: "UTC" }).format(
+    new Date(value)
+  );
 }
 
-export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequestPanelProps) {
-  const [state, action, pending] = useActionState(submitPrivacyRequestAction, initialState);
+export function PrivacyRequestPanel({
+  action,
+  data,
+  legalEmail,
+  locale
+}: PrivacyRequestPanelProps) {
+  const [state, formAction, pending] = useActionState(action, initialState);
   const text = copy[locale];
   const termsHref =
     !data.profile?.termsLegacy && data.profile?.termsLocale && data.profile.termsVersion
@@ -358,8 +366,7 @@ export function PrivacyRequestPanel({ data, legalEmail, locale }: PrivacyRequest
             {message}
           </p>
         ) : null}
-        <form action={action}>
-          <input name="locale" type="hidden" value={locale} />
+        <form action={formAction}>
           <div className="field">
             <label htmlFor="privacy-request-type">{text.type}</label>
             <select id="privacy-request-type" name="request_type" required>

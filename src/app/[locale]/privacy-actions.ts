@@ -15,7 +15,6 @@ const privacyRequestSchema = z.object({
     .trim()
     .max(2000)
     .transform((value) => (value.length > 0 ? value : null)),
-  locale: z.string().refine(isLocale),
   requestType: z.enum(requestTypes)
 });
 
@@ -24,12 +23,14 @@ export type PrivacyRequestActionState = {
 };
 
 export async function submitPrivacyRequestAction(
+  renderedLocale: string,
   _previous: PrivacyRequestActionState,
   formData: FormData
 ): Promise<PrivacyRequestActionState> {
+  if (!isLocale(renderedLocale)) return { status: "invalid" };
+
   const parsed = privacyRequestSchema.safeParse({
     description: formData.get("description") ?? "",
-    locale: formData.get("locale"),
     requestType: formData.get("request_type")
   });
   if (!parsed.success) return { status: "invalid" };
@@ -43,11 +44,11 @@ export async function submitPrivacyRequestAction(
 
   const { error } = await supabase.rpc("submit_data_subject_request", {
     p_description: parsed.data.description ?? undefined,
-    p_locale: parsed.data.locale as Locale,
+    p_locale: renderedLocale as Locale,
     p_request_type: parsed.data.requestType
   });
   if (error) return { status: "unavailable" };
 
-  revalidatePath(localizedPath(parsed.data.locale as Locale, "portal/privacy"));
+  revalidatePath(localizedPath(renderedLocale as Locale, "portal/privacy"));
   return { status: "submitted" };
 }

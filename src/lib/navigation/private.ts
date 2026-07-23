@@ -103,6 +103,7 @@ export const privateAreas: Record<PrivateArea, AreaDefinition> = {
       { path: "community", label: "Kominote" },
       { path: "ai", label: "Asistan IA" },
       { path: "notifications", label: "Notifikasyon" },
+      { path: "privacy-requests", label: "Demann konfidansyalite" },
       { path: "audit", label: "Odit" },
       { path: "security", label: "Sekirite" },
       { path: "feature-flags", label: "Fonksyon" }

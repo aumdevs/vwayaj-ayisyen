@@ -14,9 +14,9 @@ La credencial temporal del administrador **no está incluida** en este archivo n
 # Empieza aquí — paquete de entrega para Codex
 
 **Proyecto técnico:** `vwayaj-ayisyen`
-**Fecha del documento:** 2026-07-21  
-**Propietario previsto del repositorio:** `aumdevs`  
-**Grupo de Supabase:** `aumprodz Group`  
+**Fecha del documento:** 2026-07-21
+**Propietario previsto del repositorio:** `aumdevs`
+**Grupo de Supabase:** `aumprodz Group`
 **Equipo de Vercel:** `aum prodz Group`
 
 Este paquete contiene la especificación completa para construir desde cero una plataforma digital dirigida exclusivamente a la comunidad haitiana que desea informarse, prepararse y recibir acompañamiento legal y práctico para Estados Unidos, Chile, Brasil y México.
@@ -54,7 +54,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 ## Advertencias importantes
 
 - **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL oficial es `https://vwayajayisyen.com`.
-- El número de WhatsApp, entidad legal, dirección, correo de soporte, claves de Stripe y credenciales de los proveedores externos no están incluidos.
+- La identidad pública mínima, el domicilio público y los tres correos oficiales están confirmados. Faltan CNPJ, domicilio registral completo, WhatsApp, configuración comercial de Stripe y credenciales de las funciones de alto riesgo.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
 - Todo contenido migratorio de alto impacto debe permanecer en borrador hasta ser revisado por una persona competente.
@@ -222,7 +222,7 @@ El ZIP final contiene **166 archivos**:
 
 # Validación del paquete
 
-**Fecha:** 2026-07-21  
+**Fecha:** 2026-07-21
 **Alcance:** handoff documental, migraciones de referencia, scripts, workflows y plantillas.
 
 ## Controles ejecutados en esta entrega
@@ -1243,6 +1243,7 @@ No revelar si un correo existe durante recuperación o invitación.
 /[locale]/admin/community
 /[locale]/admin/ai
 /[locale]/admin/notifications
+/[locale]/admin/privacy-requests
 /[locale]/admin/audit
 /[locale]/admin/security
 /[locale]/admin/feature-flags
@@ -2632,6 +2633,9 @@ Eventos de riesgo.
 Acceso, corrección, exportación o eliminación.
 La creación del titular pasa exclusivamente por `submit_data_subject_request`; estado, verificación,
 asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
+Cada alta crea de forma atómica un evento mínimo `privacy.data_subject_request.received` en
+`outbox_events`. La cola operativa se consulta en `/[locale]/admin/privacy-requests` con rol
+administrador, MFA y RLS; no muestra la descripción libre en el listado.
 
 ### `admin_invitations`
 
@@ -4739,6 +4743,7 @@ Antes del lanzamiento y cada seis meses:
 - alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
 - Términos, Privacidad y Cookies publicados con fecha y versión;
 - Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- solicitudes de derechos autenticadas, limitadas, con evento durable y cola administrativa protegida por MFA;
 - pagos, documentos, citas, comunidad, IA y video desactivados.
 
 ## Bloqueos del lanzamiento comercial o de funciones de alto riesgo
@@ -4753,7 +4758,7 @@ Antes de activar la función afectada, completar y revisar:
 - WhatsApp, Stripe, email, IA, video y otros encargados;
 - base jurídica/consentimientos;
 - plazos de retención;
-- mecanismo de solicitudes de privacidad;
+- validación jurídica de plazos, excepciones y procedimiento final de solicitudes de privacidad;
 - transferencia internacional de datos;
 - procedimiento para menores;
 - seguro/responsabilidad profesional cuando aplique.
@@ -6105,6 +6110,16 @@ Macros multilingües revisadas, sin diagnósticos ni garantías. Siempre persona
 
 Corrección editorial de alto riesgo puede despublicar primero y revisar después.
 
+## Solicitudes de privacidad
+
+- `https://vwayajayisyen.com/es/admin/privacy-requests` es la cola operativa de solicitudes abiertas.
+- Sólo personal administrador con MFA (`aal2`) puede verla; RLS vuelve a comprobar el rol en la base de datos.
+- Revisar la cola cada día hábil y al iniciar cada turno operativo. No se promete un SLA público hasta validarlo jurídicamente.
+- Cada alta genera en la misma transacción un evento `privacy.data_subject_request.received` en `outbox_events`; un reintento no duplica la solicitud ni el evento.
+- El listado omite la descripción libre y muestra sólo referencias mínimas para el triage. Consultar detalles únicamente cuando sean necesarios.
+- Si la cola no está disponible, escalar inmediatamente a `legal@vwayajayisyen.com` y registrar la incidencia.
+- No marcar una solicitud como atendida sin conservar la decisión, la verificación proporcional y la respuesta aplicable.
+
 ## Capacidad
 
 Mostrar horarios/tiempos reales. No prometer 24/7. Colas por país/idioma/urgencia. Evitar que un solo administrador sea punto único de fallo.
@@ -6258,7 +6273,7 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 | Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
 | Entidad legal | razón social, país, dirección, registro, contacto | parcial: Vwayaj ayisyen, Ltda., Brasil; domicilio público São Paulo; soporte y legal definidos; faltan CNPJ y dirección comercial completa | permite documentos informativos y Auth; bloquea venta y facturación |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
-| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada y DSR autenticado implementado; faltan calendario definitivo, contratos/DPA y validación de transferencias | permite cuenta mínima; bloquea formularios sensibles/documentos |
+| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada, DSR autenticado, evento durable y cola administrativa AAL2 implementados; faltan calendario definitivo, contratos/DPA, validación de transferencias y revisión jurídica del procedimiento | permite cuenta mínima; bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
 | Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP, recepción, CAPTCHA y gate de Auth | completo el 2026-07-23: Resend verificado para envío; Proton Mail recibe los tres alias oficiales; tres mensajes externos de prueba llegaron; Supabase usa SMTP, confirmación, Turnstile y hook HMAC; versiones legales exactas configuradas en Vercel | registro habilitado sólo en Production; Preview y Development permanecen cerrados |
@@ -6988,11 +7003,11 @@ Antes de subir, mostrar:
 
 ## Finalidad concreta
 
-Documento solicitado: [tipo genérico]  
-Caso/tarea: [ID visible]  
-Finalidad: [REQUIRED]  
-Quién lo revisará: [roles/profesional]  
-Retención: [REQUIRED]  
+Documento solicitado: [tipo genérico]
+Caso/tarea: [ID visible]
+Finalidad: [REQUIRED]
+Quién lo revisará: [roles/profesional]
+Retención: [REQUIRED]
 Transferencias/proveedores: [REQUIRED]
 
 ## Declaraciones
@@ -7211,8 +7226,8 @@ con domicilio público en São Paulo, Brasil.
 
 # Política de cancelación y reembolso — BORRADOR
 
-**Entidad:** [REQUIRED]  
-**Vigencia:** [REQUIRED]  
+**Entidad:** [REQUIRED]
+**Vigencia:** [REQUIRED]
 **Jurisdicciones:** [REQUIRED]
 
 ## 1. Principios
@@ -7289,9 +7304,9 @@ Nada limita derechos irrenunciables.
 
 **Estado:** No publicar. Revisión jurídica obligatoria.
 
-**Fecha de vigencia:** [REQUIRED]  
-**Entidad:** [REQUIRED: razón social, registro, dirección y país]  
-**Contacto:** [REQUIRED]  
+**Fecha de vigencia:** [REQUIRED]
+**Entidad:** [REQUIRED: razón social, registro, dirección y país]
+**Contacto:** [REQUIRED]
 **Idiomas contractuales:** [REQUIRED]
 
 ## 1. Aceptación
@@ -7542,6 +7557,7 @@ Codex debe entregar un informe final con evidencia verificable, no sólo afirmar
 - [x] Términos, Privacidad y Cookies oficiales en español y portugués, con versión.
 - [x] Aceptaciones de Términos y Privacidad separadas, explícitas y firmadas.
 - [x] Registro, confirmación por email, Turnstile y centro de privacidad.
+- [x] Solicitudes de privacidad con evento durable y cola administrativa AAL2.
 - [x] Email oficial de envío y recepción para soporte/legal/promoción.
 - [x] RLS, CSP, secret scan, pruebas de base de datos, unitarias y E2E.
 - [x] Pagos, documentos, citas, comunidad, IA, video e intake público cerrados.

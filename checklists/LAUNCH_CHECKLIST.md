@@ -7,6 +7,7 @@
 - [x] Términos, Privacidad y Cookies oficiales en español y portugués, con versión.
 - [x] Aceptaciones de Términos y Privacidad separadas, explícitas y firmadas.
 - [x] Registro, confirmación por email, Turnstile y centro de privacidad.
+- [x] Solicitudes de privacidad con evento durable y cola administrativa AAL2.
 - [x] Email oficial de envío y recepción para soporte/legal/promoción.
 - [x] RLS, CSP, secret scan, pruebas de base de datos, unitarias y E2E.
 - [x] Pagos, documentos, citas, comunidad, IA, video e intake público cerrados.

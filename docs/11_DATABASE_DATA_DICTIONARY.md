@@ -363,6 +363,9 @@ Eventos de riesgo.
 Acceso, corrección, exportación o eliminación.
 La creación del titular pasa exclusivamente por `submit_data_subject_request`; estado, verificación,
 asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
+Cada alta crea de forma atómica un evento mínimo `privacy.data_subject_request.received` en
+`outbox_events`. La cola operativa se consulta en `/[locale]/admin/privacy-requests` con rol
+administrador, MFA y RLS; no muestra la descripción libre en el listado.
 
 ### `admin_invitations`
 

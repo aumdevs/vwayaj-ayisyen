@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(8);
+select plan(11);
 
 insert into auth.users(
   id,
@@ -161,6 +161,66 @@ select ok(
       and request_type = 'access'
   ),
   'The RPC owns status, verification, assignment and resolution fields'
+);
+
+select throws_ok(
+  $sql$
+    insert into public.consent_records(
+      user_id,
+      consent_type,
+      policy_version,
+      locale,
+      scope,
+      granted,
+      evidence_hash
+    )
+    values (
+      '00000000-0000-4000-8000-000000000041'::uuid,
+      'terms',
+      'forged-provenance-v1',
+      'es',
+      '{"mechanism":"signup_terms_checkbox","provenance":"auth_hook_signed_v1","separate_acceptance":true}'::jsonb,
+      true,
+      'not-a-valid-evidence-hash'
+    )
+  $sql$,
+  '23514',
+  null,
+  'Granted legal evidence requires signed Auth-hook provenance'
+);
+
+select is(
+  (
+    select count(*)
+    from public.outbox_events
+    where event_type = 'privacy.data_subject_request.received'
+      and aggregate_id = (
+        select id::text
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      )
+  ),
+  1::bigint,
+  'A privacy request creates exactly one durable operations event'
+);
+
+select ok(
+  (
+    select bool_and(
+      aggregate_type = 'data_subject_request'
+      and payload = '{"locale":"es","request_type":"access"}'::jsonb
+    )
+    from public.outbox_events
+    where event_type = 'privacy.data_subject_request.received'
+      and aggregate_id = (
+        select id::text
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      )
+  ),
+  'The operations event contains only the minimal routing metadata'
 );
 
 select * from finish();

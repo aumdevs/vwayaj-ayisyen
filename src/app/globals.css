@@ -4675,6 +4675,81 @@ small {
   overflow-x: auto;
 }
 
+.privacy-admin-queue > header p:last-child {
+  max-width: 68ch;
+  margin: 0.45rem 0 0;
+  color: var(--ink-600);
+}
+
+.privacy-admin-table {
+  min-width: 980px;
+}
+
+.privacy-admin-table .staff-table-head,
+.privacy-admin-table-row {
+  grid-template-columns:
+    minmax(115px, 0.65fr) minmax(140px, 0.8fr) minmax(150px, 0.85fr)
+    minmax(235px, 1.3fr) minmax(235px, 1.3fr);
+}
+
+.privacy-admin-table-row {
+  min-height: 66px;
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-700);
+  font-size: 0.78rem;
+}
+
+.privacy-admin-table-row:last-child {
+  border-bottom: 0;
+}
+
+.privacy-admin-table-row strong {
+  color: var(--ink-950);
+  text-transform: capitalize;
+}
+
+.privacy-admin-table-row code {
+  overflow: hidden;
+  color: var(--ink-600);
+  font-size: 0.68rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.privacy-admin-queue-state {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 2rem;
+  color: var(--ink-600);
+  text-align: center;
+}
+
+.privacy-admin-queue > footer {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--canvas);
+  color: var(--ink-600);
+  font-size: 0.76rem;
+}
+
+.privacy-admin-queue > footer svg {
+  color: var(--brand-600);
+}
+
+.privacy-admin-queue > footer a {
+  color: var(--brand-700);
+  font-weight: 740;
+}
+
 .system-state-page {
   min-height: 100dvh;
   display: grid;

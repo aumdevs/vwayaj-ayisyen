@@ -41,7 +41,7 @@ Este paquete contiene la especificación completa para construir desde cero una 
 ## Advertencias importantes
 
 - **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL oficial es `https://vwayajayisyen.com`.
-- El número de WhatsApp, entidad legal, dirección, correo de soporte, claves de Stripe y credenciales de los proveedores externos no están incluidos.
+- La identidad pública mínima, el domicilio público y los tres correos oficiales están confirmados. Faltan CNPJ, domicilio registral completo, WhatsApp, configuración comercial de Stripe y credenciales de las funciones de alto riesgo.
 - Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
 - La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
 - Todo contenido migratorio de alto impacto debe permanecer en borrador hasta ser revisado por una persona competente.
