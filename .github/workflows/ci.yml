@@ -16,7 +16,11 @@ env:
   NEXT_PUBLIC_SITE_URL: http://localhost:3000
   NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_placeholder
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
   NEXT_PUBLIC_ALLOW_INDEXING: "false"
+  SUPABASE_AUTH_CAPTCHA_SECRET: 1x0000000000000000000000000000000AA
+  REGISTRATION_TERMS_VERSION: ci-unpublished-v1
+  REGISTRATION_GATE_SIGNING_KEY: ci_registration_gate_signing_key_at_least_32_chars
   DISABLE_PAYMENTS: "true"
   DISABLE_DOCUMENT_UPLOADS: "true"
   DISABLE_AI_ASSISTANT: "true"
@@ -78,6 +82,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [app, database]
+    env:
+      DISABLE_PUBLIC_REGISTRATION: "false"
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
@@ -90,7 +96,21 @@ jobs:
           version: 2.109.1
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
+      - name: Enable Auth signup only in the ephemeral E2E stack
+        run: node scripts/ci-enable-auth-signup.mjs supabase/config.toml
       - run: supabase start
+      - name: Seed the ephemeral registration HMAC in Vault
+        run: |
+          printf '%s\n' \
+            "select vault.create_secret(:'registration_key', 'vwayaj_registration_gate_hmac', 'Ephemeral CI E2E registration key');" |
+            docker exec -i supabase_db_vwayaj-ayisyen \
+              psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
+              --set registration_key="$REGISTRATION_GATE_SIGNING_KEY"
+      - name: Allow terms verification only in the ephemeral E2E stack
+        run: |
+          docker exec supabase_db_vwayaj-ayisyen \
+            psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
+            --command "grant select (id, terms_version, terms_accepted_at) on public.profiles to service_role;"
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env

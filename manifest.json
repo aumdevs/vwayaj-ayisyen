@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-07-23",
-  "package_expected_file_count": 166,
+  "package_expected_file_count": 171,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -9,8 +9,8 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1616,
-      "sha256": "8f7752e9080f7283eb8ec0c3fec2c3286960c388ab57e37ec0a6f55b2170f351"
+      "size_bytes": 1881,
+      "sha256": "fbb3ad3f9ae8c4682554f0795271d639fd0e324408080864167393f96358ddf2"
     },
     {
       "path": ".gitignore",
@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 237346,
-      "sha256": "c97f7d2732f8c37b648cde2c5361b943cb74fedb70a3b16d2d612a3d8f391b39"
+      "size_bytes": 240346,
+      "sha256": "8033156a7ea108810aaaeb056a32745669a802aef02d248fa4500b5194c9aa13"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 7893,
-      "sha256": "4ba041611e8d91f34058f545f568f7a4301d54c23fa2a6099ec3672bab60e8c8"
+      "size_bytes": 8179,
+      "sha256": "f63883a620cf0905835842b5afb397e3e8213df5dfa17c7f5193821534249d62"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -89,8 +89,8 @@
     },
     {
       "path": "config/env.schema.json",
-      "size_bytes": 1737,
-      "sha256": "f401eba6235b31e5c20e8d84c5f9998e2e20caf31df552708a72c63e09b63d55"
+      "size_bytes": 1955,
+      "sha256": "ad29f2f5e61f50b4b0e8b67e552e15e1b41b7bbae7d3bba6684c72d47124321d"
     },
     {
       "path": "config/feature-flags.json",
@@ -214,8 +214,8 @@
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 3340,
-      "sha256": "31866b85658b142f5c985fb7e0fb11bf0e70c503e5ed07e26c5c50fe01c73c8b"
+      "size_bytes": 4739,
+      "sha256": "25e56b58803fa8ed7ea165a68bd0ea5a6867d29b6aa9d7f5bc199205b0eb5034"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -279,13 +279,13 @@
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 4576,
-      "sha256": "f55002322bde9d32b72dfbc0758fb51c2af8e16893491de0ea7a805858fd7c5c"
+      "size_bytes": 5880,
+      "sha256": "2e5e42a3ee582b7e872aa826c0a7d9e6cb4ea29ef46282248d54bc51d0412e80"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
-      "size_bytes": 3533,
-      "sha256": "1682d25e43060f3a43a7fea50baff84c16602568cc1be4acd99a9167ba773362"
+      "size_bytes": 4613,
+      "sha256": "25b47ae49be950b5dbc999f6d6041a9f8ff3d50c9f57daea2c72f8f9ae6e3f64"
     },
     {
       "path": "docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md",
@@ -324,8 +324,8 @@
     },
     {
       "path": "docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md",
-      "size_bytes": 2963,
-      "sha256": "bbf09165401ab86b01f3f8e3a580fe89d80b8719c33c625274e1ed3caaec8477"
+      "size_bytes": 3312,
+      "sha256": "f9cdb53c12f21eb88d44e9e7256ce2a528bb59c192ea7da951e34c87cde3b92e"
     },
     {
       "path": "docs/35_CONTENT_SEED_AND_RESEARCH_GUIDE.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3598,
-      "sha256": "531b9edbe07bc93c30be80180574ba74c73d342015739bcdc7261b42320cf312"
+      "size_bytes": 3822,
+      "sha256": "c4f468b58794163c609f0f2044fbf1d74c6be319f642ee18254d7b3c70bcb5d6"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -644,8 +644,8 @@
     },
     {
       "path": "scripts/bootstrap-admin.ts",
-      "size_bytes": 4099,
-      "sha256": "d943ece01aacecd1a7a3afd5e230fa883c07619dc9b78c882a5a14d1e5b3048a"
+      "size_bytes": 4414,
+      "sha256": "81c9b4c8654583bb74694af10eed2c628fa526de369abccd8bd047cb8512b305"
     },
     {
       "path": "scripts/check-no-secrets.sh",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 2207,
-      "sha256": "a3626b1bca98eabf2b39d69144d0fee34941863649d438255dddbc56b5c93d28"
+      "size_bytes": 3102,
+      "sha256": "ba0f3751163a0ea7a3b43f7e46f222acc44292b2816d763bf86c955c77559581"
     },
     {
       "path": "security/ABUSE_CASES.csv",
@@ -826,6 +826,31 @@
       "path": "vercel/vercel.json.example",
       "size_bytes": 205,
       "sha256": "1e81cec0c03b119e9255780d06d53e097eb528e2f5d4db53da3dda9890ed0483"
+    },
+    {
+      "path": "scripts/ci-enable-auth-signup.mjs",
+      "size_bytes": 1354,
+      "sha256": "26840a261722153993afe1fbda78d34c8f0c5eacd43f577a2bcbd1780b43aa90"
+    },
+    {
+      "path": "supabase/migrations/20260723140000_secure_registration_boundary.sql",
+      "size_bytes": 5180,
+      "sha256": "40d7e0b46c54e184fdf11990060f7cb423c92cce06a52e0feca16018073a33e0"
+    },
+    {
+      "path": "supabase/migrations/20260723143000_allow_signed_admin_provisioning.sql",
+      "size_bytes": 3015,
+      "sha256": "e54bdd51f07c37d80b7b3416df9a1849b7997aaa90101de548649731b82be65f"
+    },
+    {
+      "path": "supabase/tests/0003_registration_auth_hook.sql",
+      "size_bytes": 7900,
+      "sha256": "d2e4a7620f818c64703a42037540ed262474ca84338324a78dbbfffac12f6485"
+    },
+    {
+      "path": "scripts/lib/admin-provisioning-attestation.ts",
+      "size_bytes": 1269,
+      "sha256": "ccf86f92086dcf2cc1f8de4de5aa41fbfcd079dfb4e34b125a5f85527eb39357"
     }
   ]
 }

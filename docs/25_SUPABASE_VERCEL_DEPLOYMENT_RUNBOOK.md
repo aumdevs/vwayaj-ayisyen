@@ -49,13 +49,31 @@
    - MFA TOTP;
    - límites;
    - plantillas multilingües.
-   Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
-   `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
-   el endpoint público de Supabase Auth también debe permanecer cerrado.
+   Antes del lanzamiento, mantener `enable_signup=false` tanto en `[auth]` como
+   en `[auth.email]` mientras `DISABLE_PUBLIC_REGISTRATION=true`. Para abrir el
+   registro, configurar primero SMTP propio y Turnstile, aplicar la migración
+   del hook `private.before_user_created`, guardar una clave aleatoria de al
+   menos 32 bytes con el nombre `vwayaj_registration_gate_hmac` en Supabase
+   Vault y configurar la misma clave como
+   `REGISTRATION_GATE_SIGNING_KEY` únicamente en Vercel Production. Activar el
+   hook remoto mientras el proveedor continúa cerrado.
+   Publicar y revisar los textos legales, asignar su identificador inmutable a
+   `REGISTRATION_TERMS_VERSION`, comprobar alta, confirmación y recuperación,
+   habilitar el proveedor remoto de forma explícita y sólo entonces cambiar el
+   kill switch de Producción a `false`. La aplicación exige además
+   `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; cualquier pieza ausente falla cerrado.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
+   El `supabase/config.toml` versionado no se debe empujar a Producción: es el
+   perfil local/CI, mantiene el alta desactivada, permite únicamente callbacks
+   locales, valida el mismo hook y entrega email al buzón local de pruebas.
 8. Crear/configurar buckets y límites.
-9. Configurar SMTP propio antes del lanzamiento.
+9. Configurar SMTP propio antes del lanzamiento. Para Resend: host
+   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña recuperada del
+   gestor seguro y aplicada sólo en el control plane de Supabase, remitente
+   `Vwayaj Ayisyen <noreply@vwayajayisyen.com>`. La contraseña se usa al aplicar
+   la configuración remota y no se copia al repositorio, a `.env.local`, a CI
+   ni a Vercel.
 10. Activar backups/PITR según plan y criticidad.
 11. Configurar logs/alertas y políticas de red disponibles.
 12. Verificar RLS en todas las tablas expuestas.

@@ -32,3 +32,7 @@ export function isIndexingAllowed(): boolean {
 export function isPublicRegistrationEnabled(): boolean {
   return process.env.DISABLE_PUBLIC_REGISTRATION === "false";
 }
+
+export function getTurnstileSiteKey(): string | null {
+  return process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() || null;
+}

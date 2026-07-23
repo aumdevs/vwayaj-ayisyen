@@ -5,6 +5,7 @@
  * never prints the password and refuses ambiguous projects/accounts.
  */
 import { createClient, type User } from "@supabase/supabase-js";
+import { createAdminProvisioningAttestation } from "./lib/admin-provisioning-attestation";
 
 const REQUIRED_EMAIL = "admin@aumprodz.com";
 
@@ -31,6 +32,7 @@ async function main(): Promise<void> {
   const email = required("BOOTSTRAP_ADMIN_EMAIL").toLowerCase();
   const password = required("BOOTSTRAP_ADMIN_PASSWORD");
   const expectedRef = required("EXPECTED_SUPABASE_PROJECT_REF");
+  const registrationGateSigningKey = required("REGISTRATION_GATE_SIGNING_KEY");
   const actualRef = projectRefFromUrl(url);
 
   if (email !== REQUIRED_EMAIL) {
@@ -70,11 +72,18 @@ async function main(): Promise<void> {
     );
   }
 
+  const provisioningAttestation = createAdminProvisioningAttestation(
+    email,
+    registrationGateSigningKey
+  );
   const { data, error } = await admin.auth.admin.createUser({
     email,
     password,
     email_confirm: true,
-    user_metadata: { preferred_locale: "ht", bootstrap: true },
+    user_metadata: {
+      preferred_locale: "ht",
+      ...provisioningAttestation
+    },
     app_metadata: { bootstrap_source: "one-time-script" }
   });
   if (error || !data.user) throw error ?? new Error("User creation returned no user.");

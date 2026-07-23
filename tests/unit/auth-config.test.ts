@@ -33,18 +33,27 @@ function readTomlStringArray(config: string, sectionName: string, key: string): 
 }
 
 describe("Supabase Auth launch gate", () => {
-  it("keeps both general and email signup disabled at the authoritative provider", () => {
+  it("keeps provider signup closed while retaining CAPTCHA enforcement", () => {
     const config = readFileSync("supabase/config.toml", "utf8");
 
     expect(readTomlBoolean(config, "auth", "enable_signup")).toBe(false);
     expect(readTomlBoolean(config, "auth.email", "enable_signup")).toBe(false);
+    expect(readTomlBoolean(config, "auth.captcha", "enabled")).toBe(true);
+    expect(config).toContain('provider = "turnstile"');
+    expect(config).toContain('secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"');
+    expect(readTomlBoolean(config, "auth.hook.before_user_created", "enabled")).toBe(true);
+    expect(config).toContain('uri = "pg-functions://postgres/private/before_user_created"');
   });
 
-  it("allows production Auth callbacks only on the official domain", () => {
+  it("uses local callbacks and the local SMTP sink without production delivery", () => {
     const config = readFileSync("supabase/config.toml", "utf8");
 
     expect(readTomlStringArray(config, "auth", "additional_redirect_urls")).toEqual([
-      "https://vwayajayisyen.com/**"
+      "http://127.0.0.1:3000/**",
+      "http://localhost:3000/**"
     ]);
+    expect(readTomlBoolean(config, "local_smtp", "enabled")).toBe(true);
+    expect(config).not.toContain("[auth.email.smtp]");
+    expect(config).not.toContain("smtp.resend.com");
   });
 });

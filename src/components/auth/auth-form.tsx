@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { Check, Eye, EyeOff, LockKeyhole } from "lucide-react";
 import {
   forgotPasswordAction,
@@ -22,12 +23,22 @@ type AuthFormProps = {
   locale: Locale;
   mode: AuthMode;
   registrationEnabled: boolean;
+  registrationTermsVersion: string | null;
+  turnstileSiteKey: string | null;
   copy: ExperienceCopy["auth"];
 };
 
 const initialState: AuthActionState = { status: "idle" };
 
-export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }: AuthFormProps) {
+export function AuthForm({
+  dictionary,
+  locale,
+  mode,
+  registrationEnabled,
+  registrationTermsVersion,
+  turnstileSiteKey,
+  copy
+}: AuthFormProps) {
   const action =
     mode === "sign-in"
       ? signInAction
@@ -40,6 +51,9 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [password, setPassword] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaError, setCaptchaError] = useState(false);
+  const turnstileRef = useRef<TurnstileInstance>(null);
   const isEmailOnly = mode === "forgot-password";
   const isReset = mode === "reset-password";
   const title =
@@ -50,13 +64,18 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }
         : mode === "forgot-password"
           ? dictionary.auth.forgot
           : dictionary.security.password_change_required;
+  const needsCaptcha = mode === "sign-in" || mode === "sign-up" || mode === "forgot-password";
+  const captchaRequired = needsCaptcha;
+  const captchaConfigured = !needsCaptcha || turnstileSiteKey !== null;
+  const displayedStatus =
+    needsCaptcha && !captchaConfigured ? ("unavailable" as const) : state.status;
 
   const message =
-    state.status === "invalid"
+    displayedStatus === "invalid"
       ? dictionary.errors.generic
-      : state.status === "unavailable"
+      : displayedStatus === "unavailable"
         ? dictionary.errors.feature_unavailable
-        : state.status === "check_email"
+        : displayedStatus === "check_email"
           ? dictionary.auth.verify
           : null;
   const rules = [
@@ -68,6 +87,14 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }
   ];
   const showChecklist = !isEmailOnly && (passwordFocused || password.length > 0);
 
+  useEffect(() => {
+    if (!pending && state.status !== "idle" && captchaRequired) {
+      turnstileRef.current?.reset();
+      const resetToken = window.setTimeout(() => setCaptchaToken(""), 0);
+      return () => window.clearTimeout(resetToken);
+    }
+  }, [captchaRequired, pending, state.status]);
+
   return (
     <section className="auth-card" aria-labelledby="auth-title">
       <p className="eyebrow">
@@ -77,8 +104,8 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }
       <p className="auth-card-intro">{copy.body}</p>
       {message ? (
         <p
-          className={`auth-message auth-message-${state.status}`}
-          role={state.status === "invalid" ? "alert" : "status"}
+          className={`auth-message auth-message-${displayedStatus}`}
+          role={displayedStatus === "invalid" ? "alert" : "status"}
         >
           {message}
         </p>
@@ -156,12 +183,72 @@ export function AuthForm({ dictionary, locale, mode, registrationEnabled, copy }
           </div>
         ) : null}
         {mode === "sign-up" ? (
-          <label className="check-option auth-terms">
-            <input name="accept_terms" required type="checkbox" value="yes" />
-            <span>{copy.acceptTerms}</span>
-          </label>
+          <div className="check-option auth-terms">
+            <input
+              aria-describedby="auth-terms-details"
+              id="auth-accept-terms"
+              name="accept_terms"
+              required
+              type="checkbox"
+              value="yes"
+            />
+            <div className="auth-terms-copy" id="auth-terms-details">
+              <label htmlFor="auth-accept-terms">{copy.acceptTerms}</label>
+              <span className="auth-legal-links">
+                <Link href={localizedPath(locale, "legal/terms")}>{copy.termsLink}</Link>
+                <span aria-hidden="true">·</span>
+                <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacyLink}</Link>
+              </span>
+              {registrationTermsVersion ? (
+                <small className="auth-terms-version">
+                  {copy.termsVersionLabel}: <code>{registrationTermsVersion}</code>
+                </small>
+              ) : null}
+            </div>
+          </div>
         ) : null}
-        <button className="button auth-submit" disabled={pending} type="submit">
+        {needsCaptcha && turnstileSiteKey ? (
+          <div className="auth-turnstile">
+            <span className="auth-turnstile-label">{copy.securityCheck}</span>
+            <input name="captcha_token" type="hidden" value={captchaToken} />
+            <Turnstile
+              onError={() => {
+                setCaptchaError(true);
+                setCaptchaToken("");
+              }}
+              onExpire={() => setCaptchaToken("")}
+              onSuccess={(token) => {
+                setCaptchaError(false);
+                setCaptchaToken(token);
+              }}
+              options={{
+                action:
+                  mode === "sign-in"
+                    ? "signin"
+                    : mode === "forgot-password"
+                      ? "password_recovery"
+                      : "signup",
+                appearance: "always",
+                language: locale === "ht" ? "fr" : locale,
+                responseField: false,
+                size: "flexible",
+                theme: "light"
+              }}
+              ref={turnstileRef}
+              siteKey={turnstileSiteKey}
+            />
+            {captchaError ? (
+              <small className="auth-turnstile-error" role="alert">
+                {copy.securityCheckError}
+              </small>
+            ) : null}
+          </div>
+        ) : null}
+        <button
+          className="button auth-submit"
+          disabled={pending || !captchaConfigured || (captchaRequired && !captchaToken)}
+          type="submit"
+        >
           {pending ? dictionary.common.loading : title}
         </button>
       </form>

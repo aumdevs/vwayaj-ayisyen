@@ -11,6 +11,8 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
 - Supabase remoto creado y migraciones aplicadas.
 - Script `scripts/bootstrap-admin.ts` revisado.
 - `profiles`, `user_roles` y trigger de alta funcionando.
+- Hook `private.before_user_created` activo y clave HMAC de registro disponible
+  en el gestor seguro del operador.
 - MFA TOTP habilitado.
 - La app fuerza cambio de contraseña y MFA.
 - Terminal en equipo confiable.
@@ -24,11 +26,15 @@ La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `BOOTSTRAP_ADMIN_EMAIL`
    - `BOOTSTRAP_ADMIN_PASSWORD`
+   - `EXPECTED_SUPABASE_PROJECT_REF`
+   - `REGISTRATION_GATE_SIGNING_KEY`
    - `ALLOW_ADMIN_BOOTSTRAP=true`
 2. Ejecutar el script sin imprimir variables.
 3. El script:
    - rechaza producción salvo flag explícito y email exacto;
    - comprueba que no exista otro super admin inesperado;
+   - firma propósito, email, fecha y nonce; Supabase Auth exige esa firma y
+     `app_metadata.bootstrap_source=one-time-script` antes de crear la identidad;
    - crea/confirma usuario;
    - establece `force_password_change=true`;
    - llama a una función SQL transaccional que actualiza el perfil, añade roles `admin` y `super_admin` y registra auditoría;

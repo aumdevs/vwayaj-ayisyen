@@ -36,6 +36,9 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 - El recurso Supabase está conectado sólo a Production y únicamente exporta a runtime la URL pública y la clave publicable necesarias. Las otras 14 variables añadidas por la integración fueron retiradas.
 - Proyecto Supabase **Vwayaj Ayisyen** (`gaknpocbfmiamghpoqhw`) creado mediante Vercel Marketplace en São Paulo, enlazado y migrado.
 - Auth exige contraseña robusta, confirmación de email, cambio seguro, rotación de refresh tokens y TOTP; la base exige SSL.
+- El registro, la conexión y la recuperación integran Cloudflare Turnstile; los
+  tokens se envían a Supabase Auth para validación de servidor. El alta falla
+  cerrada si falta el site key público.
 - Supabase usa ES256 para firmar sesiones. La firma HS256 anterior, las API keys heredadas y la clave privada inicialmente emitida fueron revocadas; la contraseña de Postgres también fue rotada y verificada.
 - Los grants explícitos y RLS fueron verificados en el remoto con 21 pruebas pgTAP. Los buckets públicos permiten descarga directa sin permitir listados anónimos.
 - El administrador inicial fue creado de forma transaccional y el RPC de bootstrap quedó revocado después de usarlo.
@@ -51,5 +54,12 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 
 - Preview puede publicarse únicamente sin datos reales, `noindex` y con todas las funciones riesgosas desactivadas; no recibe variables del Supabase de producción.
 - Producción debe salir de `main` tras CI; indexación y funciones sensibles permanecen apagadas hasta completar sus gates.
-- Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX. Email permanece desactivado hasta configurar DMARC, identidad remitente, credenciales API/SMTP y sus gates; CAPTCHA todavía bloquea el registro público. Stripe, Zoom y OpenAI también permanecen desactivados hasta contar con sus credenciales y gates completos.
+- Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; DMARC está publicado.
+  Supabase Auth tiene SMTP Resend con
+  `Vwayaj Ayisyen <noreply@vwayajayisyen.com>` y el secreto de Turnstile; el
+  site key público está limitado a Vercel Production. El registro permanece
+  cerrado tanto en la aplicación como en Supabase hasta publicar términos
+  revisados y aprobar alta, confirmación y recuperación reales. Stripe, Zoom y
+  OpenAI también permanecen desactivados hasta contar con sus credenciales y
+  gates completos.
 - La activación pública exige completar la matriz de `docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md`.

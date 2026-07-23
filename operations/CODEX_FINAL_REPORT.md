@@ -74,10 +74,24 @@ Fecha de corte: 2026-07-23.
 
 - Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
-- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
+- Preview y Development no reciben credenciales de la base productiva.
+  Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`,
+  `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los
+  demás `DISABLE_*` en `true`. Las URL y clave publicable de Supabase quedaron
+  restauradas sólo en Production; Preview sigue aislado.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
-- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo; TLS está forzado y el seguimiento de aperturas/clics permanece apagado. Aún faltan DMARC, identidad remitente y credenciales API/SMTP de la aplicación. Zoom y OpenAI tampoco tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios
+  aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo;
+  DMARC está publicado, TLS está forzado y el seguimiento de aperturas/clics
+  permanece apagado. Supabase Auth tiene SMTP Resend y el secreto de Turnstile;
+  Vercel Production tiene el site key público. El alta queda además protegida
+  por un HMAC emitido sólo por el servidor y validado por el hook
+  `private.before_user_created`; la versión y fecha aceptadas se conservan en el
+  perfil. El registro continúa apagado en la aplicación y en el proveedor hasta
+  publicar una versión revisada de términos, fijar
+  `REGISTRATION_TERMS_VERSION` y aprobar alta, confirmación y recuperación
+  reales. Zoom y OpenAI tampoco tienen credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 
@@ -101,7 +115,9 @@ Fecha de corte: 2026-07-23.
 ## Pasos externos pendientes
 
 1. Crear un backend aislado de staging antes de habilitar Preview con datos; no reutilizar Supabase de producción.
-2. Configurar DMARC, identidad remitente, credenciales API/SMTP de Resend y CAPTCHA antes de admitir registros públicos o enviar correo desde la aplicación.
+2. Publicar términos y privacidad revisados; después aprobar alta, confirmación
+   y recuperación reales antes de abrir de forma coordinada Supabase y
+   `DISABLE_PUBLIC_REGISTRATION`.
 3. Crear productos/precios y webhook de Stripe, credenciales de Zoom y un proyecto/API key de OpenAI antes de activar esas funciones.
 4. Completar contenido, legal, privacidad, soporte y observabilidad antes de permitir indexación.
 5. Ejecutar restore drill y pentest antes de aceptar documentos reales.
