@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { getOfficialLegalLocale } from "@/content/legal";
 import { getSiteUrl, getTurnstileSiteKey } from "@/lib/config/runtime";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
@@ -86,7 +87,10 @@ export async function signUpAction(
   const accepted = formData.get("accept_terms") === "yes";
   if (!locale || !parsed.success || !accepted) return { status: "invalid" };
 
-  const attestation = createRegistrationAttestation(parsed.data.email);
+  const attestation = createRegistrationAttestation(
+    parsed.data.email,
+    getOfficialLegalLocale(locale)
+  );
   if (!attestation) return { status: "unavailable" };
 
   const supabase = await createServerSupabaseClient();
@@ -100,10 +104,14 @@ export async function signUpAction(
       captchaToken: parsed.data.captchaToken,
       emailRedirectTo: callback.toString(),
       data: {
+        acceptance_mechanism: attestation.acceptanceMechanism,
+        legal_locale: attestation.legalLocale,
         preferred_locale: locale,
+        privacy_accepted_at: attestation.acceptedAt,
+        privacy_version: attestation.privacyVersion,
         registration_nonce: attestation.registrationNonce,
         registration_signature: attestation.registrationSignature,
-        terms_accepted_at: attestation.termsAcceptedAt,
+        terms_accepted_at: attestation.acceptedAt,
         terms_version: attestation.termsVersion
       }
     }

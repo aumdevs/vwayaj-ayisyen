@@ -521,7 +521,7 @@ Para cualquier rol privilegiado:
 
 ### Administrador inicial
 
-Email: `admin@aumprodz.com`
+Email: privado; se entrega fuera del repositorio mediante el entorno protegido.
 
 La contraseña temporal se entrega en un archivo separado. Crea el usuario mediante script de bootstrap de una sola ejecución, sin imprimir la contraseña.
 
@@ -5218,7 +5218,7 @@ Nada se declara “production-ready” sólo porque `pnpm build` termina.
 | Documentos | Cuarentena + scanner privado; apagados sin scanner |
 | Accesibilidad | WCAG 2.2 AA |
 | Seguridad | ASVS L2 como objetivo, controles reforzados |
-| Admin inicial | `admin@aumprodz.com`, password temporal externo |
+| Admin inicial | correo privado del propietario, definido fuera del repositorio; password temporal externo |
 | Países | Sólo USA, Chile, Brasil y México |
 
 ## Elementos que Codex no debe inventar
@@ -5385,7 +5385,7 @@ Estas fuentes justifican decisiones técnicas, pero no sustituyen pruebas. Al fi
 
 ## Identidad
 
-Email fijo solicitado: `admin@aumprodz.com`.
+El correo privado del propietario se proporciona mediante el entorno protegido y no se publica.
 
 La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo no debe copiarse al repositorio, tickets, chats, notas compartidas ni variables permanentes.
 
@@ -8002,7 +8002,7 @@ Cada fase produce:
 
 ## Admin inicial
 
-- email: `admin@aumprodz.com`
+- email: privado; definido fuera del repositorio
 - usuario creado: sí/no
 - contraseña impresa/commiteada: debe ser no
 - cambio forzado: verificado

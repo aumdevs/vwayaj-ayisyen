@@ -19,6 +19,30 @@ test("country pages show review status instead of invented claims", async ({ pag
   await expect(page.locator(".empty-state-premium")).toHaveCount(1);
 });
 
+test("official legal center publishes Spanish and Portuguese documents without private email", async ({
+  page
+}) => {
+  const documents = [
+    ["/es/legal/terms", "Términos de uso y servicio", "terms-2026-07-23-v1"],
+    ["/es/legal/privacy", "Política de Privacidad", "privacy-2026-07-23-v1"],
+    ["/pt/legal/cookies", "Política de Cookies", "cookies-2026-07-23-v1"]
+  ] as const;
+
+  for (const [path, heading, version] of documents) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
+    await expect(page.getByText(version, { exact: true }).first()).toBeVisible();
+    await expect(page.locator("body")).toContainText("legal@vwayajayisyen.com");
+    const emailLinks = await page
+      .locator('a[href^="mailto:"]')
+      .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
+    expect(emailLinks.length).toBeGreaterThan(0);
+    expect(emailLinks.every((href) => href?.toLowerCase().endsWith("@vwayajayisyen.com"))).toBe(
+      true
+    );
+  }
+});
+
 test("comparison accepts a safe selection without inventing scores", async ({ page }) => {
   await page.goto("/es/compare");
   await page.getByRole("checkbox", { name: /Estados Unidos/ }).check();
@@ -50,7 +74,8 @@ test("public registration renders the protected account form when launch gates a
     "href",
     "/ht/legal/privacy"
   );
-  await expect(page.getByText("Vèsyon kondisyon yo:")).toContainText("ci-unpublished-v1");
+  await expect(page.getByText("terms-2026-07-23-v1")).toBeVisible();
+  await expect(page.getByText("privacy-2026-07-23-v1")).toBeVisible();
   await expect(page.locator(".auth-turnstile")).toBeVisible();
   await expect(page.getByRole("button", { name: "Kreye kont" })).toBeEnabled({
     timeout: 20_000
@@ -64,9 +89,11 @@ test("public registration crosses the live Auth hook and persists verified terms
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const privacyVersion = process.env.REGISTRATION_PRIVACY_VERSION;
   const termsVersion = process.env.REGISTRATION_TERMS_VERSION;
   expect(supabaseUrl).toBeTruthy();
   expect(serviceRoleKey).toBeTruthy();
+  expect(privacyVersion).toBeTruthy();
   expect(termsVersion).toBeTruthy();
 
   const admin = createClient(supabaseUrl!, serviceRoleKey!, {
@@ -97,13 +124,38 @@ test("public registration crosses the live Auth hook and persists verified terms
 
     const { data: profile, error: profileError } = await admin
       .from("profiles")
-      .select("terms_version, terms_accepted_at")
+      .select("terms_version, privacy_version, terms_accepted_at, privacy_accepted_at")
       .eq("id", userId!)
       .single();
     expect(profileError).toBeNull();
     expect(profile?.terms_version).toBe(termsVersion);
+    expect(profile?.privacy_version).toBe(privacyVersion);
     expect(profile?.terms_accepted_at).toBeTruthy();
+    expect(profile?.privacy_accepted_at).toBe(profile?.terms_accepted_at);
     expect(Number.isNaN(Date.parse(profile!.terms_accepted_at!))).toBe(false);
+
+    const { data: consents, error: consentError } = await admin
+      .from("consent_records")
+      .select("consent_type, policy_version, locale, granted, evidence_hash")
+      .eq("user_id", userId!)
+      .order("consent_type");
+    expect(consentError).toBeNull();
+    expect(consents).toEqual([
+      expect.objectContaining({
+        consent_type: "terms",
+        evidence_hash: expect.any(String),
+        granted: true,
+        locale: "es",
+        policy_version: termsVersion
+      }),
+      expect.objectContaining({
+        consent_type: "privacy",
+        evidence_hash: expect.any(String),
+        granted: true,
+        locale: "es",
+        policy_version: privacyVersion
+      })
+    ]);
   } finally {
     if (userId) {
       const { error } = await admin.auth.admin.deleteUser(userId);

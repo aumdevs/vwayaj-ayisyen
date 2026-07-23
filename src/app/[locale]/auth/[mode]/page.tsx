@@ -10,6 +10,7 @@ import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import {
+  getRegistrationPrivacyVersion,
   getRegistrationTermsVersion,
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
@@ -32,6 +33,7 @@ export default async function AuthPage({ params }: AuthPageProps) {
   const experience = getExperienceCopy(locale);
   const turnstileSiteKey = getTurnstileSiteKey();
   const registrationEnabled = isPublicRegistrationReady();
+  const registrationPrivacyVersion = getRegistrationPrivacyVersion();
   const registrationTermsVersion = getRegistrationTermsVersion();
 
   if (authMode === "mfa") {
@@ -89,6 +91,7 @@ export default async function AuthPage({ params }: AuthPageProps) {
         locale={locale}
         mode={authMode}
         registrationEnabled={registrationEnabled}
+        registrationPrivacyVersion={registrationPrivacyVersion}
         registrationTermsVersion={registrationTermsVersion}
         turnstileSiteKey={turnstileSiteKey}
       />

@@ -2,7 +2,8 @@
 
 ## Identidad
 
-Email fijo solicitado: `admin@aumprodz.com`.
+El correo privado del propietario se proporciona temporalmente mediante
+`BOOTSTRAP_ADMIN_EMAIL`; no debe documentarse ni publicarse en el repositorio.
 
 La contraseña temporal se encuentra en un archivo separado del ZIP. Ese archivo no debe copiarse al repositorio, tickets, chats, notas compartidas ni variables permanentes.
 

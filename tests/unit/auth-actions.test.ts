@@ -17,11 +17,14 @@ import { forgotPasswordAction, signInAction, signUpAction } from "@/app/[locale]
 
 const strongPassword = "Valid-password-2026!";
 const registrationSigningKey = "test_registration_gate_signing_key_at_least_32_chars";
+const privacyVersion = "privacy-2026-07-23-v1";
+const termsVersion = "terms-2026-07-23-v1";
 
 function enableRegistration() {
   vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
   vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
-  vi.stubEnv("REGISTRATION_TERMS_VERSION", "terms-2026-07-v1");
+  vi.stubEnv("REGISTRATION_PRIVACY_VERSION", privacyVersion);
+  vi.stubEnv("REGISTRATION_TERMS_VERSION", termsVersion);
   vi.stubEnv("REGISTRATION_GATE_SIGNING_KEY", registrationSigningKey);
 }
 
@@ -77,7 +80,7 @@ describe("Auth CAPTCHA enforcement", () => {
     expect(auth.signUp).not.toHaveBeenCalled();
   });
 
-  it("passes CAPTCHA, callback and a valid terms attestation to Supabase signup", async () => {
+  it("passes CAPTCHA, callback and a valid legal attestation to Supabase signup", async () => {
     enableRegistration();
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://vwayajayisyen.com");
 
@@ -106,19 +109,26 @@ describe("Auth CAPTCHA enforcement", () => {
 
     const metadata = signupRequest.options.data;
     expect(metadata).toMatchObject({
+      acceptance_mechanism: "signup_checkbox",
+      legal_locale: "es",
       preferred_locale: "ht",
-      terms_version: "terms-2026-07-v1"
+      privacy_version: privacyVersion,
+      terms_version: termsVersion
     });
     expect(metadata.registration_nonce).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
     );
     expect(new Date(metadata.terms_accepted_at).toISOString()).toBe(metadata.terms_accepted_at);
+    expect(metadata.privacy_accepted_at).toBe(metadata.terms_accepted_at);
 
     const expectedSignature = createHmac("sha256", registrationSigningKey)
       .update(
         [
           "new@example.com",
           metadata.terms_version,
+          metadata.privacy_version,
+          metadata.legal_locale,
+          metadata.acceptance_mechanism,
           metadata.terms_accepted_at,
           metadata.registration_nonce
         ].join("\n"),
@@ -131,6 +141,7 @@ describe("Auth CAPTCHA enforcement", () => {
   it("fails closed when the immutable terms version or signing key is missing", async () => {
     vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
     vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+    vi.stubEnv("REGISTRATION_PRIVACY_VERSION", "");
     vi.stubEnv("REGISTRATION_TERMS_VERSION", "");
     vi.stubEnv("REGISTRATION_GATE_SIGNING_KEY", "");
 

@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FileText, ShieldCheck } from "lucide-react";
+import { CalendarDays, FileText, Languages, Mail, ShieldCheck } from "lucide-react";
+import {
+  getLegalDocumentContent,
+  getOfficialLegalLocale,
+  isPublishedLegalDocument,
+  LEGAL_ENTITY
+} from "@/content/legal";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
@@ -96,6 +102,14 @@ const legalStatus: Record<Locale, { kicker: string; title: string; body: string;
   }
 };
 
+const officialLanguageNotice: Record<Locale, string> = {
+  ht: "Dokiman legal ofisyèl yo disponib an panyòl ak pòtigè. Paj sa a montre vèsyon panyòl la.",
+  fr: "Les documents juridiques officiels sont disponibles en espagnol et en portugais. Cette page affiche la version espagnole.",
+  es: "Consulta también la versión oficial en portugués.",
+  pt: "Consulte também a versão oficial em espanhol.",
+  en: "Official legal documents are available in Spanish and Portuguese. This page shows the Spanish version."
+};
+
 type LegalPageProps = { params: Promise<{ locale: string; document: string }> };
 
 export function generateStaticParams() {
@@ -108,14 +122,18 @@ export default async function LegalPage({ params }: LegalPageProps) {
   const legalDocument = document as LegalDocument;
   const dictionary = getDictionary(locale);
   const status = legalStatus[locale];
+  const published = isPublishedLegalDocument(legalDocument)
+    ? getLegalDocumentContent(legalDocument, locale)
+    : null;
+  const officialLocale = getOfficialLegalLocale(locale);
 
   return (
     <>
       <section className="page-hero page-hero-legal">
         <div className="shell page-hero-inner">
-          <p className="eyebrow">{status.kicker}</p>
-          <h1>{titles[legalDocument][locale]}</h1>
-          <p className="page-lede">{status.body}</p>
+          <p className="eyebrow">{published?.kicker ?? status.kicker}</p>
+          <h1>{published?.title ?? titles[legalDocument][locale]}</h1>
+          <p className="page-lede">{published?.summary ?? status.body}</p>
         </div>
       </section>
       <section className="section section-white">
@@ -131,17 +149,79 @@ export default async function LegalPage({ params }: LegalPageProps) {
               </Link>
             ))}
           </nav>
-          <article className="legal-pending-card">
-            <span aria-hidden="true">
-              <FileText size={29} />
-            </span>
-            <p className="eyebrow">{dictionary.common.in_preparation}</p>
-            <h2>{status.title}</h2>
-            <p>{status.body}</p>
-            <small>
-              <ShieldCheck aria-hidden="true" size={17} /> {status.note}
-            </small>
-          </article>
+          {published ? (
+            <article className="legal-document-card" lang={officialLocale}>
+              <header className="legal-document-header">
+                <div className="legal-document-meta">
+                  <span>
+                    <CalendarDays aria-hidden="true" size={17} />
+                    {published.updatedLabel}: <strong>{published.effectiveDate}</strong>
+                  </span>
+                  <span>
+                    <FileText aria-hidden="true" size={17} />
+                    {published.versionLabel}: <code>{published.version}</code>
+                  </span>
+                </div>
+                <div className="legal-language-notice">
+                  <Languages aria-hidden="true" size={20} />
+                  <div>
+                    <strong>{published.languageLabel}</strong>
+                    <p>{published.languageNotice}</p>
+                    <p>{officialLanguageNotice[locale]}</p>
+                    <span>
+                      <Link href={localizedPath("es", `legal/${legalDocument}`)}>Español</Link>
+                      <Link href={localizedPath("pt", `legal/${legalDocument}`)}>Português</Link>
+                    </span>
+                  </div>
+                </div>
+              </header>
+
+              <div className="legal-document-sections">
+                {published.sections.map((section) => (
+                  <section id={section.id} key={section.id}>
+                    <h2>{section.title}</h2>
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                    {section.items ? (
+                      <ul>
+                        {section.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </section>
+                ))}
+              </div>
+
+              <footer className="legal-contact-panel">
+                <Mail aria-hidden="true" size={25} />
+                <div>
+                  <strong>{published.contactTitle}</strong>
+                  <p>
+                    <a href={`mailto:${LEGAL_ENTITY.email.legal}`}>{LEGAL_ENTITY.email.legal}</a>
+                    <span aria-hidden="true"> · </span>
+                    <a href={`mailto:${LEGAL_ENTITY.email.support}`}>
+                      {LEGAL_ENTITY.email.support}
+                    </a>
+                  </p>
+                  <small>{LEGAL_ENTITY.publicAddress}</small>
+                </div>
+              </footer>
+            </article>
+          ) : (
+            <article className="legal-pending-card">
+              <span aria-hidden="true">
+                <FileText size={29} />
+              </span>
+              <p className="eyebrow">{dictionary.common.in_preparation}</p>
+              <h2>{status.title}</h2>
+              <p>{status.body}</p>
+              <small>
+                <ShieldCheck aria-hidden="true" size={17} /> {status.note}
+              </small>
+            </article>
+          )}
         </div>
       </section>
     </>

@@ -1,10 +1,12 @@
 -- Verify that public registration can only cross the Supabase Auth boundary
--- with a fresh server-issued HMAC, and that verified terms are persisted.
+-- with a fresh server-issued HMAC, and that verified legal acceptance is persisted.
 begin;
 
 create extension if not exists pgtap with schema extensions;
+grant usage on schema extensions to current_user;
+set local search_path = extensions, public, pg_temp;
 
-select plan(15);
+select plan(21);
 
 select ok(
   has_function_privilege(
@@ -57,11 +59,68 @@ select ok(
   'The general service role cannot execute the registration hook'
 );
 
+create temporary table registration_gate_secret_backup (
+  decrypted_secret text,
+  description text,
+  existed boolean not null,
+  secret_id uuid
+);
+
+insert into registration_gate_secret_backup(
+  decrypted_secret,
+  description,
+  existed,
+  secret_id
+)
+select
+  existing.decrypted_secret,
+  existing.description,
+  existing.id is not null,
+  existing.id
+from (values (true)) as singleton(present)
+left join lateral (
+  select id, decrypted_secret, description
+  from vault.decrypted_secrets
+  where name = 'vwayaj_registration_gate_hmac'
+  order by updated_at desc, created_at desc
+  limit 1
+) as existing on singleton.present;
+
+do $$
+declare
+  v_secret_id uuid;
+begin
+  select id
+    into v_secret_id
+  from vault.secrets
+  where name = 'vwayaj_registration_gate_hmac'
+  order by updated_at desc, created_at desc
+  limit 1;
+
+  if v_secret_id is null then
+    perform vault.create_secret(
+      'pretest_registration_gate_key_different_at_least_32_chars',
+      'vwayaj_registration_gate_hmac',
+      'Ephemeral pgTAP pretest key'
+    );
+  else
+    perform vault.update_secret(
+      v_secret_id,
+      'pretest_registration_gate_key_different_at_least_32_chars',
+      'vwayaj_registration_gate_hmac',
+      'Ephemeral pgTAP pretest key'
+    );
+  end if;
+end;
+$$;
+
 create temporary table registration_test_vector (
   accepted_at text not null,
   email text not null,
   event jsonb not null,
+  legal_locale text not null,
   nonce text not null,
+  privacy_version text not null,
   signature text not null,
   terms_version text not null,
   user_id uuid not null
@@ -71,7 +130,9 @@ insert into registration_test_vector(
   accepted_at,
   email,
   event,
+  legal_locale,
   nonce,
+  privacy_version,
   signature,
   terms_version,
   user_id
@@ -83,7 +144,9 @@ with source as (
       'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
     ) as accepted_at,
     'registration-test@example.invalid'::text as email,
+    'es'::text as legal_locale,
     extensions.gen_random_uuid()::text as nonce,
+    'privacy-ci-v1'::text as privacy_version,
     'terms-ci-v1'::text as terms_version,
     extensions.gen_random_uuid() as user_id
 ),
@@ -92,7 +155,16 @@ signed as (
     *,
     encode(
       extensions.hmac(
-        concat_ws(E'\n', email, terms_version, accepted_at, nonce),
+        concat_ws(
+          E'\n',
+          email,
+          terms_version,
+          privacy_version,
+          legal_locale,
+          'signup_checkbox',
+          accepted_at,
+          nonce
+        ),
         'ci_registration_gate_signing_key_at_least_32_chars',
         'sha256'
       ),
@@ -112,8 +184,16 @@ select
       email,
       'user_metadata',
       jsonb_build_object(
+        'acceptance_mechanism',
+        'signup_checkbox',
+        'legal_locale',
+        legal_locale,
         'preferred_locale',
         'ht',
+        'privacy_accepted_at',
+        accepted_at,
+        'privacy_version',
+        privacy_version,
         'registration_nonce',
         nonce,
         'registration_signature',
@@ -125,7 +205,9 @@ select
       )
     )
   ),
+  legal_locale,
   nonce,
+  privacy_version,
   signature,
   terms_version,
   user_id
@@ -140,13 +222,23 @@ select is(
       'message', 'Registration request could not be verified.'
     )
   ),
-  'The hook fails closed when the Vault signing key is missing'
+  'The hook fails closed before the matching test signing key is installed'
 )
 from registration_test_vector;
 
 do $$
+declare
+  v_secret_id uuid;
 begin
-  perform vault.create_secret(
+  select id
+    into v_secret_id
+  from vault.secrets
+  where name = 'vwayaj_registration_gate_hmac'
+  order by updated_at desc, created_at desc
+  limit 1;
+
+  perform vault.update_secret(
+    v_secret_id,
     'ci_registration_gate_signing_key_at_least_32_chars',
     'vwayaj_registration_gate_hmac',
     'Ephemeral pgTAP registration key'
@@ -274,6 +366,21 @@ select is(
 )
 from registration_test_vector;
 
+select is(
+  private.before_user_created(
+    event #- '{user,user_metadata,privacy_version}'
+  ),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'Registration without a privacy policy version is rejected'
+)
+from registration_test_vector;
+
 insert into auth.users(
   id,
   instance_id,
@@ -305,6 +412,13 @@ select is(
 from registration_test_vector v;
 
 select is(
+  (select p.privacy_version from public.profiles p where p.id = v.user_id),
+  v.privacy_version,
+  'The verified privacy policy version is persisted on the profile'
+)
+from registration_test_vector v;
+
+select is(
   (
     select to_char(
       p.terms_accepted_at at time zone 'UTC',
@@ -315,6 +429,47 @@ select is(
   ),
   v.accepted_at,
   'The verified terms acceptance timestamp is persisted on the profile'
+)
+from registration_test_vector v;
+
+select is(
+  (
+    select to_char(
+      p.privacy_accepted_at at time zone 'UTC',
+      'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
+    )
+    from public.profiles p
+    where p.id = v.user_id
+  ),
+  v.accepted_at,
+  'The verified privacy acceptance timestamp is persisted on the profile'
+)
+from registration_test_vector v;
+
+select is(
+  (
+    select array_agg(c.consent_type::text order by c.consent_type::text)
+    from public.consent_records c
+    where c.user_id = v.user_id
+  ),
+  array['privacy', 'terms']::text[],
+  'Terms and privacy are stored as separate consent records'
+)
+from registration_test_vector v;
+
+select ok(
+  (
+    select bool_and(
+      c.granted
+      and c.locale::text = v.legal_locale
+      and c.evidence_hash is not null
+      and c.scope ->> 'mechanism' = 'signup_checkbox'
+      and c.scope ->> 'combined_acceptance' = 'true'
+    )
+    from public.consent_records c
+    where c.user_id = v.user_id
+  ),
+  'Consent records preserve locale, mechanism and proportional evidence'
 )
 from registration_test_vector v;
 
@@ -343,13 +498,50 @@ from provisioning_test_vector;
 
 select ok(
   (
-    select p.terms_version is null and p.terms_accepted_at is null
+    select
+      p.terms_version is null
+      and p.privacy_version is null
+      and p.terms_accepted_at is null
+      and p.privacy_accepted_at is null
     from public.profiles p
     where p.id = v.user_id
   ),
-  'Administrator provisioning does not fabricate public terms acceptance'
+  'Administrator provisioning does not fabricate public legal acceptance'
 )
 from provisioning_test_vector v;
+
+select is(
+  (
+    select count(*)::integer
+    from public.consent_records c
+    where c.user_id = v.user_id
+  ),
+  0,
+  'Administrator provisioning does not fabricate consent records'
+)
+from provisioning_test_vector v;
+
+do $$
+declare
+  v_backup registration_gate_secret_backup%rowtype;
+begin
+  select *
+    into strict v_backup
+  from registration_gate_secret_backup;
+
+  if v_backup.existed then
+    perform vault.update_secret(
+      v_backup.secret_id,
+      v_backup.decrypted_secret,
+      'vwayaj_registration_gate_hmac',
+      coalesce(v_backup.description, '')
+    );
+  else
+    delete from vault.secrets
+    where name = 'vwayaj_registration_gate_hmac';
+  end if;
+end;
+$$;
 
 select * from finish();
 rollback;

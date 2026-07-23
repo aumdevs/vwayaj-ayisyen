@@ -20,7 +20,7 @@
 | Documentos | Cuarentena + scanner privado; apagados sin scanner |
 | Accesibilidad | WCAG 2.2 AA |
 | Seguridad | ASVS L2 como objetivo, controles reforzados |
-| Admin inicial | `admin@aumprodz.com`, password temporal externo |
+| Admin inicial | correo privado del propietario, definido fuera del repositorio; password temporal externo |
 | Países | Sólo USA, Chile, Brasil y México |
 
 ## Elementos que Codex no debe inventar

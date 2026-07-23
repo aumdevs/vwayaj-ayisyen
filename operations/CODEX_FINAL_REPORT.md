@@ -64,7 +64,7 @@ Fecha de corte: 2026-07-23.
 
 ## Administrador inicial
 
-- Email creado y confirmado: `admin@aumprodz.com`.
+- Email privado del propietario creado y confirmado; no se publica en el repositorio.
 - Roles verificados: `user`, `admin`, `super_admin`; cuenta activa, contraseña rotada y credencial temporal rechazada.
 - Las credenciales administrativas están únicamente en macOS Keychain bajo servicios `com.aumprodz.vwayaj-ayisyen.admin*`.
 - El permiso remoto de ejecución del bootstrap fue revocado incluso para `service_role` después del alta.

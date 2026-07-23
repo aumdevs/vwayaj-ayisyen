@@ -1,8 +1,33 @@
--- 0012_atomic_admin_bootstrap.sql
--- Transactionally grants the initial owner roles after the Auth user is created.
--- The function is callable only with the service_role API role and must be
--- removed or kept execute-revoked after the one-time bootstrap.
+-- Remove the private owner identity from public configuration. Bootstrap
+-- remains one-time and signed, but the owner email is supplied only through
+-- the protected execution environment.
 begin;
+
+insert into public.site_settings(key, value, is_public, description)
+values
+  (
+    'brand',
+    '{"status":"approved","name":"Vwayaj Ayisyen","logo_path":"/icon.svg"}'::jsonb,
+    true,
+    'Public Vwayaj Ayisyen brand configuration'
+  ),
+  (
+    'support',
+    '{"email":"support@vwayajayisyen.com","legal_email":"legal@vwayajayisyen.com","marketing_email":"promo@vwayajayisyen.com","whatsapp_e164":null,"hours":null}'::jsonb,
+    true,
+    'Public official contact configuration'
+  ),
+  (
+    'legal_entity',
+    '{"status":"partial","legal_name":"Vwayaj ayisyen","entity_type":"Ltda.","country":"Brasil","public_address":"São Paulo, Brasil","missing":["cnpj","full_commercial_address"]}'::jsonb,
+    false,
+    'Private legal entity configuration; commerce remains disabled until complete'
+  )
+on conflict (key) do update set
+  value = excluded.value,
+  is_public = excluded.is_public,
+  description = excluded.description,
+  updated_at = now();
 
 create or replace function public.bootstrap_initial_admin(
   p_user_id uuid,
@@ -84,12 +109,12 @@ begin
 end;
 $$;
 
-revoke all on function public.bootstrap_initial_admin(uuid, text) from public;
-revoke all on function public.bootstrap_initial_admin(uuid, text) from anon;
-revoke all on function public.bootstrap_initial_admin(uuid, text) from authenticated;
-grant execute on function public.bootstrap_initial_admin(uuid, text) to service_role;
+revoke all on function public.bootstrap_initial_admin(uuid, text)
+  from public, anon, authenticated;
+grant execute on function public.bootstrap_initial_admin(uuid, text)
+  to service_role;
 
 comment on function public.bootstrap_initial_admin(uuid, text) is
-  'One-time initial owner bootstrap. Execute only with service_role, then revoke service_role execute after use.';
+  'One-time initial owner bootstrap. Owner email is supplied through a protected environment and is never public configuration.';
 
 commit;

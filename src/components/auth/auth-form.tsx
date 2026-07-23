@@ -23,6 +23,7 @@ type AuthFormProps = {
   locale: Locale;
   mode: AuthMode;
   registrationEnabled: boolean;
+  registrationPrivacyVersion: string | null;
   registrationTermsVersion: string | null;
   turnstileSiteKey: string | null;
   copy: ExperienceCopy["auth"];
@@ -35,6 +36,7 @@ export function AuthForm({
   locale,
   mode,
   registrationEnabled,
+  registrationPrivacyVersion,
   registrationTermsVersion,
   turnstileSiteKey,
   copy
@@ -199,9 +201,11 @@ export function AuthForm({
                 <span aria-hidden="true">·</span>
                 <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacyLink}</Link>
               </span>
-              {registrationTermsVersion ? (
+              {registrationTermsVersion && registrationPrivacyVersion ? (
                 <small className="auth-terms-version">
-                  {copy.termsVersionLabel}: <code>{registrationTermsVersion}</code>
+                  {copy.termsLink}: <code>{registrationTermsVersion}</code>
+                  <span aria-hidden="true"> · </span>
+                  {copy.privacyLink}: <code>{registrationPrivacyVersion}</code>
                 </small>
               ) : null}
             </div>

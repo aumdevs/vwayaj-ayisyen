@@ -3126,6 +3126,76 @@ small {
   margin-top: 1.2rem;
 }
 
+.contact-channels {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.contact-channels > header {
+  max-width: 720px;
+}
+
+.contact-channels > header h2 {
+  margin-bottom: 0.6rem;
+}
+
+.contact-channels > header > p:last-child {
+  color: var(--ink-600);
+}
+
+.contact-channel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contact-channel-grid > a {
+  min-width: 0;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--ink-800);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-channel-grid > a:hover {
+  border-color: #9caeea;
+  transform: translateY(-2px);
+}
+
+.contact-channel-grid svg {
+  margin-bottom: auto;
+  color: var(--brand-600);
+}
+
+.contact-channel-grid strong {
+  margin-top: 2rem;
+}
+
+.contact-channel-grid p {
+  margin: 0.45rem 0 1rem;
+  color: var(--ink-600);
+  font-size: 0.88rem;
+}
+
+.contact-channel-grid span {
+  max-width: 100%;
+  color: var(--brand-700);
+  font-size: 0.78rem;
+  font-weight: 760;
+  overflow-wrap: anywhere;
+}
+
+.contact-channels > .contact-security-note {
+  margin: 0;
+}
+
 .public-faq-list {
   overflow: hidden;
   border: 1px solid var(--border);
@@ -3256,6 +3326,148 @@ small {
 .legal-pending-card > small svg {
   margin-top: 0.13rem;
   color: var(--aqua-600);
+}
+
+.legal-document-card {
+  max-width: 860px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-editorial);
+  background: var(--canvas);
+  box-shadow: var(--shadow-sm);
+}
+
+.legal-document-header {
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(48 76 196 / 10%), transparent 22rem), var(--surface);
+}
+
+.legal-document-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin-bottom: 1.2rem;
+}
+
+.legal-document-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ink-600);
+  font-size: 0.78rem;
+}
+
+.legal-document-meta svg {
+  color: var(--brand-600);
+}
+
+.legal-document-meta code {
+  padding: 0.2rem 0.38rem;
+  border-radius: 6px;
+  background: var(--brand-100);
+  color: var(--brand-700);
+  font-size: 0.72rem;
+}
+
+.legal-language-notice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid #cdd9ff;
+  border-radius: 14px;
+  background: #f4f6ff;
+}
+
+.legal-language-notice > svg {
+  margin-top: 0.1rem;
+  color: var(--brand-600);
+}
+
+.legal-language-notice p {
+  margin: 0.25rem 0 0;
+  color: var(--ink-600);
+  font-size: 0.82rem;
+}
+
+.legal-language-notice span {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.65rem;
+}
+
+.legal-language-notice a {
+  color: var(--brand-700);
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.legal-document-sections {
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.legal-document-sections > section {
+  scroll-margin-top: 7rem;
+}
+
+.legal-document-sections > section + section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.legal-document-sections h2 {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 790;
+}
+
+.legal-document-sections p,
+.legal-document-sections li {
+  color: var(--ink-650);
+  line-height: 1.72;
+}
+
+.legal-document-sections p {
+  max-width: 74ch;
+  margin: 0.7rem 0 0;
+}
+
+.legal-document-sections ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.9rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.legal-contact-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
+  padding: 1.3rem clamp(1.5rem, 5vw, 3rem);
+  border-top: 1px solid var(--border);
+  background: var(--ink-950);
+  color: white;
+}
+
+.legal-contact-panel > svg {
+  color: #9eb1ff;
+}
+
+.legal-contact-panel p {
+  margin: 0.3rem 0;
+}
+
+.legal-contact-panel a {
+  color: #cbd5ff;
+  overflow-wrap: anywhere;
+}
+
+.legal-contact-panel small {
+  color: #aebbc9;
 }
 
 .auth-experience {
@@ -4031,6 +4243,176 @@ small {
   margin-top: 1rem;
 }
 
+.privacy-center {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 1rem;
+}
+
+.privacy-center-intro {
+  grid-column: 1 / -1;
+  max-width: 72ch;
+  margin: 0;
+  color: var(--ink-600);
+}
+
+.privacy-acceptance-card,
+.privacy-request-card,
+.privacy-history-card {
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.privacy-acceptance-card {
+  grid-column: 1 / -1;
+}
+
+.privacy-acceptance-card > header,
+.privacy-history-card > header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.privacy-acceptance-card > header svg,
+.privacy-history-card > header svg {
+  color: var(--brand-600);
+}
+
+.privacy-acceptance-card h2,
+.privacy-request-card h2,
+.privacy-history-card h2 {
+  margin: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 790;
+}
+
+.privacy-acceptance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.privacy-acceptance-grid > a {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--canvas);
+  color: var(--ink-800);
+  text-decoration: none;
+}
+
+.privacy-acceptance-grid code {
+  color: var(--brand-700);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.privacy-acceptance-grid small {
+  color: var(--ink-500);
+}
+
+.privacy-request-card > header > div > p:last-child {
+  max-width: 66ch;
+  color: var(--ink-600);
+}
+
+.privacy-request-card form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.privacy-request-card textarea {
+  resize: vertical;
+}
+
+.privacy-request-card .button {
+  justify-self: start;
+}
+
+.privacy-request-message {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.8rem;
+  border: 1px solid #f1c6ca;
+  border-radius: 12px;
+  background: #fff0f1;
+  color: #9e2532;
+  font-size: 0.84rem;
+  font-weight: 680;
+}
+
+.privacy-request-message-submitted {
+  border-color: #bfdcd4;
+  background: #eff9f6;
+  color: #0a6a5f;
+}
+
+.privacy-request-email {
+  display: block;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--ink-600);
+}
+
+.privacy-request-email a {
+  color: var(--brand-700);
+  overflow-wrap: anywhere;
+}
+
+.privacy-history-card ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.privacy-history-card li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.privacy-history-card li > div {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.privacy-history-card li small {
+  color: var(--ink-500);
+}
+
+.privacy-history-card li > span {
+  flex: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 999px;
+  background: var(--brand-100);
+  color: var(--brand-700);
+  font-size: 0.66rem;
+  font-weight: 790;
+}
+
+.privacy-history-card > p,
+.privacy-acceptance-card > p {
+  color: var(--ink-600);
+}
+
 .portal-mobile-nav {
   display: none;
 }
@@ -4745,6 +5127,10 @@ small {
     grid-template-columns: 1fr;
   }
 
+  .contact-channel-grid {
+    grid-template-columns: 1fr;
+  }
+
   .about-principle-grid article {
     min-height: 220px;
   }
@@ -4790,6 +5176,14 @@ small {
 
   .portal-workspace {
     padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .privacy-center {
+    grid-template-columns: 1fr;
+  }
+
+  .privacy-acceptance-grid {
+    grid-template-columns: 1fr;
   }
 
   .portal-mobile-nav {

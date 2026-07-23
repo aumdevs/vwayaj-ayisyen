@@ -27,11 +27,13 @@ import {
 } from "lucide-react";
 import { signOutAction } from "@/app/[locale]/auth/actions";
 import { LogoMark } from "@/components/brand/logo-mark";
+import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel";
 import { BRAND } from "@/config/brand";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { privateAreas, type PrivateArea } from "@/lib/navigation/private";
 import type { Locale } from "@/types/domain";
+import type { PrivacyCenterData } from "@/types/privacy";
 
 type PrivateAreaShellProps = {
   area: PrivateArea;
@@ -40,6 +42,7 @@ type PrivateAreaShellProps = {
   path: readonly string[];
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyCenterData: PrivacyCenterData | null;
 };
 
 const routeIcons: Record<string, LucideIcon> = {
@@ -207,7 +210,8 @@ function PortalShell({
   section,
   title,
   email,
-  assuranceLevel
+  assuranceLevel,
+  privacyCenterData
 }: {
   definition: (typeof privateAreas)["portal"];
   dictionary: Dictionary;
@@ -216,6 +220,7 @@ function PortalShell({
   title: string;
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
+  privacyCenterData: PrivacyCenterData | null;
 }) {
   const copy = uiCopy[locale];
   const selectedIcon = routeIcons[section] ?? LayoutGrid;
@@ -305,6 +310,12 @@ function PortalShell({
                 <p>{copy.emptyBody}</p>
               </article>
             </div>
+          ) : section === "privacy" && privacyCenterData ? (
+            <PrivacyRequestPanel
+              data={privacyCenterData}
+              legalEmail={BRAND.contact.legal}
+              locale={locale}
+            />
           ) : (
             <section className="private-empty-panel">
               <span aria-hidden="true">
@@ -555,7 +566,8 @@ export function PrivateAreaShell({
   locale,
   path,
   email,
-  assuranceLevel
+  assuranceLevel,
+  privacyCenterData
 }: PrivateAreaShellProps) {
   const definition = privateAreas[area];
   const section = path[0] ?? "";
@@ -570,6 +582,7 @@ export function PrivateAreaShell({
         dictionary={dictionary}
         email={email}
         locale={locale}
+        privacyCenterData={privacyCenterData}
         section={section}
         title={title}
       />

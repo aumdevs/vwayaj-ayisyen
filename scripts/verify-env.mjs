@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const env = process.env;
 const errors = [];
+const publishedTermsVersion = "terms-2026-07-23-v1";
+const publishedPrivacyVersion = "privacy-2026-07-23-v1";
 
 function requireValue(name) {
   if (!env[name]?.trim()) errors.push(`${name} is required`);
@@ -29,8 +31,13 @@ requireValue("NEXT_PUBLIC_TURNSTILE_SITE_KEY");
 if (publicRegistrationEnabled) {
   requireValidValue(
     "REGISTRATION_TERMS_VERSION",
-    (value) => /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/.test(value),
-    "must match ^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+    (value) => value === publishedTermsVersion,
+    `must equal the published version ${publishedTermsVersion}`
+  );
+  requireValidValue(
+    "REGISTRATION_PRIVACY_VERSION",
+    (value) => value === publishedPrivacyVersion,
+    `must equal the published version ${publishedPrivacyVersion}`
   );
 }
 if (publicRegistrationEnabled || adminBootstrapEnabled) {
@@ -67,12 +74,13 @@ if (featureEnabled("DISABLE_APPOINTMENTS")) {
 }
 if (adminBootstrapEnabled) {
   requireValue("SUPABASE_SERVICE_ROLE_KEY");
-  requireValue("BOOTSTRAP_ADMIN_EMAIL");
+  requireValidValue(
+    "BOOTSTRAP_ADMIN_EMAIL",
+    (value) => value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+    "must be a valid private owner email"
+  );
   requireValue("BOOTSTRAP_ADMIN_PASSWORD");
   requireValue("EXPECTED_SUPABASE_PROJECT_REF");
-  if (env.BOOTSTRAP_ADMIN_EMAIL !== "admin@aumprodz.com") {
-    errors.push("BOOTSTRAP_ADMIN_EMAIL must be admin@aumprodz.com");
-  }
 }
 
 for (const [key, value] of Object.entries(env)) {

@@ -2,7 +2,8 @@
 
 Fecha: 2026-07-23
 
-El rediseño no activa ninguna integración. Para habilitar una función deben pasar el kill switch del entorno, la configuración requerida, el flag de base de datos y su gate de revisión.
+Cada integración debe pasar el kill switch del entorno, la configuración
+requerida, el flag de base de datos cuando exista y su gate de revisión.
 
 | Función | Flag de base | Kill switch | Estado seguro |
 |---|---|---|---|
@@ -15,6 +16,6 @@ El rediseño no activa ninguna integración. Para habilitar una función deben p
 | Captación pública | `feature_public_intake` | `DISABLE_PUBLIC_INTAKE` | cerrado |
 | Cursos | `feature_courses` | `DISABLE_COURSES` | contenido aprobado requerido |
 | Portal profesional | — | `DISABLE_PROFESSIONAL_PORTAL` | cerrado |
-| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | SMTP + Turnstile + hook HMAC listos; requiere versión publicada en `REGISTRATION_TERMS_VERSION`, prueba real y `disable_signup=false` en Supabase |
+| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | habilitado sólo en Production: SMTP, recepción, Turnstile, hook HMAC, términos y privacidad versionados y proveedor de email verificados |
 
 La ausencia de una variable o de una aprobación produce indisponibilidad, nunca un fallback inseguro.

@@ -62,7 +62,7 @@ content:
   ai_index_requires_published: true
 
 admin:
-  bootstrap_email: admin@aumprodz.com
+  bootstrap_email_source: protected_environment
   credentials_location: macos_keychain
   password_rotated: true
   force_password_change: false

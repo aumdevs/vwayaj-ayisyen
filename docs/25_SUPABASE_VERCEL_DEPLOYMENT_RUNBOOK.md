@@ -57,10 +57,12 @@
    Vault y configurar la misma clave como
    `REGISTRATION_GATE_SIGNING_KEY` únicamente en Vercel Production. Activar el
    hook remoto mientras el proveedor continúa cerrado.
-   Publicar y revisar los textos legales, asignar su identificador inmutable a
-   `REGISTRATION_TERMS_VERSION`, comprobar alta, confirmación y recuperación,
-   habilitar el proveedor remoto de forma explícita y sólo entonces cambiar el
-   kill switch de Producción a `false`. La aplicación exige además
+   Publicar y revisar los textos legales, asignar sus identificadores
+   inmutables a `REGISTRATION_TERMS_VERSION` y
+   `REGISTRATION_PRIVACY_VERSION`, comprobar alta, confirmación, recuperación y
+   persistencia de ambos consentimientos, habilitar el proveedor remoto de
+   forma explícita y sólo entonces cambiar el kill switch de Producción a
+   `false`. La aplicación exige además
    `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; cualquier pieza ausente falla cerrado.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
@@ -73,7 +75,10 @@
    gestor seguro y aplicada sólo en el control plane de Supabase, remitente
    `Vwayaj Ayisyen <noreply@vwayajayisyen.com>`. La contraseña se usa al aplicar
    la configuración remota y no se copia al repositorio, a `.env.local`, a CI
-   ni a Vercel.
+   ni a Vercel. SMTP saliente no crea buzones entrantes. La recepción usa Proton
+   Mail y quedó verificada el 2026-07-23 mediante tres mensajes externos:
+   `support@vwayajayisyen.com`, `legal@vwayajayisyen.com` y
+   `promo@vwayajayisyen.com`.
 10. Activar backups/PITR según plan y criticidad.
 11. Configurar logs/alertas y políticas de red disponibles.
 12. Verificar RLS en todas las tablas expuestas.
