@@ -2,7 +2,7 @@
 
 Este índice enumera el contenido del ZIP. La credencial temporal del administrador está fuera del paquete y no aparece aquí.
 
-**Total previsto del paquete final:** 180 archivos, incluyendo este índice.
+**Total previsto del paquete final:** 182 archivos, incluyendo este índice.
 
 ## Raíz
 

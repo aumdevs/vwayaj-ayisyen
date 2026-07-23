@@ -88,7 +88,11 @@ begin
         'request_type', p_request_type::text
       )
     )
-    on conflict do nothing;
+    on conflict (event_type, aggregate_id)
+      where event_type = 'privacy.data_subject_request.received'
+    do update
+    set payload = excluded.payload
+    where public.outbox_events.processed_at is null;
 
     return v_request_id;
   end if;

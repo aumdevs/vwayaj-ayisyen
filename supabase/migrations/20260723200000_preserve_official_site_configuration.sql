@@ -1,7 +1,9 @@
 -- Apply official identity/contact defaults without discarding any completed or
--- operational configuration already stored by an administrator. This forward
--- migration also repairs environments where the earlier migration version was
--- applied before its merge semantics were hardened.
+-- operational configuration that is still present. This cannot reconstruct
+-- values already overwritten by a previously executed migration; an affected
+-- environment must restore those values from a pre-migration backup or audit
+-- export. The corrected 20260723180000 migration prevents that loss on fresh
+-- installs, while this forward migration installs the safe idempotent helper.
 begin;
 
 create or replace function private.apply_official_site_setting_defaults()

@@ -229,7 +229,7 @@ select ok(
   (
     select bool_and(
       aggregate_type = 'data_subject_request'
-      and payload = '{"locale":"es","request_type":"access"}'::jsonb
+      and payload = '{"locale":"pt","request_type":"access"}'::jsonb
     )
     from public.outbox_events
     where event_type = 'privacy.data_subject_request.received'
@@ -240,7 +240,7 @@ select ok(
           and request_type = 'access'
       )
   ),
-  'The operations event contains only the minimal routing metadata'
+  'The operations event contains only the latest minimal routing metadata'
 );
 
 insert into auth.users(

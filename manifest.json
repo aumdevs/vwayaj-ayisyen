@@ -40,7 +40,7 @@
     {
       "path": "FILE_INDEX.md",
       "size_bytes": 8961,
-      "sha256": "335d1641b9cc19598d0e2787f2121e0b7c083fff41e3eae0a24d92510f25dc23"
+      "sha256": "e09bc1ca241940de7e620c319165e7c7da6fa525e210380e9bc376354f09712c"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -209,8 +209,8 @@
     },
     {
       "path": "docs/11_DATABASE_DATA_DICTIONARY.md",
-      "size_bytes": 6213,
-      "sha256": "c640a25e00236351be8ad2161f58a37e91d5bcbc98c0ae2c0f64c42fb86b0233"
+      "size_bytes": 6332,
+      "sha256": "4e0eae31fba775ce3b6eed95412e8881371e764c672518f81683e8db1e3e90ad"
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
@@ -359,8 +359,8 @@
     },
     {
       "path": "docs/41_SUPPORT_AND_OPERATIONS_PLAYBOOK.md",
-      "size_bytes": 2594,
-      "sha256": "e2e7a7e77c69e69dd088b506ec6a5396926a267318c0e4e0855bdef0d8ceb096"
+      "size_bytes": 2791,
+      "sha256": "c5c548c8ed856282655cb36dba310443850efdd316981c5bd65374df334ef179"
     },
     {
       "path": "docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md",
@@ -889,18 +889,18 @@
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 7829,
-      "sha256": "2b75eeb27be54b6bf26900611ea463bf2660cb0ef1503fae3d7cd5fb165c6d84"
+      "size_bytes": 8011,
+      "sha256": "5d30512512d6953e00f7a88418ab36cf0991794234fa8d1b860b8d8f2bb19852"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 14548,
-      "sha256": "8f25637e6ef32d53009711b5166126d7612511e489e2bc03b5e84cd03f250c43"
+      "size_bytes": 14555,
+      "sha256": "019a1982d8692bae0f8372e0a547cd721bd46cd06c41dfd4ee96003e8d4485f1"
     },
     {
       "path": "supabase/migrations/20260723200000_preserve_official_site_configuration.sql",
-      "size_bytes": 3257,
-      "sha256": "dfddd1aaed549db95ff1037d025195c8767da680be8e0fc3c8f9cf6dabb0d7ea"
+      "size_bytes": 3436,
+      "sha256": "b6943b8e426bf7a26ddc890bd9c9a696ed109c61d9de5f46bb37cce30127daa6"
     },
     {
       "path": "supabase/tests/0005_site_settings_preservation.sql",

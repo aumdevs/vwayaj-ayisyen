@@ -365,7 +365,8 @@ La creación del titular pasa exclusivamente por `submit_data_subject_request`; 
 asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
 Cada alta crea de forma atómica un evento mínimo `privacy.data_subject_request.received` en
 `outbox_events`. La cola operativa se consulta en `/[locale]/admin/privacy-requests` con rol
-administrador, MFA y RLS; no muestra la descripción libre en el listado.
+administrador, MFA y RLS. El listado muestra la descripción opcional a todo administrador AAL2
+autorizado, pero ese texto no se copia a auditoría ni outbox y debe tratarse como confidencial.
 
 ### `admin_invitations`
 
