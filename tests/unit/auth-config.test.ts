@@ -41,6 +41,8 @@ describe("Supabase Auth launch gate", () => {
     expect(readTomlBoolean(config, "auth.captcha", "enabled")).toBe(true);
     expect(config).toContain('provider = "turnstile"');
     expect(config).toContain('secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"');
+    expect(readTomlBoolean(config, "auth.hook.before_user_created", "enabled")).toBe(true);
+    expect(config).toContain('uri = "pg-functions://postgres/private/before_user_created"');
   });
 
   it("uses local callbacks and the local SMTP sink without production delivery", () => {

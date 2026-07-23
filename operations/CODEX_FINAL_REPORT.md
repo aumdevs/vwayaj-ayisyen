@@ -85,10 +85,13 @@ Fecha de corte: 2026-07-23.
   aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo;
   DMARC está publicado, TLS está forzado y el seguimiento de aperturas/clics
   permanece apagado. Supabase Auth tiene SMTP Resend y el secreto de Turnstile;
-  Vercel Production tiene el site key público. El registro continúa apagado en
-  la aplicación y en el proveedor hasta publicar términos revisados y aprobar
-  alta, confirmación y recuperación reales. Zoom y OpenAI tampoco tienen
-  credenciales del proyecto.
+  Vercel Production tiene el site key público. El alta queda además protegida
+  por un HMAC emitido sólo por el servidor y validado por el hook
+  `private.before_user_created`; la versión y fecha aceptadas se conservan en el
+  perfil. El registro continúa apagado en la aplicación y en el proveedor hasta
+  publicar una versión revisada de términos, fijar
+  `REGISTRATION_TERMS_VERSION` y aprobar alta, confirmación y recuperación
+  reales. Zoom y OpenAI tampoco tienen credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 

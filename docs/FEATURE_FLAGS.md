@@ -15,6 +15,6 @@ El rediseño no activa ninguna integración. Para habilitar una función deben p
 | Captación pública | `feature_public_intake` | `DISABLE_PUBLIC_INTAKE` | cerrado |
 | Cursos | `feature_courses` | `DISABLE_COURSES` | contenido aprobado requerido |
 | Portal profesional | — | `DISABLE_PROFESSIONAL_PORTAL` | cerrado |
-| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | SMTP + Turnstile listos; requiere términos publicados, prueba real y `disable_signup=false` en Supabase |
+| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | SMTP + Turnstile + hook HMAC listos; requiere versión publicada en `REGISTRATION_TERMS_VERSION`, prueba real y `disable_signup=false` en Supabase |
 
 La ausencia de una variable o de una aprobación produce indisponibilidad, nunca un fallback inseguro.

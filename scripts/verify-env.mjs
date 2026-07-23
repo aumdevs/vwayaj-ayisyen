@@ -15,6 +15,10 @@ requireValue("NEXT_PUBLIC_SUPABASE_URL");
 requireValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
 // Supabase CAPTCHA also protects sign-in and recovery, not only registration.
 requireValue("NEXT_PUBLIC_TURNSTILE_SITE_KEY");
+if (featureEnabled("DISABLE_PUBLIC_REGISTRATION")) {
+  requireValue("REGISTRATION_TERMS_VERSION");
+  requireValue("REGISTRATION_GATE_SIGNING_KEY");
+}
 if (featureEnabled("DISABLE_PAYMENTS")) {
   requireValue("STRIPE_SECRET_KEY");
   requireValue("STRIPE_WEBHOOK_SECRET");

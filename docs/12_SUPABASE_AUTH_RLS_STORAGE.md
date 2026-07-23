@@ -26,13 +26,21 @@ Configuración recomendada:
 - Cloudflare Turnstile en registro, conexión y recuperación; el token se valida en Supabase Auth, no sólo en el navegador.
 - Mensajes que eviten enumeración.
 
-El alta pública queda disponible únicamente cuando coinciden los tres controles:
-`enable_signup=true` en Supabase, `DISABLE_PUBLIC_REGISTRATION=false` en
-Producción y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` configurada. Supabase mantiene el
-secreto de Turnstile y la contraseña SMTP fuera de Vercel. El
-`supabase/config.toml` versionado es exclusivamente local/CI, usa callbacks
-locales, el buzón de pruebas y mantiene `enable_signup=false`; la configuración
-remota de Producción se aplica y verifica de forma explícita.
+El alta pública queda disponible únicamente cuando coinciden todos los
+controles: proveedor remoto habilitado, `DISABLE_PUBLIC_REGISTRATION=false`,
+Turnstile listo, `REGISTRATION_TERMS_VERSION` fijada a una versión publicada y
+la misma clave HMAC disponible como `REGISTRATION_GATE_SIGNING_KEY` en el
+servidor y como `vwayaj_registration_gate_hmac` en Supabase Vault. La acción de
+servidor firma email, versión, fecha y nonce; el hook
+`private.before_user_created` rechaza dentro de Supabase Auth cualquier alta
+directa o manipulada. El trigger de perfil sólo conserva una versión y fecha de
+aceptación cuya firma siga siendo válida.
+
+Supabase mantiene el secreto de Turnstile, la contraseña SMTP y la copia HMAC de
+Vault fuera del navegador. El `supabase/config.toml` versionado es
+exclusivamente local/CI, usa callbacks locales, el buzón de pruebas, activa el
+hook y mantiene `enable_signup=false`; la configuración remota de Producción se
+aplica y verifica de forma explícita.
 
 ## MFA
 

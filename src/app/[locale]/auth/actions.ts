@@ -2,10 +2,14 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { getSiteUrl, getTurnstileSiteKey, isPublicRegistrationReady } from "@/lib/config/runtime";
+import { getSiteUrl, getTurnstileSiteKey } from "@/lib/config/runtime";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import {
+  createRegistrationAttestation,
+  isPublicRegistrationReady
+} from "@/server/auth/registration-attestation";
 import type { Locale } from "@/types/domain";
 
 export type AuthActionState = {
@@ -82,17 +86,26 @@ export async function signUpAction(
   const accepted = formData.get("accept_terms") === "yes";
   if (!locale || !parsed.success || !accepted) return { status: "invalid" };
 
+  const attestation = createRegistrationAttestation(parsed.data.email);
+  if (!attestation) return { status: "unavailable" };
+
   const supabase = await createServerSupabaseClient();
   if (!supabase) return { status: "unavailable" };
   const callback = new URL(localizedPath(locale, "auth/callback"), getSiteUrl());
   callback.searchParams.set("next", localizedPath(locale, "portal"));
   const { error } = await supabase.auth.signUp({
-    email: parsed.data.email,
+    email: attestation.email,
     password: parsed.data.password,
     options: {
       captchaToken: parsed.data.captchaToken,
       emailRedirectTo: callback.toString(),
-      data: { preferred_locale: locale }
+      data: {
+        preferred_locale: locale,
+        registration_nonce: attestation.registrationNonce,
+        registration_signature: attestation.registrationSignature,
+        terms_accepted_at: attestation.termsAcceptedAt,
+        terms_version: attestation.termsVersion
+      }
     }
   });
   if (error) return { status: "invalid" };
