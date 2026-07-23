@@ -31,7 +31,7 @@ import { PrivacyRequestPanel } from "@/components/private/privacy-request-panel"
 import { BRAND } from "@/config/brand";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
-import { privateAreas, type PrivateArea } from "@/lib/navigation/private";
+import { portalMobileRoutes, privateAreas, type PrivateArea } from "@/lib/navigation/private";
 import type { Locale } from "@/types/domain";
 import type { PrivacyCenterData } from "@/types/privacy";
 
@@ -225,9 +225,6 @@ function PortalShell({
   const copy = uiCopy[locale];
   const selectedIcon = routeIcons[section] ?? LayoutGrid;
   const SelectedIcon = selectedIcon;
-  const mobileRoutes = definition.routes.filter(({ path }) =>
-    ["", "cases", "appointments", "privacy", "profile"].includes(path)
-  );
 
   return (
     <div className="private-app portal-app">
@@ -332,7 +329,7 @@ function PortalShell({
         </main>
 
         <nav className="portal-mobile-nav" aria-label={definition.title}>
-          {mobileRoutes.map((route) => {
+          {portalMobileRoutes.map((route) => {
             const Icon = routeIcons[route.path] ?? LayoutGrid;
             return (
               <Link

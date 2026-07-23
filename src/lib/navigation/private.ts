@@ -110,6 +110,12 @@ export const privateAreas: Record<PrivateArea, AreaDefinition> = {
   }
 };
 
+const portalMobileRoutePaths = new Set(["", "cases", "appointments", "privacy", "profile"]);
+
+export const portalMobileRoutes = privateAreas.portal.routes.filter(({ path }) =>
+  portalMobileRoutePaths.has(path)
+);
+
 export function isPrivateArea(value: string): value is PrivateArea {
   return PRIVATE_AREAS.some((area) => area === value);
 }
