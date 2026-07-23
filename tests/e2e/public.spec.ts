@@ -32,13 +32,17 @@ test("private routes redirect to sign in without a session", async ({ page }) =>
   await expect(page.getByRole("heading", { name: "Konekte" })).toBeVisible();
 });
 
-test("public registration stays closed until email delivery and anti-abuse are ready", async ({
+test("public registration renders the protected account form when launch gates are ready", async ({
   page
 }) => {
   await page.goto("/ht/auth/sign-up");
   await expect(page.getByRole("heading", { name: "Kreye kont" })).toBeVisible();
-  await expect(page.getByText(/kenbe fonksyon an fèmen/)).toBeVisible();
-  await expect(page.getByLabel("Imèl")).toHaveCount(0);
+  await expect(page.locator("#auth-email")).toBeVisible();
+  await expect(page.locator("#auth-password")).toBeVisible();
+  await expect(page.locator(".auth-turnstile")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Kreye kont" })).toBeEnabled({
+    timeout: 20_000
+  });
 });
 
 test("mobile navigation traps focus and closes with Escape", async ({ page }) => {
@@ -84,6 +88,7 @@ test("security headers and risky API defaults fail closed", async ({ page, reque
   const csp = response?.headers()["content-security-policy"] ?? "";
   expect(csp).toContain("default-src 'self'");
   expect(csp).toContain("frame-ancestors 'none'");
+  expect(csp).toContain("https://challenges.cloudflare.com");
 
   const ai = await request.post("/api/ai/chat", { data: { message: "test" } });
   expect(ai.status()).toBe(503);

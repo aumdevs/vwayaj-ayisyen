@@ -2650,8 +2650,13 @@ Configuración recomendada:
 - Protección contra contraseñas filtradas si el plan lo permite.
 - Email verificado.
 - Rate limits.
-- CAPTCHA.
+- Cloudflare Turnstile en registro, conexión y recuperación; el token se valida en Supabase Auth, no sólo en el navegador.
 - Mensajes que eviten enumeración.
+
+El alta pública queda disponible únicamente cuando coinciden los tres controles:
+`enable_signup=true` en Supabase, `DISABLE_PUBLIC_REGISTRATION=false` en
+Producción y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` configurada. Supabase mantiene el
+secreto de Turnstile y la contraseña SMTP fuera de Vercel.
 
 ## MFA
 
@@ -4289,13 +4294,20 @@ Usar GitHub Secrets sólo para CI que los necesite; Vercel Environment Variables
    - MFA TOTP;
    - límites;
    - plantillas multilingües.
-   Mantener `enable_signup=false` tanto en `[auth]` como en `[auth.email]` mientras
-   `DISABLE_PUBLIC_REGISTRATION=true`. La barrera de la aplicación es secundaria:
-   el endpoint público de Supabase Auth también debe permanecer cerrado.
+   Antes del lanzamiento, mantener `enable_signup=false` tanto en `[auth]` como
+   en `[auth.email]` mientras `DISABLE_PUBLIC_REGISTRATION=true`. Para abrir el
+   registro, configurar primero SMTP propio y Turnstile, comprobar confirmación
+   y recuperación de correo, aplicar `supabase/config.toml` y sólo entonces
+   cambiar el kill switch de Producción a `false`. La aplicación además exige
+   `NEXT_PUBLIC_TURNSTILE_SITE_KEY`; si falta, el alta continúa cerrada.
    En producción, permitir callbacks únicamente en `https://vwayajayisyen.com/**`.
    No aceptar wildcards del equipo Vercel ni localhost; Preview debe usar un backend aislado.
 8. Crear/configurar buckets y límites.
-9. Configurar SMTP propio antes del lanzamiento.
+9. Configurar SMTP propio antes del lanzamiento. Para Resend: host
+   `smtp.resend.com`, puerto `465`, usuario `resend`, contraseña mediante
+   `RESEND_SMTP_PASSWORD`, remitente
+   `Vwayaj Ayisyen <noreply@vwayajayisyen.com>`. La contraseña se usa al aplicar
+   la configuración de Supabase y no se copia a Vercel.
 10. Activar backups/PITR según plan y criticidad.
 11. Configurar logs/alertas y políticas de red disponibles.
 12. Verificar RLS en todas las tablas expuestas.
@@ -4376,6 +4388,7 @@ Sólo valores seguros para navegador con prefijo `NEXT_PUBLIC_`:
 
 - URL pública del sitio.
 - URL y anon/publishable key de Supabase, según modelo actual.
+- site key pública de Cloudflare Turnstile.
 - identificador público de Stripe publishable, si la UI lo requiere.
 - flags estrictamente no sensibles compilados.
 
@@ -4413,7 +4426,10 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `NEXT_PUBLIC_SITE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | No | todos | app |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | producción | Auth antiabuso |
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | server | tareas privilegiadas |
+| `SUPABASE_AUTH_CAPTCHA_SECRET` | Sí | CLI/Supabase | aplicar Turnstile en Auth |
+| `RESEND_SMTP_PASSWORD` | Sí | CLI/Supabase | aplicar SMTP de Auth |
 | `DATABASE_URL` | Sí | CI/admin | migración controlada |
 | `STRIPE_SECRET_KEY` | Sí | server | pagos |
 | `STRIPE_WEBHOOK_SECRET` | Sí | server | webhook |
@@ -4447,6 +4463,8 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 - `.env.example` sólo nombres y comentarios.
 - `.env.local` ignorado y permisos 600.
 - No ejecutar `printenv`.
+- No guardar `SUPABASE_AUTH_CAPTCHA_SECRET` ni `RESEND_SMTP_PASSWORD` en
+  Vercel: pertenecen a la configuración de Supabase Auth.
 - En scripts, nunca `console.log` secretos.
 - Redactar headers/cookies.
 - En Vercel, limitar variables a entornos y scopes necesarios.
@@ -6193,7 +6211,7 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 | Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | pendiente | `feature_payments=false` |
-| Email | proveedor, dominio verificado, SPF/DKIM/DMARC y remitente | Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; faltan DMARC, identidad remitente y credenciales API/SMTP | sólo notificaciones en app |
+| Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP y CAPTCHA | Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX; el código integra `noreply@vwayajayisyen.com`, SMTP Resend y Turnstile sin secretos; faltan publicar DMARC y guardar las credenciales SMTP/Turnstile en Supabase | `DISABLE_PUBLIC_REGISTRATION=true` hasta probar alta, confirmación y recuperación reales |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
 | Video | proveedor/URL segura, política de grabación y DPA | pendiente | `feature_appointments=false` o enlace manual restringido |
 | IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | pendiente | `feature_ai_assistant=false` |

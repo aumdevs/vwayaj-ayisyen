@@ -2,8 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   getSiteUrl,
   getSupabasePublicConfig,
+  getTurnstileSiteKey,
   isIndexingAllowed,
-  isPublicRegistrationEnabled
+  isPublicRegistrationEnabled,
+  isPublicRegistrationReady
 } from "@/lib/config/runtime";
 
 afterEach(() => vi.unstubAllEnvs());
@@ -61,5 +63,16 @@ describe("public runtime configuration", () => {
     expect(isPublicRegistrationEnabled()).toBe(false);
     vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
     expect(isPublicRegistrationEnabled()).toBe(true);
+  });
+
+  it("keeps public registration closed when the Turnstile site key is missing", () => {
+    vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "  ");
+    expect(getTurnstileSiteKey()).toBeNull();
+    expect(isPublicRegistrationReady()).toBe(false);
+
+    vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+    expect(getTurnstileSiteKey()).toBe("public-site-key");
+    expect(isPublicRegistrationReady()).toBe(true);
   });
 });

@@ -9,8 +9,8 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1616,
-      "sha256": "8f7752e9080f7283eb8ec0c3fec2c3286960c388ab57e37ec0a6f55b2170f351"
+      "size_bytes": 1792,
+      "sha256": "90600e98fbed34c92d1a5f680236470b04bab0dfe68647ea07088e9317e930ce"
     },
     {
       "path": ".gitignore",
@@ -29,8 +29,8 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 237346,
-      "sha256": "c97f7d2732f8c37b648cde2c5361b943cb74fedb70a3b16d2d612a3d8f391b39"
+      "size_bytes": 238859,
+      "sha256": "c4fc81ce20fd5596640bd8fe1a5c7f422035afbf81cfd23eae418690347c2515"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
@@ -89,8 +89,8 @@
     },
     {
       "path": "config/env.schema.json",
-      "size_bytes": 1737,
-      "sha256": "f401eba6235b31e5c20e8d84c5f9998e2e20caf31df552708a72c63e09b63d55"
+      "size_bytes": 1955,
+      "sha256": "ad29f2f5e61f50b4b0e8b67e552e15e1b41b7bbae7d3bba6684c72d47124321d"
     },
     {
       "path": "config/feature-flags.json",
@@ -214,8 +214,8 @@
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 3340,
-      "sha256": "31866b85658b142f5c985fb7e0fb11bf0e70c503e5ed07e26c5c50fe01c73c8b"
+      "size_bytes": 3753,
+      "sha256": "f78034853fd8a6641f2aafe6e97151693d9ee81a25966e042c30182a7b41f5d9"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -279,13 +279,13 @@
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 4576,
-      "sha256": "f55002322bde9d32b72dfbc0758fb51c2af8e16893491de0ea7a805858fd7c5c"
+      "size_bytes": 5077,
+      "sha256": "160d0738a7eebef74f1bdab14f5e1b2ae42f67ba1225e08d5950c4c96f73b30e"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
-      "size_bytes": 3533,
-      "sha256": "1682d25e43060f3a43a7fea50baff84c16602568cc1be4acd99a9167ba773362"
+      "size_bytes": 3938,
+      "sha256": "30cd1fd802607317e5931db73a26399cbd08e9c0db0d93a64d812f6adcae059d"
     },
     {
       "path": "docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3598,
-      "sha256": "531b9edbe07bc93c30be80180574ba74c73d342015739bcdc7261b42320cf312"
+      "size_bytes": 3752,
+      "sha256": "3a09c8daf2a4fe36b9770e1fe6b51a3430b1bf3d3b92bd1a7e1266c0910e498f"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 2207,
-      "sha256": "a3626b1bca98eabf2b39d69144d0fee34941863649d438255dddbc56b5c93d28"
+      "size_bytes": 2312,
+      "sha256": "5003f67c757b307d501245589ddccfc8bbbd79807b25856445ca3b1311ba6e6c"
     },
     {
       "path": "security/ABUSE_CASES.csv",

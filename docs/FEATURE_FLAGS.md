@@ -15,6 +15,6 @@ El rediseño no activa ninguna integración. Para habilitar una función deben p
 | Captación pública | `feature_public_intake` | `DISABLE_PUBLIC_INTAKE` | cerrado |
 | Cursos | `feature_courses` | `DISABLE_COURSES` | contenido aprobado requerido |
 | Portal profesional | — | `DISABLE_PROFESSIONAL_PORTAL` | cerrado |
-| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | cerrado |
+| Registro público | — | `DISABLE_PUBLIC_REGISTRATION` | código listo; requiere SMTP + Turnstile para abrir |
 
 La ausencia de una variable o de una aprobación produce indisponibilidad, nunca un fallback inseguro.

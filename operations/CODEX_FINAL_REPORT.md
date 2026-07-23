@@ -74,10 +74,20 @@ Fecha de corte: 2026-07-23.
 
 - Vercel conserva únicamente `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` de Supabase, sólo en Production; se verificaron los 17 valores y targets configurados sin exponerlos.
 - `SUPABASE_SERVICE_ROLE_KEY`, claves privadas y credenciales de Postgres no están en Vercel; las credenciales operativas rotadas viven únicamente en macOS Keychain.
-- Preview y Development no reciben credenciales de la base productiva. Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`, `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los demás `DISABLE_*` en `true`.
+- Preview y Development no reciben credenciales de la base productiva.
+  Production conserva `NEXT_PUBLIC_ALLOW_INDEXING=false`,
+  `ALLOW_ADMIN_BOOTSTRAP=false`, `DISABLE_PUBLIC_REGISTRATION=true` y todos los
+  demás `DISABLE_*` en `true`. Las URL y clave publicable de Supabase quedaron
+  restauradas sólo en Production; Preview sigue aislado.
 - El Ignored Build Step cancela todo target `production` cuando `VERCEL_GIT_COMMIT_REF` no es exactamente `main`; un fallo de clasificación de Vercel no puede publicar una rama de trabajo.
 - El Preview verificado no contiene variables Supabase/Postgres, alias de producción ni `VERCEL_AUTOMATION_BYPASS_SECRET`; OIDC permanece desactivado y Vercel Authentication devuelve el acceso público a SSO con `noindex`.
-- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo; TLS está forzado y el seguimiento de aperturas/clics permanece apagado. Aún faltan DMARC, identidad remitente y credenciales API/SMTP de la aplicación. Zoom y OpenAI tampoco tienen credenciales del proyecto. Esas funciones y el registro público continúan apagados.
+- Stripe está accesible sólo en entorno de prueba y aún no tiene productos/precios
+  aprobados. Resend verificó `vwayajayisyen.com` con DKIM, SPF y MX en São Paulo;
+  TLS está forzado y el seguimiento de aperturas/clics permanece apagado. El
+  código de Auth ya integra el remitente, SMTP Resend y Turnstile en registro,
+  conexión y recuperación. Faltan DMARC y guardar los secretos SMTP/Turnstile
+  directamente en Supabase; por eso el registro continúa apagado. Zoom y OpenAI
+  tampoco tienen credenciales del proyecto.
 
 ## Rotación de credenciales del 2026-07-22
 

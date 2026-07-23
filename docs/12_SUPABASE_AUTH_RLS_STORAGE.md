@@ -23,8 +23,13 @@ Configuración recomendada:
 - Protección contra contraseñas filtradas si el plan lo permite.
 - Email verificado.
 - Rate limits.
-- CAPTCHA.
+- Cloudflare Turnstile en registro, conexión y recuperación; el token se valida en Supabase Auth, no sólo en el navegador.
 - Mensajes que eviten enumeración.
+
+El alta pública queda disponible únicamente cuando coinciden los tres controles:
+`enable_signup=true` en Supabase, `DISABLE_PUBLIC_REGISTRATION=false` en
+Producción y `NEXT_PUBLIC_TURNSTILE_SITE_KEY` configurada. Supabase mantiene el
+secreto de Turnstile y la contraseña SMTP fuera de Vercel.
 
 ## MFA
 

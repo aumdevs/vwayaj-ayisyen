@@ -33,11 +33,18 @@ function readTomlStringArray(config: string, sectionName: string, key: string): 
 }
 
 describe("Supabase Auth launch gate", () => {
-  it("keeps both general and email signup disabled at the authoritative provider", () => {
+  it("enables signup only with provider-side CAPTCHA and verified-domain SMTP", () => {
     const config = readFileSync("supabase/config.toml", "utf8");
 
-    expect(readTomlBoolean(config, "auth", "enable_signup")).toBe(false);
-    expect(readTomlBoolean(config, "auth.email", "enable_signup")).toBe(false);
+    expect(readTomlBoolean(config, "auth", "enable_signup")).toBe(true);
+    expect(readTomlBoolean(config, "auth.email", "enable_signup")).toBe(true);
+    expect(readTomlBoolean(config, "auth.captcha", "enabled")).toBe(true);
+    expect(config).toContain('provider = "turnstile"');
+    expect(config).toContain('secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"');
+    expect(readTomlBoolean(config, "auth.email.smtp", "enabled")).toBe(true);
+    expect(config).toContain('host = "smtp.resend.com"');
+    expect(config).toContain('pass = "env(RESEND_SMTP_PASSWORD)"');
+    expect(config).toContain('admin_email = "noreply@vwayajayisyen.com"');
   });
 
   it("allows production Auth callbacks only on the official domain", () => {

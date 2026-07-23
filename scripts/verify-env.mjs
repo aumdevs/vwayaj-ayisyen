@@ -14,6 +14,9 @@ requireValue("NEXT_PUBLIC_SITE_URL");
 requireValue("NEXT_PUBLIC_SUPABASE_URL");
 requireValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
 
+if (featureEnabled("DISABLE_PUBLIC_REGISTRATION")) {
+  requireValue("NEXT_PUBLIC_TURNSTILE_SITE_KEY");
+}
 if (featureEnabled("DISABLE_PAYMENTS")) {
   requireValue("STRIPE_SECRET_KEY");
   requireValue("STRIPE_WEBHOOK_SECRET");

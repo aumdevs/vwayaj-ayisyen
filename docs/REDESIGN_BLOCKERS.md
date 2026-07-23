@@ -15,7 +15,9 @@ El rediseño y su Preview pueden publicarse sin resolver estos puntos. Las funci
 
 ## Proveedores
 
-- Resend: `vwayajayisyen.com` está verificado con DKIM, SPF y MX; faltan DMARC, identidad remitente, credenciales API/SMTP y CAPTCHA;
+- Auth/Resend: `vwayajayisyen.com` está verificado con DKIM, SPF y MX y el código
+  integra el remitente, SMTP y Turnstile; faltan DMARC y guardar las
+  credenciales SMTP/Turnstile directamente en Supabase antes de abrir el gate;
 - Stripe: faltan productos, precios, moneda, impuestos y política de reembolso aprobados;
 - Zoom: faltan credenciales, política de grabación y revisión de privacidad;
 - OpenAI: faltan proyecto, modelo, evaluación, presupuesto y política de retención;

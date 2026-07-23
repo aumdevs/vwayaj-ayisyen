@@ -109,6 +109,8 @@ export type ExperienceCopy = {
     hidePassword: string;
     passwordHelp: string;
     acceptTerms: string;
+    securityCheck: string;
+    securityCheckError: string;
     backHome: string;
   };
   states: {
@@ -272,7 +274,9 @@ const copy = {
       showPassword: "Montre modpas",
       hidePassword: "Kache modpas",
       passwordHelp: "Omwen 12 karaktè ak yon lèt majiskil, yon miniskil, yon chif ak yon senbòl.",
-      acceptTerms: "Mwen dakò kontinye selon kondisyon ki pibliye yo",
+      acceptTerms: "Mwen konprann y ap itilize imèl mwen pou kreye epi pwoteje kont mwen",
+      securityCheck: "Verifikasyon sekirite",
+      securityCheckError: "Verifikasyon an pa mache. Tanpri eseye ankò.",
       backHome: "Retounen sou sit la"
     },
     states: {
@@ -440,7 +444,9 @@ const copy = {
       showPassword: "Afficher le mot de passe",
       hidePassword: "Masquer le mot de passe",
       passwordHelp: "Au moins 12 caractères, avec majuscule, minuscule, chiffre et symbole.",
-      acceptTerms: "J’accepte de continuer selon les conditions publiées",
+      acceptTerms: "Je comprends que mon e-mail servira à créer et protéger mon compte",
+      securityCheck: "Vérification de sécurité",
+      securityCheckError: "La vérification a échoué. Veuillez réessayer.",
       backHome: "Retour au site"
     },
     states: {
@@ -610,7 +616,9 @@ const copy = {
       showPassword: "Mostrar contraseña",
       hidePassword: "Ocultar contraseña",
       passwordHelp: "Al menos 12 caracteres, con mayúscula, minúscula, número y símbolo.",
-      acceptTerms: "Acepto continuar según las condiciones publicadas",
+      acceptTerms: "Entiendo que mi correo se usará para crear y proteger mi cuenta",
+      securityCheck: "Verificación de seguridad",
+      securityCheckError: "La verificación falló. Inténtalo de nuevo.",
       backHome: "Volver al sitio"
     },
     states: {
@@ -777,7 +785,9 @@ const copy = {
       showPassword: "Mostrar senha",
       hidePassword: "Ocultar senha",
       passwordHelp: "Pelo menos 12 caracteres, com maiúscula, minúscula, número e símbolo.",
-      acceptTerms: "Aceito continuar conforme as condições publicadas",
+      acceptTerms: "Entendo que meu e-mail será usado para criar e proteger minha conta",
+      securityCheck: "Verificação de segurança",
+      securityCheckError: "A verificação falhou. Tente novamente.",
       backHome: "Voltar ao site"
     },
     states: {
@@ -935,7 +945,9 @@ const copy = {
       showPassword: "Show password",
       hidePassword: "Hide password",
       passwordHelp: "At least 12 characters with uppercase, lowercase, a number and a symbol.",
-      acceptTerms: "I agree to continue under the published terms",
+      acceptTerms: "I understand my email will be used to create and protect my account",
+      securityCheck: "Security verification",
+      securityCheckError: "Verification failed. Please try again.",
       backHome: "Back to the site"
     },
     states: {
