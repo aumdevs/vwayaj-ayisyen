@@ -14,14 +14,18 @@ vi.mock("@/lib/supabase/server", () => ({
 }));
 
 import { forgotPasswordAction, signInAction, signUpAction } from "@/app/[locale]/auth/actions";
+import { getPublishedLegalDocumentHash } from "@/server/legal/document-hash";
 
 const strongPassword = "Valid-password-2026!";
 const registrationSigningKey = "test_registration_gate_signing_key_at_least_32_chars";
+const privacyVersion = "privacy-2026-07-23-v1";
+const termsVersion = "terms-2026-07-23-v1";
 
 function enableRegistration() {
   vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
   vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
-  vi.stubEnv("REGISTRATION_TERMS_VERSION", "terms-2026-07-v1");
+  vi.stubEnv("REGISTRATION_PRIVACY_VERSION", privacyVersion);
+  vi.stubEnv("REGISTRATION_TERMS_VERSION", termsVersion);
   vi.stubEnv("REGISTRATION_GATE_SIGNING_KEY", registrationSigningKey);
 }
 
@@ -47,12 +51,17 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
         accept_terms: "yes",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -64,12 +73,17 @@ describe("Auth CAPTCHA enforcement", () => {
     enableRegistration();
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -77,18 +91,113 @@ describe("Auth CAPTCHA enforcement", () => {
     expect(auth.signUp).not.toHaveBeenCalled();
   });
 
-  it("passes CAPTCHA, callback and a valid terms attestation to Supabase signup", async () => {
+  it("requires a distinct privacy acknowledgement before calling Supabase signup", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "ht",
+      { status: "idle" },
+      formData({
+        accept_age_capacity: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("requires a separate 18+ and legal-capacity confirmation before signup", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "ht",
+      { status: "idle" },
+      formData({
+        accept_privacy: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("rejects a stale legal version displayed before a deployment", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "ht",
+      { status: "idle" },
+      formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "ht",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: "terms-previous"
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("rejects a submitted locale that differs from the server-bound signup route", async () => {
+    enableRegistration();
+
+    const result = await signUpAction(
+      "pt",
+      { status: "idle" },
+      formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
+        accept_terms: "yes",
+        captcha_token: "verified-turnstile-token",
+        email: "new@example.com",
+        locale: "es",
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(auth.signUp).not.toHaveBeenCalled();
+  });
+
+  it("passes CAPTCHA, callback and a valid legal attestation to Supabase signup", async () => {
     enableRegistration();
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://vwayajayisyen.com");
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "New@Example.COM",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 
@@ -105,20 +214,38 @@ describe("Auth CAPTCHA enforcement", () => {
     });
 
     const metadata = signupRequest.options.data;
+    const termsContentHash = getPublishedLegalDocumentHash("terms", "es");
+    const privacyContentHash = getPublishedLegalDocumentHash("privacy", "es");
     expect(metadata).toMatchObject({
+      age_capacity_mechanism: "signup_age_capacity_checkbox",
+      legal_locale: "es",
       preferred_locale: "ht",
-      terms_version: "terms-2026-07-v1"
+      privacy_acceptance_mechanism: "signup_privacy_acknowledgement_checkbox",
+      privacy_content_hash: privacyContentHash,
+      privacy_version: privacyVersion,
+      terms_acceptance_mechanism: "signup_terms_checkbox",
+      terms_content_hash: termsContentHash,
+      terms_version: termsVersion
     });
     expect(metadata.registration_nonce).toMatch(
       /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
     );
     expect(new Date(metadata.terms_accepted_at).toISOString()).toBe(metadata.terms_accepted_at);
+    expect(metadata.privacy_accepted_at).toBe(metadata.terms_accepted_at);
+    expect(metadata.age_capacity_confirmed_at).toBe(metadata.terms_accepted_at);
 
     const expectedSignature = createHmac("sha256", registrationSigningKey)
       .update(
         [
           "new@example.com",
           metadata.terms_version,
+          metadata.terms_content_hash,
+          metadata.privacy_version,
+          metadata.privacy_content_hash,
+          metadata.legal_locale,
+          metadata.terms_acceptance_mechanism,
+          metadata.privacy_acceptance_mechanism,
+          metadata.age_capacity_mechanism,
           metadata.terms_accepted_at,
           metadata.registration_nonce
         ].join("\n"),
@@ -131,17 +258,23 @@ describe("Auth CAPTCHA enforcement", () => {
   it("fails closed when the immutable terms version or signing key is missing", async () => {
     vi.stubEnv("DISABLE_PUBLIC_REGISTRATION", "false");
     vi.stubEnv("NEXT_PUBLIC_TURNSTILE_SITE_KEY", "public-site-key");
+    vi.stubEnv("REGISTRATION_PRIVACY_VERSION", "");
     vi.stubEnv("REGISTRATION_TERMS_VERSION", "");
     vi.stubEnv("REGISTRATION_GATE_SIGNING_KEY", "");
 
     const result = await signUpAction(
+      "ht",
       { status: "idle" },
       formData({
+        accept_age_capacity: "yes",
+        accept_privacy: "yes",
         accept_terms: "yes",
         captcha_token: "verified-turnstile-token",
         email: "new@example.com",
         locale: "ht",
-        password: strongPassword
+        password: strongPassword,
+        privacy_version: privacyVersion,
+        terms_version: termsVersion
       })
     );
 

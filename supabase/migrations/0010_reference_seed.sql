@@ -46,7 +46,7 @@ on conflict (country_code, locale) do update set
 insert into public.site_settings(key, value, is_public, description)
 values
   ('brand', '{"status":"pending","name":null,"logo_path":null}'::jsonb, true, 'Public brand; must be completed before launch'),
-  ('support', '{"email":"admin@aumprodz.com","whatsapp_e164":null,"hours":null}'::jsonb, true, 'Public support configuration'),
+  ('support', '{"email":"support@vwayajayisyen.com","legal_email":"legal@vwayajayisyen.com","marketing_email":"promo@vwayajayisyen.com","whatsapp_e164":null,"hours":null}'::jsonb, true, 'Public support configuration'),
   ('legal_entity', '{"status":"required","legal_name":null,"country":null,"address":null}'::jsonb, false, 'Launch blocker'),
   ('default_locale', '{"locale":"ht"}'::jsonb, true, 'Default public locale'),
   ('supported_locales', '{"locales":["ht","fr","es","pt","en"]}'::jsonb, true, 'Supported locales')

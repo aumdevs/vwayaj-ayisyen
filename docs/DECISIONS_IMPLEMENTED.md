@@ -15,6 +15,8 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 
 - **Vwayaj Ayisyen** es la identidad textual oficial. El dominio propio y la URL pública oficial son `vwayajayisyen.com` y `https://vwayajayisyen.com`.
 - Kreyòl es el locale predeterminado; los cinco diccionarios conservan la misma estructura.
+- Laptop/escritorio usan web pública normal; teléfono, tableta táctil y modo
+  standalone usan App Shell con barra superior y navegación inferior.
 - No se sembraron afirmaciones migratorias, costos, salarios, testimonios ni puntuaciones.
 - Comparador y recomendador muestran su estructura, pero quedan bloqueados hasta revisión especializada.
 - Servicios y cursos no muestran precio ni oferta hasta contar con contenido y condiciones aprobadas.
@@ -24,7 +26,11 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 - Funciones de alto riesgo requieren kill switch de entorno, configuración completa y gate independiente en base de datos.
 - Pagos, uploads, IA, comunidad, citas, intake, WhatsApp, cursos y portal profesional permanecen apagados.
 - Personal requiere rol en base de datos y sesión `aal2`; nunca se confía en `user_metadata` para autorización.
-- Caché offline excluye Auth, APIs y todas las superficies privadas.
+- Caché offline excluye Auth, APIs, Authorization, `no-store` y todas las superficies privadas.
+- El service worker no usa `skipWaiting` automático: la persona decide cuándo
+  actualizar y el cliente bloquea la acción si detecta progreso en un formulario.
+- El aviso de instalación aparece una vez por sesión, nunca fuerza el prompt
+  nativo y se oculta en standalone.
 - Actions de GitHub están fijadas a SHA. `sharp` y `postcss` usan overrides corregidos por avisos de seguridad vigentes.
 
 ## Infraestructura y bloqueos
@@ -40,7 +46,25 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
   tokens se envían a Supabase Auth para validación de servidor. El alta falla
   cerrada si falta el site key público.
 - Supabase usa ES256 para firmar sesiones. La firma HS256 anterior, las API keys heredadas y la clave privada inicialmente emitida fueron revocadas; la contraseña de Postgres también fue rotada y verificada.
-- Los grants explícitos y RLS fueron verificados en el remoto con 21 pruebas pgTAP. Los buckets públicos permiten descarga directa sin permitir listados anónimos.
+- Los grants explícitos y RLS se verifican desde una base vacía con 104 pruebas
+  pgTAP. Los buckets públicos permiten descarga directa sin permitir listados
+  anónimos.
+- El alta exige tres controles separados: Términos, reconocimiento de Privacidad
+  y confirmación 18+/capacidad. El hook de Auth valida HMAC, marca de tiempo,
+  versiones y hashes SHA-256 exactos del contenido oficial español/portugués
+  fijados en una tabla privada, no sólo variables del frontend.
+- Los consentimientos legales firmados son inmutables para sesiones de
+  navegador. Un case manager sólo puede cambiar estado/retiro de preferencias
+  no legales vinculadas a casos y no puede alterar usuario, tipo, versión,
+  alcance ni evidencia.
+- Las solicitudes de privacidad sólo se completan mediante una acción que
+  comprueba rol admin/super_admin y AAL2 antes de un RPC AAL2 independiente; el
+  RPC bloquea la fila, registra verificación/resumen, emite auditoría y crea un
+  evento outbox. Un reenvío actualiza el detalle de la solicitud abierta sin
+  crear una fila duplicada.
+- Los valores oficiales de marca y correo se aplican de forma idempotente:
+  conservan logo personalizado, horario, WhatsApp, routing y datos legales
+  completados; eliminan únicamente campos de identidad privada del propietario.
 - El administrador inicial fue creado de forma transaccional y el RPC de bootstrap quedó revocado después de usarlo.
 - Dependency Review y CodeQL nativos quedaron habilitados gratuitamente al convertir el repositorio a público; `ENABLE_GHAS_DEPENDENCY_REVIEW` y `ENABLE_GITHUB_CODE_SECURITY` están activos.
 - El runtime Colima se conserva, pero su VM local se eliminó para liberar espacio; GitHub Actions recrea el stack Supabase desde cero para las pruebas de migraciones y RLS. Analítica y Storage Vector locales son opcionales y permanecen fuera del baseline.

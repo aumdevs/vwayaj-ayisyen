@@ -3,11 +3,13 @@ import type { CountryCode, Locale } from "@/types/domain";
 export const BRAND = {
   name: "Vwayaj Ayisyen",
   shortName: "Vwayaj Ayisyen",
-  organizationName: "Vwayaj Ayisyen",
+  organizationName: "Vwayaj ayisyen",
   siteUrl: "https://vwayajayisyen.com",
   logoLabel: "Vwayaj Ayisyen",
   contact: {
-    email: null,
+    email: "support@vwayajayisyen.com",
+    legal: "legal@vwayajayisyen.com",
+    marketing: "promo@vwayajayisyen.com",
     phone: null,
     whatsapp: null
   },

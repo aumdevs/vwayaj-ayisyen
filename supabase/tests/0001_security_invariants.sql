@@ -3,7 +3,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(19);
+select plan(29);
 
 select ok(
   not exists (
@@ -84,6 +84,21 @@ select ok(
 );
 
 select ok(
+  (
+    select
+      position('pg_catalog.pg_advisory_xact_lock' in p.prosrc) > 0
+      and position('pg_catalog.pg_advisory_xact_lock' in p.prosrc)
+        < position('select count(*)::integer into v_super_admin_count' in p.prosrc)
+    from pg_catalog.pg_proc p
+    join pg_catalog.pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.proname = 'bootstrap_initial_admin'
+      and pg_catalog.pg_get_function_identity_arguments(p.oid) = 'p_user_id uuid, p_expected_email text'
+  ),
+  'Initial admin bootstrap serializes callers before checking the singleton'
+);
+
+select ok(
   not has_function_privilege('anon', 'public.admin_set_user_role(uuid,public.app_role,boolean,text)', 'EXECUTE'),
   'Anon cannot execute role administration RPC'
 );
@@ -147,6 +162,89 @@ select ok(
       and qual like '%auth.uid()%'
   ),
   'Avatar owners retain folder-scoped SELECT access required for mutations'
+);
+
+select ok(
+  not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'consent_records'
+      and policyname = 'consent_insert_self'
+  ),
+  'The broad self-service consent insert policy is absent'
+);
+
+select ok(
+  exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'consent_records'
+      and policyname = 'consent_insert_self_non_registration'
+      and cmd = 'INSERT'
+      and 'authenticated' = any(roles)
+      and with_check like '%terms%'
+      and with_check like '%privacy%'
+  ),
+  'Authenticated browser inserts exclude Terms and Privacy evidence'
+);
+
+select ok(
+  not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'data_subject_requests'
+      and policyname = 'dsr_own_insert'
+  ),
+  'The broad privacy-request insert policy is absent'
+);
+
+select ok(
+  not has_table_privilege('authenticated', 'public.data_subject_requests', 'INSERT'),
+  'Authenticated browsers cannot insert privacy workflow rows directly'
+);
+
+select ok(
+  not has_table_privilege('authenticated', 'public.data_subject_requests', 'UPDATE'),
+  'Authenticated browsers cannot update privacy workflow rows directly'
+);
+
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.submit_data_subject_request(public.data_request_type,public.app_locale,text)',
+    'EXECUTE'
+  ),
+  'Authenticated users can call the restricted privacy-request intake RPC'
+);
+
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.submit_data_subject_request(public.data_request_type,public.app_locale,text)',
+    'EXECUTE'
+  ),
+  'Anonymous users cannot call the privacy-request intake RPC'
+);
+
+select ok(
+  has_function_privilege(
+    'authenticated',
+    'public.complete_data_subject_request(uuid,public.data_request_status,text,text)',
+    'EXECUTE'
+  ),
+  'Authenticated sessions can reach the independently AAL2-gated completion RPC'
+);
+
+select ok(
+  not has_function_privilege(
+    'anon',
+    'public.complete_data_subject_request(uuid,public.data_request_status,text,text)',
+    'EXECUTE'
+  ),
+  'Anonymous users cannot call the privacy-request completion RPC'
 );
 
 select * from finish();

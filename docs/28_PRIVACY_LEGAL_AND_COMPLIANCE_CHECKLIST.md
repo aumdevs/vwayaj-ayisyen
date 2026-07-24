@@ -1,27 +1,43 @@
 # Privacidad, legal y cumplimiento — requisitos de revisión profesional
 
-> Este documento es una lista de producto/ingeniería, no asesoría jurídica. La entidad operadora, jurisdicción, contratos y países de usuarios no están definidos. Un abogado competente debe revisar los documentos y flujos antes de aceptar clientes o datos sensibles.
+> Este documento es una lista de producto/ingeniería, no asesoría jurídica. El propietario confirmó los datos públicos mínimos del operador el 23 de julio de 2026. La publicación actual se limita al sitio informativo, cuentas protegidas y ejercicio de derechos de privacidad. Un abogado competente debe revisar los documentos y flujos antes de vender servicios o aceptar documentos/datos sensibles.
 
-## Bloqueos de lanzamiento
+## Datos confirmados para el lanzamiento limitado de cuentas
 
-Definir y publicar:
+- nombre legal: `Vwayaj ayisyen`;
+- tipo y país: `Ltda.`, Brasil;
+- domicilio público: São Paulo, Brasil;
+- ley: Brasil y cualquier norma imperativa aplicable;
+- foro: São Paulo, sin excluir el foro obligatorio del consumidor;
+- idiomas jurídicos oficiales: portugués y español;
+- contactos públicos: `support@vwayajayisyen.com`, `legal@vwayajayisyen.com` y `promo@vwayajayisyen.com`;
+- alcance actual: información, herramientas de preparación, cuentas y centro de privacidad; no asesoría profesional ni garantía de resultados;
+- Términos, Privacidad y Cookies publicados con fecha y versión;
+- Términos y aviso de Privacidad presentados en controles separados, no premarcados, con evidencia firmada por versión, idioma y fecha;
+- confirmación separada de 18+/capacidad en el alta, con fecha y mecanismo firmados;
+- versiones activas de Términos/Privacidad controladas por una tabla privada que el hook de Auth valida de forma fail-closed;
+- solicitudes de derechos autenticadas, limitadas, con evento durable y cola administrativa protegida por MFA;
+- cierre de solicitudes sólo mediante RPC AAL2, con verificación, resumen, auditoría y evento outbox;
+- pagos, documentos, citas, comunidad, IA y video desactivados.
 
-- nombre legal y comercial;
-- país/domicilio de la entidad;
-- datos de contacto y responsable;
-- naturaleza exacta del servicio;
+## Bloqueos del lanzamiento comercial o de funciones de alto riesgo
+
+Antes de activar la función afectada, completar y revisar:
+
+- CNPJ/identificador fiscal y domicilio registral completo para facturación y comercio;
 - países desde los que se venderá;
-- si se presta asesoría legal o sólo orientación;
-- profesionales autorizados y jurisdicciones;
+- profesionales autorizados, contratos, licencias y jurisdicciones si se ofrece un servicio profesional;
 - impuestos/facturación;
 - política de precios/reembolsos;
 - WhatsApp, Stripe, email, IA, video y otros encargados;
 - base jurídica/consentimientos;
 - plazos de retención;
-- mecanismo de solicitudes de privacidad;
+- validación jurídica de plazos, excepciones y procedimiento final de solicitudes de privacidad;
 - transferencia internacional de datos;
 - procedimiento para menores;
 - seguro/responsabilidad profesional cuando aplique.
+
+Estos pendientes no autorizan a activar pagos, documentos sensibles ni servicios profesionales. Las banderas de esas funciones deben seguir cerradas.
 
 ## Mensajes que deben evitarse
 
@@ -120,9 +136,9 @@ La plataforma no debe permitir que menores contraten o carguen documentos por s�
 - chargebacks;
 - consumidor local.
 
-## Documentos legales incluidos como plantillas
+## Estado de los documentos legales
 
-Ver `/legal`. Cada archivo contiene marcadores `[REQUIRED]` y no debe publicarse sin completar/revisar.
+Términos, Privacidad y Cookies se publican en `/legal` en español y portugués, con versiones inmutables. Reembolsos, IA, Comunidad y Editorial continúan como estados informativos sin texto contractual y no deben presentarse como políticas vigentes hasta su revisión.
 
 ## Registro de decisiones
 

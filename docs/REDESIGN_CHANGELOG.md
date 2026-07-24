@@ -2,7 +2,7 @@
 
 Fecha: 2026-07-23
 
-Rama: `redesign/premium-ui-v2`
+Rama de cierre: `agent/legal-center-production`
 
 ## Reemplazado
 
@@ -16,6 +16,11 @@ Rama: `redesign/premium-ui-v2`
 - shell de cliente y navegación móvil privada;
 - shells operativos para asesor, profesional, editorial, moderación y administración;
 - estados vacíos, 404, offline y error.
+- mega-menús claros en laptop/escritorio;
+- App Shell para teléfono, tableta táctil y standalone;
+- instalación Android e instrucciones iPhone/iPad;
+- actualización controlada y protección de formularios;
+- manifest completo, iconos propios y screenshots reales.
 
 ## Conservado
 
@@ -26,7 +31,7 @@ Rama: `redesign/premium-ui-v2`
 - RLS, migraciones, Storage y tipos generados;
 - Stripe, uploads, citas, WhatsApp e IA detrás de sus gates existentes;
 - CSP con nonce, headers de seguridad y caché privada;
-- PWA, sitemap, robots y estructura SEO existente.
+- sitemap, robots y estructura SEO existente.
 
 ## Eliminado
 
@@ -35,6 +40,7 @@ Rama: `redesign/premium-ui-v2`
 - navegación pública compartida con Auth y áreas privadas;
 - repetición de placeholders técnicos;
 - puntuaciones, precios o métricas ficticias.
+- superficies grandes oscuras en footer, Auth, dashboard y cards.
 
 ## Activos editoriales
 
@@ -48,25 +54,49 @@ Se generaron cinco imágenes originales mediante el generador de imágenes integ
 
 Los prompts pidieron fotografía editorial realista, personas haitianas tratadas con dignidad, luz natural, composición adaptable y ausencia de texto, logos, banderas dominantes o afirmaciones.
 
-## Seguridad verificada
+## Seguridad y QA verificados
 
-- 26 pruebas unitarias aprobadas;
-- 20 pruebas E2E aprobadas;
-- 23 invariantes/RLS pgTAP aprobadas;
+- 83 pruebas unitarias aprobadas;
+- 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
+- 104 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
+- schema drift vacío;
+- aceptación legal ligada por HMAC al hash SHA-256 exacto de cada documento oficial y locale;
+- evidencia legal inmutable para case managers y columnas sensibles sin permiso
+  de actualización desde navegador;
+- migración de configuración oficial no destructiva para datos operativos o
+  legales ya completados;
+- cierre administrativo autorizado en la acción por rol y AAL2, además del RPC protegido;
+- reenvíos de una solicitud de privacidad conservan una sola fila y actualizan sus detalles;
+- 35 capturas finales sin error de navegador ni overflow, sin supresión general
+  de errores 404 en el acceso al portal;
+- consulta asíncrona del service worker cancelada al desmontar para evitar
+  actualizaciones de estado React tardías entre navegaciones;
 - integraciones riesgosas continúan fail-closed;
 - ningún secreto productivo se incorporó al cliente ni al repositorio.
 
+## PWA implementada
+
+- manifest con `id`, scope, standalone, tema blanco, shortcuts, iconos y screenshots;
+- iconos 48–512, maskable, monochrome, favicon y Apple Touch Icon;
+- caché versionada sólo para navegación/activos públicos;
+- limpieza explícita de cachés heredadas y fallback limitado a la versión vigente;
+- exclusión de APIs, Auth, privado, Authorization, `private` y `no-store`;
+- actualización sólo tras acción explícita;
+- reintento offline nativo, funcional incluso sin hidratación de JavaScript;
+- invitación una vez por sesión y ocultamiento en standalone;
+- navegación inferior y App Bar en teléfono/tableta táctil, con acceso de cuenta dirigido al portal;
+- cola de privacidad localizada con detalle enviado visible sólo al administrador y auditoría terminal
+  mínima, sin copiar texto libre ni método de verificación;
+- evidencia en `docs/screenshots/pwa-acceptance/`.
+
 ## Preview verificado
 
-- URL: `https://vwayaj-ayisyen-1hw65xw65-aum-prodz-group.vercel.app`;
-- commit final auditado: `40d58a8`;
-- 26 capturas públicas del Preview sin errores de consola ni overflow;
-- rutas principales en `200`, 404 real en la ruta inexistente y healthcheck en `200`;
-- cero errores de runtime en los logs revisados de Vercel;
-- Lighthouse móvil: 96 Performance, 100 Accessibility y 100 Best Practices;
-- Lighthouse escritorio: 99 Performance, 100 Accessibility y 100 Best Practices;
-- preparación SEO de producción: 100/100; el Preview conserva `noindex`.
+- el Preview histórico quedó protegido, sin datos productivos y con sus rutas principales en `200`;
+- el build PWA final generó 35 capturas locales sin errores ni overflow;
+- Lighthouse móvil final: 96 Performance, 100 Accessibility y 100 Best Practices;
+- Lighthouse escritorio final: 100 Performance, 100 Accessibility y 100 Best Practices;
+- SEO conserva `noindex` por decisión explícita de lanzamiento.
 
 ## Evidencia relacionada
 

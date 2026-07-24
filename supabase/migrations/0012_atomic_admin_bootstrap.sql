@@ -18,7 +18,9 @@ declare
   v_super_admin_count integer;
 begin
   if p_expected_email is null
-     or lower(trim(p_expected_email)) <> 'admin@aumprodz.com' then
+     or btrim(p_expected_email) = ''
+     or char_length(btrim(p_expected_email)) > 254
+     or btrim(p_expected_email) !~ '^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$' then
     raise exception 'invalid_bootstrap_email' using errcode = '22023';
   end if;
 
@@ -30,9 +32,16 @@ begin
     raise exception 'bootstrap_user_not_found' using errcode = 'P0002';
   end if;
 
-  if v_email <> 'admin@aumprodz.com' then
+  if v_email <> lower(btrim(p_expected_email)) then
     raise exception 'bootstrap_user_email_mismatch' using errcode = '42501';
   end if;
+
+  -- Serialize every valid bootstrap attempt before checking the singleton
+  -- condition. A transaction-scoped lock is released automatically on commit
+  -- or rollback, including when the second caller receives the duplicate error.
+  perform pg_catalog.pg_advisory_xact_lock(
+    pg_catalog.hashtextextended('vwayaj.bootstrap_initial_admin', 20260723)
+  );
 
   select count(*)::integer into v_super_admin_count
   from public.user_roles
@@ -77,10 +86,7 @@ begin
     p_user_id::text,
     'One-time owner bootstrap',
     'critical',
-    jsonb_build_object(
-      'email_domain', 'aumprodz.com',
-      'method', 'atomic_rpc'
-    )
+    jsonb_build_object('method', 'atomic_rpc')
   );
 end;
 $$;

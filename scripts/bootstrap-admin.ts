@@ -7,7 +7,7 @@
 import { createClient, type User } from "@supabase/supabase-js";
 import { createAdminProvisioningAttestation } from "./lib/admin-provisioning-attestation";
 
-const REQUIRED_EMAIL = "admin@aumprodz.com";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function required(name: string): string {
   const value = process.env[name]?.trim();
@@ -35,8 +35,8 @@ async function main(): Promise<void> {
   const registrationGateSigningKey = required("REGISTRATION_GATE_SIGNING_KEY");
   const actualRef = projectRefFromUrl(url);
 
-  if (email !== REQUIRED_EMAIL) {
-    throw new Error(`Refusing: bootstrap email must be ${REQUIRED_EMAIL}.`);
+  if (email.length > 254 || !EMAIL_PATTERN.test(email)) {
+    throw new Error("Refusing: BOOTSTRAP_ADMIN_EMAIL must be a valid private owner email.");
   }
   if (password.length < 32) {
     throw new Error("Refusing: temporary password must be at least 32 characters.");

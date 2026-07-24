@@ -25,7 +25,7 @@
 
 ## Admin inicial
 
-- email: `admin@aumprodz.com`
+- email: privado; definido fuera del repositorio
 - usuario creado: sí/no
 - contraseña impresa/commiteada: debe ser no
 - cambio forzado: verificado

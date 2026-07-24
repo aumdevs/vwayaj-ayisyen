@@ -2,23 +2,25 @@
 
 Fecha: 2026-07-23
 
-El rediseño y su Preview pueden publicarse sin resolver estos puntos. Las funciones afectadas deben seguir cerradas hasta contar con evidencia.
+La web informativa, la PWA y la cuenta mínima pueden publicarse sin resolver
+estos puntos. Las funciones afectadas deben seguir cerradas hasta contar con
+evidencia.
 
 ## Propietario y operación
 
-- entidad legal, país operativo y dirección;
+- CNPJ/identificador fiscal y domicilio registral completo;
 - alcance de orientación y profesionales autorizados;
-- canal público de soporte;
 - revisión humana de kreyòl;
 - contenido de países con fuentes y fechas aprobadas;
-- textos legales definitivos.
+- revisión jurídica externa de los documentos publicados antes de venta o tratamiento sensible.
 
 ## Proveedores
 
 - Auth/Resend: infraestructura completa el 2026-07-23. `vwayajayisyen.com`
   está verificado, DMARC está publicado, SMTP Resend y Turnstile están
   configurados en Supabase y el site key está en Vercel Production. El gate
-  continúa cerrado hasta publicar términos revisados y aprobar el flujo real;
+  está habilitado sólo en Production con versiones legales exactas, aceptación
+  separada y confirmación de edad/capacidad;
 - Stripe: faltan productos, precios, moneda, impuestos y política de reembolso aprobados;
 - Zoom: faltan credenciales, política de grabación y revisión de privacidad;
 - OpenAI: faltan proyecto, modelo, evaluación, presupuesto y política de retención;

@@ -103,12 +103,19 @@ export const privateAreas: Record<PrivateArea, AreaDefinition> = {
       { path: "community", label: "Kominote" },
       { path: "ai", label: "Asistan IA" },
       { path: "notifications", label: "Notifikasyon" },
+      { path: "privacy-requests", label: "Demann konfidansyalite" },
       { path: "audit", label: "Odit" },
       { path: "security", label: "Sekirite" },
       { path: "feature-flags", label: "Fonksyon" }
     ]
   }
 };
+
+const portalMobileRoutePaths = new Set(["", "cases", "appointments", "privacy", "profile"]);
+
+export const portalMobileRoutes = privateAreas.portal.routes.filter(({ path }) =>
+  portalMobileRoutePaths.has(path)
+);
 
 export function isPrivateArea(value: string): value is PrivateArea {
   return PRIVATE_AREAS.some((area) => area === value);

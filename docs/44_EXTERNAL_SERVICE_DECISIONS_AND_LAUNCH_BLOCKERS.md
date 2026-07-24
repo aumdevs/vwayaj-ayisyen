@@ -7,23 +7,25 @@ El código puede quedar terminado sin inventar proveedores, datos legales o cred
 | Área | Decisión/evidencia necesaria | Estado actual | Efecto |
 |---|---|---|---|
 | Marca | nombre comercial | aprobado | **Vwayaj Ayisyen** es el nombre oficial y `https://vwayajayisyen.com` es la URL pública |
-| Entidad legal | razón social, país, dirección, registro, contacto | pendiente | bloquea venta y textos contractuales finales |
+| Entidad legal | razón social, país, dirección, registro, contacto | parcial: Vwayaj ayisyen, Ltda., Brasil; domicilio público São Paulo; soporte y legal definidos; faltan CNPJ y dirección comercial completa | permite documentos informativos y Auth; bloquea venta y facturación |
 | Alcance profesional | qué orientación puede prestar la entidad y cuándo interviene abogado/profesional autorizado | pendiente | bloquea promesas y flujos de alto impacto |
-| Privacidad | bases, retención, transferencias, DPA y canal DSR | pendiente | bloquea formularios sensibles/documentos |
+| Privacidad | bases, retención, transferencias, DPA y canal DSR | parcial: política ES/PT publicada, aceptación versionada y 18+/capacidad firmada, DSR autenticado, evento durable, cola y cierre administrativo AAL2 implementados; faltan calendario definitivo, contratos/DPA, validación de transferencias y revisión jurídica del procedimiento | permite cuenta mínima; bloquea formularios sensibles/documentos |
 | WhatsApp | número E.164, propietario, horario, plantillas y privacidad | pendiente | `feature_whatsapp=false` |
 | Stripe | cuenta, país, moneda, productos, precios, impuestos, reembolsos | Stripe elegido; CLI conectada a una cuenta de prueba, sin productos ni precios aprobados | `feature_payments=false` |
-| Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP, CAPTCHA y gate de Auth | completo el 2026-07-23: Resend verificó el dominio; DMARC está publicado; Supabase tiene SMTP Resend, Turnstile y un hook que exige firma HMAC del servidor; Vercel Production tiene el site key público | `DISABLE_PUBLIC_REGISTRATION=true` y `disable_signup=true` hasta publicar una versión inmutable de términos y probar alta, confirmación y recuperación reales |
+| Email y antiabuso | proveedor, dominio verificado, SPF/DKIM/DMARC, remitente, SMTP, recepción, CAPTCHA y gate de Auth | completo el 2026-07-23: Resend verificado para envío; Proton Mail recibe los tres alias oficiales; tres mensajes externos de prueba llegaron; Supabase usa SMTP, confirmación, Turnstile y hook HMAC; versiones legales exactas configuradas en Vercel | registro habilitado sólo en Production; Preview y Development permanecen cerrados |
 | Malware | escáner privado, DPA, región, timeout y respuesta | pendiente | `feature_document_uploads=false` |
 | Video | proveedor/URL segura, política de grabación y DPA | Zoom elegido; faltan credenciales, política de grabación y revisión de privacidad | `feature_appointments=false` o enlace manual restringido |
 | IA | proveedor, DPA, modelos, evaluación, presupuesto y retención | OpenAI elegido; faltan clave del proyecto, modelo, evaluación, presupuesto y retención | `feature_ai_assistant=false` |
 | Moderación | responsables, horario, apelación, SLAs y formación | pendiente | `feature_community=false` |
 | Analítica | herramienta, consentimiento, exclusiones y retención | pendiente | sólo métricas técnicas mínimas |
 | Observabilidad | proveedor, scrub de PII, alertas y retención | pendiente | bloquea go-live operativo completo |
-| Soporte | correo, horario, idiomas, escalamiento y emergencias | pendiente | debe publicarse antes del lanzamiento |
+| Soporte | correo, horario, idiomas, escalamiento y emergencias | `support@`, `legal@` y `promo@vwayajayisyen.com` activos en Proton Mail; recepción verificada; aviso de no-emergencia publicado; no se promete un horario o SLA todavía | permite cuenta mínima; servicios pagados y de alto riesgo siguen cerrados |
 
 ## Lo que sí puede lanzarse primero
 
-La versión informativa puede publicarse con las funciones sensibles cerradas. Para activar captación, cuentas públicas o servicios comerciales deben cumplirse estos puntos:
+La versión informativa y la cuenta mínima pueden publicarse con las funciones
+sensibles cerradas. Pagos, documentos, IA, citas, comunidad y prestación
+profesional requieren completar sus bloqueadores específicos antes de activarse.
 
 - marca y contacto mínimos;
 - textos legales revisados para el país operativo;

@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vwayaj Ayisyen mark">
-  <rect width="512" height="512" rx="112" fill="#0e4a3e"/>
-  <path d="M118 153c0-19 15-34 34-34h208c19 0 34 15 34 34v206c0 19-15 34-34 34H152c-19 0-34-15-34-34V153Z" fill="#fbfcfa"/>
-  <path d="M170 198h172M170 256h172M170 314h104" fill="none" stroke="#0e4a3e" stroke-width="28" stroke-linecap="round"/>
-  <circle cx="347" cy="324" r="43" fill="#d9f45f"/>
+  <rect width="512" height="512" rx="112" fill="#ffffff"/>
+  <path d="M256 66 448 173v235L256 515 64 408V173L256 66Z" fill="#3157d9" opacity=".1" transform="translate(0 -34)"/>
+  <path d="M256 88 395 168v160L256 408 117 328V168L256 88Z" fill="none" stroke="#3157d9" stroke-width="26"/>
+  <path d="m256 140 48 117-48 117-48-117 48-117Z" fill="#3157d9"/>
+  <circle cx="256" cy="257" r="34" fill="#ffffff"/>
 </svg>

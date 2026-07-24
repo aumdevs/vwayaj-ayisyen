@@ -8,7 +8,6 @@ import {
   forgotPasswordAction,
   resetPasswordAction,
   signInAction,
-  signUpAction,
   type AuthActionState
 } from "@/app/[locale]/auth/actions";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
@@ -23,7 +22,9 @@ type AuthFormProps = {
   locale: Locale;
   mode: AuthMode;
   registrationEnabled: boolean;
+  registrationPrivacyVersion: string | null;
   registrationTermsVersion: string | null;
+  signUpAction: (_previous: AuthActionState, formData: FormData) => Promise<AuthActionState>;
   turnstileSiteKey: string | null;
   copy: ExperienceCopy["auth"];
 };
@@ -35,7 +36,9 @@ export function AuthForm({
   locale,
   mode,
   registrationEnabled,
+  registrationPrivacyVersion,
   registrationTermsVersion,
+  signUpAction,
   turnstileSiteKey,
   copy
 }: AuthFormProps) {
@@ -183,29 +186,78 @@ export function AuthForm({
           </div>
         ) : null}
         {mode === "sign-up" ? (
-          <div className="check-option auth-terms">
-            <input
-              aria-describedby="auth-terms-details"
-              id="auth-accept-terms"
-              name="accept_terms"
-              required
-              type="checkbox"
-              value="yes"
-            />
-            <div className="auth-terms-copy" id="auth-terms-details">
-              <label htmlFor="auth-accept-terms">{copy.acceptTerms}</label>
-              <span className="auth-legal-links">
-                <Link href={localizedPath(locale, "legal/terms")}>{copy.termsLink}</Link>
-                <span aria-hidden="true">·</span>
-                <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacyLink}</Link>
-              </span>
-              {registrationTermsVersion ? (
-                <small className="auth-terms-version">
-                  {copy.termsVersionLabel}: <code>{registrationTermsVersion}</code>
-                </small>
-              ) : null}
+          <>
+            <input name="terms_version" type="hidden" value={registrationTermsVersion ?? ""} />
+            <input name="privacy_version" type="hidden" value={registrationPrivacyVersion ?? ""} />
+            <div className="check-option auth-terms">
+              <input
+                aria-describedby="auth-terms-details"
+                id="auth-accept-terms"
+                name="accept_terms"
+                required
+                type="checkbox"
+                value="yes"
+              />
+              <div className="auth-terms-copy" id="auth-terms-details">
+                <label htmlFor="auth-accept-terms">{copy.acceptTerms}</label>
+                <span className="auth-legal-links">
+                  <Link
+                    href={{
+                      pathname: localizedPath(locale, "legal/terms"),
+                      query: { version: registrationTermsVersion ?? "" }
+                    }}
+                  >
+                    {copy.termsLink}
+                  </Link>
+                </span>
+                {registrationTermsVersion ? (
+                  <small className="auth-terms-version">
+                    {copy.termsLink}: <code>{registrationTermsVersion}</code>
+                  </small>
+                ) : null}
+              </div>
             </div>
-          </div>
+            <div className="check-option auth-terms">
+              <input
+                aria-describedby="auth-privacy-details"
+                id="auth-accept-privacy"
+                name="accept_privacy"
+                required
+                type="checkbox"
+                value="yes"
+              />
+              <div className="auth-terms-copy" id="auth-privacy-details">
+                <label htmlFor="auth-accept-privacy">{copy.acknowledgePrivacy}</label>
+                <span className="auth-legal-links">
+                  <Link
+                    href={{
+                      pathname: localizedPath(locale, "legal/privacy"),
+                      query: { version: registrationPrivacyVersion ?? "" }
+                    }}
+                  >
+                    {copy.privacyLink}
+                  </Link>
+                </span>
+                {registrationPrivacyVersion ? (
+                  <small className="auth-terms-version">
+                    {copy.privacyLink}: <code>{registrationPrivacyVersion}</code>
+                  </small>
+                ) : null}
+              </div>
+            </div>
+            <div className="check-option auth-terms">
+              <input
+                id="auth-accept-age-capacity"
+                name="accept_age_capacity"
+                required
+                type="checkbox"
+                value="yes"
+              />
+              <div className="auth-terms-copy">
+                <label htmlFor="auth-accept-age-capacity">{copy.confirmAgeCapacity}</label>
+              </div>
+            </div>
+          </>
         ) : null}
         {needsCaptcha && turnstileSiteKey ? (
           <div className="auth-turnstile">

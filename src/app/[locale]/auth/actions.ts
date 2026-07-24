@@ -2,12 +2,15 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { getOfficialLegalLocale } from "@/content/legal";
 import { getSiteUrl, getTurnstileSiteKey } from "@/lib/config/runtime";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import {
   createRegistrationAttestation,
+  getRegistrationPrivacyVersion,
+  getRegistrationTermsVersion,
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
 import type { Locale } from "@/types/domain";
@@ -72,21 +75,46 @@ export async function signInAction(
 }
 
 export async function signUpAction(
+  renderedLocale: Locale,
   _previous: AuthActionState,
   formData: FormData
 ): Promise<AuthActionState> {
   if (!isPublicRegistrationReady()) return { status: "unavailable" };
 
-  const locale = readLocale(formData);
+  const submittedLocale = readLocale(formData);
   const parsed = signupSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
     captchaToken: formData.get("captcha_token")
   });
-  const accepted = formData.get("accept_terms") === "yes";
-  if (!locale || !parsed.success || !accepted) return { status: "invalid" };
+  const acceptedTerms = formData.get("accept_terms") === "yes";
+  const acknowledgedPrivacy = formData.get("accept_privacy") === "yes";
+  const confirmedAgeCapacity = formData.get("accept_age_capacity") === "yes";
+  const displayedTermsVersion = formData.get("terms_version");
+  const displayedPrivacyVersion = formData.get("privacy_version");
+  const currentTermsVersion = getRegistrationTermsVersion();
+  const currentPrivacyVersion = getRegistrationPrivacyVersion();
+  if (
+    !isLocale(renderedLocale) ||
+    !submittedLocale ||
+    submittedLocale !== renderedLocale ||
+    !parsed.success ||
+    !acceptedTerms ||
+    !acknowledgedPrivacy ||
+    !confirmedAgeCapacity ||
+    typeof displayedTermsVersion !== "string" ||
+    typeof displayedPrivacyVersion !== "string" ||
+    displayedTermsVersion !== currentTermsVersion ||
+    displayedPrivacyVersion !== currentPrivacyVersion
+  ) {
+    return { status: "invalid" };
+  }
+  const locale = renderedLocale;
 
-  const attestation = createRegistrationAttestation(parsed.data.email);
+  const attestation = createRegistrationAttestation(
+    parsed.data.email,
+    getOfficialLegalLocale(locale)
+  );
   if (!attestation) return { status: "unavailable" };
 
   const supabase = await createServerSupabaseClient();
@@ -100,10 +128,19 @@ export async function signUpAction(
       captchaToken: parsed.data.captchaToken,
       emailRedirectTo: callback.toString(),
       data: {
+        age_capacity_confirmed_at: attestation.acceptedAt,
+        age_capacity_mechanism: attestation.ageCapacityMechanism,
+        legal_locale: attestation.legalLocale,
         preferred_locale: locale,
+        privacy_accepted_at: attestation.acceptedAt,
+        privacy_acceptance_mechanism: attestation.privacyAcceptanceMechanism,
+        privacy_content_hash: attestation.privacyContentHash,
+        privacy_version: attestation.privacyVersion,
         registration_nonce: attestation.registrationNonce,
         registration_signature: attestation.registrationSignature,
-        terms_accepted_at: attestation.termsAcceptedAt,
+        terms_accepted_at: attestation.acceptedAt,
+        terms_acceptance_mechanism: attestation.termsAcceptanceMechanism,
+        terms_content_hash: attestation.termsContentHash,
         terms_version: attestation.termsVersion
       }
     }

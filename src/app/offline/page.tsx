@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { WifiOff } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo-mark";
+import { OfflineActions } from "@/components/pwa/offline-actions";
 import { BRAND } from "@/config/brand";
 
 export default function OfflinePage() {
@@ -14,11 +15,10 @@ export default function OfflinePage() {
           <WifiOff size={30} />
         </span>
         <p className="eyebrow">Offline</p>
-        <h1>Pa gen koneksyon entènèt.</h1>
+        <h1>Ou pa konekte kounye a</h1>
+        <p>Gen kèk paj ki ka disponib, men enfòmasyon ki bezwen mizajou mande yon koneksyon.</p>
         <p>Rekonekte anvan ou louvri yon kont, yon dosye oswa lòt enfòmasyon prive.</p>
-        <Link className="button button-secondary" href="/ht">
-          Eseye retounen sou sit la
-        </Link>
+        <OfflineActions />
       </section>
     </main>
   );

@@ -204,7 +204,7 @@ Para cualquier rol privilegiado:
 
 ### Administrador inicial
 
-Email: `admin@aumprodz.com`
+Email: privado; se entrega fuera del repositorio mediante el entorno protegido.
 
 La contraseña temporal se entrega en un archivo separado. Crea el usuario mediante script de bootstrap de una sola ejecución, sin imprimir la contraseña.
 

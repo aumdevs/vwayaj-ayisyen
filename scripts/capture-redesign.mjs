@@ -48,9 +48,12 @@ function isKnownDevelopmentCspNoise(message) {
 }
 
 async function capture(name, path, viewport, group) {
+  const touch =
+    group === "mobile" || (group === "matrix" && viewport.width >= 768 && viewport.width <= 1024);
   const context = await browser.newContext({
     viewport,
     deviceScaleFactor: 1,
+    hasTouch: touch,
     reducedMotion: "reduce",
     colorScheme: "light",
     extraHTTPHeaders: protectionBypass

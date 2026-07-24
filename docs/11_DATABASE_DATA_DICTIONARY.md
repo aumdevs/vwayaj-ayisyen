@@ -361,6 +361,16 @@ Eventos de riesgo.
 ### `data_subject_requests`
 
 Acceso, corrección, exportación o eliminación.
+La creación del titular pasa exclusivamente por `submit_data_subject_request`; estado, verificación,
+asignación, vencimiento y resolución son campos internos y no se aceptan desde el cliente.
+Un índice parcial único garantiza una sola solicitud abierta por usuario y tipo;
+la migración conserva y cierra duplicados históricos apuntándolos a la solicitud
+canónica. `transition_data_subject_request` permite a un administrador AAL2 pasar
+de recibido a verificación y luego a en proceso; el cierre continúa separado.
+Cada alta crea de forma atómica un evento mínimo `privacy.data_subject_request.received` en
+`outbox_events`. La cola operativa se consulta en `/[locale]/admin/privacy-requests` con rol
+administrador, MFA y RLS. El listado muestra la descripción opcional a todo administrador AAL2
+autorizado, pero ese texto no se copia a auditoría ni outbox y debe tratarse como confidencial.
 
 ### `admin_invitations`
 

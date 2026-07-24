@@ -142,6 +142,7 @@ No revelar si un correo existe durante recuperación o invitación.
 /[locale]/admin/community
 /[locale]/admin/ai
 /[locale]/admin/notifications
+/[locale]/admin/privacy-requests
 /[locale]/admin/audit
 /[locale]/admin/security
 /[locale]/admin/feature-flags

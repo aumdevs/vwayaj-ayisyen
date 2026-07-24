@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
-  "generated_at": "2026-07-23",
-  "package_expected_file_count": 171,
+  "generated_at": "2026-07-24",
+  "package_expected_file_count": 183,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -9,8 +9,8 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1881,
-      "sha256": "fbb3ad3f9ae8c4682554f0795271d639fd0e324408080864167393f96358ddf2"
+      "size_bytes": 1978,
+      "sha256": "44fb5f2bce5d877a4229882bb4465aed486ee2fc586bf160dd317bb926d7b1ca"
     },
     {
       "path": ".gitignore",
@@ -19,8 +19,8 @@
     },
     {
       "path": "00_START_HERE.md",
-      "size_bytes": 3560,
-      "sha256": "71bd1834ef82db3c17fe8c73a5c429de23168c918d45b3f04090de64593ce844"
+      "size_bytes": 3647,
+      "sha256": "f2c44dd7d8a87b96089bd68a7b29ec08973d1296187d8131af8c2798a9f56312"
     },
     {
       "path": "AGENTS.md",
@@ -29,18 +29,18 @@
     },
     {
       "path": "CODEX_ALL_IN_ONE.md",
-      "size_bytes": 240346,
-      "sha256": "8033156a7ea108810aaaeb056a32745669a802aef02d248fa4500b5194c9aa13"
+      "size_bytes": 250098,
+      "sha256": "51bddfea9c67cd0e1c04f28757e9fb27bbaaba6967f5d3d7bf93d0c5882737e0"
     },
     {
       "path": "CODEX_MASTER_PROMPT.md",
-      "size_bytes": 19764,
-      "sha256": "68bfdbabfbab34a09ce87e672480c249a9d299f07c324db0f5546843d64aecb3"
+      "size_bytes": 19816,
+      "sha256": "d2f824228e8eba144f7b509f4a64ebec178c6553918e05fd61197e4bb65b438d"
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 8179,
-      "sha256": "f63883a620cf0905835842b5afb397e3e8213df5dfa17c7f5193821534249d62"
+      "size_bytes": 9038,
+      "sha256": "ceb38d1d633a913adb900958b3507062f93dffac12881ab8524c165ef33d8056"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -74,8 +74,8 @@
     },
     {
       "path": "checklists/LAUNCH_CHECKLIST.md",
-      "size_bytes": 1614,
-      "sha256": "6d497b4d784a0e812015f084380939d550bdd4c14224ec5b2e28cde2a0661622"
+      "size_bytes": 2792,
+      "sha256": "fef4bcac282984cad59f0049c5cc33bfced515bcfc538555cb98263a1c44d513"
     },
     {
       "path": "checklists/MANUAL_ACCOUNT_SETUP.md",
@@ -89,8 +89,8 @@
     },
     {
       "path": "config/env.schema.json",
-      "size_bytes": 1955,
-      "sha256": "ad29f2f5e61f50b4b0e8b67e552e15e1b41b7bbae7d3bba6684c72d47124321d"
+      "size_bytes": 1979,
+      "sha256": "6c739ebfe370aba606128a2d2e2cf00cc374b8cce2486e5a2f5fccddaaccd931"
     },
     {
       "path": "config/feature-flags.json",
@@ -99,8 +99,8 @@
     },
     {
       "path": "config/project-config.yaml",
-      "size_bytes": 1501,
-      "sha256": "eb2cbeface7e42acd85e9f6ad20cc700138321651ab817438024ee5471914750"
+      "size_bytes": 1511,
+      "sha256": "5bb982d053243dedf5d616a8f42887797ef07b564a7afd39565b8881a2cea082"
     },
     {
       "path": "content/RESEARCH_RECORD_TEMPLATE.csv",
@@ -169,8 +169,8 @@
     },
     {
       "path": "docs/03_INFORMATION_ARCHITECTURE_AND_ROUTES.md",
-      "size_bytes": 4245,
-      "sha256": "f17678b13e2c764aaabf1ff7f9a0e6bedce363287b00453fe0763e2e89adac3b"
+      "size_bytes": 4278,
+      "sha256": "e9b010d507d11c79cd843c909ec09d23a06d84fce422f6c3d6a0c8e8695d59d7"
     },
     {
       "path": "docs/04_USER_ROLES_AND_PERMISSIONS.md",
@@ -209,13 +209,13 @@
     },
     {
       "path": "docs/11_DATABASE_DATA_DICTIONARY.md",
-      "size_bytes": 5756,
-      "sha256": "974e0c2f68f49d0f7d66da6977e2e3b3234c661c59eac6c780337eab75af0ecf"
+      "size_bytes": 6662,
+      "sha256": "2394280c3a98e90334905febded29102147fa9e9bf43e311b14965e80b00f581"
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 4739,
-      "sha256": "25e56b58803fa8ed7ea165a68bd0ea5a6867d29b6aa9d7f5bc199205b0eb5034"
+      "size_bytes": 5322,
+      "sha256": "01500eb7a24dcc3178bedbe1f09a00fafcde52d9b949d45942da6444a2274efb"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -259,8 +259,8 @@
     },
     {
       "path": "docs/21_PWA_PERFORMANCE_AND_SEO.md",
-      "size_bytes": 2603,
-      "sha256": "e7a64f57ef271fabcb0b5141d4362ed069f1ec2f0f0785d156e73628486a7d70"
+      "size_bytes": 3692,
+      "sha256": "950c9cad55873d1c2ffc015b3eddc17790482196f1285f6e3252a32375ee2a77"
     },
     {
       "path": "docs/22_ADMIN_CMS_AND_CONTENT_GOVERNANCE.md",
@@ -279,13 +279,13 @@
     },
     {
       "path": "docs/25_SUPABASE_VERCEL_DEPLOYMENT_RUNBOOK.md",
-      "size_bytes": 5880,
-      "sha256": "2e5e42a3ee582b7e872aa826c0a7d9e6cb4ea29ef46282248d54bc51d0412e80"
+      "size_bytes": 6193,
+      "sha256": "cab2e91b63175c7abde747a7f1686690b554aae1b6babf1374a47a733a097778"
     },
     {
       "path": "docs/26_ENVIRONMENT_VARIABLES_AND_SECRETS.md",
-      "size_bytes": 4613,
-      "sha256": "25b47ae49be950b5dbc999f6d6041a9f8ff3d50c9f57daea2c72f8f9ae6e3f64"
+      "size_bytes": 4823,
+      "sha256": "a1c2fc0d6211eb5202e67a6e1f7ac4367946b15e3555f802b44fb0e9490ba6e6"
     },
     {
       "path": "docs/27_OBSERVABILITY_BACKUP_AND_INCIDENT_RESPONSE.md",
@@ -294,8 +294,8 @@
     },
     {
       "path": "docs/28_PRIVACY_LEGAL_AND_COMPLIANCE_CHECKLIST.md",
-      "size_bytes": 4414,
-      "sha256": "d1814b0c70d8f019dc395eb07d69f95a12f36ba11f9a51567638b5985dec85f7"
+      "size_bytes": 6259,
+      "sha256": "13cb3d4df962a8a4802d9494a2e0dac3239f45f5f9c3a0362773b0fa4b35b623"
     },
     {
       "path": "docs/29_IMPLEMENTATION_ROADMAP.md",
@@ -314,8 +314,8 @@
     },
     {
       "path": "docs/32_ASSUMPTIONS_DECISIONS_AND_OPEN_ITEMS.md",
-      "size_bytes": 3168,
-      "sha256": "289a28039fcc385fec2cf3c2337645167eba4c6dcb46670a11b6e51c78312b7b"
+      "size_bytes": 3210,
+      "sha256": "174357e9302403b9bbd0d7caa6d255e65f95423044aab61a32a0be790c37cef5"
     },
     {
       "path": "docs/33_OFFICIAL_TECHNICAL_REFERENCES.md",
@@ -324,8 +324,8 @@
     },
     {
       "path": "docs/34_ADMIN_BOOTSTRAP_RUNBOOK.md",
-      "size_bytes": 3312,
-      "sha256": "f9cdb53c12f21eb88d44e9e7256ce2a528bb59c192ea7da951e34c87cde3b92e"
+      "size_bytes": 3456,
+      "sha256": "bdebada05f79c21bfe7b75e3ba2d10ed78a305548c74474f59e1fa34a82195d5"
     },
     {
       "path": "docs/35_CONTENT_SEED_AND_RESEARCH_GUIDE.md",
@@ -359,8 +359,8 @@
     },
     {
       "path": "docs/41_SUPPORT_AND_OPERATIONS_PLAYBOOK.md",
-      "size_bytes": 1667,
-      "sha256": "579f190d9adb69159acf64b7ee72a7f5ef8be1151224f5f60be0bb05668d17df"
+      "size_bytes": 3183,
+      "sha256": "b09e3e7f2436d374719ddd1c75b1c5343cb27a2a1db937f862b1cbf4b4b52b05"
     },
     {
       "path": "docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 3822,
-      "sha256": "c4f468b58794163c609f0f2044fbf1d74c6be319f642ee18254d7b3c70bcb5d6"
+      "size_bytes": 4508,
+      "sha256": "b2b5911ce44f8ea0e2b89e2e69db158c2bf16d23ebb745d7b8441fd6e8b1a56f"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -469,8 +469,8 @@
     },
     {
       "path": "legal/README.md",
-      "size_bytes": 728,
-      "sha256": "28674304a357b72d7848945acd3c278ec4c580268300c7ee921c8528d5bba7d1"
+      "size_bytes": 1113,
+      "sha256": "4b7a7de3e14a604f5ab23de694ee25b102c11b2adca838d60027845a1ee8cb94"
     },
     {
       "path": "legal/REFUND_POLICY_TEMPLATE.md",
@@ -489,8 +489,8 @@
     },
     {
       "path": "operations/CODEX_FINAL_REPORT_TEMPLATE.md",
-      "size_bytes": 1206,
-      "sha256": "ea08017cfac6711f2cdad71143319f56104a5beeeb02d80b2dc4ac982978ad53"
+      "size_bytes": 1225,
+      "sha256": "fa18f913b57744a5b8a527d2719d0ca2525c883c41a8c8c5ea8a113aee8141fe"
     },
     {
       "path": "operations/DEPLOYMENT_REPORT_TEMPLATE.md",
@@ -644,8 +644,8 @@
     },
     {
       "path": "scripts/bootstrap-admin.ts",
-      "size_bytes": 4414,
-      "sha256": "81c9b4c8654583bb74694af10eed2c628fa526de369abccd8bd047cb8512b305"
+      "size_bytes": 4461,
+      "sha256": "4bc8deca6da56d8fe1afa3f63623bd35db6134b60a9974de9cd60ac2b0ed715b"
     },
     {
       "path": "scripts/check-no-secrets.sh",
@@ -669,8 +669,8 @@
     },
     {
       "path": "scripts/verify-env.mjs",
-      "size_bytes": 3102,
-      "sha256": "ba0f3751163a0ea7a3b43f7e46f222acc44292b2816d763bf86c955c77559581"
+      "size_bytes": 3390,
+      "sha256": "3b16a8e76d698333ead5f2f54b472b243089c9563ef091db4beff50d17ab6a4c"
     },
     {
       "path": "security/ABUSE_CASES.csv",
@@ -779,8 +779,8 @@
     },
     {
       "path": "supabase/migrations/0008_row_level_security.sql",
-      "size_bytes": 41688,
-      "sha256": "5057c30045062726e1ab7c9c0cf2fd2cd07b8c38acd8cd8d9528d8942935fe1e"
+      "size_bytes": 41666,
+      "sha256": "e954bdd528b6599db7a79a61170237153ae109707acfd7f3ff5dd74b520513f2"
     },
     {
       "path": "supabase/migrations/0009_storage_buckets_and_policies.sql",
@@ -789,8 +789,8 @@
     },
     {
       "path": "supabase/migrations/0010_reference_seed.sql",
-      "size_bytes": 10060,
-      "sha256": "a004642eda85b2ef3a603d37749267093ae41ddbf5973f2265872a113d0602ae"
+      "size_bytes": 10151,
+      "sha256": "b869c5eea531d7b9ac8bf45278a13c55c97a3ba353b01be7940dbbd0eea42e71"
     },
     {
       "path": "supabase/migrations/0011_views_and_maintenance.sql",
@@ -799,8 +799,8 @@
     },
     {
       "path": "supabase/migrations/0012_atomic_admin_bootstrap.sql",
-      "size_bytes": 2740,
-      "sha256": "0d97c92089dbfddaa6ad75346785f2a49ff70895146c5ef75e40d0b7d9d004a9"
+      "size_bytes": 3171,
+      "sha256": "c1721c983fce09f583430d1943ae9d1bb7b83cb0a959d83449aca37aaaadd1ef"
     },
     {
       "path": "supabase/seed.sql",
@@ -809,8 +809,8 @@
     },
     {
       "path": "supabase/tests/0001_security_invariants.sql",
-      "size_bytes": 4029,
-      "sha256": "17590440def9dcb9382b7df6a22e476b88b7bdc8c7b121bfb52acb7e0995d04b"
+      "size_bytes": 6828,
+      "sha256": "50f14aa47fd4891958589ae717a1e186321c421d83ba2d8cc2b1d123d82dc986"
     },
     {
       "path": "supabase/tests/0002_public_content_rls.sql",
@@ -844,13 +844,73 @@
     },
     {
       "path": "supabase/tests/0003_registration_auth_hook.sql",
-      "size_bytes": 7900,
-      "sha256": "d2e4a7620f818c64703a42037540ed262474ca84338324a78dbbfffac12f6485"
+      "size_bytes": 21926,
+      "sha256": "5a044e932fc3984128c13e1c62e44f18f0a95e8bd9194834d75dc87478c350fd"
     },
     {
       "path": "scripts/lib/admin-provisioning-attestation.ts",
       "size_bytes": 1269,
       "sha256": "ccf86f92086dcf2cc1f8de4de5aa41fbfcd079dfb4e34b125a5f85527eb39357"
+    },
+    {
+      "path": "supabase/migrations/20260723165325_persist_versioned_terms_and_privacy_acceptance.sql",
+      "size_bytes": 5951,
+      "sha256": "b4bf4ffd1caac5e6524f21573e5b30e89e9b1d826e6df8ebce0304c293d09a13"
+    },
+    {
+      "path": "supabase/migrations/20260723180000_remove_private_owner_email_from_public_configuration.sql",
+      "size_bytes": 5610,
+      "sha256": "304508d5813250d5300bf18b3a942d6f97d9d30a7e92e4839f0d9075fe683529"
+    },
+    {
+      "path": "supabase/migrations/0013_password_change_completion.sql",
+      "size_bytes": 812,
+      "sha256": "1cd5bd76a3664c40dbda2b52b6d90c31461641cf1970f0c2757535dd81c1db0e"
+    },
+    {
+      "path": "supabase/migrations/0014_public_content_search.sql",
+      "size_bytes": 1311,
+      "sha256": "2bb85b0fd5f60c72ff82115aedb0e3db378421c742b8d830282044ec2304bd9f"
+    },
+    {
+      "path": "supabase/migrations/20260722041004_harden_remote_security_advisors.sql",
+      "size_bytes": 1261,
+      "sha256": "38470200cbadadec659ef4332dda588147e7b22d94b2f12e5cc00d0bd9792e02"
+    },
+    {
+      "path": "supabase/migrations/20260722070000_restore_scoped_storage_select_policies.sql",
+      "size_bytes": 722,
+      "sha256": "44171d4b46165a3a1722669786fb14b166d574698bcce9936dee0d74131ac818"
+    },
+    {
+      "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
+      "size_bytes": 17085,
+      "sha256": "ffbd404250435953b8f942adc39d3f8d1a22632818afe641472d7c64dbed9120"
+    },
+    {
+      "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
+      "size_bytes": 12662,
+      "sha256": "b4682d9a3c609c811dc9afbf12af5d42ee489ca7cf53ba57c699f7f83df61174"
+    },
+    {
+      "path": "supabase/tests/0004_consent_rls.sql",
+      "size_bytes": 17637,
+      "sha256": "c79dd35ea7342bc1046266308cd2084fcab912ddce1d555bfff178b6ea5c646b"
+    },
+    {
+      "path": "supabase/migrations/20260723200000_preserve_official_site_configuration.sql",
+      "size_bytes": 3436,
+      "sha256": "b6943b8e426bf7a26ddc890bd9c9a696ed109c61d9de5f46bb37cce30127daa6"
+    },
+    {
+      "path": "supabase/tests/0005_site_settings_preservation.sql",
+      "size_bytes": 3892,
+      "sha256": "1f4b7bb45b678a8e264a2ec1d4dbc587210859baaeb5ba9f32a5fe33a86610eb"
+    },
+    {
+      "path": "supabase/migrations/20260723203000_serialize_initial_admin_bootstrap.sql",
+      "size_bytes": 2706,
+      "sha256": "b7320c5aca344f3133c5e3cd72189b57cf8c5f8a113e03b824677e44b0edc057"
     }
   ]
 }

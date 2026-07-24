@@ -1,47 +1,44 @@
-# Auditoría del rediseño premium
+# Auditoría del rediseño premium y PWA
 
-Fecha: 2026-07-22
+Fecha de cierre: 2026-07-23
 
-Rama: `redesign/premium-ui-v2`
+Rama de cierre: `agent/legal-center-production`
 
-Referencia auditada: `https://vwayaj-ayisyen.vercel.app/ht`
+Referencia de producción: `https://vwayajayisyen.com/ht`
 
 ## Alcance revisado
 
-- 39 archivos de rutas y estados de App Router.
-- 23 componentes compartidos de interfaz.
+- Rutas públicas, autenticación y áreas privadas de App Router.
+- Componentes compartidos, navegación, formularios y estados.
 - Cinco diccionarios de interfaz: `ht`, `fr`, `es`, `pt` y `en`.
 - Flujos server-side de Supabase Auth, contenido publicado, Stripe, uploads, citas, IA y WhatsApp.
-- 48 documentos de producto, seguridad, datos y operación.
-- Capturas baseline de ocho superficies en escritorio y móvil.
+- Manifest, service worker, política de caché, instalación y actualización PWA.
+- Capturas reales en escritorio, teléfono y tableta táctil.
 
 ## Evidencia visual inicial
 
-Las capturas están en `docs/screenshots/redesign/before/`:
+El baseline anterior está en `docs/screenshots/redesign/before/`. La evidencia
+final web/PWA está en `docs/screenshots/pwa-acceptance/`:
 
-- inicio;
-- países;
-- guía de Estados Unidos;
-- comparador;
-- recomendador;
-- servicios;
-- guías;
-- inicio de sesión.
+- 16 superficies de escritorio;
+- 14 superficies móviles;
+- 5 superficies de tableta;
+- cuatro screenshots reales publicados en el manifest.
 
 ## Problemas confirmados
 
-1. El layout localizado monta el mismo header, footer y control de audio en público, Auth y áreas privadas.
-2. Un control heredado de lectura asistida ocupaba una franja propia y contradecía la dirección actual; fue retirado del producto.
-3. El header depende de enlaces largos, un menú móvil basado en `details` y una jerarquía débil.
-4. La home carece de fotografía editorial, contraste entre destinos y una narrativa de producto completa.
-5. Las páginas de país muestran hasta quince secciones vacías con el mismo mensaje interno.
-6. Copy como “revisión obligatoria”, “no hay fuentes aprobadas” y “función no disponible” expone el estado del equipo al público.
-7. Comparador y recomendador parecen controles incompletos en vez de estados premium protegidos por configuración.
-8. Servicios, guías, cursos y páginas legales reutilizan una única plantilla de indisponibilidad.
-9. Auth comparte navegación pública y presenta un formulario sin shell narrativo, visibilidad de contraseña ni jerarquía refinada.
-10. Cliente, asesor, profesional, editorial, moderación y administración reutilizan un único shell genérico.
-11. El CSS global concentra todos los módulos, con pocos tokens semánticos y sin dirección editorial consistente.
-12. No existen fotografías de destino ni componentes suficientes para tablas, timeline, métricas y estados de producto.
+1. El primer rediseño seguía ofreciendo en móvil una web responsive, no un App Shell.
+2. La tableta táctil horizontal podía recibir el shell de laptop.
+3. El manifest no tenía tamaños de icono, screenshots, shortcuts ni metadatos suficientes.
+4. El service worker actualizaba de inmediato y no protegía formularios con progreso.
+5. La instalación no tenía flujo propio Android ni instrucciones iOS/iPadOS.
+6. La navegación desktop era plana y no ofrecía mega-menús accesibles.
+7. Persistían superficies grandes oscuras en tarjetas, Auth, footer y operación.
+8. Faltaban evidencia visual y pruebas específicas de instalación, standalone, offline y actualización.
+
+Todos estos puntos fueron corregidos. La única superficie deliberadamente
+oscura que permanece es el enlace pequeño de salto al contenido mientras recibe
+foco; no existe modo oscuro ni fondos oscuros como superficie de página o card.
 
 ## Piezas funcionales que se conservan
 
@@ -52,7 +49,7 @@ Las capturas están en `docs/screenshots/redesign/before/`:
 - RLS, migraciones, Storage y tipos generados, sin cambios.
 - kill switches y respuesta fail-closed de integraciones sensibles.
 - creación de precios y estados de Stripe exclusivamente en servidor.
-- CSP con nonce, cabeceras, PWA pública y exclusión de caché privada.
+- CSP con nonce, cabeceras y exclusión absoluta de caché privada, Auth y APIs.
 - los cinco locales y preservación de ruta al cambiar idioma.
 
 ## Riesgos y mitigaciones
@@ -63,11 +60,18 @@ Las capturas están en `docs/screenshots/redesign/before/`:
 | Mostrar contenido no aprobado | Renderizar únicamente filas publicadas; si no existen, una sola experiencia editorial útil. |
 | Inventar datos para llenar la UI | Usar texto de orientación de producto, nunca cifras, precios, requisitos o testimonios ficticios. |
 | Habilitar integraciones incompletas | Mantener kill switches y ocultar acciones públicas cuando su configuración no está aprobada. |
-| Regresión de marca o PWA | Conservar el símbolo existente y centralizar la identidad textual; revisar iconos y manifest. |
+| Regresión de marca o PWA | Reutilizar el símbolo propio existente, generar todos sus tamaños y comprobar manifest/screenshots. |
 | Regresión responsive | Verificar ocho viewports, overflow, menús, tablas y safe areas con Playwright. |
-| Regresión de accesibilidad | Mantener landmarks, foco, teclado, 44 px, reduced motion y ejecutar axe. |
+| Regresión de accesibilidad | Mantener landmarks, trampa/retorno de foco, teclado, 44 px, reduced motion y ejecutar axe. |
 | Preview sin Supabase | Verificar UI pública y fail-closed; no conectar datos productivos a Preview. |
+| Actualización con trabajo en curso | No activar el worker nuevo hasta una acción explícita y bloquearla si existe progreso en formularios. |
+| Caché de datos privados | Ignorar métodos no GET, APIs, Auth, áreas privadas, Authorization y respuestas `private`/`no-store`. |
 
 ## Decisión de arquitectura visual
 
-El layout de locale quedará neutro. El grupo público recibirá su propio header/footer; Auth tendrá un shell independiente; las áreas privadas se renderizarán con un shell de cliente o un shell operativo según el rol. La seguridad seguirá viviendo en las mismas fronteras server-side.
+Laptop y escritorio conservan una web pública amplia, clara y editorial.
+Teléfono, tableta táctil y modo standalone reciben barra superior, navegación
+inferior de cinco destinos, menú “Más”, safe areas y superficies orientadas a
+tareas. Auth y las áreas privadas mantienen shells claros independientes. La
+seguridad sigue en las mismas fronteras server-side y no depende de CSS ni del
+tipo de dispositivo.

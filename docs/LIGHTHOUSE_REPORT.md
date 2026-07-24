@@ -2,10 +2,9 @@
 
 Fecha: 2026-07-23
 
-Commit auditado: `40d58a8`
+Build auditado: rama `agent/legal-center-production`, después del App Shell PWA.
 
-Preview auditado:
-`https://vwayaj-ayisyen-1hw65xw65-aum-prodz-group.vercel.app/ht`
+Origen auditado: build final de producción servido localmente con `next start`.
 
 ## Método
 
@@ -13,31 +12,34 @@ Preview auditado:
 - Chrome Headless `150`.
 - Perfil móvil predeterminado y preset de escritorio.
 - Categorías: Performance, Accessibility, Best Practices y SEO.
-- Acceso al Preview mediante un bypass de automatización temporal, sin desactivar la protección de Vercel.
-- Los headers sensibles fueron reemplazados por `[REDACTED]` en los reportes y el repositorio quedó sin coincidencias del secreto.
+- Sin bypass, cuenta productiva, datos reales ni secretos.
+- Los archivos conservan su nombre histórico `preview-home-*` para no romper el
+  índice/integridad del paquete, pero su contenido corresponde al build final local.
 
 ## Resultado del Preview
 
 | Perfil | Performance | Accessibility | Best Practices | SEO bruto | FCP | LCP | TBT | CLS | Speed Index |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Móvil | 96 | 100 | 100 | 69 | 1,29 s | 2,64 s | 84 ms | 0 | 1,59 s |
-| Escritorio | 99 | 100 | 100 | 69 | 0,38 s | 0,62 s | 0 ms | 0 | 1,22 s |
+| Móvil | 96 | 100 | 100 | 69 | 1,24 s | 2,74 s | 52 ms | 0 | 1,24 s |
+| Escritorio | 100 | 100 | 100 | 69 | 0,33 s | 0,69 s | 0 ms | 0 | 0,57 s |
 
 Performance, Accessibility y Best Practices superan los objetivos de producción.
 La detección de la imagen LCP pasa los tres controles de Lighthouse: prioridad alta,
 descubrimiento en el documento inicial y carga no diferida.
 
-El LCP móvil quedó 0,14 s por encima del objetivo orientativo de 2,5 s bajo la
-simulación móvil de Lighthouse. La puntuación Performance sigue siendo 96 y no
-hay desplazamiento de layout.
+El LCP móvil quedó 0,24 s por encima del objetivo orientativo de 2,5 s en esta
+simulación de laboratorio. La puntuación Performance es 96, TBT 52 ms y CLS 0.
+La trazabilidad de Lighthouse confirma que la imagen LCP tiene
+`fetchpriority=high`, se descubre en el documento inicial y no usa carga diferida.
+El resultado satisface el umbral de Performance >90, pero LCP debe seguir
+observándose con datos de campo después del despliegue.
 
 ## Interpretación de SEO
 
-El único control SEO que falla en el Preview es `is-crawlable`. Es el resultado
+El único control SEO que falla en este build es `is-crawlable`. Es el resultado
 esperado porque:
 
 - la aplicación emite `noindex` en entornos no aprobados para indexación;
-- Vercel añade `x-robots-tag: noindex` a los Preview;
 - `robots.txt` bloquea el rastreo mientras la indexación está desactivada.
 
 No se debilitó esa protección para mejorar artificialmente la puntuación.

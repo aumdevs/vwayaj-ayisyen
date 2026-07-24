@@ -50,6 +50,7 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `SUPABASE_SERVICE_ROLE_KEY` | Sí | server | tareas privilegiadas |
 | `SUPABASE_AUTH_CAPTCHA_SECRET` | Sí | CLI/Supabase | aplicar Turnstile en Auth |
 | `REGISTRATION_TERMS_VERSION` | No/operativo | server | identificar términos publicados aceptados |
+| `REGISTRATION_PRIVACY_VERSION` | No/operativo | server | identificar política de privacidad publicada aceptada |
 | `REGISTRATION_GATE_SIGNING_KEY` | Sí | Vercel server + Supabase Vault | impedir altas directas o manipuladas |
 | `DATABASE_URL` | Sí | CI/admin | migración controlada |
 | `STRIPE_SECRET_KEY` | Sí | server | pagos |
@@ -89,8 +90,9 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 - Generar `REGISTRATION_GATE_SIGNING_KEY` con al menos 32 bytes aleatorios,
   conservarla en Vercel Production y duplicarla en Supabase Vault bajo
   `vwayaj_registration_gate_hmac`; nunca enviarla al navegador, Preview ni CI
-  real. `REGISTRATION_TERMS_VERSION` sólo se define después de publicar y
-  aprobar esa versión.
+  real. `REGISTRATION_TERMS_VERSION` y `REGISTRATION_PRIVACY_VERSION` deben
+  coincidir exactamente con las versiones publicadas en código; cualquier
+  diferencia mantiene el registro cerrado.
 - La contraseña SMTP de Resend no es una variable de la aplicación. Se conserva
   en el gestor seguro y se aplica directamente al control plane de Supabase; no
   se copia a `.env.local`, CI ni Vercel.

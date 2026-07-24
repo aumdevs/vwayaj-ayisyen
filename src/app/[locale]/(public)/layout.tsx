@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { InstallAppPrompt } from "@/components/pwa/install-app-prompt";
+import { MobileAppBar } from "@/components/pwa/mobile-app-bar";
+import { MobileBottomNavigation } from "@/components/pwa/mobile-bottom-navigation";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { isLocale } from "@/lib/i18n/config";
 
@@ -18,10 +21,15 @@ export default async function PublicLayout({ children, params }: PublicLayoutPro
   return (
     <div className="site-frame">
       <SiteHeader dictionary={dictionary} locale={locale} />
-      <main id="main-content" tabIndex={-1}>
+      <MobileAppBar locale={locale} />
+      <main className="public-app-content" id="main-content" tabIndex={-1}>
         {children}
       </main>
       <SiteFooter dictionary={dictionary} locale={locale} />
+      <MobileBottomNavigation locale={locale} />
+      <InstallAppPrompt locale={locale} />
+      <div id="bottom-sheet-host" />
+      <div aria-live="polite" className="toast-region" id="toast-region" />
     </div>
   );
 }

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vwayaj Ayisyen maskable mark">
+  <rect width="512" height="512" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="186" fill="#e8edff"/>
+  <path d="M256 111 374 177v158L256 401 138 335V177l118-66Z" fill="none" stroke="#3157d9" stroke-width="23"/>
+  <path d="m256 155 41 101-41 101-41-101 41-101Z" fill="#3157d9"/>
+  <circle cx="256" cy="256" r="29" fill="#ffffff"/>
+</svg>

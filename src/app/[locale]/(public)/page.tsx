@@ -9,6 +9,8 @@ import {
   GraduationCap,
   HeartHandshake,
   Home as HomeIcon,
+  MapPinned,
+  Scale,
   ShieldCheck
 } from "lucide-react";
 import { BRAND } from "@/config/brand";
@@ -77,6 +79,39 @@ export default async function HomePage({ params }: HomePageProps) {
               <p>{copy.home.trust[0].title}</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="app-home-actions" aria-label={dictionary.nav.home}>
+        <div className="shell">
+          {[
+            {
+              href: localizedPath(locale, "countries"),
+              icon: MapPinned,
+              label: dictionary.nav.countries
+            },
+            {
+              href: localizedPath(locale, "compare"),
+              icon: Scale,
+              label: dictionary.nav.compare
+            },
+            {
+              href: localizedPath(locale, "find-my-country"),
+              icon: HeartHandshake,
+              label: dictionary.nav.assessment
+            },
+            {
+              href: localizedPath(locale, "guides"),
+              icon: BookOpenText,
+              label: dictionary.nav.guides
+            }
+          ].map(({ href, icon: Icon, label }) => (
+            <Link href={href} key={href}>
+              <Icon aria-hidden="true" size={22} />
+              <span>{label}</span>
+              <ArrowRight aria-hidden="true" size={17} />
+            </Link>
+          ))}
         </div>
       </section>
 

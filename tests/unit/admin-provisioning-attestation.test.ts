@@ -6,7 +6,7 @@ describe("administrator provisioning attestation", () => {
   it("binds a one-time bootstrap signature to purpose, email, time and nonce", () => {
     const signingKey = "test_registration_gate_signing_key_at_least_32_chars";
     const attestation = createAdminProvisioningAttestation(
-      " Admin@AumProdz.COM ",
+      " Owner@Example.COM ",
       signingKey,
       new Date("2026-07-23T14:30:00.123Z"),
       "d9a40880-6427-4b28-b953-2dbeca6f8bde"
@@ -21,7 +21,7 @@ describe("administrator provisioning attestation", () => {
       .update(
         [
           "admin-bootstrap",
-          "admin@aumprodz.com",
+          "owner@example.com",
           attestation.provisioning_issued_at,
           attestation.provisioning_nonce
         ].join("\n"),
@@ -34,7 +34,7 @@ describe("administrator provisioning attestation", () => {
   it("refuses a weak signing key", () => {
     expect(() =>
       createAdminProvisioningAttestation(
-        "admin@aumprodz.com",
+        "owner@example.com",
         "too-short",
         new Date("2026-07-23T14:30:00.123Z"),
         "d9a40880-6427-4b28-b953-2dbeca6f8bde"

@@ -18,22 +18,27 @@ function verifyEnv(extra: Record<string, string>) {
 }
 
 describe("environment validation", () => {
-  it("rejects a registration terms version or signing key that runtime would ignore", () => {
+  it("rejects legal versions or a signing key that runtime would ignore", () => {
     const result = verifyEnv({
       DISABLE_PUBLIC_REGISTRATION: "false",
+      REGISTRATION_PRIVACY_VERSION: "privacy-old-version",
       REGISTRATION_TERMS_VERSION: "invalid version",
       REGISTRATION_GATE_SIGNING_KEY: "too-short"
     });
 
     expect(result.status).toBe(1);
-    expect(result.stderr).toContain("REGISTRATION_TERMS_VERSION must match");
+    expect(result.stderr).toContain("REGISTRATION_TERMS_VERSION must equal the published version");
+    expect(result.stderr).toContain(
+      "REGISTRATION_PRIVACY_VERSION must equal the published version"
+    );
     expect(result.stderr).toContain("REGISTRATION_GATE_SIGNING_KEY must contain at least 32");
   });
 
   it("accepts the exact registration values consumed by runtime", () => {
     const result = verifyEnv({
       DISABLE_PUBLIC_REGISTRATION: "false",
-      REGISTRATION_TERMS_VERSION: "terms-2026.07",
+      REGISTRATION_PRIVACY_VERSION: "privacy-2026-07-23-v1",
+      REGISTRATION_TERMS_VERSION: "terms-2026-07-23-v1",
       REGISTRATION_GATE_SIGNING_KEY: "a-secure-test-signing-key-with-32-chars"
     });
 
@@ -45,7 +50,7 @@ describe("environment validation", () => {
     const result = verifyEnv({
       ALLOW_ADMIN_BOOTSTRAP: "true",
       SUPABASE_SERVICE_ROLE_KEY: "service-role-test",
-      BOOTSTRAP_ADMIN_EMAIL: "admin@aumprodz.com",
+      BOOTSTRAP_ADMIN_EMAIL: "owner@example.com",
       BOOTSTRAP_ADMIN_PASSWORD: "a".repeat(24),
       EXPECTED_SUPABASE_PROJECT_REF: "project-ref",
       REGISTRATION_GATE_SIGNING_KEY: "too-short"

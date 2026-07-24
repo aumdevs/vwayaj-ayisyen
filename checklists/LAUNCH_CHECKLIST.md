@@ -1,20 +1,36 @@
 # Checklist de lanzamiento
 
+## Hito actual: sitio informativo y cuentas protegidas
+
+- [x] Dominio `vwayajayisyen.com` y marca Vwayaj Ayisyen.
+- [x] Identidad pública mínima del operador confirmada por el propietario.
+- [x] Términos, Privacidad y Cookies oficiales en español y portugués, con versión.
+- [x] Aceptaciones de Términos y Privacidad separadas, explícitas y firmadas.
+- [x] Registro, confirmación por email, Turnstile y centro de privacidad.
+- [x] Solicitudes de privacidad con evento durable y cola administrativa AAL2.
+- [x] Email oficial de envío y recepción para soporte/legal/promoción.
+- [x] RLS, CSP, secret scan, pruebas de base de datos, unitarias y E2E.
+- [x] Pagos, documentos, citas, comunidad, IA, video e intake público cerrados.
+- [ ] Revisión jurídica profesional antes de comercio o datos sensibles.
+- [ ] CNPJ, domicilio registral completo, fiscalidad y contratos antes de comercio.
+
+Los ítems generales no marcados debajo bloquean la función correspondiente, no el hito limitado descrito arriba.
+
 ## Propiedad y legal
 
-- [ ] Marca/dominio.
-- [ ] Entidad legal.
-- [ ] Alcance profesional.
-- [ ] Términos.
-- [ ] Privacidad.
+- [x] Marca/dominio.
+- [x] Entidad legal básica para identificación pública.
+- [x] Alcance actual definido como informativo, sin asesoría profesional.
+- [x] Términos.
+- [x] Privacidad.
 - [ ] Reembolsos.
-- [ ] Cookies.
-- [ ] Consentimientos.
+- [x] Cookies.
+- [x] Consentimientos de registro.
 - [ ] Comunidad.
 - [ ] IA.
 - [ ] Proveedores/DPA.
 - [ ] Facturación/impuestos.
-- [ ] Menores.
+- [x] Menores: cuentas 18+; funciones de datos sensibles desactivadas.
 - [ ] Retención.
 
 ## Producto
@@ -25,12 +41,12 @@
 - [ ] Cuestionario.
 - [ ] Paquetes.
 - [ ] WhatsApp.
-- [ ] Auth/portal.
+- [x] Auth/portal.
 - [ ] Admin.
 - [ ] Help/FAQ.
 - [ ] PWA.
-- [ ] Email.
-- [ ] Support.
+- [x] Email.
+- [x] Support.
 
 ## Contenido
 
@@ -46,17 +62,17 @@
 ## Seguridad
 
 - [ ] `SECURITY_CHECKLIST.md`.
-- [ ] RLS tests.
+- [x] RLS tests.
 - [ ] Auth/MFA.
 - [ ] Admin password changed.
 - [ ] Pentest.
 - [ ] Backups/restore.
 - [ ] Incident drill.
-- [ ] Scanner.
-- [ ] CSP.
-- [ ] Secret scan.
+- [ ] Scanner privado.
+- [x] CSP.
+- [x] Secret scan.
 - [ ] Rate limits.
-- [ ] Bot protection.
+- [x] Bot protection.
 - [ ] Access review.
 
 ## Pagos/operación
@@ -75,8 +91,8 @@
 
 ## Calidad
 
-- [ ] CI verde.
-- [ ] E2E.
+- [x] CI verde.
+- [x] E2E.
 - [ ] Navegadores/dispositivos.
 - [ ] WCAG.
 - [ ] Rendimiento.

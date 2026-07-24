@@ -19,7 +19,8 @@ env:
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
   NEXT_PUBLIC_ALLOW_INDEXING: "false"
   SUPABASE_AUTH_CAPTCHA_SECRET: 1x0000000000000000000000000000000AA
-  REGISTRATION_TERMS_VERSION: ci-unpublished-v1
+  REGISTRATION_PRIVACY_VERSION: privacy-2026-07-23-v1
+  REGISTRATION_TERMS_VERSION: terms-2026-07-23-v1
   REGISTRATION_GATE_SIGNING_KEY: ci_registration_gate_signing_key_at_least_32_chars
   DISABLE_PAYMENTS: "true"
   DISABLE_DOCUMENT_UPLOADS: "true"
@@ -106,11 +107,11 @@ jobs:
             docker exec -i supabase_db_vwayaj-ayisyen \
               psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
               --set registration_key="$REGISTRATION_GATE_SIGNING_KEY"
-      - name: Allow terms verification only in the ephemeral E2E stack
+      - name: Allow legal acceptance verification only in the ephemeral E2E stack
         run: |
           docker exec supabase_db_vwayaj-ayisyen \
             psql --username postgres --dbname postgres --set ON_ERROR_STOP=1 \
-            --command "grant select (id, terms_version, terms_accepted_at) on public.profiles to service_role;"
+            --command "grant select (id, terms_version, privacy_version, terms_accepted_at, privacy_accepted_at) on public.profiles to service_role; grant select (user_id, consent_type, policy_version, locale, granted, evidence_hash, scope) on public.consent_records to service_role;"
       - name: Map local Supabase variables without printing values
         run: |
           supabase status -o env > /tmp/supabase.env

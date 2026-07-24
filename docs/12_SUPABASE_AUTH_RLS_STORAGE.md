@@ -28,13 +28,23 @@ Configuración recomendada:
 
 El alta pública queda disponible únicamente cuando coinciden todos los
 controles: proveedor remoto habilitado, `DISABLE_PUBLIC_REGISTRATION=false`,
-Turnstile listo, `REGISTRATION_TERMS_VERSION` fijada a una versión publicada y
-la misma clave HMAC disponible como `REGISTRATION_GATE_SIGNING_KEY` en el
+Turnstile listo, `REGISTRATION_TERMS_VERSION` y
+`REGISTRATION_PRIVACY_VERSION` fijadas exactamente a las versiones publicadas,
+y la misma clave HMAC disponible como `REGISTRATION_GATE_SIGNING_KEY` en el
 servidor y como `vwayaj_registration_gate_hmac` en Supabase Vault. La acción de
-servidor firma email, versión, fecha y nonce; el hook
+servidor firma email, ambas versiones, idioma jurídico, mecanismo, fecha y
+nonce; el hook
 `private.before_user_created` rechaza dentro de Supabase Auth cualquier alta
 directa o manipulada. El trigger de perfil sólo conserva una versión y fecha de
-aceptación cuya firma siga siendo válida.
+aceptación cuya firma siga siendo válida y crea registros separados de
+consentimiento para Términos y Privacidad con evidencia criptográfica
+proporcional.
+
+La migración admite durante 24 horas los dos formatos HMAC anteriores para que
+el cambio de base de datos y el despliegue de Next.js puedan ocurrir en cualquier
+orden. Esos formatos sólo conservan en el perfil la evidencia que realmente
+firmaron y nunca crean consentimientos document-bound ni datos de capacidad
+inexistentes. Después de la ventana se rechazan automáticamente.
 
 El bootstrap inicial usa un payload HMAC distinto, con propósito
 `admin-bootstrap`, y además exige `app_metadata` que sólo puede establecer la

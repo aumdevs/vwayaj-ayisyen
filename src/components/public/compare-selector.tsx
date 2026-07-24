@@ -51,7 +51,7 @@ export function CompareSelector({
       </div>
 
       <div className="compare-option-grid">
-        {countries.map((country) => {
+        {countries.map((country, index) => {
           const isSelected = selected.includes(country.code);
           return (
             <label
@@ -68,6 +68,7 @@ export function CompareSelector({
                 <Image
                   alt=""
                   fill
+                  preload={index === 0}
                   sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw"
                   src={country.image}
                 />

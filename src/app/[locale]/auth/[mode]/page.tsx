@@ -10,10 +10,12 @@ import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import {
+  getRegistrationPrivacyVersion,
   getRegistrationTermsVersion,
   isPublicRegistrationReady
 } from "@/server/auth/registration-attestation";
 import { getViewer } from "@/server/auth/viewer";
+import { signUpAction } from "@/app/[locale]/auth/actions";
 
 const modes = ["sign-in", "sign-up", "verify", "forgot-password", "reset-password", "mfa"] as const;
 type AuthMode = (typeof modes)[number];
@@ -32,7 +34,9 @@ export default async function AuthPage({ params }: AuthPageProps) {
   const experience = getExperienceCopy(locale);
   const turnstileSiteKey = getTurnstileSiteKey();
   const registrationEnabled = isPublicRegistrationReady();
+  const registrationPrivacyVersion = getRegistrationPrivacyVersion();
   const registrationTermsVersion = getRegistrationTermsVersion();
+  const localizedSignUpAction = signUpAction.bind(null, locale);
 
   if (authMode === "mfa") {
     const viewer = await getViewer();
@@ -89,7 +93,9 @@ export default async function AuthPage({ params }: AuthPageProps) {
         locale={locale}
         mode={authMode}
         registrationEnabled={registrationEnabled}
+        registrationPrivacyVersion={registrationPrivacyVersion}
         registrationTermsVersion={registrationTermsVersion}
+        signUpAction={localizedSignUpAction}
         turnstileSiteKey={turnstileSiteKey}
       />
     </AuthShell>

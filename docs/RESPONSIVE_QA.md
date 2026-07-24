@@ -19,6 +19,10 @@ Resultado: **PASS**
 
 ## Evidencia
 
+- 35 capturas finales web/PWA en `docs/screenshots/pwa-acceptance/`.
+- Reporte final en `docs/screenshots/pwa-acceptance/report.json`: 35 capturas,
+  0 errores de navegador y 0 desbordamientos.
+- Screenshots reales del manifest en `public/screenshots/pwa/`.
 - 42 capturas revisadas en `docs/screenshots/redesign/after/`.
 - Baseline previo en `docs/screenshots/redesign/before/`.
 - Reporte automatizado en `docs/screenshots/redesign/after/report.json`.
@@ -39,6 +43,10 @@ Las capturas privadas se generaron con datos vacíos mediante un arnés exclusiv
 - portal, documentos y expediente;
 - asesor, administración, tabla administrativa y editor;
 - 404 y error.
+- cuatro mega-menús de escritorio;
+- App Shell móvil y tableta táctil en ambas orientaciones;
+- menú “Más”, instalación Android, instrucciones iOS, offline y actualización;
+- modo standalone e invitación una vez por sesión.
 
 ## Correcciones realizadas durante QA
 
@@ -48,7 +56,9 @@ Las capturas privadas se generaron con datos vacíos mediante un arnés exclusiv
 - se apiló correctamente la composición del estado de error;
 - se verificó la marca completa dentro de los shells privados;
 - se corrigió el control visual del selector de comparación;
-- se validó la navegación inferior móvil y el drawer del header.
+- se reemplazó el drawer público móvil por App Bar, menú “Más” y navegación inferior;
+- se mantuvo App Shell en tableta táctil horizontal;
+- se validaron safe areas, teclado, contenido no cubierto y modo standalone.
 
 ## Observaciones
 

@@ -2,18 +2,16 @@
 
 ## PWA
 
-La aplicación será instalable, pero una PWA no debe ampliar el riesgo de datos privados.
+La aplicación es instalable, pero la PWA no amplía el riesgo de datos privados.
 
-### Manifest
+### Manifest implementado
 
-- nombre configurable;
-- `short_name`;
-- iconos adecuados;
-- `display: standalone`;
-- `start_url` locale-aware;
-- `scope`;
-- `theme_color` y `background_color`;
-- accesos directos sólo a rutas públicas seguras.
+- `id=/`, nombre `Vwayaj Ayisyen` y nombre corto `Vwayaj`;
+- `start_url=/ht?source=pwa`, `scope=/`, `display=standalone`;
+- tema y fondo blancos, orientación libre, locale kreyòl;
+- iconos normales 48–512, maskable, monochrome y Apple Touch Icon;
+- screenshots reales: home móvil, comparador móvil, país móvil y home tableta;
+- shortcuts a comparar, países, guías y cuenta.
 
 ### Service worker
 
@@ -37,7 +35,29 @@ Nunca cachear:
 - conversaciones IA;
 - datos personales.
 
-Usar `NetworkOnly` para superficies privadas y limpiar caches al cambiar versión. No implementar “offline sync” de formularios sensibles.
+La implementación usa network-first para navegación pública y
+stale-while-revalidate para activos públicos. No intercepta lo privado en
+absoluto; por tanto queda network-only por diseño. Los caches tienen prefijo y
+versión, y sólo se limpian los caches propios obsoletos. No existe
+sincronización offline de formularios.
+
+### App Shell e instalación
+
+- teléfono ≤767 px;
+- tableta táctil ≤1366 px sin hover, también horizontal;
+- `standalone` y `fullscreen`;
+- barra superior, idioma, atrás, menú “Más” y cinco destinos inferiores;
+- safe areas y ocultamiento de navegación cuando el teclado ocupa la pantalla;
+- aviso una vez por sesión después de 2,5 segundos;
+- Android usa `beforeinstallprompt` sólo después del botón;
+- iPhone/iPad reciben instrucciones;
+- no solicita notificaciones.
+
+### Actualización
+
+El worker espera. La interfaz anuncia una versión y ofrece “Actualizar” o “Más
+tarde”. Si cualquier formulario contiene progreso, no envía `SKIP_WAITING` y
+explica que primero debe finalizarse o guardarse.
 
 ## Rendimiento
 
