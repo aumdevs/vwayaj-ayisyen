@@ -2,7 +2,7 @@
 
 Fecha: 2026-07-23
 
-Rama de cierre: `agent/legal-center-production`
+Release funcional: PR `#16`; correcciones posdespliegue: PR `#17` y PR `#18`
 
 ## Reemplazado
 
@@ -56,7 +56,7 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 
 ## Seguridad y QA verificados
 
-- 83 pruebas unitarias aprobadas;
+- 84 pruebas unitarias aprobadas;
 - 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
 - 104 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
@@ -80,6 +80,8 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 - manifest con `id`, scope, standalone, tema blanco, shortcuts, iconos y screenshots;
 - iconos 48–512, maskable, monochrome, favicon y Apple Touch Icon;
 - caché versionada sólo para navegación/activos públicos;
+- precarga dinámica de los assets de Next.js requeridos por la página offline,
+  para que el fallback hidrate sin `ChunkLoadError`;
 - limpieza explícita de cachés heredadas y fallback limitado a la versión vigente;
 - exclusión de APIs, Auth, privado, Authorization, `private` y `no-store`;
 - actualización sólo tras acción explícita;
@@ -90,9 +92,20 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
   mínima, sin copiar texto libre ni método de verificación;
 - evidencia en `docs/screenshots/pwa-acceptance/`.
 
-## Preview verificado
+## Producción verificada
 
 - el Preview histórico quedó protegido, sin datos productivos y con sus rutas principales en `200`;
+- `https://vwayajayisyen.com` y sus aliases apuntan al deployment Production
+  `dpl_DxFaqBzK74brpUTHmw9X7CS8hA8P`, estado `Ready`;
+- CSP de registro sin errores, Turnstile visible y sin
+  `style-src-attr 'unsafe-inline'`;
+- service worker v5 controlando la página offline, fallback servido desde
+  caché y cero `ChunkLoadError`;
+- health, robots, sitemap, rutas legales y redirección del portal verificados
+  sobre el dominio oficial;
+- 24 migraciones locales y remotas alineadas;
+- los endpoints desactivados permanecieron fail-closed y los cron protegidos
+  rechazaron solicitudes sin autorización;
 - el build PWA final generó 35 capturas locales sin errores ni overflow;
 - Lighthouse móvil final: 96 Performance, 100 Accessibility y 100 Best Practices;
 - Lighthouse escritorio final: 100 Performance, 100 Accessibility y 100 Best Practices;
