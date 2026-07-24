@@ -1,9 +1,10 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v4";
+const CACHE_VERSION = "v5";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];
 const OFFLINE_URL = "/offline";
+const NEXT_STATIC_ASSET_PATTERN = /\/_next\/static\/[^"'\\\s<]+/g;
 const PRECACHE_URLS = [
   OFFLINE_URL,
   "/icon.svg",
@@ -40,6 +41,25 @@ function canCache(response) {
   return !/\b(?:private|no-store)\b/i.test(cacheControl);
 }
 
+async function precacheOfflineSurface() {
+  const cache = await caches.open(STATIC_CACHE);
+  await cache.addAll(PRECACHE_URLS);
+
+  const offlineResponse = await cache.match(OFFLINE_URL);
+  if (!offlineResponse) throw new Error("Offline surface was not cached.");
+
+  const offlineHtml = await offlineResponse.text();
+  const buildAssets = [...new Set(offlineHtml.match(NEXT_STATIC_ASSET_PATTERN) ?? [])];
+  await Promise.all(
+    buildAssets.map(async (assetPath) => {
+      const assetUrl = new URL(assetPath, self.location.origin).href;
+      const response = await fetch(assetUrl, { cache: "reload" });
+      if (!canCache(response)) throw new Error(`Offline asset could not be cached: ${assetPath}`);
+      await cache.put(assetUrl, response.clone());
+    })
+  );
+}
+
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
@@ -71,7 +91,7 @@ async function staleWhileRevalidate(request) {
 }
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(STATIC_CACHE).then((cache) => cache.addAll(PRECACHE_URLS)));
+  event.waitUntil(precacheOfflineSurface());
 });
 
 self.addEventListener("message", (event) => {
