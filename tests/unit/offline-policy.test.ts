@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { runInNewContext } from "node:vm";
 import { describe, expect, it } from "vitest";
 
 describe("offline cache policy", () => {
@@ -41,6 +42,68 @@ describe("offline cache policy", () => {
     expect(source).toContain("staleWhileRevalidate(request)");
     expect(source).toContain("/_next/static/");
     expect(source).toContain("/images/");
+  });
+
+  it("precaches the build assets needed to hydrate the offline surface", async () => {
+    const listeners = new Map<
+      string,
+      (event: { waitUntil(promise: Promise<unknown>): void }) => void
+    >();
+    const cachedAssets: string[] = [];
+    const fetchedAssets: string[] = [];
+    let installPromise: Promise<unknown> | null = null;
+    const cache = {
+      addAll: async () => undefined,
+      match: async () => ({
+        text: async () =>
+          [
+            '<script src="/_next/static/chunks/runtime.js"></script>',
+            '<script>self.__next_f.push(["/_next/static/chunks/offline.js"])</script>'
+          ].join("")
+      }),
+      put: async (assetUrl: string) => {
+        cachedAssets.push(assetUrl);
+      }
+    };
+    const response = {
+      clone: () => response,
+      headers: { get: () => "public, max-age=31536000, immutable" },
+      ok: true,
+      type: "basic"
+    };
+
+    runInNewContext(source, {
+      URL,
+      caches: {
+        open: async () => cache
+      },
+      fetch: async (assetUrl: string) => {
+        fetchedAssets.push(assetUrl);
+        return response;
+      },
+      self: {
+        addEventListener: (
+          event: string,
+          listener: (event: { waitUntil(promise: Promise<unknown>): void }) => void
+        ) => listeners.set(event, listener),
+        clients: { claim: async () => undefined },
+        location: { origin: "https://vwayajayisyen.com" },
+        skipWaiting: () => undefined
+      }
+    });
+
+    listeners.get("install")?.({
+      waitUntil(promise) {
+        installPromise = promise;
+      }
+    });
+    await installPromise;
+
+    expect(fetchedAssets).toEqual([
+      "https://vwayajayisyen.com/_next/static/chunks/runtime.js",
+      "https://vwayajayisyen.com/_next/static/chunks/offline.js"
+    ]);
+    expect(cachedAssets).toEqual(fetchedAssets);
   });
 
   it("removes the legacy worker cache and reads fallbacks only from current caches", () => {
