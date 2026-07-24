@@ -5,8 +5,12 @@ Fecha de corte: 2026-07-23.
 ## Recursos
 
 - GitHub: `https://github.com/aumdevs/vwayaj-ayisyen` (público, licencia propietaria de Aum Prodz).
-- Rama de release: `agent/legal-center-production`; PR `#16`.
-- Vercel: equipo `Aum prodz Group`, proyecto `vwayaj-ayisyen` (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como única rama Production; Preview protegido por Vercel Authentication.
+- Release funcional: PR `#16`; correcciones posdespliegue: PR `#17` y
+  PR `#18`.
+- Vercel: equipo `Aum prodz Group`, proyecto `vwayaj-ayisyen`
+  (`prj_7ypksu4QMxUZLss5pZGGTSIDBLXV`), conectado a GitHub con `main` como
+  única rama Production; `https://vwayajayisyen.com` activo y Preview
+  protegido por Vercel Authentication.
 - Supabase remoto: **Vwayaj Ayisyen** (`gaknpocbfmiamghpoqhw`), São Paulo, plan gratuito, creado mediante Vercel Marketplace.
 - GitHub Code Security: CodeQL y Dependency Review nativos habilitados después de convertir el repositorio a público.
 - GitHub: secret scanning, push protection, alertas de dependencias, actualizaciones de seguridad de Dependabot y reporte privado de vulnerabilidades habilitados.
@@ -53,11 +57,11 @@ Fecha de corte: 2026-07-23.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 24 aplicadas localmente; las cuatro últimas se aplican a remoto al publicar este release |
+| Migraciones desde base vacía | 24 aplicadas localmente y alineadas con Supabase remoto |
 | Lint PostgreSQL | sin hallazgos |
 | Pruebas pgTAP/RLS | 104 aprobadas localmente |
 | Schema drift | vacío |
-| Unit tests | 83 aprobadas en 18 archivos |
+| Unit tests | 84 aprobadas en 18 archivos |
 | Cobertura del núcleo | 96.36% líneas, 97.43% ramas |
 | Playwright desktop/móvil | 33 aprobadas, 7 saltos intencionales por plataforma |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |
@@ -71,7 +75,43 @@ Fecha de corte: 2026-07-23.
 | Clave privada nueva de Supabase | REST remoto `200` |
 | Contraseña rotada de Postgres | conexión SSL directa aprobada |
 | GitHub Actions | app, base de datos, E2E, CodeQL, Dependency Review y Gitleaks aprobados en runners públicos |
-| Vercel | Preview protegido verificado; publicación de Production reservada a un merge aprobado en `main` |
+| Vercel | Production `Ready`; dominio principal y aliases asignados al commit aprobado de `main` |
+
+## Publicación y verificación de producción
+
+- El release principal se integró mediante PR `#16`: commit de `main`
+  `66e51c8`, deployment `dpl_DwyC9z5botbkBESLX5MxCxE4YtDA`.
+- El fallback PWA se corrigió mediante PR `#17`: commit `14fdbd5`,
+  deployment `dpl_4ZcZzYQDu8Z9FiU1v5JjqT3ywFHT`.
+- La política CSP exacta de Turnstile se corrigió mediante PR `#18`: commit
+  `fdf2e53`, deployment `dpl_DxFaqBzK74brpUTHmw9X7CS8hA8P`, estado
+  `Ready` y alias `https://vwayajayisyen.com`.
+- Dominio raíz, `www`, SSL/HSTS, `/api/health`, `robots.txt` y
+  `sitemap.xml` respondieron correctamente. El health endpoint conserva
+  `Cache-Control: no-store` y el lanzamiento continúa con indexación
+  desactivada.
+- Las 24 migraciones están aplicadas y alineadas en Supabase remoto.
+- Las rutas versionadas de Términos y Privacidad en español y portugués
+  respondieron `200`; una versión inválida respondió `404`.
+- El portal sin sesión redirigió a login. El registro mostró las tres
+  aceptaciones separadas, versiones legales y Turnstile visible; su CSP
+  contiene únicamente el hash exacto requerido por Cloudflare, sin
+  `style-src-attr 'unsafe-inline'` ni errores CSP.
+- La PWA v5 quedó controlada por el service worker: su fallback offline fue
+  servido desde caché, precargó los 14 assets estáticos actuales de Next.js,
+  mostró `Ou pa konekte kounye a` y produjo cero `ChunkLoadError`.
+- Escritorio, teléfono y tableta conservaron sus shells respectivos sin
+  overflow. En escritorio se verificó el mega-menú; en teléfono y tableta,
+  App Bar y navegación inferior.
+- Los endpoints de intake, pagos, IA, WhatsApp, documentos, uploads y citas
+  permanecen fail-closed; los cron protegidos rechazaron acceso sin
+  autorización.
+- No se encontró `admin@aumprodz.com`, `vwayaj.aumprodz.com` ni el nombre
+  heredado “Haitian Legal Travel Platform” en las superficies públicas
+  revisadas. Los correos públicos son `support@vwayajayisyen.com`,
+  `legal@vwayajayisyen.com` y `promo@vwayajayisyen.com`.
+- Las pruebas de producción fueron de sólo lectura: no se creó ninguna
+  cuenta ni se modificaron datos productivos.
 
 ## Estado de funciones
 
