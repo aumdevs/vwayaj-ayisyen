@@ -4,11 +4,13 @@ import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n/config";
 import { refreshAuthSession } from "@/lib/supabase/proxy";
 
 const NEXT_IMAGE_FILL_STYLE_SHA256 = "'sha256-ZDrxqUOB4m/L0JWL/+gS52g1CRH0l/qwMhjTw5Z/Fsc='";
+const TURNSTILE_FLEXIBLE_STYLE_SHA256 = "'sha256-dMnbuGXRM5Y7/d67w8MZPydMv+XXsm0B9vkgAYOXC1I='";
 
 function buildContentSecurityPolicy(nonce: string): string {
   const isDevelopment = process.env.NODE_ENV === "development";
   const connectSources = ["'self'"];
   const scriptSources = ["'self'", `'nonce-${nonce}'`, "'strict-dynamic'"];
+  const styleAttributeHashes = [NEXT_IMAGE_FILL_STYLE_SHA256];
   const frameSources: string[] = [];
   const supabase = getSupabasePublicConfig();
   const turnstileEnabled = getTurnstileSiteKey() !== null;
@@ -21,6 +23,7 @@ function buildContentSecurityPolicy(nonce: string): string {
   if (turnstileEnabled) {
     scriptSources.push("https://challenges.cloudflare.com");
     frameSources.push("https://challenges.cloudflare.com");
+    styleAttributeHashes.push(TURNSTILE_FLEXIBLE_STYLE_SHA256);
   }
   if (isDevelopment) scriptSources.push("'unsafe-eval'");
 
@@ -28,7 +31,7 @@ function buildContentSecurityPolicy(nonce: string): string {
     "default-src 'self'",
     `script-src ${scriptSources.join(" ")}`,
     `style-src 'self' 'nonce-${nonce}'`,
-    `style-src-attr 'unsafe-hashes' ${NEXT_IMAGE_FILL_STYLE_SHA256}`,
+    `style-src-attr 'unsafe-hashes' ${styleAttributeHashes.join(" ")}`,
     "img-src 'self' blob: data:",
     "font-src 'self' data:",
     `connect-src ${connectSources.join(" ")}`,
