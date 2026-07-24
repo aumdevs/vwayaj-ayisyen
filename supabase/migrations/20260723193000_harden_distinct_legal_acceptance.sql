@@ -20,6 +20,16 @@ create table if not exists private.registration_legal_versions (
   updated_at timestamptz not null default now()
 );
 
+alter table private.registration_legal_versions
+  add column if not exists legacy_attestation_accept_until timestamptz;
+update private.registration_legal_versions
+set legacy_attestation_accept_until = clock_timestamp() + interval '24 hours'
+where legacy_attestation_accept_until is null;
+alter table private.registration_legal_versions
+  alter column legacy_attestation_accept_until
+    set default (clock_timestamp() + interval '24 hours'),
+  alter column legacy_attestation_accept_until set not null;
+
 insert into private.registration_legal_versions(
   singleton,
   terms_version,
@@ -138,11 +148,11 @@ alter table public.consent_records
     )
   );
 
-create or replace function private.registration_attestation_is_valid(
+create or replace function private.registration_attestation_version(
   p_email text,
   p_metadata jsonb
 )
-returns boolean
+returns text
 language plpgsql
 set search_path = ''
 as $$
@@ -153,6 +163,7 @@ declare
   v_age_capacity_mechanism text;
   v_email text;
   v_legal_locale text;
+  v_legacy_allowed boolean;
   v_nonce text;
   v_payload text;
   v_privacy_acceptance_mechanism text;
@@ -184,19 +195,37 @@ begin
 
   if v_email = '' or char_length(v_email) > 254
     or v_terms_version !~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
-    or v_privacy_version !~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
-    or v_terms_content_hash !~ '^[0-9a-f]{64}$'
-    or v_privacy_content_hash !~ '^[0-9a-f]{64}$'
-    or v_legal_locale not in ('es', 'pt')
-    or v_terms_acceptance_mechanism <> 'signup_terms_checkbox'
-    or v_privacy_acceptance_mechanism <> 'signup_privacy_acknowledgement_checkbox'
-    or v_age_capacity_mechanism <> 'signup_age_capacity_checkbox'
     or v_accepted_at_text
       !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$'
-    or v_privacy_accepted_at_text <> v_accepted_at_text
-    or v_age_capacity_confirmed_at_text <> v_accepted_at_text
     or v_nonce !~ '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
-    or not exists (
+  then
+    return null;
+  end if;
+
+  begin
+    v_accepted_at := v_accepted_at_text::timestamptz;
+  exception
+    when others then
+      return null;
+  end;
+
+  if v_accepted_at < clock_timestamp() - interval '10 minutes'
+    or v_accepted_at > clock_timestamp() + interval '1 minute'
+  then
+    return null;
+  end if;
+
+  if v_privacy_version ~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
+    and v_terms_content_hash ~ '^[0-9a-f]{64}$'
+    and v_privacy_content_hash ~ '^[0-9a-f]{64}$'
+    and v_legal_locale in ('es', 'pt')
+    and v_terms_acceptance_mechanism = 'signup_terms_checkbox'
+    and v_privacy_acceptance_mechanism =
+      'signup_privacy_acknowledgement_checkbox'
+    and v_age_capacity_mechanism = 'signup_age_capacity_checkbox'
+    and v_privacy_accepted_at_text = v_accepted_at_text
+    and v_age_capacity_confirmed_at_text = v_accepted_at_text
+    and exists (
       select 1
       from private.registration_legal_versions as active_versions
       where active_versions.singleton
@@ -213,42 +242,107 @@ begin
         end
     )
   then
-    return false;
+    v_payload := concat_ws(
+      E'\n',
+      v_email,
+      v_terms_version,
+      v_terms_content_hash,
+      v_privacy_version,
+      v_privacy_content_hash,
+      v_legal_locale,
+      v_terms_acceptance_mechanism,
+      v_privacy_acceptance_mechanism,
+      v_age_capacity_mechanism,
+      v_accepted_at_text,
+      v_nonce
+    );
+    if private.registration_signature_matches(v_payload, v_signature) then
+      return 'document_bound_v2';
+    end if;
   end if;
 
-  begin
-    v_accepted_at := v_accepted_at_text::timestamptz;
-  exception
-    when others then
-      return false;
-  end;
+  select
+    active_versions.legacy_attestation_accept_until >= clock_timestamp()
+  into v_legacy_allowed
+  from private.registration_legal_versions as active_versions
+  where active_versions.singleton;
 
-  if v_accepted_at < clock_timestamp() - interval '10 minutes'
-    or v_accepted_at > clock_timestamp() + interval '1 minute'
+  if not coalesce(v_legacy_allowed, false) then
+    return null;
+  end if;
+
+  -- During the bounded rollout window, accept the immediately preceding
+  -- separate-Terms/Privacy payload. It remains profile-only legacy evidence:
+  -- the missing document hashes and age/capacity proof are never fabricated.
+  if v_privacy_version ~ '^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$'
+    and v_legal_locale in ('es', 'pt')
+    and v_terms_acceptance_mechanism = 'signup_terms_checkbox'
+    and v_privacy_acceptance_mechanism =
+      'signup_privacy_acknowledgement_checkbox'
+    and v_privacy_accepted_at_text = v_accepted_at_text
+    and v_terms_content_hash = ''
+    and v_privacy_content_hash = ''
+    and v_age_capacity_mechanism = ''
+    and v_age_capacity_confirmed_at_text = ''
   then
-    return false;
+    v_payload := concat_ws(
+      E'\n',
+      v_email,
+      v_terms_version,
+      v_privacy_version,
+      v_legal_locale,
+      v_terms_acceptance_mechanism,
+      v_privacy_acceptance_mechanism,
+      v_accepted_at_text,
+      v_nonce
+    );
+    if private.registration_signature_matches(v_payload, v_signature) then
+      return 'separate_legal_v1';
+    end if;
   end if;
 
-  v_payload := concat_ws(
-    E'\n',
-    v_email,
-    v_terms_version,
-    v_terms_content_hash,
-    v_privacy_version,
-    v_privacy_content_hash,
-    v_legal_locale,
-    v_terms_acceptance_mechanism,
-    v_privacy_acceptance_mechanism,
-    v_age_capacity_mechanism,
-    v_accepted_at_text,
-    v_nonce
-  );
+  -- The production application that precedes this release signs only these
+  -- four fields. Extra legal metadata must be absent so an old signature can
+  -- never authorize forged current-format evidence.
+  if v_privacy_version = ''
+    and v_legal_locale = ''
+    and v_terms_acceptance_mechanism = ''
+    and v_privacy_acceptance_mechanism = ''
+    and v_privacy_accepted_at_text = ''
+    and v_terms_content_hash = ''
+    and v_privacy_content_hash = ''
+    and v_age_capacity_mechanism = ''
+    and v_age_capacity_confirmed_at_text = ''
+  then
+    v_payload := concat_ws(
+      E'\n',
+      v_email,
+      v_terms_version,
+      v_accepted_at_text,
+      v_nonce
+    );
+    if private.registration_signature_matches(v_payload, v_signature) then
+      return 'terms_only_v0';
+    end if;
+  end if;
 
-  return private.registration_signature_matches(v_payload, v_signature);
+  return null;
 exception
   when others then
-    return false;
+    return null;
 end;
+$$;
+
+create or replace function private.registration_attestation_is_valid(
+  p_email text,
+  p_metadata jsonb
+)
+returns boolean
+language sql
+set search_path = ''
+as $$
+  select private.registration_attestation_version(p_email, p_metadata)
+    is not null;
 $$;
 
 create or replace function private.handle_new_auth_user()
@@ -260,16 +354,20 @@ as $$
 declare
   v_accepted_at timestamptz;
   v_attestation_valid boolean;
+  v_attestation_version text;
   v_evidence_hash text;
   v_legal_locale public.app_locale;
 begin
-  v_attestation_valid := private.registration_attestation_is_valid(
+  v_attestation_version := private.registration_attestation_version(
     new.email,
     coalesce(new.raw_user_meta_data, '{}'::jsonb)
   );
+  v_attestation_valid := v_attestation_version is not null;
 
   if v_attestation_valid then
     v_accepted_at := (new.raw_user_meta_data ->> 'terms_accepted_at')::timestamptz;
+  end if;
+  if v_attestation_version = 'document_bound_v2' then
     v_legal_locale := (new.raw_user_meta_data ->> 'legal_locale')::public.app_locale;
     v_evidence_hash := encode(
       extensions.digest(
@@ -304,7 +402,8 @@ begin
       else null
     end,
     case
-      when v_attestation_valid then new.raw_user_meta_data ->> 'privacy_version'
+      when v_attestation_version in ('separate_legal_v1', 'document_bound_v2')
+        then new.raw_user_meta_data ->> 'privacy_version'
       else null
     end,
     case
@@ -312,13 +411,14 @@ begin
       else null
     end,
     case
-      when v_attestation_valid then v_accepted_at
+      when v_attestation_version in ('separate_legal_v1', 'document_bound_v2')
+        then v_accepted_at
       else null
     end
   )
   on conflict (id) do nothing;
 
-  if v_attestation_valid then
+  if v_attestation_version = 'document_bound_v2' then
     insert into public.consent_records(
       user_id,
       consent_type,
@@ -379,7 +479,11 @@ $$;
 
 revoke all on function private.registration_attestation_is_valid(text, jsonb)
   from public, anon, authenticated, service_role;
+revoke all on function private.registration_attestation_version(text, jsonb)
+  from public, anon, authenticated, service_role;
 grant execute on function private.registration_attestation_is_valid(text, jsonb)
+  to supabase_auth_admin;
+grant execute on function private.registration_attestation_version(text, jsonb)
   to supabase_auth_admin;
 
 -- CREATE OR REPLACE preserves a manual EXECUTE revocation. Repair the earlier

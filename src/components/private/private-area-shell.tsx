@@ -49,6 +49,10 @@ type PrivateAreaShellProps = {
     _previous: PrivacyAdminActionState,
     formData: FormData
   ) => Promise<PrivacyAdminActionState>;
+  privacyAdminTransitionAction: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
   privacyAdminQueueData: PrivacyAdminQueueData | null;
   privacyCenterData: PrivacyCenterData | null;
   privacyRequestAction: (
@@ -409,6 +413,7 @@ function StaffShell({
   email,
   assuranceLevel,
   privacyAdminAction,
+  privacyAdminTransitionAction,
   privacyAdminQueueData
 }: {
   area: Exclude<PrivateArea, "portal">;
@@ -420,6 +425,10 @@ function StaffShell({
   email: string | null;
   assuranceLevel: "aal1" | "aal2" | null;
   privacyAdminAction: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
+  privacyAdminTransitionAction: (
     _previous: PrivacyAdminActionState,
     formData: FormData
   ) => Promise<PrivacyAdminActionState>;
@@ -553,10 +562,11 @@ function StaffShell({
             </section>
           ) : area === "admin" && section === "privacy-requests" && privacyAdminQueueData ? (
             <PrivacyAdminQueue
-              action={privacyAdminAction}
+              completionAction={privacyAdminAction}
               data={privacyAdminQueueData}
               legalEmail={BRAND.contact.legal}
               locale={locale}
+              transitionAction={privacyAdminTransitionAction}
             />
           ) : (
             <section className="staff-table-panel">
@@ -599,6 +609,7 @@ export function PrivateAreaShell({
   email,
   assuranceLevel,
   privacyAdminAction,
+  privacyAdminTransitionAction,
   privacyAdminQueueData,
   privacyCenterData,
   privacyRequestAction
@@ -633,6 +644,7 @@ export function PrivateAreaShell({
       email={email}
       locale={locale}
       privacyAdminAction={privacyAdminAction}
+      privacyAdminTransitionAction={privacyAdminTransitionAction}
       privacyAdminQueueData={privacyAdminQueueData}
       section={section}
       title={title}

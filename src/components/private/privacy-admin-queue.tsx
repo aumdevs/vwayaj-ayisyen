@@ -1,17 +1,22 @@
 import { Inbox, ShieldCheck } from "lucide-react";
 import type { PrivacyAdminActionState } from "@/app/[locale]/privacy-admin-actions";
+import { PrivacyAdminProgressForm } from "@/components/private/privacy-admin-progress-form";
 import { PrivacyAdminResolutionForm } from "@/components/private/privacy-admin-resolution-form";
 import type { Locale } from "@/types/domain";
 import type { PrivacyAdminQueueData } from "@/types/privacy";
 
 type PrivacyAdminQueueProps = {
-  action: (
+  completionAction: (
     _previous: PrivacyAdminActionState,
     formData: FormData
   ) => Promise<PrivacyAdminActionState>;
   data: PrivacyAdminQueueData;
   legalEmail: string;
   locale: Locale;
+  transitionAction: (
+    _previous: PrivacyAdminActionState,
+    formData: FormData
+  ) => Promise<PrivacyAdminActionState>;
 };
 
 const copy = {
@@ -200,7 +205,13 @@ function formatTimestamp(value: string, locale: Locale) {
   }).format(new Date(value));
 }
 
-export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyAdminQueueProps) {
+export function PrivacyAdminQueue({
+  completionAction,
+  data,
+  legalEmail,
+  locale,
+  transitionAction
+}: PrivacyAdminQueueProps) {
   const text = copy[locale];
 
   return (
@@ -250,11 +261,19 @@ export function PrivacyAdminQueue({ action, data, legalEmail, locale }: PrivacyA
                 {request.description?.trim() || text.noDetails}
               </p>
               <div role="cell">
-                <PrivacyAdminResolutionForm
-                  action={action}
-                  locale={locale}
-                  requestId={request.id}
-                />
+                <div className="privacy-admin-workflow-forms">
+                  <PrivacyAdminProgressForm
+                    action={transitionAction}
+                    currentStatus={request.status}
+                    locale={locale}
+                    requestId={request.id}
+                  />
+                  <PrivacyAdminResolutionForm
+                    action={completionAction}
+                    locale={locale}
+                    requestId={request.id}
+                  />
+                </div>
               </div>
             </div>
           ))}

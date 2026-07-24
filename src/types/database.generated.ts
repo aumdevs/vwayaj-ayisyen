@@ -4607,6 +4607,34 @@ export type Database = {
         };
         Returns: string;
       };
+      transition_data_subject_request: {
+        Args: {
+          p_identity_verification_method: string;
+          p_next_status: Database["public"]["Enums"]["data_request_status"];
+          p_request_id: string;
+        };
+        Returns: {
+          assigned_to: string | null;
+          completed_at: string | null;
+          created_at: string;
+          description: string | null;
+          due_at: string | null;
+          id: string;
+          identity_verification_method: string | null;
+          locale: Database["public"]["Enums"]["app_locale"];
+          request_type: Database["public"]["Enums"]["data_request_type"];
+          resolution_summary: string | null;
+          status: Database["public"]["Enums"]["data_request_status"];
+          updated_at: string;
+          user_id: string | null;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "data_subject_requests";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
       update_my_profile: {
         Args: {
           p_country_of_residence?: string;

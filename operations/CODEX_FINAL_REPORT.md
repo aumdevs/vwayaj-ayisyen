@@ -28,9 +28,12 @@ Fecha de corte: 2026-07-23.
 - Alta con aceptación separada de Términos, reconocimiento de Privacidad y
   confirmación 18+/capacidad; HMAC, timestamp, versiones activas y hash SHA-256
   exacto del contenido oficial por idioma se validan en el hook de Auth.
-- Centro de privacidad con intake autenticado, cola administrativa y cierre
-  exclusivo mediante acción admin+AAL2 y RPC AAL2 auditado con outbox; un
-  reenvío actualiza los detalles de la solicitud abierta sin duplicarla.
+- Centro de privacidad con intake autenticado, unicidad de solicitudes abiertas,
+  consolidación histórica, cola administrativa, transiciones intermedias y
+  cierre mediante acciones admin+AAL2 y RPCs AAL2 auditados; un reenvío
+  actualiza los detalles de la solicitud abierta sin duplicarla.
+- Despliegue de registro sin corte: los formatos HMAC anteriores sólo se
+  aceptan durante una ventana de 24 horas y no fabrican evidencia legal nueva.
 - Evidencia legal firmada inmutable para navegadores; los case managers
   conservan sólo la actualización de estado/retiro para consentimientos no
   legales y no pueden convertirlos en Términos o Privacidad.
@@ -50,11 +53,11 @@ Fecha de corte: 2026-07-23.
 
 | Control | Resultado |
 |---|---|
-| Migraciones desde base vacía | 23 aplicadas localmente; las tres últimas se aplican a remoto al publicar este release |
+| Migraciones desde base vacía | 24 aplicadas localmente; las cuatro últimas se aplican a remoto al publicar este release |
 | Lint PostgreSQL | sin hallazgos |
-| Pruebas pgTAP/RLS | 91 aprobadas localmente |
+| Pruebas pgTAP/RLS | 104 aprobadas localmente |
 | Schema drift | vacío |
-| Unit tests | 81 aprobadas en 18 archivos |
+| Unit tests | 83 aprobadas en 18 archivos |
 | Cobertura del núcleo | 96.36% líneas, 97.43% ramas |
 | Playwright desktop/móvil | 33 aprobadas, 7 saltos intencionales por plataforma |
 | Axe WCAG serio/crítico | 0 en home desktop/móvil |

@@ -29,7 +29,10 @@ vi.mock("@/lib/supabase/server", () => ({
   }))
 }));
 
-import { completePrivacyRequestAction } from "@/app/[locale]/privacy-admin-actions";
+import {
+  completePrivacyRequestAction,
+  transitionPrivacyRequestAction
+} from "@/app/[locale]/privacy-admin-actions";
 import { submitPrivacyRequestAction } from "@/app/[locale]/privacy-actions";
 
 function formData(values: Record<string, string>): FormData {
@@ -167,6 +170,47 @@ describe("privacy request action", () => {
 });
 
 describe("privacy administrator completion action", () => {
+  it("moves an open request to a protected intermediate workflow state", async () => {
+    mocks.rpc.mockResolvedValue({
+      data: { id: "00000000-0000-4000-8000-000000000124", status: "identity_check" },
+      error: null
+    });
+
+    const result = await transitionPrivacyRequestAction(
+      "es",
+      { status: "idle" },
+      formData({
+        identity_verification_method: "Sesión MFA y confirmación por correo",
+        request_id: "00000000-0000-4000-8000-000000000124",
+        workflow_status: "identity_check"
+      })
+    );
+
+    expect(result).toEqual({ status: "updated" });
+    expect(mocks.rpc).toHaveBeenCalledWith("transition_data_subject_request", {
+      p_identity_verification_method: "Sesión MFA y confirmación por correo",
+      p_next_status: "identity_check",
+      p_request_id: "00000000-0000-4000-8000-000000000124"
+    });
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/es/admin/privacy-requests");
+  });
+
+  it("rejects a terminal state through the intermediate transition action", async () => {
+    const result = await transitionPrivacyRequestAction(
+      "pt",
+      { status: "idle" },
+      formData({
+        identity_verification_method: "Sessão MFA",
+        request_id: "00000000-0000-4000-8000-000000000124",
+        workflow_status: "fulfilled"
+      })
+    );
+
+    expect(result).toEqual({ status: "invalid" });
+    expect(mocks.getClaims).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalled();
+  });
+
   it("submits only the validated terminal decision through the protected RPC", async () => {
     mocks.rpc.mockResolvedValue({
       data: { id: "00000000-0000-4000-8000-000000000124" },

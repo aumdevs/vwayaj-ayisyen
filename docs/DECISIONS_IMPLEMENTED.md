@@ -46,7 +46,7 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
   tokens se envían a Supabase Auth para validación de servidor. El alta falla
   cerrada si falta el site key público.
 - Supabase usa ES256 para firmar sesiones. La firma HS256 anterior, las API keys heredadas y la clave privada inicialmente emitida fueron revocadas; la contraseña de Postgres también fue rotada y verificada.
-- Los grants explícitos y RLS se verifican desde una base vacía con 91 pruebas
+- Los grants explícitos y RLS se verifican desde una base vacía con 104 pruebas
   pgTAP. Los buckets públicos permiten descarga directa sin permitir listados
   anónimos.
 - El alta exige tres controles separados: Términos, reconocimiento de Privacidad

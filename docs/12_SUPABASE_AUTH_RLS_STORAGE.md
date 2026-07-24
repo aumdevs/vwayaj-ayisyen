@@ -40,6 +40,12 @@ aceptación cuya firma siga siendo válida y crea registros separados de
 consentimiento para Términos y Privacidad con evidencia criptográfica
 proporcional.
 
+La migración admite durante 24 horas los dos formatos HMAC anteriores para que
+el cambio de base de datos y el despliegue de Next.js puedan ocurrir en cualquier
+orden. Esos formatos sólo conservan en el perfil la evidencia que realmente
+firmaron y nunca crean consentimientos document-bound ni datos de capacidad
+inexistentes. Después de la ventana se rechazan automáticamente.
+
 El bootstrap inicial usa un payload HMAC distinto, con propósito
 `admin-bootstrap`, y además exige `app_metadata` que sólo puede establecer la
 Admin API. Esto mantiene operativo el aprovisionamiento documentado sin crear un

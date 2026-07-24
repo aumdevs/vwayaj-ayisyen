@@ -6,7 +6,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to current_user;
 set local search_path = extensions, public, pg_temp;
 
-select plan(29);
+select plan(35);
 
 select ok(
   has_function_privilege(
@@ -24,6 +24,15 @@ select ok(
     'EXECUTE'
   ),
   'Supabase Auth can validate a server attestation'
+);
+
+select ok(
+  has_function_privilege(
+    'supabase_auth_admin',
+    'private.registration_attestation_version(text,jsonb)',
+    'EXECUTE'
+  ),
+  'Supabase Auth can identify the verified attestation format'
 );
 
 select ok(
@@ -270,6 +279,80 @@ select
   user_id
 from signed;
 
+create temporary table legacy_registration_test_vector (
+  accepted_at text not null,
+  email text not null,
+  event jsonb not null,
+  nonce text not null,
+  signature text not null,
+  terms_version text not null,
+  user_id uuid not null
+);
+
+insert into legacy_registration_test_vector(
+  accepted_at,
+  email,
+  event,
+  nonce,
+  signature,
+  terms_version,
+  user_id
+)
+with source as (
+  select
+    to_char(
+      clock_timestamp() at time zone 'UTC',
+      'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
+    ) as accepted_at,
+    'legacy-registration-test@example.invalid'::text as email,
+    extensions.gen_random_uuid()::text as nonce,
+    'terms-production-v0'::text as terms_version,
+    extensions.gen_random_uuid() as user_id
+),
+signed as (
+  select
+    *,
+    encode(
+      extensions.hmac(
+        concat_ws(E'\n', email, terms_version, accepted_at, nonce),
+        'ci_registration_gate_signing_key_at_least_32_chars',
+        'sha256'
+      ),
+      'hex'
+    ) as signature
+  from source
+)
+select
+  accepted_at,
+  email,
+  jsonb_build_object(
+    'metadata',
+    jsonb_build_object('name', 'before-user-created'),
+    'user',
+    jsonb_build_object(
+      'email',
+      email,
+      'user_metadata',
+      jsonb_build_object(
+        'preferred_locale',
+        'ht',
+        'registration_nonce',
+        nonce,
+        'registration_signature',
+        signature,
+        'terms_accepted_at',
+        accepted_at,
+        'terms_version',
+        terms_version
+      )
+    )
+  ),
+  nonce,
+  signature,
+  terms_version,
+  user_id
+from signed;
+
 select is(
   private.before_user_created(event),
   jsonb_build_object(
@@ -403,6 +486,32 @@ select is(
   'A fresh correctly signed registration is allowed'
 )
 from registration_test_vector;
+
+select is(
+  private.before_user_created(event),
+  '{}'::jsonb,
+  'The production four-field attestation remains valid during the rollout window'
+)
+from legacy_registration_test_vector;
+
+select is(
+  private.before_user_created(
+    jsonb_set(
+      event,
+      '{user,user_metadata,privacy_version}',
+      to_jsonb('forged-privacy-v1'::text)
+    )
+  ),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'A legacy signature cannot authorize added current-format legal evidence'
+)
+from legacy_registration_test_vector;
 
 select is(
   private.before_user_created(
@@ -661,6 +770,74 @@ select ok(
   'Consent records preserve locale, document hash, mechanism and proportional evidence'
 )
 from registration_test_vector v;
+
+insert into auth.users(
+  id,
+  instance_id,
+  aud,
+  role,
+  email,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  created_at,
+  updated_at
+)
+select
+  user_id,
+  '00000000-0000-0000-0000-000000000000'::uuid,
+  'authenticated',
+  'authenticated',
+  email,
+  '{"provider":"email","providers":["email"]}'::jsonb,
+  event -> 'user' -> 'user_metadata',
+  clock_timestamp(),
+  clock_timestamp()
+from legacy_registration_test_vector;
+
+select ok(
+  (
+    select
+      p.terms_version = v.terms_version
+      and to_char(
+        p.terms_accepted_at at time zone 'UTC',
+        'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'
+      ) = v.accepted_at
+      and p.privacy_version is null
+      and p.privacy_accepted_at is null
+    from public.profiles p
+    where p.id = v.user_id
+  ),
+  'Legacy rollout registration preserves only the evidence it actually signed'
+)
+from legacy_registration_test_vector v;
+
+select is(
+  (
+    select count(*)::integer
+    from public.consent_records c
+    where c.user_id = v.user_id
+  ),
+  0,
+  'Legacy rollout registration never fabricates document-bound consent records'
+)
+from legacy_registration_test_vector v;
+
+update private.registration_legal_versions
+set legacy_attestation_accept_until = clock_timestamp() - interval '1 second'
+where singleton;
+
+select is(
+  private.before_user_created(event),
+  jsonb_build_object(
+    'error',
+    jsonb_build_object(
+      'http_code', 400,
+      'message', 'Registration request could not be verified.'
+    )
+  ),
+  'The production four-field format is rejected after the bounded rollout window'
+)
+from legacy_registration_test_vector;
 
 insert into auth.users(
   id,

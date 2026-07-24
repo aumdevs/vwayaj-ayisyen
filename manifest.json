@@ -1,6 +1,6 @@
 {
   "project": "vwayaj-ayisyen",
-  "generated_at": "2026-07-23",
+  "generated_at": "2026-07-24",
   "package_expected_file_count": 183,
   "manifest_excludes": [
     "manifest.json",
@@ -209,13 +209,13 @@
     },
     {
       "path": "docs/11_DATABASE_DATA_DICTIONARY.md",
-      "size_bytes": 6332,
-      "sha256": "4e0eae31fba775ce3b6eed95412e8881371e764c672518f81683e8db1e3e90ad"
+      "size_bytes": 6662,
+      "sha256": "2394280c3a98e90334905febded29102147fa9e9bf43e311b14965e80b00f581"
     },
     {
       "path": "docs/12_SUPABASE_AUTH_RLS_STORAGE.md",
-      "size_bytes": 4939,
-      "sha256": "2d63added6b9501a4c603d95de0e4f2a024ccb868b0607d31c89b64d6fd1492b"
+      "size_bytes": 5322,
+      "sha256": "01500eb7a24dcc3178bedbe1f09a00fafcde52d9b949d45942da6444a2274efb"
     },
     {
       "path": "docs/13_SECURITY_THREAT_MODEL.md",
@@ -359,8 +359,8 @@
     },
     {
       "path": "docs/41_SUPPORT_AND_OPERATIONS_PLAYBOOK.md",
-      "size_bytes": 2791,
-      "sha256": "c5c548c8ed856282655cb36dba310443850efdd316981c5bd65374df334ef179"
+      "size_bytes": 3183,
+      "sha256": "b09e3e7f2436d374719ddd1c75b1c5343cb27a2a1db937f862b1cbf4b4b52b05"
     },
     {
       "path": "docs/42_DATA_RETENTION_SCHEDULE_TEMPLATE.md",
@@ -844,8 +844,8 @@
     },
     {
       "path": "supabase/tests/0003_registration_auth_hook.sql",
-      "size_bytes": 17949,
-      "sha256": "a2c85ef51216632bc3d46035c3cdbeb256107e90ea66a7e4191c9524f89bc3bc"
+      "size_bytes": 21926,
+      "sha256": "5a044e932fc3984128c13e1c62e44f18f0a95e8bd9194834d75dc87478c350fd"
     },
     {
       "path": "scripts/lib/admin-provisioning-attestation.ts",
@@ -884,18 +884,18 @@
     },
     {
       "path": "supabase/migrations/20260723193000_harden_distinct_legal_acceptance.sql",
-      "size_bytes": 13515,
-      "sha256": "60f6b0874cd52113495195d4357cad3d539097695aefaec922b1910173fdbdd4"
+      "size_bytes": 17085,
+      "sha256": "ffbd404250435953b8f942adc39d3f8d1a22632818afe641472d7c64dbed9120"
     },
     {
       "path": "supabase/migrations/20260723194500_harden_privacy_request_intake.sql",
-      "size_bytes": 8011,
-      "sha256": "5d30512512d6953e00f7a88418ab36cf0991794234fa8d1b860b8d8f2bb19852"
+      "size_bytes": 12662,
+      "sha256": "b4682d9a3c609c811dc9afbf12af5d42ee489ca7cf53ba57c699f7f83df61174"
     },
     {
       "path": "supabase/tests/0004_consent_rls.sql",
-      "size_bytes": 14555,
-      "sha256": "019a1982d8692bae0f8372e0a547cd721bd46cd06c41dfd4ee96003e8d4485f1"
+      "size_bytes": 17637,
+      "sha256": "c79dd35ea7342bc1046266308cd2084fcab912ddce1d555bfff178b6ea5c646b"
     },
     {
       "path": "supabase/migrations/20260723200000_preserve_official_site_configuration.sql",

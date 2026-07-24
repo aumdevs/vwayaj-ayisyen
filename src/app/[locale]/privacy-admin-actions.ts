@@ -14,9 +14,55 @@ const completionSchema = z.object({
   terminalStatus: z.enum(["fulfilled", "denied", "cancelled"])
 });
 
+const transitionSchema = z.object({
+  identityVerificationMethod: z.string().trim().min(3).max(160),
+  nextStatus: z.enum(["identity_check", "in_progress"]),
+  requestId: z.uuid()
+});
+
 export type PrivacyAdminActionState = {
-  status: "idle" | "invalid" | "resolved" | "unavailable";
+  status: "idle" | "invalid" | "resolved" | "unavailable" | "updated";
 };
+
+export async function transitionPrivacyRequestAction(
+  renderedLocale: string,
+  _previous: PrivacyAdminActionState,
+  formData: FormData
+): Promise<PrivacyAdminActionState> {
+  if (!isLocale(renderedLocale)) return { status: "invalid" };
+
+  const parsed = transitionSchema.safeParse({
+    identityVerificationMethod: formData.get("identity_verification_method"),
+    nextStatus: formData.get("workflow_status"),
+    requestId: formData.get("request_id")
+  });
+  if (!parsed.success) return { status: "invalid" };
+
+  const supabase = await createServerSupabaseClient();
+  if (!supabase) return { status: "unavailable" };
+  const { data, error: claimsError } = await supabase.auth.getClaims();
+  const claims = data?.claims;
+  const userId = typeof claims?.sub === "string" ? claims.sub : null;
+  if (claimsError || !userId || claims?.aal !== "aal2") return { status: "unavailable" };
+
+  const { data: roles, error: rolesError } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .in("role", ["admin", "super_admin"])
+    .limit(1);
+  if (rolesError || !roles?.[0]) return { status: "unavailable" };
+
+  const { error } = await supabase.rpc("transition_data_subject_request", {
+    p_identity_verification_method: parsed.data.identityVerificationMethod,
+    p_next_status: parsed.data.nextStatus,
+    p_request_id: parsed.data.requestId
+  });
+  if (error) return { status: "unavailable" };
+
+  revalidatePath(localizedPath(renderedLocale as Locale, "admin/privacy-requests"));
+  return { status: "updated" };
+}
 
 export async function completePrivacyRequestAction(
   renderedLocale: string,

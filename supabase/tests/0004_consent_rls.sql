@@ -7,7 +7,7 @@ create extension if not exists pgtap with schema extensions;
 grant usage on schema extensions to authenticated;
 set local search_path = extensions, public, pg_temp;
 
-select plan(25);
+select plan(31);
 
 insert into auth.users(
   id,
@@ -160,7 +160,47 @@ select throws_ok(
   'An ordinary authenticated user cannot complete a privacy request'
 );
 
+select throws_ok(
+  $sql$
+    select public.transition_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = auth.uid()
+          and request_type = 'access'
+      ),
+      'identity_check',
+      'forged user verification'
+    )
+  $sql$,
+  '42501',
+  'Administrator AAL2 is required.',
+  'An ordinary authenticated user cannot change privacy workflow status'
+);
+
 reset role;
+
+select throws_ok(
+  $sql$
+    insert into public.data_subject_requests(
+      user_id,
+      request_type,
+      status,
+      locale,
+      identity_verification_method
+    )
+    values (
+      '00000000-0000-4000-8000-000000000041'::uuid,
+      'access',
+      'identity_check',
+      'es',
+      'migration regression test'
+    )
+  $sql$,
+  '23505',
+  null,
+  'The database enforces one open workflow per user and request type'
+);
 
 select ok(
   (
@@ -350,6 +390,24 @@ select throws_ok(
   'An administrator without AAL2 cannot complete a privacy request'
 );
 
+select throws_ok(
+  $sql$
+    select public.transition_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'identity_check',
+      'email challenge'
+    )
+  $sql$,
+  '42501',
+  'Administrator AAL2 is required.',
+  'An administrator below AAL2 cannot change privacy workflow status'
+);
+
 reset role;
 select set_config(
   'request.jwt.claims',
@@ -435,6 +493,38 @@ select ok(
 
 select lives_ok(
   $sql$
+    select public.transition_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'identity_check',
+      'MFA session and email challenge'
+    )
+  $sql$,
+  'An AAL2 administrator can start identity verification'
+);
+
+select lives_ok(
+  $sql$
+    select public.transition_data_subject_request(
+      (
+        select id
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      ),
+      'in_progress',
+      'MFA session and email challenge'
+    )
+  $sql$,
+  'An AAL2 administrator can move verified work into progress'
+);
+
+select lives_ok(
+  $sql$
     select public.complete_data_subject_request(
       (
         select id
@@ -516,6 +606,33 @@ select ok(
       )
   ),
   'Completion creates an attributable high-risk audit record'
+);
+
+select ok(
+  (
+    select count(*) = 2
+      and bool_and(
+        actor_id = '00000000-0000-4000-8000-000000000042'::uuid
+        and actor_role = 'admin'::public.app_role
+        and risk_level = 'high'::public.risk_level
+        and reason in ('status:identity_check', 'status:in_progress')
+        and not (before_data ? 'identity_verification_method')
+        and not (after_data ? 'identity_verification_method')
+        and position(
+          'MFA session and email challenge'
+          in concat_ws(' ', reason, before_data::text, after_data::text, metadata::text)
+        ) = 0
+      )
+    from public.audit_log
+    where action = 'privacy_request_status_changed'
+      and target_id = (
+        select id::text
+        from public.data_subject_requests
+        where user_id = '00000000-0000-4000-8000-000000000041'::uuid
+          and request_type = 'access'
+      )
+  ),
+  'Intermediate transitions create attributable audits without verification details'
 );
 
 select ok(

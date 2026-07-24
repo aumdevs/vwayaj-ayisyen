@@ -68,6 +68,8 @@ Corrección editorial de alto riesgo puede despublicar primero y revisar despué
 - Sólo personal administrador con MFA (`aal2`) puede verla; RLS vuelve a comprobar el rol en la base de datos.
 - Revisar la cola cada día hábil y al iniciar cada turno operativo. No se promete un SLA público hasta validarlo jurídicamente.
 - Cada alta genera en la misma transacción un evento `privacy.data_subject_request.received` en `outbox_events`; un reintento no duplica la solicitud ni el evento y actualiza su metadata de idioma mientras siga pendiente.
+- Usar la acción AAL2 de la cola para avanzar `recibida → verificación de identidad → en proceso`; el RPC rechaza retrocesos y registra cada transición sin copiar el método de verificación a auditoría.
+- La migración de idempotencia conserva duplicados históricos, cierra los anteriores como consolidados y mantiene abierta únicamente la solicitud más reciente de cada derecho.
 - La cola muestra directamente la descripción opcional a todo administrador AAL2
   autorizado para que pueda tramitar la solicitud. Tratarla como confidencial,
   abrir la cola sólo cuando sea necesario y no copiar ese texto a logs,

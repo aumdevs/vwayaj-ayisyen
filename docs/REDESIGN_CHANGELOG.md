@@ -56,9 +56,9 @@ Los prompts pidieron fotografía editorial realista, personas haitianas tratadas
 
 ## Seguridad y QA verificados
 
-- 81 pruebas unitarias aprobadas;
+- 83 pruebas unitarias aprobadas;
 - 33 pruebas E2E aprobadas y 7 saltos intencionales por plataforma;
-- 91 invariantes/RLS pgTAP aprobadas;
+- 104 invariantes/RLS pgTAP aprobadas;
 - lint de base de datos sin hallazgos;
 - schema drift vacío;
 - aceptación legal ligada por HMAC al hash SHA-256 exacto de cada documento oficial y locale;

@@ -125,10 +125,11 @@ describe("privacy administrator queue", () => {
 
     render(
       createElement(PrivacyAdminQueue, {
-        action,
+        completionAction: action,
         data,
         legalEmail: "legal@vwayajayisyen.com",
-        locale: "es"
+        locale: "es",
+        transitionAction: action
       })
     );
 
@@ -140,6 +141,8 @@ describe("privacy administrator queue", () => {
     expect(screen.getByText("Corrige mi apellido de Dupond a Dupont.")).toBeVisible();
     expect(screen.getByText("00000000-0000-4000-8000-000000000124")).toBeVisible();
     expect(screen.getByLabelText("Método de verificación")).toBeVisible();
+    expect(screen.getByLabelText("Método de seguimiento")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Actualizar estado" })).toBeVisible();
     expect(screen.getByLabelText("Resolución y fundamento de la decisión")).toBeVisible();
     expect(screen.getByRole("button", { name: "Cerrar solicitud" })).toBeVisible();
     expect(screen.getByRole("link", { name: "legal@vwayajayisyen.com" })).toHaveAttribute(
@@ -167,10 +170,11 @@ describe("privacy administrator queue", () => {
 
     render(
       createElement(PrivacyAdminQueue, {
-        action,
+        completionAction: action,
         data,
         legalEmail: "legal@vwayajayisyen.com",
-        locale: "ht"
+        locale: "ht",
+        transitionAction: action
       })
     );
 

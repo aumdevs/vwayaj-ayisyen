@@ -89,4 +89,4 @@ La frontera real de `/[locale]/portal`, `/advisor`, `/professional`, `/editor`, 
 No se ejecutaron mutaciones con usuarios productivos. El E2E creó y eliminó una
 cuenta efímera local y verificó el hook de Auth. La separación de datos,
 versiones y hashes legales, inmutabilidad del consentimiento, preservación de
-configuración, DSR y RPC AAL2 se verificó con 91 pruebas pgTAP.
+configuración, DSR y RPC AAL2 se verificó con 104 pruebas pgTAP.
