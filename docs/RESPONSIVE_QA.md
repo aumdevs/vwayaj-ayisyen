@@ -51,7 +51,8 @@ Las capturas privadas se generaron con datos vacíos mediante un arnés exclusiv
 ## Correcciones realizadas durante QA
 
 - se fijó el posicionamiento CSS de imágenes `fill` para funcionar con la CSP estricta;
-- se autorizó únicamente el hash del estilo `fill` de Next/Image mediante `style-src-attr`, sin habilitar `unsafe-inline`;
+- `style-src-attr` autoriza únicamente los hashes exactos de `fill` de Next/Image
+  y del contenedor flexible de Turnstile, sin habilitar `unsafe-inline`;
 - se corrigió el recorte del hero de país;
 - se apiló correctamente la composición del estado de error;
 - se verificó la marca completa dentro de los shells privados;

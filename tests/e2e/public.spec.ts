@@ -478,6 +478,7 @@ test("security headers and risky API defaults fail closed", async ({ page, reque
   expect(csp).toContain("default-src 'self'");
   expect(csp).toContain("frame-ancestors 'none'");
   expect(csp).toContain("https://challenges.cloudflare.com");
+  expect(csp).toContain("sha256-dMnbuGXRM5Y7/d67w8MZPydMv+XXsm0B9vkgAYOXC1I=");
 
   const ai = await request.post("/api/ai/chat", { data: { message: "test" } });
   expect(ai.status()).toBe(503);
