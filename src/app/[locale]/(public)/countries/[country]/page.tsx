@@ -1,12 +1,15 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, BookOpenText, CalendarDays, Languages, Layers3 } from "lucide-react";
 import { ContextualAdvisorCTA } from "@/components/public/contextual-advisor-cta";
+import { OfficialSourceDirectory } from "@/components/public/official-source-directory";
 import { PublicContentArticle } from "@/components/public/public-content-article";
 import { SectionHeading } from "@/components/public/section-heading";
 import { EmptyState } from "@/components/ui/empty-state";
+import { StructuredData } from "@/components/seo/structured-data";
+import { LAUNCH_READINESS } from "@/config/launch-readiness";
+import { getSiteUrl } from "@/lib/config/runtime";
 import { countries, getCountry, getCountrySections, isCountryCode } from "@/lib/content/catalog";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
@@ -20,12 +23,6 @@ export function generateStaticParams() {
   return countries.map(({ code }) => ({ country: code }));
 }
 
-export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
-  const { locale, country } = await params;
-  if (!isLocale(locale) || !isCountryCode(country)) return {};
-  return { title: getCountry(country).name[locale] };
-}
-
 export default async function CountryPage({ params }: CountryPageProps) {
   const { locale, country: countryParam } = await params;
   if (!isLocale(locale) || !isCountryCode(countryParam)) notFound();
@@ -33,7 +30,10 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const copy = getExperienceCopy(locale);
   const country = getCountry(countryParam);
   const sections = getCountrySections(dictionary);
-  const publishedContent = await getPublishedCountryContent(country.code, locale);
+  const editorialGuideEnabled = LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
+  const publishedContent = editorialGuideEnabled
+    ? await getPublishedCountryContent(country.code, locale)
+    : [];
   const sectionsWithContent = sections.filter((section) =>
     publishedContent.some((item) => item.sectionKey === section.key)
   );
@@ -43,6 +43,12 @@ export default async function CountryPage({ params }: CountryPageProps) {
     .filter((date): date is string => Boolean(date))
     .sort()
     .at(-1);
+  const siteUrl = getSiteUrl();
+  const showOfficialSourceDirectory =
+    country.code === LAUNCH_READINESS.pilotCountry &&
+    LAUNCH_READINESS.countryContent.officialSourceDirectory &&
+    !LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
+  const showReviewedEditorialGuide = editorialGuideEnabled && publishedContent.length > 0;
 
   return (
     <>
@@ -59,19 +65,55 @@ export default async function CountryPage({ params }: CountryPageProps) {
             <p className="eyebrow">{copy.country.guideKicker}</p>
             <h1>{country.name[locale]}</h1>
             <p>{copy.country.intro}</p>
-            <div className="country-quick-facts">
-              {[Languages, Layers3, CalendarDays].map((Icon, index) => (
-                <span key={copy.country.quickFacts[index]}>
-                  <Icon aria-hidden="true" size={18} />
-                  {copy.country.quickFacts[index]}
-                </span>
-              ))}
-            </div>
+            {showOfficialSourceDirectory ? (
+              <div className="country-quick-facts">
+                {[Languages, Layers3, CalendarDays].map((Icon, index) => (
+                  <span key={copy.country.quickFacts[index]}>
+                    <Icon aria-hidden="true" size={18} />
+                    {copy.country.quickFacts[index]}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
 
-      {publishedContent.length === 0 ? (
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: dictionary.nav.countries,
+              item: new URL(localizedPath(locale, "countries"), siteUrl).toString()
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: country.name[locale],
+              item: new URL(localizedPath(locale, `countries/${country.code}`), siteUrl).toString()
+            }
+          ]
+        }}
+      />
+
+      {showOfficialSourceDirectory ? (
+        <>
+          <OfficialSourceDirectory locale={locale} />
+          <section className="section section-white section-final-cta">
+            <div className="shell">
+              <ContextualAdvisorCTA
+                body={copy.home.finalBody}
+                locale={locale}
+                title={copy.home.finalTitle}
+              />
+            </div>
+          </section>
+        </>
+      ) : !showReviewedEditorialGuide ? (
         <>
           <section className="section section-white">
             <div className="shell country-pending-layout">
@@ -96,8 +138,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 <EmptyState
                   actions={
                     <>
-                      <Link className="button" href={localizedPath(locale, "compare")}>
-                        {copy.country.compareAction}
+                      <Link className="button" href={localizedPath(locale, "countries/usa")}>
+                        {copy.home.primary}
                       </Link>
                       <Link
                         className="button button-secondary"
@@ -114,8 +156,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 <div className="country-next-card">
                   <h3>{copy.country.nextTitle}</h3>
                   <p>{copy.country.nextBody}</p>
-                  <Link className="text-link" href={localizedPath(locale, "compare")}>
-                    {copy.home.secondary} <ArrowRight aria-hidden="true" size={17} />
+                  <Link className="text-link" href={localizedPath(locale, "contact")}>
+                    {copy.advisor} <ArrowRight aria-hidden="true" size={17} />
                   </Link>
                 </div>
               </aside>

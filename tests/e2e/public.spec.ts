@@ -3,18 +3,13 @@ import { expect, test } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "node:crypto";
 
-test("root selects Haitian Creole and renders the four countries", async ({ page }) => {
+test("root selects Haitian Creole and promotes only the reviewed pilot", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/ht$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Prepare pwochen etap");
   const cards = page.locator(".country-card");
-  await expect(cards).toHaveCount(4);
-  await expect(cards.locator(".country-card-title")).toHaveText([
-    "Etazini",
-    "Chili",
-    "Brezil",
-    "Meksik"
-  ]);
+  await expect(cards).toHaveCount(1);
+  await expect(cards.locator(".country-card-title")).toHaveText(["Etazini"]);
 });
 
 test("desktop and mobile expose their intended navigation shells", async ({ page }, testInfo) => {
@@ -28,7 +23,7 @@ test("desktop and mobile expose their intended navigation shells", async ({ page
     await expect(bottomNavigation).toBeVisible();
     await expect(desktopHeader).toBeHidden();
     await expect(bottomNavigation.getByRole("link")).toHaveCount(5);
-    await expect(bottomNavigation.getByRole("link", { name: "Kont" })).toHaveAttribute(
+    await expect(bottomNavigation.getByRole("link", { name: "Kont", exact: true })).toHaveAttribute(
       "href",
       "/ht/portal"
     );
@@ -90,9 +85,15 @@ test("manifest exposes install assets and the controlled offline surface", async
   expect(manifest.ok()).toBe(true);
   const manifestBody = (await manifest.json()) as {
     display?: string;
+    screenshots?: { src?: string }[];
     shortcuts?: { short_name?: string; url?: string }[];
   };
   expect(manifestBody.display).toBe("standalone");
+  expect(manifestBody.screenshots?.map(({ src }) => src)).toEqual([
+    "/screenshots/pwa/home-mobile.png",
+    "/screenshots/pwa/country-mobile.png",
+    "/screenshots/pwa/home-tablet.png"
+  ]);
   expect(manifestBody.shortcuts).toContainEqual(
     expect.objectContaining({
       short_name: "Kont",
@@ -104,10 +105,11 @@ test("manifest exposes install assets and the controlled offline surface", async
   await expect(page.getByRole("heading", { name: "Ou pa konekte kounye a" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Eseye ankò" })).toBeVisible();
   await expect(page.locator("form[data-offline-retry]")).toHaveAttribute("action", "");
-  await expect(page.getByRole("link", { name: /Gade kontni/ })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Ale nan paj dakèy" })).toHaveAttribute(
     "href",
-    "/ht/guides"
+    "/ht"
   );
+  await expect(page.getByRole("link", { name: /Gade sous/ })).toHaveCount(0);
 });
 
 test("iPhone install guidance appears once per navigation session", async ({ page }, testInfo) => {
@@ -247,11 +249,84 @@ test("a pending form blocks a service-worker update", async ({ page }, testInfo)
   await expect(page.locator("#auth-email")).toHaveValue("unfinished@example.com");
 });
 
-test("country pages show review status instead of invented claims", async ({ page }) => {
+test("country pages show review status instead of invented claims", async ({ page, request }) => {
   await page.goto("/ht/countries/usa/legal-pathways");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Fason legal");
   await expect(page.getByText("Gid sa a ap pran fòm.")).toBeVisible();
   await expect(page.locator(".empty-state-premium")).toHaveCount(1);
+
+  await page.goto("/ht/guides/usa");
+  await expect(page.locator(".published-guide-list")).toHaveCount(0);
+  await expect(page.locator(".empty-state-premium")).toHaveCount(1);
+
+  const search = await request.get("/api/search?locale=ht&q=travay");
+  expect(search.ok()).toBe(true);
+  expect(await search.json()).toEqual({ items: [] });
+});
+
+test("pilot directory exposes only verified official starting points", async ({ page }) => {
+  await page.goto("/ht/countries/usa");
+  await expect(
+    page.getByRole("heading", { name: "Kòmanse ak sous gouvènman yo pou Etazini" })
+  ).toBeVisible();
+  await expect(page.locator(".official-source-grid article")).toHaveCount(5);
+  await expect(page.locator('time[datetime="2026-08-23"]')).toBeVisible();
+  await expect(page.getByText("23 out 2026")).toBeVisible();
+  await expect(page.getByText("Sa ki poko pibliye")).toBeVisible();
+
+  await page.goto("/es/countries/chile");
+  await expect(page).toHaveTitle("Chile · Vwayaj Ayisyen");
+  await expect(page.locator(".country-quick-facts")).toHaveCount(0);
+  await expect(page.locator(".official-source-grid")).toHaveCount(0);
+  await expect(page.locator('a[href="/es/compare"]')).toHaveCount(0);
+  await expect(page.locator('.empty-state-premium a[href="/es/countries/usa"]')).toBeVisible();
+  await expect(page.locator('.country-next-card a[href="/es/contact"]')).toBeVisible();
+});
+
+test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ page, request }) => {
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
+  await page.goto("/ht");
+  const pilotLink = page.locator('a[href="/ht/countries/usa"]').first();
+  await pilotLink.hover();
+  await pilotLink.click();
+  await expect(page).toHaveTitle("Etazini · Vwayaj Ayisyen");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    `${siteUrl}/ht/countries/usa`
+  );
+  await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
+    "href",
+    `${siteUrl}/ht/countries/usa`
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
+
+  await page.goto("/ht/guides/usa/draft.js");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    `${siteUrl}/ht/guides/usa/draft.js`
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
+
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.ok()).toBe(true);
+  const sitemapBody = await sitemap.text();
+  expect(sitemapBody).toContain("/ht/countries/usa");
+  expect(sitemapBody).not.toContain("/ht/compare");
+  expect(sitemapBody).not.toContain("/ht/countries/chile");
+  expect(sitemapBody).not.toContain("/ht/legal/privacy");
+  expect(sitemapBody).toContain("/es/legal/privacy");
+
+  const socialImage = await request.get("/opengraph-image");
+  expect(socialImage.ok()).toBe(true);
+  expect(socialImage.headers()["content-type"]).toContain("image/png");
+});
+
+test("contact update requests use the selected language", async ({ page }) => {
+  await page.goto("/es/contact");
+  const href = await page.locator('a[href^="mailto:promo@vwayajayisyen.com"]').getAttribute("href");
+  expect(decodeURIComponent(href ?? "")).toContain("novedades del lanzamiento");
+  expect(decodeURIComponent(href ?? "")).toContain("no debo enviar documentos sensibles");
 });
 
 test("official legal center publishes Spanish and Portuguese documents without private email", async ({
@@ -302,6 +377,7 @@ test("comparison accepts a safe selection without inventing scores", async ({ pa
 test("private routes redirect to sign in without a session", async ({ page }) => {
   await page.goto("/ht/admin");
   await expect(page).toHaveURL(/\/ht\/auth\/sign-in\?reason=required$/);
+  await expect(page).toHaveTitle("Vwayaj Ayisyen");
   await expect(page.getByRole("heading", { name: "Konekte" })).toBeVisible();
 });
 

@@ -53,7 +53,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ht_HT",
     title: BRAND.name,
-    description: "Enfòmasyon estriktire, onèt ak aksesib pou kominote ayisyèn nan."
+    description: "Enfòmasyon estriktire, onèt ak aksesib pou kominote ayisyèn nan.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: BRAND.name }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: BRAND.name,
+    description: "Sous ofisyèl ak limit vizib pou kominote ayisyèn nan.",
+    images: ["/opengraph-image"]
   }
 };
 

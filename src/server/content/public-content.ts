@@ -1,6 +1,7 @@
 import "server-only";
 
 import { z } from "zod";
+import { LAUNCH_READINESS } from "@/config/launch-readiness";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type {
   PublicContentBlock,
@@ -54,6 +55,8 @@ export async function getPublishedCountryContent(
   countryCode: CountryCode,
   locale: Locale
 ): Promise<readonly PublicCountryContent[]> {
+  if (!LAUNCH_READINESS.countryContent.reviewedEditorialGuide) return [];
+
   const supabase = await createServerSupabaseClient();
   if (!supabase) return [];
 

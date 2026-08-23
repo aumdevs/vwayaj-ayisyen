@@ -84,7 +84,8 @@ const copy = {
     aboutBody:
       "Platfòm sa a fèt pou ede kominote ayisyèn nan konprann opsyon, sous ak limit. Li pa ranplase konsèy yon pwofesyonèl otorize.",
     contactTitle: "Kontakte ekip la",
-    contactBody: "Chanèl piblik la poko aktive. Pa voye dokiman, modpas, kòd oswa lòt done sansib.",
+    contactBody:
+      "Imèl ofisyèl yo aktif pou kestyon ak nouvèl. Pa voye dokiman, modpas, kòd oswa lòt done sansib.",
     backToCountry: "Retounen nan paj peyi a"
   },
   fr: {
@@ -140,7 +141,7 @@ const copy = {
       "Cette plateforme aide la communauté haïtienne à comprendre options, sources et limites. Elle ne remplace pas un professionnel autorisé.",
     contactTitle: "Contacter l’équipe",
     contactBody:
-      "Le canal public n’est pas encore activé. N’envoyez aucun document, mot de passe, code ou donnée sensible.",
+      "Les adresses officielles sont actives pour les questions et actualités. N’envoyez aucun document, mot de passe, code ou donnée sensible.",
     backToCountry: "Retour au pays"
   },
   es: {
@@ -193,7 +194,7 @@ const copy = {
       "Esta plataforma ayuda a la comunidad haitiana a comprender opciones, fuentes y límites. No reemplaza a un profesional autorizado.",
     contactTitle: "Contactar al equipo",
     contactBody:
-      "El canal público aún no está activo. No envíes documentos, contraseñas, códigos ni datos sensibles.",
+      "Los correos oficiales están activos para consultas y novedades. No envíes documentos, contraseñas, códigos ni datos sensibles.",
     backToCountry: "Volver al país"
   },
   pt: {
@@ -245,7 +246,7 @@ const copy = {
       "A plataforma ajuda a comunidade haitiana a entender opções, fontes e limites. Não substitui um profissional autorizado.",
     contactTitle: "Falar com a equipe",
     contactBody:
-      "O canal público ainda não está ativo. Não envie documentos, senhas, códigos ou dados sensíveis.",
+      "Os e-mails oficiais estão ativos para dúvidas e novidades. Não envie documentos, senhas, códigos ou dados sensíveis.",
     backToCountry: "Voltar ao país"
   },
   en: {
@@ -295,7 +296,7 @@ const copy = {
       "This platform helps the Haitian community understand options, sources and limits. It does not replace an authorized professional.",
     contactTitle: "Contact the team",
     contactBody:
-      "The public channel is not active yet. Do not send documents, passwords, codes or sensitive data.",
+      "Official email channels are active for questions and updates. Do not send documents, passwords, codes or sensitive data.",
     backToCountry: "Back to the country"
   }
 } satisfies Record<Locale, ProductCopy>;

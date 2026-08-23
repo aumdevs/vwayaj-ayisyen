@@ -21,7 +21,11 @@ export function ContextualAdvisorCTA({ locale, title, body }: ContextualAdvisorC
         <h2>{title}</h2>
         <p>{body}</p>
       </div>
-      <Link className="button button-light" href={localizedPath(locale, "contact")}>
+      <Link
+        className="button button-light"
+        data-analytics-event="cta_clicked"
+        href={localizedPath(locale, "contact")}
+      >
         {copy.advisor} <ArrowRight aria-hidden="true" size={18} />
       </Link>
     </section>

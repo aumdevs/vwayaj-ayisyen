@@ -52,3 +52,17 @@ Configurar según revisión legal. La app funciona sin analítica no esencial. D
 - Duración/stop rule.
 - Segmentos no sensibles.
 - Resultado registrado.
+
+## Implementación mínima (2026-08-23)
+
+- `PublicAnalytics` emite únicamente `page_view`, `country_view`, `cta_clicked`
+  y `official_source_opened`.
+- El payload contiene sólo `event`, `locale` y `pathname`; elimina query string y
+  fragmento, no crea ID de sesión y no envía referrer.
+- DNT y Global Privacy Control desactivan la emisión.
+- La ausencia de `NEXT_PUBLIC_ANALYTICS_ENDPOINT` desactiva totalmente la
+  analítica. El proveedor, DPA, región, retención y base jurídica siguen siendo
+  una decisión externa previa a activarla en Production.
+- La CSP sólo autoriza el origen HTTPS configurado. Una URL inválida falla
+  cerrada.
+- Las pruebas unitarias fijan el vocabulario y la eliminación de query strings.

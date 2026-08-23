@@ -22,6 +22,7 @@
 | Seguridad | ASVS L2 como objetivo, controles reforzados |
 | Admin inicial | correo privado del propietario, definido fuera del repositorio; password temporal externo |
 | Países | Sólo USA, Chile, Brasil y México |
+| País piloto de promoción | **USA**; elegido el 2026-08-23 por ser el primer país consistente en configuración, API y QA. Chile, Brasil y México permanecen fuera de navegación promocional hasta revisión editorial. |
 
 ## Elementos que Codex no debe inventar
 

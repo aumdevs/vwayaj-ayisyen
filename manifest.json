@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
-  "generated_at": "2026-07-24",
-  "package_expected_file_count": 183,
+  "generated_at": "2026-08-23",
+  "package_expected_file_count": 185,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -9,8 +9,8 @@
   "files": [
     {
       "path": ".env.example",
-      "size_bytes": 1978,
-      "sha256": "44fb5f2bce5d877a4229882bb4465aed486ee2fc586bf160dd317bb926d7b1ca"
+      "size_bytes": 2109,
+      "sha256": "34be0ce84d2f113b6072f0fc667547f9102e11399f15639e94ef18955a3e78de"
     },
     {
       "path": ".gitignore",
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 9038,
-      "sha256": "ceb38d1d633a913adb900958b3507062f93dffac12881ab8524c165ef33d8056"
+      "size_bytes": 9046,
+      "sha256": "11fbe00ff598913beb6586789293e820c524bf6116b6d071c664464b322f2035"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -54,8 +54,8 @@
     },
     {
       "path": "README.md",
-      "size_bytes": 3770,
-      "sha256": "3b4750089cff3b473e409c9a723047eaa99cce4b20e8520b5140782fc35fadfc"
+      "size_bytes": 3221,
+      "sha256": "82e4c7ddc04feed15104b396fd80d0cb89a7efb1c2733d4be5a7cc20e2eaebb1"
     },
     {
       "path": "api/openapi.yaml",
@@ -89,8 +89,8 @@
     },
     {
       "path": "config/env.schema.json",
-      "size_bytes": 1979,
-      "sha256": "6c739ebfe370aba606128a2d2e2cf00cc374b8cce2486e5a2f5fccddaaccd931"
+      "size_bytes": 2146,
+      "sha256": "864dd70522d285bc11f63ac02d6f4a2248a46f4049cd4da26c8bbf78134b952f"
     },
     {
       "path": "config/feature-flags.json",
@@ -99,8 +99,8 @@
     },
     {
       "path": "config/project-config.yaml",
-      "size_bytes": 1511,
-      "sha256": "5bb982d053243dedf5d616a8f42887797ef07b564a7afd39565b8881a2cea082"
+      "size_bytes": 1807,
+      "sha256": "3c5711158d665656fcf3ca059bc34b9b48dc085ea7087a877ba29ce6986080cf"
     },
     {
       "path": "content/RESEARCH_RECORD_TEMPLATE.csv",
@@ -314,8 +314,8 @@
     },
     {
       "path": "docs/32_ASSUMPTIONS_DECISIONS_AND_OPEN_ITEMS.md",
-      "size_bytes": 3210,
-      "sha256": "174357e9302403b9bbd0d7caa6d255e65f95423044aab61a32a0be790c37cef5"
+      "size_bytes": 3434,
+      "sha256": "95719d6db184004d6caa7c5e55a3f67bf7c59c06b41900eae96c485ce1ee7340"
     },
     {
       "path": "docs/33_OFFICIAL_TECHNICAL_REFERENCES.md",
@@ -354,8 +354,8 @@
     },
     {
       "path": "docs/40_ANALYTICS_AND_EXPERIMENTATION.md",
-      "size_bytes": 1289,
-      "sha256": "49c14b57198ee2c95fb91b3aa301f37f5e9726850296735e6c4771c8fa6c43b7"
+      "size_bytes": 2022,
+      "sha256": "c60e1b5e7a66acbcd3da55656ab59a3243fac2722038f353077e23a96e4e3d94"
     },
     {
       "path": "docs/41_SUPPORT_AND_OPERATIONS_PLAYBOOK.md",
@@ -374,8 +374,8 @@
     },
     {
       "path": "docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md",
-      "size_bytes": 4508,
-      "sha256": "b2b5911ce44f8ea0e2b89e2e69db158c2bf16d23ebb745d7b8441fd6e8b1a56f"
+      "size_bytes": 5375,
+      "sha256": "bb426b20fab290f777c067e16c4a85e8047d8e07ed4b9ce89de9acf7856546b7"
     },
     {
       "path": "docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md",
@@ -391,51 +391,6 @@
       "path": "docs/47_COST_AND_CAPACITY_GUARDRAILS.md",
       "size_bytes": 2520,
       "sha256": "c2775740f69de9466275003f45e491173af3320ffcd662e0877de7b53ae3fb88"
-    },
-    {
-      "path": "github/.github/CODEOWNERS",
-      "size_bytes": 294,
-      "sha256": "cfa315f8257b9f1d02da96ac120adf879384222d994360e4fdea9f60d1d22467"
-    },
-    {
-      "path": "github/.github/ISSUE_TEMPLATE/bug.yml",
-      "size_bytes": 861,
-      "sha256": "8d2fc6edff4a7c2f23aef186fc2dae61705873ccf72c8e28498d72a64b37cec5"
-    },
-    {
-      "path": "github/.github/ISSUE_TEMPLATE/config.yml",
-      "size_bytes": 241,
-      "sha256": "4981e6f4b2938a419cd9f7b3dc480380d26b728b421b15c449723f2e3ac58327"
-    },
-    {
-      "path": "github/.github/dependabot.yml",
-      "size_bytes": 490,
-      "sha256": "eb838867afb8e5ad56c14266faf7915ada79fac8eb0146cba2b17d296642ea0e"
-    },
-    {
-      "path": "github/.github/pull_request_template.md",
-      "size_bytes": 737,
-      "sha256": "523de66a29f7602ad20be2da7f1701cfe022198240a1227b992b882d06cf1ed4"
-    },
-    {
-      "path": "github/.github/workflows/ci.yml",
-      "size_bytes": 3396,
-      "sha256": "259502bc4407312115ea287520475e025d9694029236a3cf7fdeccc33852c18c"
-    },
-    {
-      "path": "github/.github/workflows/codeql.yml",
-      "size_bytes": 542,
-      "sha256": "aba309f0bb937747afcc25e660696be0d2b74efe8f78ea37a05df072706f3431"
-    },
-    {
-      "path": "github/.github/workflows/dependency-review.yml",
-      "size_bytes": 360,
-      "sha256": "e1c21c1841d931825a234b5e3233d56a726df46d74f0c2b94b586abf6a64813b"
-    },
-    {
-      "path": "github/.github/workflows/secret-scan.yml",
-      "size_bytes": 336,
-      "sha256": "91e527eddec289c2fa93bf12f9792d02bbe161b513f0ba79d285e2e9b4cab2a9"
     },
     {
       "path": "legal/AI_ASSISTANT_DISCLAIMER.md",
@@ -911,6 +866,61 @@
       "path": "supabase/migrations/20260723203000_serialize_initial_admin_bootstrap.sql",
       "size_bytes": 2706,
       "sha256": "b7320c5aca344f3133c5e3cd72189b57cf8c5f8a113e03b824677e44b0edc057"
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "size_bytes": 311,
+      "sha256": "1a8219a27eaddd47d58e98f8a1306e8317c6877712bd087b2e1e0c39bd3e5e69"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug.yml",
+      "size_bytes": 861,
+      "sha256": "8d2fc6edff4a7c2f23aef186fc2dae61705873ccf72c8e28498d72a64b37cec5"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "size_bytes": 255,
+      "sha256": "69d4d4204539152b33b1207260d0afdb622feb006f4c7b1f903bfc51104430db"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "size_bytes": 490,
+      "sha256": "eb838867afb8e5ad56c14266faf7915ada79fac8eb0146cba2b17d296642ea0e"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "size_bytes": 336,
+      "sha256": "7fec45d5953cf23897b960845712963b576b96563d5678bd3947fd8af8af241b"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "size_bytes": 4892,
+      "sha256": "4f4027e2c5d43d1854c8d030893842c04147863c52abbe0f1db130be6aa7bf8d"
+    },
+    {
+      "path": ".github/workflows/codeql.yml",
+      "size_bytes": 1463,
+      "sha256": "9aad85e03f180ba9b2fd052c976aadd8305fa5b1abc6bb631f42cc8ed0cd5b68"
+    },
+    {
+      "path": ".github/workflows/dependency-review.yml",
+      "size_bytes": 968,
+      "sha256": "5f52bb87a1b0d2083cc4a9481f97f4f0e3fabf21ca83c0198f0f9e1e7c0e72af"
+    },
+    {
+      "path": ".github/workflows/secret-scan.yml",
+      "size_bytes": 444,
+      "sha256": "dfc18e6faaeddded70e8a77798a84e7446885deacc2034047c66371a29e6b762"
+    },
+    {
+      "path": "docs/48_PROMOTION_READINESS_2026-08-23.md",
+      "size_bytes": 4227,
+      "sha256": "0e971f06a8d76cbac20d52ad0e22650a728f5175bbdbc629243783398a2ec27c"
+    },
+    {
+      "path": "content/pilot/usa-launch-draft.json",
+      "size_bytes": 9414,
+      "sha256": "104a02fc9cef7beeaa2ad8cac6e23faad456397cd66acf13e8ec7b62cb3a7053"
     }
   ]
 }

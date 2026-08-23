@@ -3,9 +3,6 @@ import { getSiteUrl, isIndexingAllowed } from "@/lib/config/runtime";
 
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl();
-  if (!isIndexingAllowed()) {
-    return { rules: { userAgent: "*", disallow: "/" } };
-  }
   return {
     rules: [
       {
@@ -22,6 +19,8 @@ export default function robots(): MetadataRoute.Robots {
         ]
       }
     ],
-    sitemap: new URL("/sitemap.xml", siteUrl).toString()
+    ...(isIndexingAllowed()
+      ? { sitemap: new URL("/sitemap.xml", siteUrl).toString() }
+      : { host: siteUrl.origin })
   };
 }

@@ -11,9 +11,16 @@ type CountryCardProps = {
   locale: Locale;
   actionLabel: string;
   preload?: boolean;
+  sizes?: string;
 };
 
-export function CountryCard({ country, locale, actionLabel, preload = false }: CountryCardProps) {
+export function CountryCard({
+  country,
+  locale,
+  actionLabel,
+  preload = false,
+  sizes = "(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw"
+}: CountryCardProps) {
   const copy = getExperienceCopy(locale);
   return (
     <Link
@@ -25,7 +32,7 @@ export function CountryCard({ country, locale, actionLabel, preload = false }: C
           alt={country.imageAlt[locale]}
           fill
           preload={preload}
-          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw"
+          sizes={sizes}
           src={country.image}
         />
       </span>

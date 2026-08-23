@@ -1,6 +1,6 @@
 # Decisiones implementadas
 
-Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sustituye aprobaciones legales, editoriales o comerciales.
+Fecha de corte: 2026-08-23. Este documento registra decisiones técnicas; no sustituye aprobaciones legales, editoriales o comerciales.
 
 ## Plataforma
 
@@ -17,9 +17,9 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
 - Kreyòl es el locale predeterminado; los cinco diccionarios conservan la misma estructura.
 - Laptop/escritorio usan web pública normal; teléfono, tableta táctil y modo
   standalone usan App Shell con barra superior y navegación inferior.
-- No se sembraron afirmaciones migratorias, costos, salarios, testimonios ni puntuaciones.
-- Comparador y recomendador muestran su estructura, pero quedan bloqueados hasta revisión especializada.
-- Servicios y cursos no muestran precio ni oferta hasta contar con contenido y condiciones aprobadas.
+- El piloto de promoción es USA. El sitio público muestra sólo un directorio de cinco fuentes gubernamentales revisadas el 2026-08-23; el dossier HT/EN de 15 secciones permanece en revisión y no publica elegibilidad, costos, salarios ni testimonios.
+- Comparador, recomendador, servicios y guías vacías permanecen accesibles sólo como superficies `noindex`, pero fueron retirados de navegación promocional y sitemap hasta revisión especializada.
+- La navegación promocional, home y países dirigen únicamente al piloto USA, contacto, información institucional y documentos legales.
 
 ## Seguridad
 
@@ -31,7 +31,8 @@ Fecha de corte: 2026-07-23. Este documento registra decisiones técnicas; no sus
   actualizar y el cliente bloquea la acción si detecta progreso en un formulario.
 - El aviso de instalación aparece una vez por sesión, nunca fuerza el prompt
   nativo y se oculta en standalone.
-- Actions de GitHub están fijadas a SHA. `sharp` y `postcss` usan overrides corregidos por avisos de seguridad vigentes.
+- Actions de GitHub están fijadas a SHA. `nanoid` `3.3.18` y `postcss` `8.5.23` corrigen los avisos GHSA-2v37-7h3g-55p8 y GHSA-fxqj-rqcc-2cmp; `pnpm audit --prod` quedó sin vulnerabilidades conocidas el 2026-08-23.
+- La analítica pública usa un vocabulario cerrado, elimina query strings, no crea identificadores ni envía referrer, respeta DNT/GPC y falla cerrada sin un colector HTTPS aprobado.
 
 ## Infraestructura y bloqueos
 

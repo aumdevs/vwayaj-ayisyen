@@ -5,6 +5,7 @@ import { BRAND } from "@/config/brand";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { countries } from "@/lib/content/catalog";
+import { isPromotableCountry } from "@/config/launch-readiness";
 import type { Locale } from "@/types/domain";
 
 type SiteFooterProps = {
@@ -15,45 +16,40 @@ type SiteFooterProps = {
 const footerCopy = {
   ht: {
     countries: "Peyi yo",
-    tools: "Zouti yo",
+    tools: "Resous",
     help: "Èd ak legal",
-    editorial: "Politik editoryal",
     privacy: "Konfidansyalite",
     terms: "Kondisyon",
     top: "Retounen anlè"
   },
   fr: {
     countries: "Pays",
-    tools: "Outils",
+    tools: "Ressources",
     help: "Aide et juridique",
-    editorial: "Politique éditoriale",
     privacy: "Confidentialité",
     terms: "Conditions",
     top: "Retour en haut"
   },
   es: {
     countries: "Países",
-    tools: "Herramientas",
+    tools: "Recursos",
     help: "Ayuda y legal",
-    editorial: "Política editorial",
     privacy: "Privacidad",
     terms: "Términos",
     top: "Volver arriba"
   },
   pt: {
     countries: "Países",
-    tools: "Ferramentas",
+    tools: "Recursos",
     help: "Ajuda e jurídico",
-    editorial: "Política editorial",
     privacy: "Privacidade",
     terms: "Termos",
     top: "Voltar ao topo"
   },
   en: {
     countries: "Countries",
-    tools: "Tools",
+    tools: "Resources",
     help: "Help and legal",
-    editorial: "Editorial policy",
     privacy: "Privacy",
     terms: "Terms",
     top: "Back to top"
@@ -64,7 +60,6 @@ const footerCopy = {
     countries: string;
     tools: string;
     help: string;
-    editorial: string;
     privacy: string;
     terms: string;
     top: string;
@@ -87,25 +82,24 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
         </div>
         <nav aria-label={copy.countries}>
           <strong>{copy.countries}</strong>
-          {countries.map((country) => (
-            <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
-              {country.name[locale]}
-            </Link>
-          ))}
+          {countries
+            .filter(({ code }) => isPromotableCountry(code))
+            .map((country) => (
+              <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
+                {country.name[locale]}
+              </Link>
+            ))}
         </nav>
         <nav aria-label={copy.tools}>
           <strong>{copy.tools}</strong>
-          <Link href={localizedPath(locale, "compare")}>{dictionary.nav.compare}</Link>
-          <Link href={localizedPath(locale, "find-my-country")}>{dictionary.nav.assessment}</Link>
-          <Link href={localizedPath(locale, "guides")}>{dictionary.nav.guides}</Link>
-          <Link href={localizedPath(locale, "services")}>{dictionary.nav.packages}</Link>
+          <Link href={localizedPath(locale, "countries/usa")}>{dictionary.common.sources}</Link>
+          <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
         </nav>
         <nav aria-label={copy.help}>
           <strong>{copy.help}</strong>
           <Link href={localizedPath(locale, "about")}>{dictionary.nav.help}</Link>
           <Link href={localizedPath(locale, "faq")}>FAQ</Link>
           <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
-          <Link href={localizedPath(locale, "legal/editorial")}>{copy.editorial}</Link>
           <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacy}</Link>
           <Link href={localizedPath(locale, "legal/terms")}>{copy.terms}</Link>
         </nav>

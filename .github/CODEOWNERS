@@ -1,4 +1,4 @@
-# Replace/add real reviewers as the team grows.
+# Replace or add reviewers as the team grows.
 * @aumdevs
 
 /supabase/migrations/ @aumdevs
@@ -10,3 +10,4 @@
 /src/lib/ai/ @aumdevs
 /.github/workflows/ @aumdevs
 /legal/ @aumdevs
+/content/ @aumdevs

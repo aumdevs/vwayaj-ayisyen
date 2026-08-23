@@ -4,6 +4,7 @@ import { chromium } from "@playwright/test";
 
 const baseUrl = process.env.VISUAL_BASE_URL ?? "http://127.0.0.1:3000";
 const protectionBypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const manifestOnly = process.env.PWA_MANIFEST_ONLY === "true";
 const outputRoot = resolve(
   process.cwd(),
   process.env.PWA_VISUAL_OUTPUT_ROOT ?? "docs/screenshots/pwa-acceptance"
@@ -31,20 +32,6 @@ const scenarios = [
     viewport: desktop
   },
   {
-    action: async (page) => page.getByRole("button", { name: "Zouti" }).click(),
-    group: "desktop",
-    name: "mega-menu-tools",
-    path: "/ht",
-    viewport: desktop
-  },
-  {
-    action: async (page) => page.getByRole("button", { name: "Sèvis ak akonpayman" }).click(),
-    group: "desktop",
-    name: "mega-menu-services",
-    path: "/ht",
-    viewport: desktop
-  },
-  {
     action: async (page) => page.getByRole("button", { name: "Gid ak resous" }).click(),
     group: "desktop",
     name: "mega-menu-resources",
@@ -56,22 +43,6 @@ const scenarios = [
     group: "desktop",
     name: "country",
     path: "/ht/countries/usa",
-    viewport: desktop,
-    fullPage: true
-  },
-  { group: "desktop", name: "compare", path: "/ht/compare", viewport: desktop, fullPage: true },
-  {
-    group: "desktop",
-    name: "assessment",
-    path: "/ht/find-my-country",
-    viewport: desktop,
-    fullPage: true
-  },
-  { group: "desktop", name: "guides", path: "/ht/guides", viewport: desktop, fullPage: true },
-  {
-    group: "desktop",
-    name: "services-and-plans",
-    path: "/ht/services",
     viewport: desktop,
     fullPage: true
   },
@@ -134,42 +105,6 @@ const scenarios = [
     group: "mobile",
     name: "country",
     path: "/ht/countries/usa",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "compare",
-    path: "/ht/compare",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "assessment",
-    path: "/ht/find-my-country",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "guides",
-    path: "/ht/guides",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "services",
-    path: "/ht/services",
     viewport: mobile,
     touch: true,
     userAgent: iphoneUserAgent,
@@ -260,15 +195,6 @@ const scenarios = [
     fullPage: true
   },
   {
-    group: "tablet",
-    name: "compare",
-    path: "/ht/compare",
-    viewport: tabletLandscape,
-    touch: true,
-    userAgent: ipadUserAgent,
-    fullPage: true
-  },
-  {
     action: async (page) => {
       const prompt = page.getByRole("dialog", { name: "Enstale Vwayaj Ayisyen" });
       await prompt.waitFor({ state: "visible", timeout: 6_000 });
@@ -287,13 +213,6 @@ const manifestScreenshots = [
   {
     file: "home-mobile.png",
     path: "/ht",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent
-  },
-  {
-    file: "compare-mobile.png",
-    path: "/ht/compare",
     viewport: mobile,
     touch: true,
     userAgent: iphoneUserAgent
@@ -318,6 +237,7 @@ await mkdir(outputRoot, { recursive: true });
 await mkdir(manifestRoot, { recursive: true });
 const browser = await chromium.launch();
 const findings = [];
+const manifestFindings = [];
 const isLocalDevelopment = /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(baseUrl);
 
 function isKnownDevelopmentCspNoise(message) {
@@ -413,7 +333,7 @@ async function settle(page) {
   await page.waitForTimeout(180);
 }
 
-for (const scenario of scenarios) {
+for (const scenario of manifestOnly ? [] : scenarios) {
   const { context, page } = await createPage(scenario);
   const errors = observeErrors(page);
   const response = await page.goto(`${baseUrl}${scenario.path}`, { waitUntil: "networkidle" });
@@ -459,33 +379,55 @@ for (const scenario of scenarios) {
 
 for (const screenshot of manifestScreenshots) {
   const { context, page } = await createPage(screenshot);
-  await page.goto(`${baseUrl}${screenshot.path}`, { waitUntil: "networkidle" });
+  const errors = observeErrors(page);
+  const response = await page.goto(`${baseUrl}${screenshot.path}`, { waitUntil: "networkidle" });
   await settle(page);
+  const metrics = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    pathname: window.location.pathname,
+    scrollWidth: document.documentElement.scrollWidth,
+    title: document.title
+  }));
   await page.screenshot({
     animations: "disabled",
     fullPage: false,
     path: resolve(manifestRoot, screenshot.file)
   });
+  manifestFindings.push({
+    browserErrors: errors.browserErrors,
+    finalPath: metrics.pathname,
+    group: "manifest",
+    horizontalOverflow: metrics.scrollWidth > metrics.clientWidth,
+    ignoredDevelopmentCspMessages: errors.getIgnoredDevelopmentCspMessages(),
+    name: screenshot.file,
+    path: screenshot.path,
+    status: response?.status() ?? null,
+    title: metrics.title,
+    viewport: `${screenshot.viewport.width}x${screenshot.viewport.height}`
+  });
   await context.close();
 }
 
 await browser.close();
-const failures = findings.filter(
+const allFindings = [...findings, ...manifestFindings];
+const failures = allFindings.filter(
   ({ browserErrors, horizontalOverflow, status }) =>
     browserErrors.length > 0 || horizontalOverflow || (status !== null && status >= 400)
 );
 const report = {
-  captures: findings.length,
+  captures: allFindings.length,
   failureCount: failures.length,
   failures,
-  findings,
+  findings: allFindings,
   manifestScreenshots: manifestScreenshots.map(({ file, viewport }) => ({
     file,
     viewport: `${viewport.width}x${viewport.height}`
   }))
 };
-await writeFile(resolve(outputRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
+if (!manifestOnly) {
+  await writeFile(resolve(outputRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
+}
 process.stdout.write(
-  `${JSON.stringify({ captures: findings.length, failureCount: failures.length, failures }, null, 2)}\n`
+  `${JSON.stringify({ captures: allFindings.length, failureCount: failures.length, failures }, null, 2)}\n`
 );
 if (failures.length > 0) process.exitCode = 1;

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "country_code": "usa",
+  "pilot_decision": {
+    "status": "accepted_for_editorial_preparation",
+    "decided_at": "2026-08-23",
+    "basis": "The existing product configuration, API contract and QA routes consistently list usa first. This is reversible before editorial publication."
+  },
+  "editorial_status": "in_review",
+  "publication_approved": false,
+  "locales": ["ht", "en"],
+  "last_source_check_at": "2026-08-23",
+  "next_source_check_at": "2026-09-23",
+  "review": {
+    "author": "Codex-assisted editorial draft",
+    "fact_reviewer_id": null,
+    "legal_reviewer_id": null,
+    "kreyol_reviewer_id": null
+  },
+  "publication_blockers": [
+    "missing_named_fact_reviewer",
+    "missing_authorized_us_immigration_reviewer",
+    "missing_human_kreyol_review",
+    "missing_city_and_state_methodology",
+    "missing_service_scope_and_terms"
+  ],
+  "sources": [
+    {
+      "id": "uscis_tools",
+      "title": "myUSCIS",
+      "publisher": "U.S. Citizenship and Immigration Services",
+      "url": "https://my.uscis.gov/",
+      "official": true,
+      "accessed_at": "2026-08-23"
+    },
+    {
+      "id": "state_visa_directory",
+      "title": "Directory of Visa Categories",
+      "publisher": "U.S. Department of State",
+      "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/all-visa-categories.html",
+      "official": true,
+      "accessed_at": "2026-08-23"
+    },
+    {
+      "id": "cbp_i94",
+      "title": "I-94 and traveler compliance",
+      "publisher": "U.S. Customs and Border Protection",
+      "url": "https://i94.cbp.dhs.gov/",
+      "official": true,
+      "accessed_at": "2026-08-23"
+    },
+    {
+      "id": "eoir_representation",
+      "title": "Find Legal Representation",
+      "publisher": "U.S. Department of Justice — EOIR",
+      "url": "https://www.justice.gov/eoir/find-legal-representation",
+      "official": true,
+      "accessed_at": "2026-08-23"
+    },
+    {
+      "id": "ftc_scams",
+      "title": "Scams Against Immigrants",
+      "publisher": "U.S. Federal Trade Commission",
+      "url": "https://consumer.ftc.gov/features/scams-against-immigrants",
+      "official": true,
+      "accessed_at": "2026-08-23"
+    }
+  ],
+  "sections": [
+    {
+      "key": "overview",
+      "risk": "medium",
+      "status": "draft",
+      "source_ids": ["uscis_tools", "state_visa_directory"],
+      "ht": {
+        "title": "Kòmanse ak objektif la, pa ak yon pwomès",
+        "summary": "Pwosesis la depann de rezon vwayaj la ak sitiyasyon moun nan. Sèvi ak zouti ofisyèl yo anvan ou pran yon desizyon."
+      },
+      "en": {
+        "title": "Start with the purpose, not a promise",
+        "summary": "The process depends on the purpose of travel and the individual situation. Start with official tools before making a decision."
+      }
+    },
+    {
+      "key": "who_it_may_suit",
+      "risk": "medium",
+      "status": "needs_methodology",
+      "source_ids": [],
+      "ht": { "title": "Pou kiyès li ka adapte", "summary": "Pa gen rekòmandasyon jiskaske kritè lang, bidjè, fanmi ak objektif yo gen metòd ak sous." },
+      "en": { "title": "Who it may suit", "summary": "No recommendation is published until language, budget, family and goal criteria have a documented method and sources." }
+    },
+    {
+      "key": "who_it_may_not_suit",
+      "risk": "medium",
+      "status": "needs_methodology",
+      "source_ids": [],
+      "ht": { "title": "Pou kiyès li ka pa adapte", "summary": "Baryè yo dwe dekri san estereyotip epi ak diferans ant eta ak vil yo." },
+      "en": { "title": "Who it may not suit", "summary": "Barriers must be described without stereotypes and with state and city differences made explicit." }
+    },
+    {
+      "key": "legal_pathways",
+      "risk": "high",
+      "status": "requires_professional_review",
+      "source_ids": ["uscis_tools", "state_visa_directory", "eoir_representation"],
+      "ht": { "title": "Chemen migrasyon", "summary": "Kategori yo varye selon objektif ak enfòmasyon pèsonèl. Se sèlman sous ofisyèl ak pwofesyonèl otorize ki dwe sèvi pou evalye kalifikasyon." },
+      "en": { "title": "Immigration pathways", "summary": "Categories vary by purpose and individual facts. Eligibility must be assessed through official sources and authorized professionals." }
+    },
+    {
+      "key": "haitian_community_reality",
+      "risk": "medium",
+      "status": "needs_community_research",
+      "source_ids": [],
+      "ht": { "title": "Reyalite kominote ayisyèn nan", "summary": "Bezwen entèvyou modere, konsantman, echantiyon ak diferans rejyonal anvan piblikasyon." },
+      "en": { "title": "Haitian community reality", "summary": "Moderated interviews, consent, sample disclosure and regional differences are required before publication." }
+    },
+    {
+      "key": "work_and_income",
+      "risk": "high",
+      "status": "needs_state_and_city_data",
+      "source_ids": [],
+      "ht": { "title": "Travay ak revni", "summary": "Pa pibliye salè oswa dwa travay san otorizasyon, eta, vil, peryòd, sous ak dat." },
+      "en": { "title": "Work and income", "summary": "Do not publish wages or work-right claims without authorization context, state, city, period, source and date." }
+    },
+    {
+      "key": "cost_of_living",
+      "risk": "medium",
+      "status": "needs_city_methodology",
+      "source_ids": [],
+      "ht": { "title": "Pri lavi", "summary": "Ranje yo bezwen pwofil kay, vil, dat ak yon metòd ki ka repwodui." },
+      "en": { "title": "Cost of living", "summary": "Ranges require a household profile, city, date and reproducible method." }
+    },
+    {
+      "key": "banking_and_money",
+      "risk": "medium",
+      "status": "needs_primary_sources",
+      "source_ids": [],
+      "ht": { "title": "Bank ak lajan", "summary": "Egzijans kont, frè ak kredi dwe sòti nan sous regilatè oswa kondisyon aktyèl founisè a." },
+      "en": { "title": "Banking and money", "summary": "Account requirements, fees and credit information must come from regulators or current provider terms." }
+    },
+    {
+      "key": "housing",
+      "risk": "medium",
+      "status": "needs_state_and_city_data",
+      "source_ids": ["ftc_scams"],
+      "ht": { "title": "Lojman", "summary": "Gid la dwe separe rechèch pratik ak dwa ki chanje selon eta ak vil, epi mete verifikasyon anvan peman an." },
+      "en": { "title": "Housing", "summary": "Guidance must separate practical search steps from rights that vary by state and city, with verification before payment." }
+    },
+    {
+      "key": "education",
+      "risk": "medium",
+      "status": "needs_state_and_city_data",
+      "source_ids": [],
+      "ht": { "title": "Etid", "summary": "Lekòl, ekivalans ak èd finansye bezwen sous ofisyèl pa eta ak pa enstitisyon." },
+      "en": { "title": "Education", "summary": "School enrollment, credential recognition and financial aid require official state and institution sources." }
+    },
+    {
+      "key": "health",
+      "risk": "high",
+      "status": "requires_professional_review",
+      "source_ids": [],
+      "ht": { "title": "Sante", "summary": "Pa bay rekòmandasyon medikal. Verifye ijans, asirans ak sèvis lokal yo nan sous ofisyèl aktyèl." },
+      "en": { "title": "Health", "summary": "Do not provide medical recommendations. Verify emergency, insurance and local service information with current official sources." }
+    },
+    {
+      "key": "first_30_days",
+      "risk": "medium",
+      "status": "draft",
+      "source_ids": ["cbp_i94", "uscis_tools", "ftc_scams"],
+      "ht": { "title": "Premye 30 jou", "summary": "Verifye dosye ofisyèl ki aplike pou ou, konsève avi yo, pwoteje dokiman yo epi verifye nenpòt moun anvan ou peye." },
+      "en": { "title": "First 30 days", "summary": "Check the official records that apply to you, keep notices, protect documents and verify anyone before paying." }
+    },
+    {
+      "key": "scams_and_risks",
+      "risk": "high",
+      "status": "draft",
+      "source_ids": ["ftc_scams", "eoir_representation"],
+      "ht": { "title": "Magouy ak risk", "summary": "Verifye pwofesyonèl yo nan lis ofisyèl yo. Pa sipoze yon notè, ajan vwayaj oswa konsiltan gen otorizasyon pou bay konsèy legal." },
+      "en": { "title": "Scams and risks", "summary": "Verify professionals in official rosters. Do not assume a notary, travel agent or consultant is authorized to provide legal advice." }
+    },
+    {
+      "key": "packages",
+      "risk": "high",
+      "status": "blocked_on_service_terms",
+      "source_ids": [],
+      "ht": { "title": "Sèvis", "summary": "Pa gen sèvis pou vann jiskaske limit, pri, SLA, ranbousman ak wòl pwofesyonèl yo apwouve." },
+      "en": { "title": "Services", "summary": "No service is offered for sale until scope, price, SLA, refunds and professional roles are approved." }
+    },
+    {
+      "key": "sources",
+      "risk": "low",
+      "status": "ready_as_directory_only",
+      "source_ids": ["uscis_tools", "state_visa_directory", "cbp_i94", "eoir_representation", "ftc_scams"],
+      "ht": { "title": "Sous", "summary": "Senk pwen depa ofisyèl yo verifye nan dat ki ekri anlè a; itilizatè a dwe tcheke sous la ankò anvan li aji." },
+      "en": { "title": "Sources", "summary": "Five official starting points were checked on the recorded date; users should recheck the source before acting." }
+    }
+  ]
+}
