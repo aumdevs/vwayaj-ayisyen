@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { DEFAULT_LOCALE, isLocale, normalizeLocale } from "@/lib/i18n/config";
 import { getProductCopy } from "@/lib/i18n/product-copy";
 import { localizedPath, replaceLocale } from "@/lib/i18n/paths";
+import { formatLocalizedDate } from "@/lib/i18n/dates";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
 function leafKeys(value: unknown, prefix = ""): string[] {
@@ -39,5 +40,10 @@ describe("locale configuration", () => {
     expect(localizedPath("fr", "/")).toBe("/fr");
     expect(replaceLocale("/es/countries/chile", "pt")).toBe("/pt/countries/chile");
     expect(replaceLocale("/", "en")).toBe("/en");
+  });
+
+  it("formats Haitian dates without falling back to English month names", () => {
+    expect(formatLocalizedDate("2026-08-23", "ht")).toBe("23 out 2026");
+    expect(formatLocalizedDate("2026-08-23", "ht", "short")).toBe("23 out 2026");
   });
 });

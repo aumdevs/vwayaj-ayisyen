@@ -24,6 +24,7 @@ import {
 } from "@/content/official-source-directory";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
+import { formatLocalizedDate } from "@/lib/i18n/dates";
 import { getProductCopy } from "@/lib/i18n/product-copy";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
@@ -38,12 +39,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const product = getProductCopy(locale);
   const pilotCountry = getCountry("usa");
   const directoryCopy = officialDirectoryCopy[locale];
-  const reviewedAt = new Intl.DateTimeFormat(locale, {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC"
-  }).format(new Date(`${OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT}T00:00:00Z`));
+  const reviewedAt = formatLocalizedDate(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT, locale, "short");
 
   return (
     <>

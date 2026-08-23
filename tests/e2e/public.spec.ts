@@ -105,10 +105,11 @@ test("manifest exposes install assets and the controlled offline surface", async
   await expect(page.getByRole("heading", { name: "Ou pa konekte kounye a" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Eseye ankò" })).toBeVisible();
   await expect(page.locator("form[data-offline-retry]")).toHaveAttribute("action", "");
-  await expect(page.getByRole("link", { name: /Gade sous/ })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Ale nan paj dakèy" })).toHaveAttribute(
     "href",
-    "/ht/countries/usa"
+    "/ht"
   );
+  await expect(page.getByRole("link", { name: /Gade sous/ })).toHaveCount(0);
 });
 
 test("iPhone install guidance appears once per navigation session", async ({ page }, testInfo) => {
@@ -262,6 +263,7 @@ test("pilot directory exposes only verified official starting points", async ({ 
   ).toBeVisible();
   await expect(page.locator(".official-source-grid article")).toHaveCount(5);
   await expect(page.locator('time[datetime="2026-08-23"]')).toBeVisible();
+  await expect(page.getByText("23 out 2026")).toBeVisible();
   await expect(page.getByText("Sa ki poko pibliye")).toBeVisible();
 
   await page.goto("/es/countries/chile");

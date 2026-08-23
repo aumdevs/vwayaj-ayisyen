@@ -4,16 +4,12 @@ import {
   OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT,
   USA_OFFICIAL_SOURCES
 } from "@/content/official-source-directory";
+import { formatLocalizedDate } from "@/lib/i18n/dates";
 import type { Locale } from "@/types/domain";
 
 export function OfficialSourceDirectory({ locale }: { locale: Locale }) {
   const copy = officialDirectoryCopy[locale];
-  const reviewedAt = new Intl.DateTimeFormat(locale, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC"
-  }).format(new Date(`${OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT}T00:00:00Z`));
+  const reviewedAt = formatLocalizedDate(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT, locale);
 
   return (
     <section className="section section-white official-source-directory">

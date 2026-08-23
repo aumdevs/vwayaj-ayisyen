@@ -30,7 +30,10 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const copy = getExperienceCopy(locale);
   const country = getCountry(countryParam);
   const sections = getCountrySections(dictionary);
-  const publishedContent = await getPublishedCountryContent(country.code, locale);
+  const editorialGuideEnabled = LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
+  const publishedContent = editorialGuideEnabled
+    ? await getPublishedCountryContent(country.code, locale)
+    : [];
   const sectionsWithContent = sections.filter((section) =>
     publishedContent.some((item) => item.sectionKey === section.key)
   );
@@ -45,8 +48,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
     country.code === LAUNCH_READINESS.pilotCountry &&
     LAUNCH_READINESS.countryContent.officialSourceDirectory &&
     !LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
-  const showReviewedEditorialGuide =
-    LAUNCH_READINESS.countryContent.reviewedEditorialGuide && publishedContent.length > 0;
+  const showReviewedEditorialGuide = editorialGuideEnabled && publishedContent.length > 0;
 
   return (
     <>
