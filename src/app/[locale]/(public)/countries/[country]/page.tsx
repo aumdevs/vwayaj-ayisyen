@@ -138,8 +138,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 <EmptyState
                   actions={
                     <>
-                      <Link className="button" href={localizedPath(locale, "compare")}>
-                        {copy.country.compareAction}
+                      <Link className="button" href={localizedPath(locale, "countries/usa")}>
+                        {copy.home.primary}
                       </Link>
                       <Link
                         className="button button-secondary"
@@ -156,8 +156,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 <div className="country-next-card">
                   <h3>{copy.country.nextTitle}</h3>
                   <p>{copy.country.nextBody}</p>
-                  <Link className="text-link" href={localizedPath(locale, "compare")}>
-                    {copy.home.secondary} <ArrowRight aria-hidden="true" size={17} />
+                  <Link className="text-link" href={localizedPath(locale, "contact")}>
+                    {copy.advisor} <ArrowRight aria-hidden="true" size={17} />
                   </Link>
                 </div>
               </aside>

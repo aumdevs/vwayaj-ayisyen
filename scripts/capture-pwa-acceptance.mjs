@@ -237,6 +237,7 @@ await mkdir(outputRoot, { recursive: true });
 await mkdir(manifestRoot, { recursive: true });
 const browser = await chromium.launch();
 const findings = [];
+const manifestFindings = [];
 const isLocalDevelopment = /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(baseUrl);
 
 function isKnownDevelopmentCspNoise(message) {
@@ -378,26 +379,46 @@ for (const scenario of manifestOnly ? [] : scenarios) {
 
 for (const screenshot of manifestScreenshots) {
   const { context, page } = await createPage(screenshot);
-  await page.goto(`${baseUrl}${screenshot.path}`, { waitUntil: "networkidle" });
+  const errors = observeErrors(page);
+  const response = await page.goto(`${baseUrl}${screenshot.path}`, { waitUntil: "networkidle" });
   await settle(page);
+  const metrics = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    pathname: window.location.pathname,
+    scrollWidth: document.documentElement.scrollWidth,
+    title: document.title
+  }));
   await page.screenshot({
     animations: "disabled",
     fullPage: false,
     path: resolve(manifestRoot, screenshot.file)
   });
+  manifestFindings.push({
+    browserErrors: errors.browserErrors,
+    finalPath: metrics.pathname,
+    group: "manifest",
+    horizontalOverflow: metrics.scrollWidth > metrics.clientWidth,
+    ignoredDevelopmentCspMessages: errors.getIgnoredDevelopmentCspMessages(),
+    name: screenshot.file,
+    path: screenshot.path,
+    status: response?.status() ?? null,
+    title: metrics.title,
+    viewport: `${screenshot.viewport.width}x${screenshot.viewport.height}`
+  });
   await context.close();
 }
 
 await browser.close();
-const failures = findings.filter(
+const allFindings = [...findings, ...manifestFindings];
+const failures = allFindings.filter(
   ({ browserErrors, horizontalOverflow, status }) =>
     browserErrors.length > 0 || horizontalOverflow || (status !== null && status >= 400)
 );
 const report = {
-  captures: findings.length,
+  captures: allFindings.length,
   failureCount: failures.length,
   failures,
-  findings,
+  findings: allFindings,
   manifestScreenshots: manifestScreenshots.map(({ file, viewport }) => ({
     file,
     viewport: `${viewport.width}x${viewport.height}`
@@ -407,6 +428,6 @@ if (!manifestOnly) {
   await writeFile(resolve(outputRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
 }
 process.stdout.write(
-  `${JSON.stringify({ captures: findings.length, failureCount: failures.length, failures }, null, 2)}\n`
+  `${JSON.stringify({ captures: allFindings.length, failureCount: failures.length, failures }, null, 2)}\n`
 );
 if (failures.length > 0) process.exitCode = 1;

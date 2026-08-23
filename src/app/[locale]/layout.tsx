@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
         ? product.contactBody
         : BRAND.descriptions[locale];
   return {
-    title: path === "" ? { absolute: BRAND.name } : title,
+    title: title === BRAND.name ? { absolute: BRAND.name } : title,
     description,
     alternates: {
       canonical: localizedPath(canonicalLocale, path),

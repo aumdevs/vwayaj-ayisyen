@@ -106,7 +106,7 @@ export const config = {
   matcher: [
     {
       source:
-        "/((?!api|_next/static|_next/image|favicon.ico|icon.svg|opengraph-image|robots.txt|sitemap.xml|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|gif|webp|avif|woff2|css|js)$).*)"
+        "/((?!api(?:/|$)|_next/|icons/|images/|screenshots/|favicon\\.ico$|icon(?:-maskable|-monochrome)?\\.svg$|opengraph-image$|robots\\.txt$|sitemap\\.xml$|manifest\\.webmanifest$|sw\\.js$).*)"
     }
   ]
 };

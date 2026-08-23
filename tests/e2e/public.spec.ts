@@ -278,6 +278,9 @@ test("pilot directory exposes only verified official starting points", async ({ 
   await expect(page).toHaveTitle("Chile · Vwayaj Ayisyen");
   await expect(page.locator(".country-quick-facts")).toHaveCount(0);
   await expect(page.locator(".official-source-grid")).toHaveCount(0);
+  await expect(page.locator('a[href="/es/compare"]')).toHaveCount(0);
+  await expect(page.locator('.empty-state-premium a[href="/es/countries/usa"]')).toBeVisible();
+  await expect(page.locator('.country-next-card a[href="/es/contact"]')).toBeVisible();
 });
 
 test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ page, request }) => {
@@ -295,6 +298,13 @@ test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ p
   await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
     "href",
     `${siteUrl}/ht/countries/usa`
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
+
+  await page.goto("/ht/guides/usa/draft.js");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    `${siteUrl}/ht/guides/usa/draft.js`
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
 
@@ -367,6 +377,7 @@ test("comparison accepts a safe selection without inventing scores", async ({ pa
 test("private routes redirect to sign in without a session", async ({ page }) => {
   await page.goto("/ht/admin");
   await expect(page).toHaveURL(/\/ht\/auth\/sign-in\?reason=required$/);
+  await expect(page).toHaveTitle("Vwayaj Ayisyen");
   await expect(page.getByRole("heading", { name: "Konekte" })).toBeVisible();
 });
 

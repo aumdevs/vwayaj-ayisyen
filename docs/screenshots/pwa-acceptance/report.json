@@ -1,5 +1,5 @@
 {
-  "captures": 24,
+  "captures": 27,
   "failureCount": 0,
   "failures": [],
   "findings": [
@@ -72,7 +72,7 @@
       "name": "login",
       "path": "/ht/auth/sign-in",
       "status": 200,
-      "title": "Vwayaj Ayisyen · Vwayaj Ayisyen",
+      "title": "Vwayaj Ayisyen",
       "viewport": "1440x900"
     },
     {
@@ -84,7 +84,7 @@
       "name": "dashboard-access-control",
       "path": "/ht/portal",
       "status": 200,
-      "title": "Vwayaj Ayisyen · Vwayaj Ayisyen",
+      "title": "Vwayaj Ayisyen",
       "viewport": "1440x900"
     },
     {
@@ -180,7 +180,7 @@
       "name": "login",
       "path": "/ht/auth/sign-in",
       "status": 200,
-      "title": "Vwayaj Ayisyen · Vwayaj Ayisyen",
+      "title": "Vwayaj Ayisyen",
       "viewport": "390x844"
     },
     {
@@ -192,7 +192,7 @@
       "name": "account-access-control",
       "path": "/ht/portal",
       "status": 200,
-      "title": "Vwayaj Ayisyen · Vwayaj Ayisyen",
+      "title": "Vwayaj Ayisyen",
       "viewport": "390x844"
     },
     {
@@ -290,6 +290,42 @@
       "status": 200,
       "title": "Vwayaj Ayisyen",
       "viewport": "768x1024"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-mobile.png",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/usa",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "country-mobile.png",
+      "path": "/ht/countries/usa",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-tablet.png",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1024x768"
     }
   ],
   "manifestScreenshots": [

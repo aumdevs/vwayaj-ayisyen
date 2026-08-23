@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { BRAND } from "@/config/brand";
 
-export const alt = "Vwayaj Ayisyen — sous ofisyèl pou kominote ayisyèn nan";
+export const alt = "Vwayaj Ayisyen";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,13 +32,31 @@ export default function OpenGraphImage() {
         }}
       >
         <div style={{ color: "#f7d86f", display: "flex", fontSize: 24, letterSpacing: 4 }}>
-          SOUS OFISYÈL · LIMIT VIZIB
+          VWAYAJAYISYEN.COM
         </div>
         <div style={{ display: "flex", fontSize: 76, fontWeight: 800, lineHeight: 1.02 }}>
           {BRAND.name}
         </div>
-        <div style={{ display: "flex", fontSize: 34, lineHeight: 1.35, maxWidth: 900 }}>
-          Prepare pwochen etap ou, san fo pwomès.
+        <div style={{ display: "flex", gap: "18px", marginTop: "8px" }}>
+          {["HT", "FR", "ES", "PT", "EN"].map((locale) => (
+            <span
+              key={locale}
+              style={{
+                alignItems: "center",
+                background: "rgba(255, 255, 255, 0.12)",
+                border: "1px solid rgba(255, 255, 255, 0.24)",
+                borderRadius: "999px",
+                display: "flex",
+                fontSize: "22px",
+                fontWeight: 700,
+                height: "52px",
+                justifyContent: "center",
+                width: "76px"
+              }}
+            >
+              {locale}
+            </span>
+          ))}
         </div>
       </div>
     </div>,
