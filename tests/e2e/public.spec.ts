@@ -260,15 +260,17 @@ test("pilot directory exposes only verified official starting points", async ({ 
 });
 
 test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ page, request }) => {
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
+
   await page.goto("/ht/countries/usa");
   await expect(page).toHaveTitle("Etazini · Vwayaj Ayisyen");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "http://127.0.0.1:3000/ht/countries/usa"
+    `${siteUrl}/ht/countries/usa`
   );
   await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
     "href",
-    "http://127.0.0.1:3000/ht/countries/usa"
+    `${siteUrl}/ht/countries/usa`
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
 
