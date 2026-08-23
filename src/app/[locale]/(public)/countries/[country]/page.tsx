@@ -8,6 +8,7 @@ import { PublicContentArticle } from "@/components/public/public-content-article
 import { SectionHeading } from "@/components/public/section-heading";
 import { EmptyState } from "@/components/ui/empty-state";
 import { StructuredData } from "@/components/seo/structured-data";
+import { LAUNCH_READINESS } from "@/config/launch-readiness";
 import { getSiteUrl } from "@/lib/config/runtime";
 import { countries, getCountry, getCountrySections, isCountryCode } from "@/lib/content/catalog";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -40,6 +41,12 @@ export default async function CountryPage({ params }: CountryPageProps) {
     .sort()
     .at(-1);
   const siteUrl = getSiteUrl();
+  const showOfficialSourceDirectory =
+    country.code === LAUNCH_READINESS.pilotCountry &&
+    LAUNCH_READINESS.countryContent.officialSourceDirectory &&
+    !LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
+  const showReviewedEditorialGuide =
+    LAUNCH_READINESS.countryContent.reviewedEditorialGuide && publishedContent.length > 0;
 
   return (
     <>
@@ -56,14 +63,16 @@ export default async function CountryPage({ params }: CountryPageProps) {
             <p className="eyebrow">{copy.country.guideKicker}</p>
             <h1>{country.name[locale]}</h1>
             <p>{copy.country.intro}</p>
-            <div className="country-quick-facts">
-              {[Languages, Layers3, CalendarDays].map((Icon, index) => (
-                <span key={copy.country.quickFacts[index]}>
-                  <Icon aria-hidden="true" size={18} />
-                  {copy.country.quickFacts[index]}
-                </span>
-              ))}
-            </div>
+            {showOfficialSourceDirectory ? (
+              <div className="country-quick-facts">
+                {[Languages, Layers3, CalendarDays].map((Icon, index) => (
+                  <span key={copy.country.quickFacts[index]}>
+                    <Icon aria-hidden="true" size={18} />
+                    {copy.country.quickFacts[index]}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -89,7 +98,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
         }}
       />
 
-      {publishedContent.length === 0 && country.code === "usa" ? (
+      {showOfficialSourceDirectory ? (
         <>
           <OfficialSourceDirectory locale={locale} />
           <section className="section section-white section-final-cta">
@@ -102,7 +111,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
             </div>
           </section>
         </>
-      ) : publishedContent.length === 0 ? (
+      ) : !showReviewedEditorialGuide ? (
         <>
           <section className="section section-white">
             <div className="shell country-pending-layout">

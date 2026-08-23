@@ -10,6 +10,9 @@ export const PUBLIC_ANALYTICS_EVENTS = [
 
 export type PublicAnalyticsEvent = (typeof PUBLIC_ANALYTICS_EVENTS)[number];
 
+const TRACKABLE_PUBLIC_PATH =
+  /^\/(ht|fr|es|pt|en)(?:\/(?:about|contact|faq|countries(?:\/usa)?|legal\/(?:terms|privacy|cookies)))?\/?$/;
+
 export function isPublicAnalyticsEvent(value: string): value is PublicAnalyticsEvent {
   return PUBLIC_ANALYTICS_EVENTS.some((event) => event === value);
 }
@@ -17,8 +20,7 @@ export function isPublicAnalyticsEvent(value: string): value is PublicAnalyticsE
 export function sanitizeAnalyticsPath(value: string): string | null {
   try {
     const pathname = new URL(value, "https://analytics.invalid").pathname;
-    const [locale] = pathname.split("/").filter(Boolean);
-    if (!locale || !isLocale(locale) || pathname.length > 180) return null;
+    if (!TRACKABLE_PUBLIC_PATH.test(pathname)) return null;
     return pathname;
   } catch {
     return null;

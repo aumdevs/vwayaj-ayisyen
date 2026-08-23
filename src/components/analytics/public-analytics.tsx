@@ -36,10 +36,6 @@ function sendEvent(event: PublicAnalyticsEvent, rawPath: string): void {
   if (!locale) return;
 
   const body = JSON.stringify({ event, path, locale });
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(endpoint, new Blob([body], { type: "application/json" }));
-    return;
-  }
   void fetch(endpoint, {
     method: "POST",
     body,
@@ -47,7 +43,7 @@ function sendEvent(event: PublicAnalyticsEvent, rawPath: string): void {
     keepalive: true,
     credentials: "omit",
     referrerPolicy: "no-referrer"
-  });
+  }).catch(() => undefined);
 }
 
 export function PublicAnalytics() {

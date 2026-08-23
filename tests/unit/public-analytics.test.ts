@@ -17,6 +17,11 @@ describe("public analytics privacy boundary", () => {
     expect(sanitizeAnalyticsPath(`/ht/${"x".repeat(181)}`)).toBeNull();
   });
 
+  it("rejects arbitrary or sensitive-looking localized path segments", () => {
+    expect(sanitizeAnalyticsPath("/ht/guides/usa/alice@example.com")).toBeNull();
+    expect(sanitizeAnalyticsPath("/ht/countries/usa/private")).toBeNull();
+  });
+
   it("accepts only the fixed public event vocabulary", () => {
     expect(isPublicAnalyticsEvent("page_view")).toBe(true);
     expect(isPublicAnalyticsEvent("search:someone@example.com")).toBe(false);

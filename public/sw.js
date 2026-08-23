@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v5";
+const CACHE_VERSION = "v6";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];

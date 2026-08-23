@@ -33,14 +33,7 @@ export const PROMOTABLE_CORE_PATHS = [
   "contact"
 ] as const;
 
-export const PROMOTABLE_LEGAL_PATHS = [
-  "legal/terms",
-  "legal/privacy",
-  "legal/cookies",
-  "legal/ai",
-  "legal/community",
-  "legal/editorial"
-] as const;
+export const PROMOTABLE_LEGAL_PATHS = ["legal/terms", "legal/privacy", "legal/cookies"] as const;
 
 const promotablePublicPaths: ReadonlySet<string> = new Set([
   ...PROMOTABLE_CORE_PATHS,

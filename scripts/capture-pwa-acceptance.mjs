@@ -4,6 +4,7 @@ import { chromium } from "@playwright/test";
 
 const baseUrl = process.env.VISUAL_BASE_URL ?? "http://127.0.0.1:3000";
 const protectionBypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+const manifestOnly = process.env.PWA_MANIFEST_ONLY === "true";
 const outputRoot = resolve(
   process.cwd(),
   process.env.PWA_VISUAL_OUTPUT_ROOT ?? "docs/screenshots/pwa-acceptance"
@@ -292,13 +293,6 @@ const manifestScreenshots = [
     userAgent: iphoneUserAgent
   },
   {
-    file: "compare-mobile.png",
-    path: "/ht/compare",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent
-  },
-  {
     file: "country-mobile.png",
     path: "/ht/countries/usa",
     viewport: mobile,
@@ -413,7 +407,7 @@ async function settle(page) {
   await page.waitForTimeout(180);
 }
 
-for (const scenario of scenarios) {
+for (const scenario of manifestOnly ? [] : scenarios) {
   const { context, page } = await createPage(scenario);
   const errors = observeErrors(page);
   const response = await page.goto(`${baseUrl}${scenario.path}`, { waitUntil: "networkidle" });
@@ -484,7 +478,9 @@ const report = {
     viewport: `${viewport.width}x${viewport.height}`
   }))
 };
-await writeFile(resolve(outputRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
+if (!manifestOnly) {
+  await writeFile(resolve(outputRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
+}
 process.stdout.write(
   `${JSON.stringify({ captures: findings.length, failureCount: failures.length, failures }, null, 2)}\n`
 );

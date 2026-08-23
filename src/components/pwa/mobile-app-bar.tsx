@@ -25,7 +25,6 @@ const copy = {
     about: "Sou nou",
     privacy: "Konfidansyalite",
     terms: "Kondisyon itilizasyon",
-    editorial: "Politik editoryal",
     account: "Kont mwen"
   },
   fr: {
@@ -42,7 +41,6 @@ const copy = {
     about: "À propos",
     privacy: "Confidentialité",
     terms: "Conditions d’utilisation",
-    editorial: "Politique éditoriale",
     account: "Mon compte"
   },
   es: {
@@ -59,7 +57,6 @@ const copy = {
     about: "Sobre nosotros",
     privacy: "Privacidad",
     terms: "Condiciones de uso",
-    editorial: "Política editorial",
     account: "Mi cuenta"
   },
   pt: {
@@ -76,7 +73,6 @@ const copy = {
     about: "Sobre nós",
     privacy: "Privacidade",
     terms: "Termos de uso",
-    editorial: "Política editorial",
     account: "Minha conta"
   },
   en: {
@@ -93,7 +89,6 @@ const copy = {
     about: "About",
     privacy: "Privacy",
     terms: "Terms of use",
-    editorial: "Editorial policy",
     account: "My account"
   }
 } satisfies Record<Locale, Record<string, string>>;
@@ -165,8 +160,7 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
     [text.about, "about"],
     [text.account, "portal"],
     [text.privacy, "legal/privacy"],
-    [text.terms, "legal/terms"],
-    [text.editorial, "legal/editorial"]
+    [text.terms, "legal/terms"]
   ] as const;
 
   return (

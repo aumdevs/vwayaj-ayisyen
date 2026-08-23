@@ -85,9 +85,15 @@ test("manifest exposes install assets and the controlled offline surface", async
   expect(manifest.ok()).toBe(true);
   const manifestBody = (await manifest.json()) as {
     display?: string;
+    screenshots?: { src?: string }[];
     shortcuts?: { short_name?: string; url?: string }[];
   };
   expect(manifestBody.display).toBe("standalone");
+  expect(manifestBody.screenshots?.map(({ src }) => src)).toEqual([
+    "/screenshots/pwa/home-mobile.png",
+    "/screenshots/pwa/country-mobile.png",
+    "/screenshots/pwa/home-tablet.png"
+  ]);
   expect(manifestBody.shortcuts).toContainEqual(
     expect.objectContaining({
       short_name: "Kont",
@@ -257,12 +263,19 @@ test("pilot directory exposes only verified official starting points", async ({ 
   await expect(page.locator(".official-source-grid article")).toHaveCount(5);
   await expect(page.locator('time[datetime="2026-08-23"]')).toBeVisible();
   await expect(page.getByText("Sa ki poko pibliye")).toBeVisible();
+
+  await page.goto("/es/countries/chile");
+  await expect(page.locator(".country-quick-facts")).toHaveCount(0);
+  await expect(page.locator(".official-source-grid")).toHaveCount(0);
 });
 
 test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ page, request }) => {
-  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:3000").replace(/\/$/, "");
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
-  await page.goto("/ht/countries/usa");
+  await page.goto("/ht");
+  const pilotLink = page.locator('a[href="/ht/countries/usa"]').first();
+  await pilotLink.hover();
+  await pilotLink.click();
   await expect(page).toHaveTitle("Etazini · Vwayaj Ayisyen");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
@@ -286,6 +299,13 @@ test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ p
   const socialImage = await request.get("/opengraph-image");
   expect(socialImage.ok()).toBe(true);
   expect(socialImage.headers()["content-type"]).toContain("image/png");
+});
+
+test("contact update requests use the selected language", async ({ page }) => {
+  await page.goto("/es/contact");
+  const href = await page.locator('a[href^="mailto:promo@vwayajayisyen.com"]').getAttribute("href");
+  expect(decodeURIComponent(href ?? "")).toContain("novedades del lanzamiento");
+  expect(decodeURIComponent(href ?? "")).toContain("no debo enviar documentos sensibles");
 });
 
 test("official legal center publishes Spanish and Portuguese documents without private email", async ({

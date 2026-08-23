@@ -8,7 +8,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 import { countries } from "@/lib/content/catalog";
-import { isPromotableCountry } from "@/config/launch-readiness";
+import { isPromotableCountry, LAUNCH_READINESS } from "@/config/launch-readiness";
 import type { Locale } from "@/types/domain";
 
 type SiteHeaderProps = {
@@ -28,7 +28,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
   const navigationCopy = {
     ht: {
       about: "Sou nou",
-      editorial: "Politik editoryal",
       main: "Navigasyon prensipal",
       privacy: "Konfidansyalite",
       resources: "Gid ak resous",
@@ -36,7 +35,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     },
     fr: {
       about: "À propos",
-      editorial: "Politique éditoriale",
       main: "Navigation principale",
       privacy: "Confidentialité",
       resources: "Guides et ressources",
@@ -44,7 +42,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     },
     es: {
       about: "Sobre nosotros",
-      editorial: "Política editorial",
       main: "Navegación principal",
       privacy: "Privacidad",
       resources: "Guías y recursos",
@@ -52,7 +49,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     },
     pt: {
       about: "Sobre nós",
-      editorial: "Política editorial",
       main: "Navegação principal",
       privacy: "Privacidade",
       resources: "Guias e recursos",
@@ -60,7 +56,6 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     },
     en: {
       about: "About",
-      editorial: "Editorial policy",
       main: "Main navigation",
       privacy: "Privacy",
       resources: "Guides and resources",
@@ -86,11 +81,12 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     {
       label: navigationCopy.resources,
       links: [
-        { href: localizedPath(locale, "guides"), label: dictionary.nav.guides },
+        ...(LAUNCH_READINESS.tools.guides
+          ? [{ href: localizedPath(locale, "guides"), label: dictionary.nav.guides }]
+          : []),
         { href: localizedPath(locale, "about"), label: navigationCopy.about },
         { href: localizedPath(locale, "faq"), label: "FAQ" },
         { href: localizedPath(locale, "contact"), label: dictionary.common.contact },
-        { href: localizedPath(locale, "legal/editorial"), label: navigationCopy.editorial },
         { href: localizedPath(locale, "legal/privacy"), label: navigationCopy.privacy }
       ]
     }

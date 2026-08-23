@@ -18,7 +18,6 @@ const footerCopy = {
     countries: "Peyi yo",
     tools: "Resous",
     help: "Èd ak legal",
-    editorial: "Politik editoryal",
     privacy: "Konfidansyalite",
     terms: "Kondisyon",
     top: "Retounen anlè"
@@ -27,7 +26,6 @@ const footerCopy = {
     countries: "Pays",
     tools: "Ressources",
     help: "Aide et juridique",
-    editorial: "Politique éditoriale",
     privacy: "Confidentialité",
     terms: "Conditions",
     top: "Retour en haut"
@@ -36,7 +34,6 @@ const footerCopy = {
     countries: "Países",
     tools: "Recursos",
     help: "Ayuda y legal",
-    editorial: "Política editorial",
     privacy: "Privacidad",
     terms: "Términos",
     top: "Volver arriba"
@@ -45,7 +42,6 @@ const footerCopy = {
     countries: "Países",
     tools: "Recursos",
     help: "Ajuda e jurídico",
-    editorial: "Política editorial",
     privacy: "Privacidade",
     terms: "Termos",
     top: "Voltar ao topo"
@@ -54,7 +50,6 @@ const footerCopy = {
     countries: "Countries",
     tools: "Resources",
     help: "Help and legal",
-    editorial: "Editorial policy",
     privacy: "Privacy",
     terms: "Terms",
     top: "Back to top"
@@ -65,7 +60,6 @@ const footerCopy = {
     countries: string;
     tools: string;
     help: string;
-    editorial: string;
     privacy: string;
     terms: string;
     top: string;
@@ -106,7 +100,6 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
           <Link href={localizedPath(locale, "about")}>{dictionary.nav.help}</Link>
           <Link href={localizedPath(locale, "faq")}>FAQ</Link>
           <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
-          <Link href={localizedPath(locale, "legal/editorial")}>{copy.editorial}</Link>
           <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacy}</Link>
           <Link href={localizedPath(locale, "legal/terms")}>{copy.terms}</Link>
         </nav>

@@ -12,5 +12,8 @@ describe("promotion readiness", () => {
     expect(isPromotablePublicPath("legal/privacy", "es")).toBe(true);
     expect(isPromotablePublicPath("legal/privacy", "pt")).toBe(true);
     expect(isPromotablePublicPath("legal/privacy", "ht")).toBe(false);
+    expect(isPromotablePublicPath("legal/ai", "es")).toBe(false);
+    expect(isPromotablePublicPath("legal/community", "pt")).toBe(false);
+    expect(isPromotablePublicPath("legal/editorial", "es")).toBe(false);
   });
 });

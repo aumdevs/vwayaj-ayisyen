@@ -19,6 +19,9 @@ const contactCopy = {
     legalBody: "Dwa sou done, kondisyon, sekirite oswa yon demann legal.",
     marketing: "Nouvèl lansman",
     marketingBody: "Mande nouvèl sou nouvo gid yo epi jere otorizasyon ou.",
+    updatesSubject: "Vwayaj Ayisyen — nouvèl lansman",
+    updatesBody:
+      "Tanpri ajoute m nan nouvèl lansman yo. Mwen konprann mwen pa dwe voye dokiman sansib oswa enfòmasyon koneksyon pa imèl.",
     notice: "Imèl yo pa yon kanal pou ijans ni pou voye paspò, pyès idantite oswa dosye migrasyon."
   },
   fr: {
@@ -30,6 +33,9 @@ const contactCopy = {
     legalBody: "Droits sur les données, conditions, sécurité ou demande juridique.",
     marketing: "Actualités du lancement",
     marketingBody: "Demandez les actualités des nouveaux guides et gérez votre autorisation.",
+    updatesSubject: "Vwayaj Ayisyen — actualités du lancement",
+    updatesBody:
+      "Merci de m’ajouter aux actualités du lancement. Je comprends que je ne dois envoyer aucun document sensible ni identifiant de compte par e-mail.",
     notice:
       "Les e-mails ne sont pas un canal d’urgence et ne doivent pas contenir de passeport, pièce d’identité ou dossier migratoire."
   },
@@ -42,6 +48,9 @@ const contactCopy = {
     legalBody: "Derechos de datos, términos, seguridad o una solicitud legal.",
     marketing: "Novedades del lanzamiento",
     marketingBody: "Solicita novedades sobre nuevas guías y gestiona tu autorización.",
+    updatesSubject: "Vwayaj Ayisyen — novedades del lanzamiento",
+    updatesBody:
+      "Por favor, agréguenme a las novedades del lanzamiento. Entiendo que no debo enviar documentos sensibles ni credenciales de cuenta por correo.",
     notice:
       "El correo no es un canal de emergencias ni para enviar pasaportes, identificaciones o expedientes migratorios."
   },
@@ -54,6 +63,9 @@ const contactCopy = {
     legalBody: "Direitos de dados, termos, segurança ou solicitação jurídica.",
     marketing: "Novidades do lançamento",
     marketingBody: "Solicite novidades sobre novos guias e gerencie sua autorização.",
+    updatesSubject: "Vwayaj Ayisyen — novidades do lançamento",
+    updatesBody:
+      "Por favor, incluam-me nas novidades do lançamento. Entendo que não devo enviar documentos sensíveis nem credenciais da conta por e-mail.",
     notice:
       "O e-mail não é um canal de emergência nem deve ser usado para enviar passaportes, identidades ou processos migratórios."
   },
@@ -66,6 +78,9 @@ const contactCopy = {
     legalBody: "Data rights, terms, security or a legal request.",
     marketing: "Launch updates",
     marketingBody: "Ask for updates about new guides and manage your permission.",
+    updatesSubject: "Vwayaj Ayisyen — launch updates",
+    updatesBody:
+      "Please add me to launch updates. I understand that I should not send sensitive documents or account credentials by email.",
     notice:
       "Email is not an emergency channel and must not be used to send passports, IDs or immigration files."
   }
@@ -80,6 +95,8 @@ const contactCopy = {
     legalBody: string;
     marketing: string;
     marketingBody: string;
+    updatesSubject: string;
+    updatesBody: string;
     notice: string;
   }
 >;
@@ -91,11 +108,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const experience = getExperienceCopy(locale);
   const copy = getProductCopy(locale);
   const contact = contactCopy[locale];
-  const updatesHref = `mailto:${LEGAL_ENTITY.email.marketing}?subject=${encodeURIComponent(
-    "Vwayaj Ayisyen — launch updates"
-  )}&body=${encodeURIComponent(
-    "Please add me to launch updates. I understand that I should not send sensitive documents or account credentials by email."
-  )}`;
+  const updatesHref = `mailto:${LEGAL_ENTITY.email.marketing}?subject=${encodeURIComponent(contact.updatesSubject)}&body=${encodeURIComponent(contact.updatesBody)}`;
 
   return (
     <>
