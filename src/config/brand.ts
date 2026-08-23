@@ -24,10 +24,10 @@ export const BRAND = {
     } satisfies Record<CountryCode, string>
   },
   descriptions: {
-    ht: "Gid pratik, konparezon onèt ak akonpayman pou kominote ayisyèn nan.",
-    fr: "Des guides pratiques, des comparaisons honnêtes et un accompagnement pour la communauté haïtienne.",
-    es: "Guías prácticas, comparaciones honestas y acompañamiento para la comunidad haitiana.",
-    pt: "Guias práticos, comparações honestas e acompanhamento para a comunidade haitiana.",
-    en: "Practical guides, honest comparisons and support for the Haitian community."
+    ht: "Sous ofisyèl, dat ak limit vizib pou kominote ayisyèn nan.",
+    fr: "Sources officielles, dates et limites visibles pour la communauté haïtienne.",
+    es: "Fuentes oficiales, fechas y límites visibles para la comunidad haitiana.",
+    pt: "Fontes oficiais, datas e limites visíveis para a comunidade haitiana.",
+    en: "Official sources, dates and visible limits for the Haitian community."
   } satisfies Record<Locale, string>
 } as const;

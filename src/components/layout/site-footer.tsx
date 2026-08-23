@@ -5,6 +5,7 @@ import { BRAND } from "@/config/brand";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { countries } from "@/lib/content/catalog";
+import { isPromotableCountry } from "@/config/launch-readiness";
 import type { Locale } from "@/types/domain";
 
 type SiteFooterProps = {
@@ -15,7 +16,7 @@ type SiteFooterProps = {
 const footerCopy = {
   ht: {
     countries: "Peyi yo",
-    tools: "Zouti yo",
+    tools: "Resous",
     help: "Èd ak legal",
     editorial: "Politik editoryal",
     privacy: "Konfidansyalite",
@@ -24,7 +25,7 @@ const footerCopy = {
   },
   fr: {
     countries: "Pays",
-    tools: "Outils",
+    tools: "Ressources",
     help: "Aide et juridique",
     editorial: "Politique éditoriale",
     privacy: "Confidentialité",
@@ -33,7 +34,7 @@ const footerCopy = {
   },
   es: {
     countries: "Países",
-    tools: "Herramientas",
+    tools: "Recursos",
     help: "Ayuda y legal",
     editorial: "Política editorial",
     privacy: "Privacidad",
@@ -42,7 +43,7 @@ const footerCopy = {
   },
   pt: {
     countries: "Países",
-    tools: "Ferramentas",
+    tools: "Recursos",
     help: "Ajuda e jurídico",
     editorial: "Política editorial",
     privacy: "Privacidade",
@@ -51,7 +52,7 @@ const footerCopy = {
   },
   en: {
     countries: "Countries",
-    tools: "Tools",
+    tools: "Resources",
     help: "Help and legal",
     editorial: "Editorial policy",
     privacy: "Privacy",
@@ -87,18 +88,18 @@ export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
         </div>
         <nav aria-label={copy.countries}>
           <strong>{copy.countries}</strong>
-          {countries.map((country) => (
-            <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
-              {country.name[locale]}
-            </Link>
-          ))}
+          {countries
+            .filter(({ code }) => isPromotableCountry(code))
+            .map((country) => (
+              <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
+                {country.name[locale]}
+              </Link>
+            ))}
         </nav>
         <nav aria-label={copy.tools}>
           <strong>{copy.tools}</strong>
-          <Link href={localizedPath(locale, "compare")}>{dictionary.nav.compare}</Link>
-          <Link href={localizedPath(locale, "find-my-country")}>{dictionary.nav.assessment}</Link>
-          <Link href={localizedPath(locale, "guides")}>{dictionary.nav.guides}</Link>
-          <Link href={localizedPath(locale, "services")}>{dictionary.nav.packages}</Link>
+          <Link href={localizedPath(locale, "countries/usa")}>{dictionary.common.sources}</Link>
+          <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
         </nav>
         <nav aria-label={copy.help}>
           <strong>{copy.help}</strong>

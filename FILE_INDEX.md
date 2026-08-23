@@ -108,19 +108,19 @@ configuración local, seed, migraciones y pruebas SQL
 - `supabase/tests/0004_consent_rls.sql`
 - `supabase/tests/0005_site_settings_preservation.sql`
 
-## github
+## .github
 
-workflows y configuración que Codex debe copiar a `.github`
+workflows y configuración activos en GitHub
 
-- `github/.github/CODEOWNERS`
-- `github/.github/ISSUE_TEMPLATE/bug.yml`
-- `github/.github/ISSUE_TEMPLATE/config.yml`
-- `github/.github/dependabot.yml`
-- `github/.github/pull_request_template.md`
-- `github/.github/workflows/ci.yml`
-- `github/.github/workflows/codeql.yml`
-- `github/.github/workflows/dependency-review.yml`
-- `github/.github/workflows/secret-scan.yml`
+- `.github/CODEOWNERS`
+- `.github/ISSUE_TEMPLATE/bug.yml`
+- `.github/ISSUE_TEMPLATE/config.yml`
+- `.github/dependabot.yml`
+- `.github/pull_request_template.md`
+- `.github/workflows/ci.yml`
+- `.github/workflows/codeql.yml`
+- `.github/workflows/dependency-review.yml`
+- `.github/workflows/secret-scan.yml`
 
 ## scripts
 

@@ -14,12 +14,21 @@ function buildContentSecurityPolicy(nonce: string): string {
   const frameSources: string[] = [];
   const supabase = getSupabasePublicConfig();
   const turnstileEnabled = getTurnstileSiteKey() !== null;
+  const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT?.trim();
 
   if (supabase) {
     const origin = new URL(supabase.url).origin;
     connectSources.push(origin, origin.replace(/^http/, "ws"));
   }
   if (isDevelopment) connectSources.push("ws:", "http:");
+  if (analyticsEndpoint) {
+    try {
+      const analyticsOrigin = new URL(analyticsEndpoint).origin;
+      if (analyticsOrigin.startsWith("https://")) connectSources.push(analyticsOrigin);
+    } catch {
+      // Invalid optional configuration fails closed: the browser cannot connect.
+    }
+  }
   if (turnstileEnabled) {
     scriptSources.push("https://challenges.cloudflare.com");
     frameSources.push("https://challenges.cloudflare.com");
@@ -74,6 +83,7 @@ export async function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("x-locale", firstSegment);
+  requestHeaders.set("x-pathname", pathname);
   requestHeaders.set("Content-Security-Policy", csp);
 
   const privateSurface =
@@ -96,7 +106,7 @@ export const config = {
   matcher: [
     {
       source:
-        "/((?!api|_next/static|_next/image|favicon.ico|icon.svg|robots.txt|sitemap.xml|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|gif|webp|avif|woff2|css|js)$).*)",
+        "/((?!api|_next/static|_next/image|favicon.ico|icon.svg|opengraph-image|robots.txt|sitemap.xml|manifest.webmanifest|sw.js|.*\\.(?:png|jpg|jpeg|gif|webp|avif|woff2|css|js)$).*)",
       missing: [
         { type: "header", key: "next-router-prefetch" },
         { type: "header", key: "purpose", value: "prefetch" }

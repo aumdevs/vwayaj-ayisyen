@@ -159,8 +159,7 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
   }, [moreOpen]);
 
   const links = [
-    [text.assessment, "find-my-country"],
-    [text.services, "services"],
+    [text.countries, "countries"],
     [text.faq, "faq"],
     [text.contact, "contact"],
     [text.about, "about"],

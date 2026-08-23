@@ -29,7 +29,7 @@ describe("PWA manifest", () => {
       dir: "ltr",
       orientation: "any"
     });
-    expect(value.shortcuts).toHaveLength(4);
+    expect(value.shortcuts).toHaveLength(3);
     expect(value.shortcuts).toContainEqual(
       expect.objectContaining({
         short_name: "Kont",
@@ -67,8 +67,8 @@ describe("PWA manifest", () => {
     ).not.toContain('fill="#ffffff"');
   });
 
-  it("references four real product screenshots with valid declared dimensions", () => {
-    expect(value.screenshots).toHaveLength(4);
+  it("references the real promotional screenshots with valid declared dimensions", () => {
+    expect(value.screenshots).toHaveLength(3);
     for (const screenshot of value.screenshots ?? []) {
       expect(typeof screenshot.src).toBe("string");
       const source = screenshot.src as string;

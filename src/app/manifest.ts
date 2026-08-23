@@ -60,13 +60,6 @@ export default function manifest(): MetadataRoute.Manifest {
         label: "Akèy Vwayaj Ayisyen"
       },
       {
-        src: "/screenshots/pwa/compare-mobile.png",
-        sizes: "390x844",
-        type: "image/png",
-        form_factor: "narrow",
-        label: "Konpare peyi yo"
-      },
-      {
         src: "/screenshots/pwa/country-mobile.png",
         sizes: "390x844",
         type: "image/png",
@@ -83,24 +76,17 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: "Konpare peyi yo",
-        short_name: "Konpare",
-        description: "Louvri zouti konparezon peyi yo.",
-        url: "/ht/compare?source=pwa-shortcut",
+        name: "Sous ofisyèl Etazini",
+        short_name: "Sous USA",
+        description: "Louvri anyè sous ofisyèl peyi pilòt la.",
+        url: "/ht/countries/usa?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Eksplore peyi yo",
-        short_name: "Peyi",
-        description: "Louvri lis peyi ki disponib yo.",
-        url: "/ht/countries?source=pwa-shortcut",
-        icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
-      },
-      {
-        name: "Gid yo",
-        short_name: "Gid",
-        description: "Louvri bibliyotèk gid piblik la.",
-        url: "/ht/guides?source=pwa-shortcut",
+        name: "Kontakte ekip la",
+        short_name: "Kontak",
+        description: "Louvri chanèl ofisyèl ekip la.",
+        url: "/ht/contact?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {

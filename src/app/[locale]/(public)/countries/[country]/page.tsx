@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, BookOpenText, CalendarDays, Languages, Layers3 } from "lucide-react";
 import { ContextualAdvisorCTA } from "@/components/public/contextual-advisor-cta";
+import { OfficialSourceDirectory } from "@/components/public/official-source-directory";
 import { PublicContentArticle } from "@/components/public/public-content-article";
 import { SectionHeading } from "@/components/public/section-heading";
 import { EmptyState } from "@/components/ui/empty-state";
+import { StructuredData } from "@/components/seo/structured-data";
+import { getSiteUrl } from "@/lib/config/runtime";
 import { countries, getCountry, getCountrySections, isCountryCode } from "@/lib/content/catalog";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
@@ -18,12 +20,6 @@ type CountryPageProps = { params: Promise<{ locale: string; country: string }> }
 
 export function generateStaticParams() {
   return countries.map(({ code }) => ({ country: code }));
-}
-
-export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
-  const { locale, country } = await params;
-  if (!isLocale(locale) || !isCountryCode(country)) return {};
-  return { title: getCountry(country).name[locale] };
 }
 
 export default async function CountryPage({ params }: CountryPageProps) {
@@ -43,6 +39,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
     .filter((date): date is string => Boolean(date))
     .sort()
     .at(-1);
+  const siteUrl = getSiteUrl();
 
   return (
     <>
@@ -71,7 +68,41 @@ export default async function CountryPage({ params }: CountryPageProps) {
         </div>
       </section>
 
-      {publishedContent.length === 0 ? (
+      <StructuredData
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: dictionary.nav.countries,
+              item: new URL(localizedPath(locale, "countries"), siteUrl).toString()
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: country.name[locale],
+              item: new URL(localizedPath(locale, `countries/${country.code}`), siteUrl).toString()
+            }
+          ]
+        }}
+      />
+
+      {publishedContent.length === 0 && country.code === "usa" ? (
+        <>
+          <OfficialSourceDirectory locale={locale} />
+          <section className="section section-white section-final-cta">
+            <div className="shell">
+              <ContextualAdvisorCTA
+                body={copy.home.finalBody}
+                locale={locale}
+                title={copy.home.finalTitle}
+              />
+            </div>
+          </section>
+        </>
+      ) : publishedContent.length === 0 ? (
         <>
           <section className="section section-white">
             <div className="shell country-pending-layout">

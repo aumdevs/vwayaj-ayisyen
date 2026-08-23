@@ -4,7 +4,8 @@ allowBuilds:
   supabase: true
   unrs-resolver: true
 overrides:
-  postcss: 8.5.21
+  nanoid: 3.3.18
+  postcss: 8.5.23
   sharp: 0.35.3
 minimumReleaseAgeExclude:
   - "@next/env@16.2.11"
@@ -26,4 +27,5 @@ minimumReleaseAgeExclude:
   - eslint-config-next@16.2.11
   - next@16.2.11
   - prettier@3.9.6
-  - postcss@8.5.21
+  - nanoid@3.3.18
+  - postcss@8.5.23

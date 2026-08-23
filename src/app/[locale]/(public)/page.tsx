@@ -4,24 +4,27 @@ import { notFound } from "next/navigation";
 import {
   ArrowRight,
   BookOpenText,
-  BriefcaseBusiness,
   Building2,
-  GraduationCap,
   HeartHandshake,
-  Home as HomeIcon,
+  Info,
+  Mail,
   MapPinned,
-  Scale,
   ShieldCheck
 } from "lucide-react";
 import { BRAND } from "@/config/brand";
 import { ContextualAdvisorCTA } from "@/components/public/contextual-advisor-cta";
-import { PackageCard } from "@/components/public/package-card";
 import { SectionHeading } from "@/components/public/section-heading";
 import { TrustStrip } from "@/components/public/trust-strip";
 import { CountryCard } from "@/components/ui/country-card";
-import { countries } from "@/lib/content/catalog";
+import { getCountry } from "@/lib/content/catalog";
+import {
+  officialDirectoryCopy,
+  OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT,
+  USA_OFFICIAL_SOURCES
+} from "@/content/official-source-directory";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
+import { getProductCopy } from "@/lib/i18n/product-copy";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 
@@ -32,12 +35,15 @@ export default async function HomePage({ params }: HomePageProps) {
   if (!isLocale(locale)) notFound();
   const dictionary = getDictionary(locale);
   const copy = getExperienceCopy(locale);
-  const comparisonCriteria = [
-    { icon: BriefcaseBusiness, label: dictionary.country.work },
-    { icon: HomeIcon, label: dictionary.country.cost },
-    { icon: GraduationCap, label: dictionary.country.education },
-    { icon: HeartHandshake, label: copy.goals[2] }
-  ];
+  const product = getProductCopy(locale);
+  const pilotCountry = getCountry("usa");
+  const directoryCopy = officialDirectoryCopy[locale];
+  const reviewedAt = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC"
+  }).format(new Date(`${OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT}T00:00:00Z`));
 
   return (
     <>
@@ -48,14 +54,14 @@ export default async function HomePage({ params }: HomePageProps) {
             <h1>{copy.home.title}</h1>
             <p className="page-lede">{copy.home.body}</p>
             <div className="button-row">
-              <Link className="button button-large" href={localizedPath(locale, "find-my-country")}>
+              <Link className="button button-large" href={localizedPath(locale, "countries/usa")}>
                 {copy.home.primary} <ArrowRight aria-hidden="true" size={19} />
               </Link>
               <Link
                 className="button button-secondary button-large"
-                href={localizedPath(locale, "compare")}
+                href={localizedPath(locale, "contact")}
               >
-                {copy.home.secondary}
+                {copy.advisor}
               </Link>
             </div>
           </div>
@@ -71,12 +77,15 @@ export default async function HomePage({ params }: HomePageProps) {
               />
             </div>
             <div className="hero-data-card hero-data-primary">
-              <span>04</span>
-              <p>{dictionary.nav.countries}</p>
+              <span>{String(USA_OFFICIAL_SOURCES.length).padStart(2, "0")}</span>
+              <p>{dictionary.common.sources}</p>
             </div>
             <div className="hero-data-card hero-data-secondary">
               <ShieldCheck aria-hidden="true" size={21} />
-              <p>{copy.home.trust[0].title}</p>
+              <p>
+                {directoryCopy.checked}
+                <time dateTime={OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT}>{reviewedAt}</time>
+              </p>
             </div>
           </div>
         </div>
@@ -86,24 +95,24 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="shell">
           {[
             {
-              href: localizedPath(locale, "countries"),
+              href: localizedPath(locale, "countries/usa"),
               icon: MapPinned,
               label: dictionary.nav.countries
             },
             {
-              href: localizedPath(locale, "compare"),
-              icon: Scale,
-              label: dictionary.nav.compare
+              href: localizedPath(locale, "about"),
+              icon: Info,
+              label: dictionary.nav.help
             },
             {
-              href: localizedPath(locale, "find-my-country"),
+              href: localizedPath(locale, "faq"),
               icon: HeartHandshake,
-              label: dictionary.nav.assessment
+              label: "FAQ"
             },
             {
-              href: localizedPath(locale, "guides"),
-              icon: BookOpenText,
-              label: dictionary.nav.guides
+              href: localizedPath(locale, "contact"),
+              icon: Mail,
+              label: dictionary.common.contact
             }
           ].map(({ href, icon: Icon, label }) => (
             <Link href={href} key={href}>
@@ -129,71 +138,39 @@ export default async function HomePage({ params }: HomePageProps) {
             kicker={dictionary.nav.countries}
             title={copy.home.destinationsTitle}
           />
-          <div className="country-grid country-grid-editorial">
-            {countries.map((country) => (
+          <div className="pilot-showcase">
+            <div className="country-grid country-grid-editorial">
               <CountryCard
                 actionLabel={copy.explore}
-                country={country}
-                key={country.code}
+                country={pilotCountry}
                 locale={locale}
+                preload
+                sizes="(max-width: 900px) 100vw, 54vw"
               />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-journey">
-        <div className="shell journey-panel">
-          <div className="journey-copy">
-            <p className="eyebrow">{dictionary.nav.assessment}</p>
-            <h2>{copy.home.assessmentTitle}</h2>
-            <p>{copy.home.assessmentBody}</p>
-            <Link className="button button-light" href={localizedPath(locale, "compare")}>
-              {copy.home.secondary} <ArrowRight aria-hidden="true" size={18} />
-            </Link>
-          </div>
-          <div className="journey-question-stack" aria-label={copy.assessment.questionsTitle}>
-            {copy.assessment.questions.map((question, index) => (
-              <article key={question}>
-                <span>0{index + 1}</span>
-                <p>{question}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-comparison-preview">
-        <div className="shell">
-          <SectionHeading
-            body={copy.home.comparisonBody}
-            kicker={dictionary.nav.compare}
-            title={copy.home.comparisonTitle}
-          />
-          <div className="comparison-story-grid">
-            <article className="comparison-country-stack">
-              {countries.map((country, index) => (
-                <div
-                  className={`comparison-country country-accent-${country.accent}`}
-                  key={country.code}
-                >
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{country.name[locale]}</strong>
-                </div>
-              ))}
-            </article>
-            <div className="comparison-criteria-list">
-              {comparisonCriteria.map(({ icon: Icon, label }) => (
-                <article key={label}>
-                  <Icon aria-hidden="true" size={22} />
-                  <span>{label}</span>
-                  <span className="comparison-dash" aria-hidden="true" />
-                </article>
-              ))}
-              <Link className="text-link" href={localizedPath(locale, "compare")}>
-                {copy.home.secondary} <ArrowRight aria-hidden="true" size={17} />
-              </Link>
             </div>
+            <aside className="pilot-proof-panel">
+              <div className="pilot-proof-seal" aria-hidden="true">
+                <ShieldCheck size={28} />
+              </div>
+              <p className="eyebrow">{directoryCopy.kicker}</p>
+              <h3>{directoryCopy.title}</h3>
+              <p>{directoryCopy.body}</p>
+              <dl>
+                <div>
+                  <dt>{dictionary.common.sources}</dt>
+                  <dd>{String(USA_OFFICIAL_SOURCES.length).padStart(2, "0")}</dd>
+                </div>
+                <div>
+                  <dt>{directoryCopy.checked}</dt>
+                  <dd>
+                    <time dateTime={OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT}>{reviewedAt}</time>
+                  </dd>
+                </div>
+              </dl>
+              <Link className="text-link" href={localizedPath(locale, "countries/usa")}>
+                {copy.explore} <ArrowRight aria-hidden="true" size={17} />
+              </Link>
+            </aside>
           </div>
         </div>
       </section>
@@ -219,68 +196,14 @@ export default async function HomePage({ params }: HomePageProps) {
               },
               {
                 icon: HeartHandshake,
-                title: dictionary.notices.community,
-                body: copy.home.trust[2].body
+                title: product.privacyFirst,
+                body: product.privacyFirstBody
               }
             ].map(({ icon: Icon, title, body }) => (
               <article key={title}>
                 <Icon aria-hidden="true" size={23} />
                 <h3>{title}</h3>
                 <p>{body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-services-preview">
-        <div className="shell">
-          <SectionHeading
-            body={copy.home.servicesBody}
-            kicker={dictionary.nav.packages}
-            title={copy.home.servicesTitle}
-          />
-          <div className="package-grid">
-            {copy.services.levels.map((level, index) => (
-              <PackageCard
-                audience={level.audience}
-                availability={copy.services.availability}
-                featured={index === 1}
-                featuredLabel={copy.comingSoon}
-                features={level.features}
-                key={level.name}
-                name={level.name}
-                result={level.result}
-              />
-            ))}
-          </div>
-          <div className="centered-action">
-            <Link className="button button-secondary" href={localizedPath(locale, "services")}>
-              {copy.viewAll} <ArrowRight aria-hidden="true" size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-guides-preview">
-        <div className="shell">
-          <SectionHeading
-            body={copy.home.guidesBody}
-            kicker={dictionary.nav.guides}
-            title={copy.home.guidesTitle}
-          />
-          <div className="editorial-card-grid">
-            {[
-              dictionary.country.work,
-              dictionary.country.housing,
-              dictionary.country.first_30_days
-            ].map((title, index) => (
-              <article className="editorial-card" key={title}>
-                <span className="editorial-card-index">0{index + 1}</span>
-                <BookOpenText aria-hidden="true" size={25} />
-                <h3>{title}</h3>
-                <p>{copy.guides.pendingBody}</p>
-                <span className="status-badge">{copy.comingSoon}</span>
               </article>
             ))}
           </div>

@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpenText, CircleUserRound, House, MapPinned, Scale } from "lucide-react";
+import { CircleUserRound, House, Info, Mail, MapPinned } from "lucide-react";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 import { useKeyboardOpen } from "@/components/pwa/app-experience";
 
 const labels = {
-  ht: ["Akèy", "Peyi", "Konpare", "Gid", "Kont"],
-  fr: ["Accueil", "Pays", "Comparer", "Guides", "Compte"],
-  es: ["Inicio", "Países", "Comparar", "Guías", "Cuenta"],
-  pt: ["Início", "Países", "Comparar", "Guias", "Conta"],
-  en: ["Home", "Countries", "Compare", "Guides", "Account"]
+  ht: ["Akèy", "Peyi", "Sou nou", "Kontak", "Kont"],
+  fr: ["Accueil", "Pays", "À propos", "Contact", "Compte"],
+  es: ["Inicio", "Países", "Nosotros", "Contacto", "Cuenta"],
+  pt: ["Início", "Países", "Sobre", "Contato", "Conta"],
+  en: ["Home", "Countries", "About", "Contact", "Account"]
 } satisfies Record<Locale, readonly [string, string, string, string, string]>;
 
 export function MobileBottomNavigation({ locale }: { locale: Locale }) {
@@ -27,12 +27,12 @@ export function MobileBottomNavigation({ locale }: { locale: Locale }) {
       label: copy[1],
       key: "countries"
     },
-    { href: localizedPath(locale, "compare"), icon: Scale, label: copy[2], key: "compare" },
+    { href: localizedPath(locale, "about"), icon: Info, label: copy[2], key: "about" },
     {
-      href: localizedPath(locale, "guides"),
-      icon: BookOpenText,
+      href: localizedPath(locale, "contact"),
+      icon: Mail,
       label: copy[3],
-      key: "guides"
+      key: "contact"
     },
     {
       href: localizedPath(locale, "portal"),

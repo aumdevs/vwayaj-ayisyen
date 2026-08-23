@@ -30,6 +30,15 @@ countries:
   - code: mexico
     iso2: MX
 
+launch:
+  phase: informational_prelaunch
+  decided_at: 2026-08-23
+  pilot_country: usa
+  pilot_editorial_locales: [ht, en]
+  public_scope: official_source_directory
+  global_indexing_default: false
+  hidden_from_promotion: [compare, assessment, guides, services, courses, chile, brazil, mexico]
+
 security:
   target: OWASP_ASVS_L2
   privileged_mfa: required

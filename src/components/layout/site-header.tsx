@@ -8,6 +8,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
 import { localizedPath } from "@/lib/i18n/paths";
 import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 import { countries } from "@/lib/content/catalog";
+import { isPromotableCountry } from "@/config/launch-readiness";
 import type { Locale } from "@/types/domain";
 
 type SiteHeaderProps = {
@@ -17,12 +18,12 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
   const experience = getExperienceCopy(locale);
+  const launchCountries = countries.filter(({ code }) => isPromotableCountry(code));
   const compactNav = [
     { label: dictionary.nav.countries, href: localizedPath(locale, "countries") },
-    { label: dictionary.nav.compare, href: localizedPath(locale, "compare") },
-    { label: dictionary.nav.assessment, href: localizedPath(locale, "find-my-country") },
-    { label: dictionary.nav.packages, href: localizedPath(locale, "services") },
-    { label: dictionary.nav.guides, href: localizedPath(locale, "guides") }
+    { label: navigationCopyFallback(locale, "about"), href: localizedPath(locale, "about") },
+    { label: "FAQ", href: localizedPath(locale, "faq") },
+    { label: dictionary.common.contact, href: localizedPath(locale, "contact") }
   ];
   const navigationCopy = {
     ht: {
@@ -70,7 +71,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
     {
       label: dictionary.nav.countries,
       links: [
-        ...countries.map((country) => ({
+        ...launchCountries.map((country) => ({
           href: localizedPath(locale, `countries/${country.code}`),
           label: country.name[locale],
           meta: country.shortLabel
@@ -78,35 +79,8 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
         {
           href: localizedPath(locale, "countries"),
           label: experience.viewAll,
-          meta: "04"
+          meta: "01"
         }
-      ]
-    },
-    {
-      label: navigationCopy.tools,
-      links: [
-        {
-          href: localizedPath(locale, "compare"),
-          label: dictionary.nav.compare
-        },
-        {
-          href: localizedPath(locale, "find-my-country"),
-          label: dictionary.nav.assessment
-        }
-      ]
-    },
-    {
-      label: dictionary.nav.packages,
-      links: [
-        {
-          href: localizedPath(locale, "services"),
-          label: experience.services.title
-        },
-        ...countries.map((country) => ({
-          href: localizedPath(locale, `services/${country.code}`),
-          label: country.name[locale],
-          meta: country.shortLabel
-        }))
       ]
     },
     {
@@ -158,4 +132,15 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
       </div>
     </header>
   );
+}
+
+function navigationCopyFallback(locale: Locale, key: "about"): string {
+  const about = {
+    ht: "Sou nou",
+    fr: "À propos",
+    es: "Sobre nosotros",
+    pt: "Sobre nós",
+    en: "About"
+  } satisfies Record<Locale, string>;
+  return key === "about" ? about[locale] : about[locale];
 }

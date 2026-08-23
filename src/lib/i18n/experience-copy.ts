@@ -129,7 +129,7 @@ export type ExperienceCopy = {
 const copy = {
   ht: {
     menu: "Meni",
-    advisor: "Pale ak yon konseye",
+    advisor: "Rete enfòme",
     explore: "Eksplore",
     viewAll: "Wè tout",
     comingSoon: "Byento",
@@ -137,12 +137,12 @@ const copy = {
     home: {
       kicker: "Chwazi ak plis klète",
       title: "Prepare pwochen etap ou, san fo pwomès.",
-      body: "Gid pratik, konparezon onèt ak akonpayman pou Etazini, Chili, Brezil ak Meksik.",
+      body: "Yon anyè sous ofisyèl pou Etazini, prepare pou kominote ayisyèn nan san fo pwomès.",
       heroAlt: "De pwofesyonèl ayisyen ap prepare pwochen etap yo ansanm",
-      primary: "Jwenn peyi ki adapte avè m",
+      primary: "Eksplore sous Etazini yo",
       secondary: "Konpare peyi yo",
-      destinationsTitle: "Kat destinasyon. Yon desizyon ki merite tan.",
-      destinationsBody: "Kòmanse ak sa ki enpòtan pou ou epi ouvri chak gid nan pwòp ritm ou.",
+      destinationsTitle: "Yon peyi pilòt. Sous yo an premye.",
+      destinationsBody: "Kòmanse ak anyè Etazini an pandan lòt gid yo rete fèmen pou revizyon.",
       assessmentTitle: "Pi bon kestyon yo vini anvan rekòmandasyon an.",
       assessmentBody:
         "Zouti nou an ap ede w reflechi sou objektif, lang, fanmi ak fason ou vle viv. Jiskaske metòd la pare, ou ka konpare peyi yo dirèkteman.",
@@ -151,15 +151,14 @@ const copy = {
         "Travay, pri lavi, etid, fanmi ak adaptasyon dwe eksplike ak mo senp, sous ak dat.",
       realityTitle: "Reyalite anvan pwomès.",
       realityBody:
-        "Nou mete enfòmasyon ofisyèl, konsèy pratik ak eksperyans kominote a nan plas pa yo pou ou ka wè diferans lan.",
+        "Nou montre sa ki soti nan sous ofisyèl, sa ki toujou an revizyon ak limit platfòm la.",
       servicesTitle: "Akonpayman ki kòmanse ak yon limit klè.",
       servicesBody:
         "Chwazi nivo sipò ou bezwen an. Pri ak acha ap parèt sèlman lè tout kondisyon sèvis yo pare.",
       guidesTitle: "Gid pou kestyon ki vini apre desizyon an.",
       guidesBody: "Travay, lojman, bank, etid ak premye jou yo—òganize pou li fasil sou telefòn.",
       finalTitle: "Ou pa bezwen deside tout bagay jodi a.",
-      finalBody:
-        "Kòmanse ak yon peyi, konpare de opsyon oswa prepare kestyon ou vle poze yon konseye.",
+      finalBody: "Kòmanse ak sous ofisyèl yo oswa ekri ekip la san voye dokiman sansib.",
       trust: [
         { title: "Enfòmasyon ki gen sous", body: "Dat ak sous rete toupre kontni ki disponib la." },
         { title: "Oryantasyon onèt", body: "Nou separe sa ki ofisyèl, pratik ak kominotè." },
@@ -171,8 +170,8 @@ const copy = {
     },
     countries: {
       kicker: "Chwazi destinasyon ou",
-      title: "Eksplore kat peyi yo ak menm nivo klète.",
-      body: "Chak gid òganize kestyon esansyèl yo san klase yon peyi kòm solisyon pou tout moun.",
+      title: "Kòmanse ak peyi pilòt la epi verifye sous yo.",
+      body: "Anyè Etazini an louvri; Chili, Brezil ak Meksik rete deyò pwomosyon jiskaske kontni yo revize.",
       goalsTitle: "Kisa ki pi enpòtan pou ou?",
       chooseTitle: "Yon bon chwa kòmanse ak bon kestyon.",
       chooseBody:
@@ -182,7 +181,7 @@ const copy = {
       guideKicker: "Gid destinasyon",
       intro:
         "Yon espas pou konprann lavi chak jou, preparasyon ak kestyon ou dwe verifye anvan ou avanse.",
-      quickFacts: ["5 lang", "14 tèm pratik", "Sous ak dat"],
+      quickFacts: ["5 sous ofisyèl", "Lyen dirèk", "Dat verifikasyon"],
       coverageTitle: "Sa gid konplè a ap kouvri",
       coverageBody:
         "Nou montre sèlman seksyon ki gen kontni pare; pa gen kat vid ni konsèy envante.",
@@ -300,7 +299,7 @@ const copy = {
   },
   fr: {
     menu: "Menu",
-    advisor: "Parler à un conseiller",
+    advisor: "Rester informé",
     explore: "Explorer",
     viewAll: "Tout voir",
     comingSoon: "Bientôt",
@@ -308,12 +307,13 @@ const copy = {
     home: {
       kicker: "Choisir avec plus de clarté",
       title: "Préparez votre prochaine étape, sans fausses promesses.",
-      body: "Des guides pratiques, des comparaisons honnêtes et un accompagnement pour les États-Unis, le Chili, le Brésil et le Mexique.",
+      body: "Un répertoire de sources officielles pour les États-Unis, préparé pour la communauté haïtienne sans fausses promesses.",
       heroAlt: "Deux professionnels haïtiens préparent ensemble leur prochaine étape",
-      primary: "Trouver le pays qui me convient",
+      primary: "Explorer les sources des États-Unis",
       secondary: "Comparer les pays",
-      destinationsTitle: "Quatre destinations. Une décision qui mérite du temps.",
-      destinationsBody: "Commencez par vos priorités et ouvrez chaque guide à votre rythme.",
+      destinationsTitle: "Un pays pilote. Les sources d’abord.",
+      destinationsBody:
+        "Commencez par le répertoire des États-Unis pendant la révision des autres guides.",
       assessmentTitle: "Les bonnes questions viennent avant la recommandation.",
       assessmentBody:
         "L’outil prendra en compte objectifs, langues, famille et mode de vie. En attendant, comparez directement les pays.",
@@ -322,14 +322,15 @@ const copy = {
         "Travail, coût de la vie, études, famille et adaptation doivent être expliqués simplement, avec sources et dates.",
       realityTitle: "La réalité avant les promesses.",
       realityBody:
-        "Nous distinguons clairement information officielle, conseils pratiques et expérience communautaire.",
+        "Nous distinguons les sources officielles, les contenus encore en révision et les limites de la plateforme.",
       servicesTitle: "Un accompagnement qui commence par des limites claires.",
       servicesBody:
         "Choisissez le niveau de soutien utile. Les prix et achats n’apparaîtront que lorsque les conditions seront prêtes.",
       guidesTitle: "Des guides pour les questions qui viennent ensuite.",
       guidesBody: "Travail, logement, banque, études et premiers jours, pensés pour le mobile.",
       finalTitle: "Vous n’avez pas à tout décider aujourd’hui.",
-      finalBody: "Commencez par un pays, comparez deux options ou préparez vos questions.",
+      finalBody:
+        "Commencez par les sources officielles ou écrivez à l’équipe sans envoyer de documents sensibles.",
       trust: [
         {
           title: "Informations sourcées",
@@ -347,8 +348,8 @@ const copy = {
     },
     countries: {
       kicker: "Choisir sa destination",
-      title: "Explorez quatre pays avec le même niveau de clarté.",
-      body: "Chaque guide organise les questions essentielles sans présenter un pays comme solution universelle.",
+      title: "Commencez par le pays pilote et vérifiez les sources.",
+      body: "Le répertoire des États-Unis est ouvert; le Chili, le Brésil et le Mexique restent hors promotion jusqu’à révision.",
       goalsTitle: "Qu’est-ce qui compte le plus pour vous ?",
       chooseTitle: "Un bon choix commence par de bonnes questions.",
       chooseBody:
@@ -358,7 +359,7 @@ const copy = {
       guideKicker: "Guide destination",
       intro:
         "Un espace pour comprendre la vie quotidienne, la préparation et ce qu’il faut vérifier avant d’avancer.",
-      quickFacts: ["5 langues", "14 thèmes pratiques", "Sources et dates"],
+      quickFacts: ["5 sources officielles", "Liens directs", "Date de vérification"],
       coverageTitle: "Ce que couvrira le guide complet",
       coverageBody:
         "Seules les sections prêtes sont affichées : aucune carte vide ni conseil inventé.",
@@ -476,7 +477,7 @@ const copy = {
   },
   es: {
     menu: "Menú",
-    advisor: "Hablar con un asesor",
+    advisor: "Recibir novedades",
     explore: "Explorar",
     viewAll: "Ver todo",
     comingSoon: "Próximamente",
@@ -484,12 +485,13 @@ const copy = {
     home: {
       kicker: "Elegir con más claridad",
       title: "Prepara tu próximo paso, sin falsas promesas.",
-      body: "Guías prácticas, comparaciones honestas y acompañamiento para Estados Unidos, Chile, Brasil y México.",
+      body: "Un directorio de fuentes oficiales de Estados Unidos para la comunidad haitiana, sin falsas promesas.",
       heroAlt: "Dos profesionales haitianos preparan juntos su próximo paso",
-      primary: "Encontrar el país para mí",
+      primary: "Explorar fuentes de EE. UU.",
       secondary: "Comparar países",
-      destinationsTitle: "Cuatro destinos. Una decisión que merece tiempo.",
-      destinationsBody: "Empieza por tus prioridades y abre cada guía a tu ritmo.",
+      destinationsTitle: "Un país piloto. Las fuentes primero.",
+      destinationsBody:
+        "Empieza por el directorio de Estados Unidos mientras las demás guías siguen en revisión.",
       assessmentTitle: "Las buenas preguntas vienen antes de la recomendación.",
       assessmentBody:
         "La herramienta tendrá en cuenta objetivos, idiomas, familia y estilo de vida. Mientras tanto, compara directamente los países.",
@@ -497,14 +499,16 @@ const copy = {
       comparisonBody:
         "Trabajo, costo de vida, estudios, familia y adaptación deben explicarse con claridad, fuentes y fechas.",
       realityTitle: "Realidad antes que promesas.",
-      realityBody: "Separamos información oficial, consejos prácticos y experiencia comunitaria.",
+      realityBody:
+        "Separamos las fuentes oficiales, el contenido todavía en revisión y los límites de la plataforma.",
       servicesTitle: "Acompañamiento que empieza con límites claros.",
       servicesBody:
         "Elige el nivel de apoyo útil. Los precios y compras aparecerán cuando todas las condiciones estén listas.",
       guidesTitle: "Guías para las preguntas que vienen después.",
       guidesBody: "Trabajo, vivienda, bancos, estudios y primeros días, pensados para el móvil.",
       finalTitle: "No tienes que decidirlo todo hoy.",
-      finalBody: "Empieza con un país, compara dos opciones o prepara tus preguntas.",
+      finalBody:
+        "Empieza por las fuentes oficiales o escribe al equipo sin enviar documentos sensibles.",
       trust: [
         {
           title: "Información con fuentes",
@@ -522,8 +526,8 @@ const copy = {
     },
     countries: {
       kicker: "Elegir destino",
-      title: "Explora cuatro países con el mismo nivel de claridad.",
-      body: "Cada guía organiza preguntas esenciales sin presentar un país como solución universal.",
+      title: "Empieza por el país piloto y verifica las fuentes.",
+      body: "El directorio de Estados Unidos está abierto; Chile, Brasil y México quedan fuera de promoción hasta su revisión.",
       goalsTitle: "¿Qué es lo más importante para ti?",
       chooseTitle: "Una buena elección empieza con buenas preguntas.",
       chooseBody:
@@ -533,7 +537,7 @@ const copy = {
       guideKicker: "Guía de destino",
       intro:
         "Un espacio para entender la vida cotidiana, la preparación y lo que debes verificar antes de avanzar.",
-      quickFacts: ["5 idiomas", "14 temas prácticos", "Fuentes y fechas"],
+      quickFacts: ["5 fuentes oficiales", "Enlaces directos", "Fecha de verificación"],
       coverageTitle: "Qué cubrirá la guía completa",
       coverageBody: "Sólo aparecen secciones listas: sin tarjetas vacías ni consejos inventados.",
       pendingTitle: "Esta guía está tomando forma.",
@@ -653,7 +657,7 @@ const copy = {
   },
   pt: {
     menu: "Menu",
-    advisor: "Falar com um consultor",
+    advisor: "Receber novidades",
     explore: "Explorar",
     viewAll: "Ver tudo",
     comingSoon: "Em breve",
@@ -661,12 +665,13 @@ const copy = {
     home: {
       kicker: "Escolher com mais clareza",
       title: "Prepare seu próximo passo, sem falsas promessas.",
-      body: "Guias práticos, comparações honestas e acompanhamento para Estados Unidos, Chile, Brasil e México.",
+      body: "Um diretório de fontes oficiais dos Estados Unidos para a comunidade haitiana, sem falsas promessas.",
       heroAlt: "Dois profissionais haitianos preparam juntos seu próximo passo",
-      primary: "Encontrar o país para mim",
+      primary: "Explorar fontes dos EUA",
       secondary: "Comparar países",
-      destinationsTitle: "Quatro destinos. Uma decisão que merece tempo.",
-      destinationsBody: "Comece pelas suas prioridades e abra cada guia no seu ritmo.",
+      destinationsTitle: "Um país piloto. As fontes primeiro.",
+      destinationsBody:
+        "Comece pelo diretório dos Estados Unidos enquanto os demais guias seguem em revisão.",
       assessmentTitle: "As boas perguntas vêm antes da recomendação.",
       assessmentBody:
         "A ferramenta considerará objetivos, idiomas, família e estilo de vida. Enquanto isso, compare os países diretamente.",
@@ -674,14 +679,16 @@ const copy = {
       comparisonBody:
         "Trabalho, custo de vida, estudos, família e adaptação devem ser explicados com clareza, fontes e datas.",
       realityTitle: "Realidade antes de promessas.",
-      realityBody: "Separamos informação oficial, orientação prática e experiência comunitária.",
+      realityBody:
+        "Separamos as fontes oficiais, o conteúdo ainda em revisão e os limites da plataforma.",
       servicesTitle: "Acompanhamento que começa com limites claros.",
       servicesBody:
         "Escolha o apoio útil. Preços e compras aparecerão quando todas as condições estiverem prontas.",
       guidesTitle: "Guias para as perguntas que vêm depois.",
       guidesBody: "Trabalho, moradia, bancos, estudos e primeiros dias, pensados para o celular.",
       finalTitle: "Você não precisa decidir tudo hoje.",
-      finalBody: "Comece por um país, compare duas opções ou prepare suas perguntas.",
+      finalBody:
+        "Comece pelas fontes oficiais ou escreva para a equipe sem enviar documentos sensíveis.",
       trust: [
         {
           title: "Informação com fontes",
@@ -699,8 +706,8 @@ const copy = {
     },
     countries: {
       kicker: "Escolher destino",
-      title: "Explore quatro países com o mesmo nível de clareza.",
-      body: "Cada guia organiza perguntas essenciais sem apresentar um país como solução universal.",
+      title: "Comece pelo país piloto e verifique as fontes.",
+      body: "O diretório dos Estados Unidos está aberto; Chile, Brasil e México ficam fora da promoção até a revisão.",
       goalsTitle: "O que é mais importante para você?",
       chooseTitle: "Uma boa escolha começa com boas perguntas.",
       chooseBody:
@@ -710,7 +717,7 @@ const copy = {
       guideKicker: "Guia de destino",
       intro:
         "Um espaço para entender o cotidiano, a preparação e o que verificar antes de avançar.",
-      quickFacts: ["5 idiomas", "14 temas práticos", "Fontes e datas"],
+      quickFacts: ["5 fontes oficiais", "Links diretos", "Data de verificação"],
       coverageTitle: "O que o guia completo vai cobrir",
       coverageBody: "Só aparecem seções prontas: sem cartões vazios ou conselhos inventados.",
       pendingTitle: "Este guia está tomando forma.",
@@ -828,7 +835,7 @@ const copy = {
   },
   en: {
     menu: "Menu",
-    advisor: "Talk to an advisor",
+    advisor: "Get updates",
     explore: "Explore",
     viewAll: "View all",
     comingSoon: "Coming soon",
@@ -836,12 +843,13 @@ const copy = {
     home: {
       kicker: "Choose with more clarity",
       title: "Prepare your next step, without false promises.",
-      body: "Practical guides, honest comparisons and support for the United States, Chile, Brazil and Mexico.",
+      body: "A directory of official United States sources for the Haitian community, without false promises.",
       heroAlt: "Two Haitian professionals prepare their next step together",
-      primary: "Find the country for me",
+      primary: "Explore U.S. sources",
       secondary: "Compare countries",
-      destinationsTitle: "Four destinations. A decision worth taking time for.",
-      destinationsBody: "Start with your priorities and open each guide at your own pace.",
+      destinationsTitle: "One pilot country. Sources first.",
+      destinationsBody:
+        "Start with the United States directory while the other guides remain under review.",
       assessmentTitle: "Good questions come before the recommendation.",
       assessmentBody:
         "The tool will consider goals, languages, family and lifestyle. Until then, compare countries directly.",
@@ -850,14 +858,15 @@ const copy = {
         "Work, cost of living, study, family and adaptation should be explained clearly, with sources and dates.",
       realityTitle: "Reality before promises.",
       realityBody:
-        "We keep official information, practical guidance and community experience clearly separated.",
+        "We separate official sources, content still under review and the platform’s limits.",
       servicesTitle: "Support that begins with clear limits.",
       servicesBody:
         "Choose the support level that helps. Prices and purchases will appear once every condition is ready.",
       guidesTitle: "Guides for the questions that come next.",
       guidesBody: "Work, housing, banking, study and first days, designed for mobile.",
       finalTitle: "You do not have to decide everything today.",
-      finalBody: "Start with one country, compare two options or prepare your questions.",
+      finalBody:
+        "Start with official sources or write to the team without sending sensitive documents.",
       trust: [
         {
           title: "Sourced information",
@@ -872,8 +881,8 @@ const copy = {
     },
     countries: {
       kicker: "Choose a destination",
-      title: "Explore four countries with the same level of clarity.",
-      body: "Each guide organizes essential questions without presenting one country as a universal answer.",
+      title: "Start with the pilot country and verify the sources.",
+      body: "The United States directory is open; Chile, Brazil and Mexico remain out of promotion until reviewed.",
       goalsTitle: "What matters most to you?",
       chooseTitle: "A good choice starts with good questions.",
       chooseBody:
@@ -883,7 +892,7 @@ const copy = {
       guideKicker: "Destination guide",
       intro:
         "A place to understand daily life, preparation and what to verify before moving forward.",
-      quickFacts: ["5 languages", "14 practical topics", "Sources and dates"],
+      quickFacts: ["5 official sources", "Direct links", "Verification date"],
       coverageTitle: "What the complete guide will cover",
       coverageBody: "Only ready sections appear: no empty cards or invented advice.",
       pendingTitle: "This guide is taking shape.",

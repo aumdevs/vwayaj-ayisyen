@@ -1,37 +1,15 @@
 import type { MetadataRoute } from "next";
-import { countries, countrySectionKeys } from "@/lib/content/catalog";
+import { PROMOTABLE_CORE_PATHS, PROMOTABLE_LEGAL_PATHS } from "@/config/launch-readiness";
 import { getSiteUrl } from "@/lib/config/runtime";
 import { SUPPORTED_LOCALES } from "@/types/domain";
-
-const publicPaths = [
-  "",
-  "countries",
-  "compare",
-  "find-my-country",
-  "guides",
-  "services",
-  "courses",
-  "about",
-  "faq",
-  "contact",
-  "search",
-  "legal/terms",
-  "legal/privacy",
-  "legal/cookies",
-  "legal/refunds",
-  "legal/ai",
-  "legal/community",
-  "legal/editorial"
-] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
   const paths = SUPPORTED_LOCALES.flatMap((locale) => [
-    ...publicPaths.map((path) => `/${locale}${path ? `/${path}` : ""}`),
-    ...countries.flatMap(({ code }) => [
-      `/${locale}/countries/${code}`,
-      ...countrySectionKeys.map((section) => `/${locale}/countries/${code}/${section}`)
-    ])
+    ...PROMOTABLE_CORE_PATHS.map((path) => `/${locale}${path ? `/${path}` : ""}`),
+    ...(locale === "es" || locale === "pt"
+      ? PROMOTABLE_LEGAL_PATHS.map((path) => `/${locale}/${path}`)
+      : [])
   ]);
 
   return paths.map((path) => ({

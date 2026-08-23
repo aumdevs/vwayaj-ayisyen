@@ -3,18 +3,13 @@ import { expect, test } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "node:crypto";
 
-test("root selects Haitian Creole and renders the four countries", async ({ page }) => {
+test("root selects Haitian Creole and promotes only the reviewed pilot", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/ht$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Prepare pwochen etap");
   const cards = page.locator(".country-card");
-  await expect(cards).toHaveCount(4);
-  await expect(cards.locator(".country-card-title")).toHaveText([
-    "Etazini",
-    "Chili",
-    "Brezil",
-    "Meksik"
-  ]);
+  await expect(cards).toHaveCount(1);
+  await expect(cards.locator(".country-card-title")).toHaveText(["Etazini"]);
 });
 
 test("desktop and mobile expose their intended navigation shells", async ({ page }, testInfo) => {
@@ -28,7 +23,7 @@ test("desktop and mobile expose their intended navigation shells", async ({ page
     await expect(bottomNavigation).toBeVisible();
     await expect(desktopHeader).toBeHidden();
     await expect(bottomNavigation.getByRole("link")).toHaveCount(5);
-    await expect(bottomNavigation.getByRole("link", { name: "Kont" })).toHaveAttribute(
+    await expect(bottomNavigation.getByRole("link", { name: "Kont", exact: true })).toHaveAttribute(
       "href",
       "/ht/portal"
     );
@@ -104,9 +99,9 @@ test("manifest exposes install assets and the controlled offline surface", async
   await expect(page.getByRole("heading", { name: "Ou pa konekte kounye a" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Eseye ankò" })).toBeVisible();
   await expect(page.locator("form[data-offline-retry]")).toHaveAttribute("action", "");
-  await expect(page.getByRole("link", { name: /Gade kontni/ })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: /Gade sous/ })).toHaveAttribute(
     "href",
-    "/ht/guides"
+    "/ht/countries/usa"
   );
 });
 
@@ -252,6 +247,43 @@ test("country pages show review status instead of invented claims", async ({ pag
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Fason legal");
   await expect(page.getByText("Gid sa a ap pran fòm.")).toBeVisible();
   await expect(page.locator(".empty-state-premium")).toHaveCount(1);
+});
+
+test("pilot directory exposes only verified official starting points", async ({ page }) => {
+  await page.goto("/ht/countries/usa");
+  await expect(
+    page.getByRole("heading", { name: "Kòmanse ak sous gouvènman yo pou Etazini" })
+  ).toBeVisible();
+  await expect(page.locator(".official-source-grid article")).toHaveCount(5);
+  await expect(page.locator('time[datetime="2026-08-23"]')).toBeVisible();
+  await expect(page.getByText("Sa ki poko pibliye")).toBeVisible();
+});
+
+test("SEO exposes exact alternates and excludes unfinished surfaces", async ({ page, request }) => {
+  await page.goto("/ht/countries/usa");
+  await expect(page).toHaveTitle("Etazini · Vwayaj Ayisyen");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "http://127.0.0.1:3000/ht/countries/usa"
+  );
+  await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
+    "href",
+    "http://127.0.0.1:3000/ht/countries/usa"
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex, follow/);
+
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.ok()).toBe(true);
+  const sitemapBody = await sitemap.text();
+  expect(sitemapBody).toContain("/ht/countries/usa");
+  expect(sitemapBody).not.toContain("/ht/compare");
+  expect(sitemapBody).not.toContain("/ht/countries/chile");
+  expect(sitemapBody).not.toContain("/ht/legal/privacy");
+  expect(sitemapBody).toContain("/es/legal/privacy");
+
+  const socialImage = await request.get("/opengraph-image");
+  expect(socialImage.ok()).toBe(true);
+  expect(socialImage.headers()["content-type"]).toContain("image/png");
 });
 
 test("official legal center publishes Spanish and Portuguese documents without private email", async ({
