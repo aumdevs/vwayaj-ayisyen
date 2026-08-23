@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { isPromotablePublicPath } from "@/config/launch-readiness";
+import { isPromotablePublicPath, LAUNCH_READINESS } from "@/config/launch-readiness";
 
 describe("promotion readiness", () => {
   it("allows the pilot and hides unfinished product surfaces", () => {
+    expect(LAUNCH_READINESS.countryContent.reviewedEditorialGuide).toBe(false);
     expect(isPromotablePublicPath("countries/usa", "ht")).toBe(true);
     expect(isPromotablePublicPath("compare", "ht")).toBe(false);
     expect(isPromotablePublicPath("countries/chile", "es")).toBe(false);

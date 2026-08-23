@@ -1,7 +1,7 @@
 {
   "project": "vwayaj-ayisyen",
   "generated_at": "2026-08-23",
-  "package_expected_file_count": 183,
+  "package_expected_file_count": 185,
   "manifest_excludes": [
     "manifest.json",
     "SHA256SUMS.txt"
@@ -39,8 +39,8 @@
     },
     {
       "path": "FILE_INDEX.md",
-      "size_bytes": 8960,
-      "sha256": "916c079457eb1c94f65b73f540219264950b70de15440f0209555237522eb529"
+      "size_bytes": 9046,
+      "sha256": "11fbe00ff598913beb6586789293e820c524bf6116b6d071c664464b322f2035"
     },
     {
       "path": "PACKAGE_VALIDATION.md",
@@ -911,6 +911,16 @@
       "path": ".github/workflows/secret-scan.yml",
       "size_bytes": 444,
       "sha256": "dfc18e6faaeddded70e8a77798a84e7446885deacc2034047c66371a29e6b762"
+    },
+    {
+      "path": "docs/48_PROMOTION_READINESS_2026-08-23.md",
+      "size_bytes": 4227,
+      "sha256": "0e971f06a8d76cbac20d52ad0e22650a728f5175bbdbc629243783398a2ec27c"
+    },
+    {
+      "path": "content/pilot/usa-launch-draft.json",
+      "size_bytes": 9414,
+      "sha256": "104a02fc9cef7beeaa2ad8cac6e23faad456397cd66acf13e8ec7b62cb3a7053"
     }
   ]
 }

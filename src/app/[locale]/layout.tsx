@@ -7,7 +7,7 @@ import { localizedPath } from "@/lib/i18n/paths";
 import { isPromotablePublicPath } from "@/config/launch-readiness";
 import { isIndexingAllowed } from "@/lib/config/runtime";
 import { BRAND } from "@/config/brand";
-import { getCountry } from "@/lib/content/catalog";
+import { getCountry, isCountryCode } from "@/lib/content/catalog";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getProductCopy } from "@/lib/i18n/product-copy";
 import { SUPPORTED_LOCALES } from "@/types/domain";
@@ -75,13 +75,18 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     legalDocument in legalTitles
       ? legalTitles[legalDocument as keyof typeof legalTitles][locale]
       : null;
+  const countryPathSegment = path.match(/^countries\/([^/]+)$/)?.[1];
+  const countryTitle =
+    countryPathSegment && isCountryCode(countryPathSegment)
+      ? getCountry(countryPathSegment).name[locale]
+      : null;
   const title =
     path === ""
       ? BRAND.name
       : path === "countries"
         ? dictionary.nav.countries
-        : path === "countries/usa"
-          ? getCountry("usa").name[locale]
+        : countryTitle
+          ? countryTitle
           : path === "about"
             ? product.aboutTitle
             : path === "contact"

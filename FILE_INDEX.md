@@ -2,7 +2,7 @@
 
 Este índice enumera el contenido del ZIP. La credencial temporal del administrador está fuera del paquete y no aparece aquí.
 
-**Total previsto del paquete final:** 183 archivos, incluyendo este índice.
+**Total previsto del paquete final:** 185 archivos, incluyendo este índice.
 
 ## Raíz
 
@@ -71,6 +71,7 @@ especificaciones de producto, arquitectura, seguridad y operación
 - `docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md`
 - `docs/46_RELEASE_AND_DATABASE_MIGRATION_STRATEGY.md`
 - `docs/47_COST_AND_CAPACITY_GUARDRAILS.md`
+- `docs/48_PROMOTION_READINESS_2026-08-23.md`
 
 ## supabase
 
@@ -172,6 +173,7 @@ plantillas editoriales, investigación, fuentes y traducciones UI
 - `content/SOURCE_REGISTER_TEMPLATE.csv`
 - `content/assessment-rules-template.json`
 - `content/country-page-template.json`
+- `content/pilot/usa-launch-draft.json`
 - `content/ui-copy/en.json`
 - `content/ui-copy/es.json`
 - `content/ui-copy/fr.json`

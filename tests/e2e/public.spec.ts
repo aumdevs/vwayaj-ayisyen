@@ -249,11 +249,19 @@ test("a pending form blocks a service-worker update", async ({ page }, testInfo)
   await expect(page.locator("#auth-email")).toHaveValue("unfinished@example.com");
 });
 
-test("country pages show review status instead of invented claims", async ({ page }) => {
+test("country pages show review status instead of invented claims", async ({ page, request }) => {
   await page.goto("/ht/countries/usa/legal-pathways");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Fason legal");
   await expect(page.getByText("Gid sa a ap pran fòm.")).toBeVisible();
   await expect(page.locator(".empty-state-premium")).toHaveCount(1);
+
+  await page.goto("/ht/guides/usa");
+  await expect(page.locator(".published-guide-list")).toHaveCount(0);
+  await expect(page.locator(".empty-state-premium")).toHaveCount(1);
+
+  const search = await request.get("/api/search?locale=ht&q=travay");
+  expect(search.ok()).toBe(true);
+  expect(await search.json()).toEqual({ items: [] });
 });
 
 test("pilot directory exposes only verified official starting points", async ({ page }) => {
@@ -267,6 +275,7 @@ test("pilot directory exposes only verified official starting points", async ({ 
   await expect(page.getByText("Sa ki poko pibliye")).toBeVisible();
 
   await page.goto("/es/countries/chile");
+  await expect(page).toHaveTitle("Chile · Vwayaj Ayisyen");
   await expect(page.locator(".country-quick-facts")).toHaveCount(0);
   await expect(page.locator(".official-source-grid")).toHaveCount(0);
 });
