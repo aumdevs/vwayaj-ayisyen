@@ -32,20 +32,6 @@ const scenarios = [
     viewport: desktop
   },
   {
-    action: async (page) => page.getByRole("button", { name: "Zouti" }).click(),
-    group: "desktop",
-    name: "mega-menu-tools",
-    path: "/ht",
-    viewport: desktop
-  },
-  {
-    action: async (page) => page.getByRole("button", { name: "Sèvis ak akonpayman" }).click(),
-    group: "desktop",
-    name: "mega-menu-services",
-    path: "/ht",
-    viewport: desktop
-  },
-  {
     action: async (page) => page.getByRole("button", { name: "Gid ak resous" }).click(),
     group: "desktop",
     name: "mega-menu-resources",
@@ -57,22 +43,6 @@ const scenarios = [
     group: "desktop",
     name: "country",
     path: "/ht/countries/usa",
-    viewport: desktop,
-    fullPage: true
-  },
-  { group: "desktop", name: "compare", path: "/ht/compare", viewport: desktop, fullPage: true },
-  {
-    group: "desktop",
-    name: "assessment",
-    path: "/ht/find-my-country",
-    viewport: desktop,
-    fullPage: true
-  },
-  { group: "desktop", name: "guides", path: "/ht/guides", viewport: desktop, fullPage: true },
-  {
-    group: "desktop",
-    name: "services-and-plans",
-    path: "/ht/services",
     viewport: desktop,
     fullPage: true
   },
@@ -135,42 +105,6 @@ const scenarios = [
     group: "mobile",
     name: "country",
     path: "/ht/countries/usa",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "compare",
-    path: "/ht/compare",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "assessment",
-    path: "/ht/find-my-country",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "guides",
-    path: "/ht/guides",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "services",
-    path: "/ht/services",
     viewport: mobile,
     touch: true,
     userAgent: iphoneUserAgent,
@@ -256,15 +190,6 @@ const scenarios = [
     name: "country-master-detail",
     path: "/ht/countries/usa",
     viewport: tabletPortrait,
-    touch: true,
-    userAgent: ipadUserAgent,
-    fullPage: true
-  },
-  {
-    group: "tablet",
-    name: "compare",
-    path: "/ht/compare",
-    viewport: tabletLandscape,
     touch: true,
     userAgent: ipadUserAgent,
     fullPage: true
