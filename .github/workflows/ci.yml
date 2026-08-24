@@ -39,11 +39,22 @@ jobs:
       - run: pnpm audit:prod
       - run: pnpm build
 
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Verify the public-only data boundary
+        run: |
+          test ! -d supabase
+          test ! -e src/lib/supabase
+          test ! -e src/types/database.generated.ts
+
   e2e:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    needs: app
+    needs: [app, database]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
