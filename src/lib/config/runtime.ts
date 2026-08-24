@@ -15,6 +15,8 @@ export function getSiteUrl(): URL {
 
 export function isIndexingAllowed(): boolean {
   const siteUrl = getSiteUrl();
-  if (siteUrl.hostname === "vwayajayisyen.com") return true;
+  if (process.env.VERCEL_ENV === "production" && siteUrl.hostname === "vwayajayisyen.com") {
+    return true;
+  }
   return process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
 }

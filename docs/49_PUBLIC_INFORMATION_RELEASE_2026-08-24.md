@@ -61,10 +61,10 @@ se consultan directamente en las autoridades responsables.
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_ALLOW_INDEXING`
 
-El dominio oficial `vwayajayisyen.com` queda indexable por definición de la
-versión pública aprobada. La segunda variable mantiene los entornos de prueba y
-preview fuera de los buscadores salvo activación explícita. No se requieren
-otras variables para ejecutar la web pública.
+El dominio oficial `vwayajayisyen.com` queda indexable cuando Vercel identifica
+el deployment como producción. La segunda variable mantiene los entornos de
+prueba y preview fuera de los buscadores salvo activación explícita. No se
+requieren otras variables para ejecutar la web pública.
 
 ## Rollback
 

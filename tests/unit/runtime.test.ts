@@ -23,8 +23,9 @@ describe("public runtime configuration", () => {
     expect(getSiteUrl().toString()).toBe("https://example.org/base");
   });
 
-  it("keeps previews opt-in while always indexing the launched public domain", () => {
+  it("keeps previews opt-in while indexing the launched production domain", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://preview.example.com");
+    vi.stubEnv("VERCEL_ENV", "preview");
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "TRUE");
     expect(isIndexingAllowed()).toBe(false);
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "true");
@@ -32,6 +33,9 @@ describe("public runtime configuration", () => {
 
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://vwayajayisyen.com");
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "false");
+    expect(isIndexingAllowed()).toBe(false);
+
+    vi.stubEnv("VERCEL_ENV", "production");
     expect(isIndexingAllowed()).toBe(true);
   });
 });
