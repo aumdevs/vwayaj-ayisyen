@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v6";
+const CACHE_VERSION = "v7";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];
@@ -21,16 +21,20 @@ const PRECACHE_URLS = [
   "/icons/icon-maskable-192.png",
   "/icons/icon-maskable-512.png"
 ];
-const PRIVATE_ROUTE =
-  /^\/(?:ht|fr|es|pt|en)\/(?:auth|portal|admin|advisor|professional|editor|moderation)(?:\/|$)/;
+const PUBLIC_PAGE_URLS = [
+  "/ht",
+  "/ht/countries",
+  "/ht/countries/usa",
+  "/ht/countries/chile",
+  "/ht/countries/brazil",
+  "/ht/countries/mexico"
+];
 
-function isPrivateOrSensitive(request, url) {
+function isNonCacheable(request, url) {
   return (
     request.method !== "GET" ||
     url.origin !== self.location.origin ||
     url.pathname.startsWith("/api/") ||
-    PRIVATE_ROUTE.test(url.pathname) ||
-    request.headers.has("authorization") ||
     request.cache === "no-store"
   );
 }
@@ -44,6 +48,8 @@ function canCache(response) {
 async function precacheOfflineSurface() {
   const cache = await caches.open(STATIC_CACHE);
   await cache.addAll(PRECACHE_URLS);
+  const pageCache = await caches.open(PAGE_CACHE);
+  await pageCache.addAll(PUBLIC_PAGE_URLS);
 
   const offlineResponse = await cache.match(OFFLINE_URL);
   if (!offlineResponse) throw new Error("Offline surface was not cached.");
@@ -120,7 +126,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
-  if (isPrivateOrSensitive(request, url)) return;
+  if (isNonCacheable(request, url)) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));

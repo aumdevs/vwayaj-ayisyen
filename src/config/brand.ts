@@ -9,7 +9,6 @@ export const BRAND = {
   contact: {
     email: "support@vwayajayisyen.com",
     legal: "legal@vwayajayisyen.com",
-    marketing: "promo@vwayajayisyen.com",
     phone: null,
     whatsapp: null
   },

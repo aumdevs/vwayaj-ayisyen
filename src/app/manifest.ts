@@ -5,13 +5,13 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "/",
     name: "Vwayaj Ayisyen",
     short_name: "Vwayaj",
-    description: "Enfòmasyon estriktire pou kominote ayisyèn nan.",
+    description: "Sous ofisyèl sou viza, konsila ak lavi pratik pou kominote ayisyèn nan.",
     start_url: "/ht?source=pwa",
     scope: "/",
     display: "standalone",
     display_override: ["standalone"],
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    background_color: "#f8f5ef",
+    theme_color: "#07152e",
     lang: "ht",
     dir: "ltr",
     orientation: "any",
@@ -76,24 +76,31 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: "Sous ofisyèl Etazini",
-        short_name: "Sous USA",
-        description: "Louvri anyè sous ofisyèl peyi pilòt la.",
+        name: "Gid Etazini",
+        short_name: "Etazini",
+        description: "Louvri sous ofisyèl pou Etazini.",
         url: "/ht/countries/usa?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Kontakte ekip la",
-        short_name: "Kontak",
-        description: "Louvri chanèl ofisyèl ekip la.",
-        url: "/ht/contact?source=pwa-shortcut",
+        name: "Gid Chili",
+        short_name: "Chili",
+        description: "Louvri sous ofisyèl pou Chili.",
+        url: "/ht/countries/chile?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Kont mwen",
-        short_name: "Kont",
-        description: "Louvri aksè kont lan.",
-        url: "/ht/portal?source=pwa-shortcut",
+        name: "Gid Brezil",
+        short_name: "Brezil",
+        description: "Louvri sous ofisyèl pou Brezil.",
+        url: "/ht/countries/brazil?source=pwa-shortcut",
+        icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
+      },
+      {
+        name: "Gid Meksik",
+        short_name: "Meksik",
+        description: "Louvri sous ofisyèl pou Meksik.",
+        url: "/ht/countries/mexico?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
     ]

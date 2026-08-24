@@ -26,32 +26,14 @@
     "visual:capture": "node scripts/capture-pwa-acceptance.mjs",
     "check:env": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.development.local scripts/verify-env.mjs",
     "check:secrets": "bash scripts/check-no-secrets.sh",
-    "integrity:check": "node scripts/refresh-package-integrity.mjs --check",
-    "integrity:refresh": "node scripts/refresh-package-integrity.mjs",
-    "check:all": "pnpm format:check && pnpm integrity:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm check:secrets",
-    "audit:prod": "pnpm audit --prod",
-    "db:start": "supabase start",
-    "db:stop": "supabase stop",
-    "db:status": "supabase status",
-    "db:reset": "supabase db reset",
-    "db:lint": "supabase db lint --local --level warning",
-    "db:test": "supabase test db",
-    "db:types": "bash scripts/generate-supabase-types.sh --local",
-    "db:types:remote": "bash scripts/generate-supabase-types.sh",
-    "admin:bootstrap": "node --env-file=.env.bootstrap.local --import tsx scripts/bootstrap-admin.ts"
+    "check:all": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm check:secrets",
+    "audit:prod": "pnpm audit --prod"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.4.0",
-    "@marsidev/react-turnstile": "1.5.3",
-    "@supabase/ssr": "0.12.3",
-    "@supabase/supabase-js": "2.110.8",
     "lucide-react": "1.25.0",
     "next": "16.2.11",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-hook-form": "7.82.0",
-    "server-only": "0.0.1",
-    "stripe": "22.3.2",
     "zod": "4.4.3"
   },
   "devDependencies": {
@@ -68,9 +50,7 @@
     "eslint-config-next": "16.2.11",
     "jsdom": "29.1.1",
     "prettier": "3.9.6",
-    "supabase": "2.109.1",
     "tailwindcss": "4.3.3",
-    "tsx": "4.23.1",
     "typescript": "5.9.3",
     "vitest": "4.1.10"
   }

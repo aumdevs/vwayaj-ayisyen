@@ -2,22 +2,10 @@ import type { CountryCode } from "@/types/domain";
 import type { Locale } from "@/types/domain";
 
 /**
- * Public launch scope. Keep this list intentionally small: navigation and SEO
- * must never advertise surfaces that do not yet contain useful, reviewed data.
+ * Public information scope. Only reviewed, useful routes belong in navigation and SEO.
  */
 export const LAUNCH_READINESS = {
-  pilotCountry: "usa" as CountryCode,
-  promotableCountries: ["usa"] as readonly CountryCode[],
-  tools: {
-    assessment: false,
-    compare: false,
-    guides: false,
-    services: false
-  },
-  countryContent: {
-    officialSourceDirectory: true,
-    reviewedEditorialGuide: false
-  }
+  promotableCountries: ["usa", "chile", "brazil", "mexico"] as readonly CountryCode[]
 } as const;
 
 export function isPromotableCountry(country: CountryCode): boolean {
@@ -28,6 +16,9 @@ export const PROMOTABLE_CORE_PATHS = [
   "",
   "countries",
   "countries/usa",
+  "countries/chile",
+  "countries/brazil",
+  "countries/mexico",
   "about",
   "faq",
   "contact"

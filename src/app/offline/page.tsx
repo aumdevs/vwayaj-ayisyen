@@ -17,7 +17,7 @@ export default function OfflinePage() {
         <p className="eyebrow">Offline</p>
         <h1>Ou pa konekte kounye a</h1>
         <p>Gen kèk paj ki ka disponib, men enfòmasyon ki bezwen mizajou mande yon koneksyon.</p>
-        <p>Rekonekte anvan ou louvri yon kont, yon dosye oswa lòt enfòmasyon prive.</p>
+        <p>Rekonekte pou verifye dènye enfòmasyon yo dirèkteman sou sit otorite yo.</p>
         <OfflineActions />
       </section>
     </main>

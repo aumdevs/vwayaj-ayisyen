@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import { isPromotablePublicPath, LAUNCH_READINESS } from "@/config/launch-readiness";
 
 describe("promotion readiness", () => {
-  it("allows the pilot and hides unfinished product surfaces", () => {
-    expect(LAUNCH_READINESS.countryContent.reviewedEditorialGuide).toBe(false);
+  it("publishes the four reviewed country guides", () => {
+    expect(LAUNCH_READINESS.promotableCountries).toEqual(["usa", "chile", "brazil", "mexico"]);
     expect(isPromotablePublicPath("countries/usa", "ht")).toBe(true);
+    expect(isPromotablePublicPath("countries/chile", "es")).toBe(true);
+    expect(isPromotablePublicPath("countries/brazil", "pt")).toBe(true);
+    expect(isPromotablePublicPath("countries/mexico", "fr")).toBe(true);
     expect(isPromotablePublicPath("compare", "ht")).toBe(false);
-    expect(isPromotablePublicPath("countries/chile", "es")).toBe(false);
+    expect(isPromotablePublicPath("portal", "ht")).toBe(false);
   });
 
   it("indexes legal documents only in their official locales", () => {

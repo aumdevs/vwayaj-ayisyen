@@ -4,12 +4,12 @@ import { ArrowUpRight } from "lucide-react";
 import type { Country } from "@/lib/content/catalog";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
-import { getExperienceCopy } from "@/lib/i18n/experience-copy";
 
 type CountryCardProps = {
   country: Country;
   locale: Locale;
   actionLabel: string;
+  tags: readonly string[];
   preload?: boolean;
   sizes?: string;
 };
@@ -18,10 +18,10 @@ export function CountryCard({
   country,
   locale,
   actionLabel,
+  tags,
   preload = false,
   sizes = "(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 25vw"
 }: CountryCardProps) {
-  const copy = getExperienceCopy(locale);
   return (
     <Link
       className={`country-card country-${country.code} country-accent-${country.accent}`}
@@ -44,7 +44,7 @@ export function CountryCard({
         </span>
         <span className="country-card-title">{country.name[locale]}</span>
         <span className="country-card-tags" aria-label={actionLabel}>
-          {copy.goals.slice(0, 3).map((goal) => (
+          {tags.slice(0, 3).map((goal) => (
             <span key={goal}>{goal}</span>
           ))}
         </span>

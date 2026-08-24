@@ -31,13 +31,6 @@ const scenarios = [
     path: "/ht",
     viewport: desktop
   },
-  {
-    action: async (page) => page.getByRole("button", { name: "Gid ak resous" }).click(),
-    group: "desktop",
-    name: "mega-menu-resources",
-    path: "/ht",
-    viewport: desktop
-  },
   { group: "desktop", name: "countries", path: "/ht/countries", viewport: desktop, fullPage: true },
   {
     group: "desktop",
@@ -48,15 +41,22 @@ const scenarios = [
   },
   {
     group: "desktop",
-    name: "login",
-    path: "/ht/auth/sign-in",
+    name: "chile",
+    path: "/ht/countries/chile",
     viewport: desktop,
     fullPage: true
   },
   {
     group: "desktop",
-    name: "dashboard-access-control",
-    path: "/ht/portal",
+    name: "brazil",
+    path: "/ht/countries/brazil",
+    viewport: desktop,
+    fullPage: true
+  },
+  {
+    group: "desktop",
+    name: "mexico",
+    path: "/ht/countries/mexico",
     viewport: desktop,
     fullPage: true
   },
@@ -105,24 +105,6 @@ const scenarios = [
     group: "mobile",
     name: "country",
     path: "/ht/countries/usa",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "login",
-    path: "/ht/auth/sign-in",
-    viewport: mobile,
-    touch: true,
-    userAgent: iphoneUserAgent,
-    fullPage: true
-  },
-  {
-    group: "mobile",
-    name: "account-access-control",
-    path: "/ht/portal",
     viewport: mobile,
     touch: true,
     userAgent: iphoneUserAgent,

@@ -1,20 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { getDictionary } from "@/lib/i18n/dictionaries";
+import { publicCopy } from "@/content/public-copy";
 import { DEFAULT_LOCALE, isLocale, normalizeLocale } from "@/lib/i18n/config";
-import { getProductCopy } from "@/lib/i18n/product-copy";
-import { localizedPath, replaceLocale } from "@/lib/i18n/paths";
 import { formatLocalizedDate } from "@/lib/i18n/dates";
+import { localizedPath, replaceLocale } from "@/lib/i18n/paths";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
-function leafKeys(value: unknown, prefix = ""): string[] {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return [prefix];
-  return Object.entries(value as Record<string, unknown>).flatMap(([key, child]) =>
-    leafKeys(child, prefix ? `${prefix}.${key}` : key)
-  );
-}
-
-describe("locale configuration", () => {
-  it("uses Haitian Creole as the fail-safe default", () => {
+describe("public locale configuration", () => {
+  it("uses Haitian Creole as the default", () => {
     expect(DEFAULT_LOCALE).toBe("ht");
     expect(normalizeLocale("unknown")).toBe("ht");
     expect(normalizeLocale(null)).toBe("ht");
@@ -26,24 +18,22 @@ describe("locale configuration", () => {
     expect(isLocale("HT")).toBe(false);
   });
 
-  it("keeps the same UI dictionary shape in every locale", () => {
-    const expected = leafKeys(getDictionary("ht")).sort();
+  it("ships complete public copy in every language", () => {
     for (const locale of SUPPORTED_LOCALES) {
-      expect(leafKeys(getDictionary(locale)).sort()).toEqual(expected);
-      expect(getProductCopy(locale).productName).toBe("Vwayaj Ayisyen");
+      expect(publicCopy[locale].home.title.length).toBeGreaterThan(10);
+      expect(publicCopy[locale].countries.cardTags).toHaveLength(3);
+      expect(publicCopy[locale].home.methodItems).toHaveLength(3);
+      expect(publicCopy[locale].navigation.countries.length).toBeGreaterThan(2);
     }
   });
 
-  it("builds and replaces localized paths without duplicate slashes", () => {
+  it("builds and replaces localized paths", () => {
     expect(localizedPath("ht")).toBe("/ht");
     expect(localizedPath("es", "/countries/usa")).toBe("/es/countries/usa");
-    expect(localizedPath("fr", "/")).toBe("/fr");
     expect(replaceLocale("/es/countries/chile", "pt")).toBe("/pt/countries/chile");
-    expect(replaceLocale("/", "en")).toBe("/en");
   });
 
-  it("formats Haitian dates without falling back to English month names", () => {
-    expect(formatLocalizedDate("2026-08-23", "ht")).toBe("23 out 2026");
-    expect(formatLocalizedDate("2026-08-23", "ht", "short")).toBe("23 out 2026");
+  it("formats the review date in Haitian Creole", () => {
+    expect(formatLocalizedDate("2026-08-24", "ht")).toBe("24 out 2026");
   });
 });

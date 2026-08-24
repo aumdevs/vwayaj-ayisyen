@@ -1,93 +1,50 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo-mark";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { MobileNavigationDrawer } from "@/components/layout/mobile-navigation-drawer";
 import { PublicNavigation, type PublicNavGroup } from "@/components/layout/public-navigation";
 import { BRAND } from "@/config/brand";
-import type { Dictionary } from "@/lib/i18n/dictionaries";
-import { localizedPath } from "@/lib/i18n/paths";
-import { getExperienceCopy } from "@/lib/i18n/experience-copy";
+import { publicCopy } from "@/content/public-copy";
 import { countries } from "@/lib/content/catalog";
-import { isPromotableCountry, LAUNCH_READINESS } from "@/config/launch-readiness";
+import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 
 type SiteHeaderProps = {
   locale: Locale;
-  dictionary: Dictionary;
 };
 
-export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
-  const experience = getExperienceCopy(locale);
-  const launchCountries = countries.filter(({ code }) => isPromotableCountry(code));
+export function SiteHeader({ locale }: SiteHeaderProps) {
+  const copy = publicCopy[locale];
   const compactNav = [
-    { label: dictionary.nav.countries, href: localizedPath(locale, "countries") },
-    { label: navigationCopyFallback(locale, "about"), href: localizedPath(locale, "about") },
-    { label: "FAQ", href: localizedPath(locale, "faq") },
-    { label: dictionary.common.contact, href: localizedPath(locale, "contact") }
+    { label: copy.navigation.countries, href: localizedPath(locale, "countries") },
+    { label: copy.navigation.about, href: localizedPath(locale, "about") },
+    { label: copy.navigation.faq, href: localizedPath(locale, "faq") },
+    { label: copy.navigation.contact, href: localizedPath(locale, "contact") }
   ];
-  const navigationCopy = {
-    ht: {
-      about: "Sou nou",
-      main: "Navigasyon prensipal",
-      privacy: "Konfidansyalite",
-      resources: "Gid ak resous",
-      tools: "Zouti"
-    },
-    fr: {
-      about: "À propos",
-      main: "Navigation principale",
-      privacy: "Confidentialité",
-      resources: "Guides et ressources",
-      tools: "Outils"
-    },
-    es: {
-      about: "Sobre nosotros",
-      main: "Navegación principal",
-      privacy: "Privacidad",
-      resources: "Guías y recursos",
-      tools: "Herramientas"
-    },
-    pt: {
-      about: "Sobre nós",
-      main: "Navegação principal",
-      privacy: "Privacidade",
-      resources: "Guias e recursos",
-      tools: "Ferramentas"
-    },
-    en: {
-      about: "About",
-      main: "Main navigation",
-      privacy: "Privacy",
-      resources: "Guides and resources",
-      tools: "Tools"
-    }
-  }[locale];
   const groups: readonly PublicNavGroup[] = [
     {
-      label: dictionary.nav.countries,
+      label: copy.navigation.countries,
       links: [
-        ...launchCountries.map((country) => ({
+        ...countries.map((country) => ({
           href: localizedPath(locale, `countries/${country.code}`),
           label: country.name[locale],
           meta: country.shortLabel
         })),
         {
           href: localizedPath(locale, "countries"),
-          label: experience.viewAll,
-          meta: "01"
+          label: copy.country.allCountries,
+          meta: "04"
         }
       ]
     },
     {
-      label: navigationCopy.resources,
+      label: copy.navigation.about,
       links: [
-        ...(LAUNCH_READINESS.tools.guides
-          ? [{ href: localizedPath(locale, "guides"), label: dictionary.nav.guides }]
-          : []),
-        { href: localizedPath(locale, "about"), label: navigationCopy.about },
-        { href: localizedPath(locale, "faq"), label: "FAQ" },
-        { href: localizedPath(locale, "contact"), label: dictionary.common.contact },
-        { href: localizedPath(locale, "legal/privacy"), label: navigationCopy.privacy }
+        { href: localizedPath(locale, "about"), label: copy.navigation.about },
+        { href: localizedPath(locale, "faq"), label: copy.navigation.faq },
+        { href: localizedPath(locale, "contact"), label: copy.navigation.contact },
+        { href: localizedPath(locale, "legal/privacy"), label: copy.footer.privacy }
       ]
     }
   ];
@@ -102,41 +59,22 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
           </span>
         </Link>
 
-        <PublicNavigation ariaLabel={navigationCopy.main} groups={groups} />
+        <PublicNavigation ariaLabel={copy.navigation.main} groups={groups} />
 
         <div className="header-actions">
           <LanguageSwitcher locale={locale} />
-          <Link
-            className="button button-quiet desktop-signin"
-            href={localizedPath(locale, "auth/sign-in")}
-          >
-            {dictionary.auth.sign_in}
-          </Link>
-          <Link className="button header-advisor" href={localizedPath(locale, "contact")}>
-            {experience.advisor}
+          <Link className="button header-guide-action" href={localizedPath(locale, "countries")}>
+            {copy.home.primary} <ArrowRight aria-hidden="true" size={17} />
           </Link>
           <MobileNavigationDrawer
-            advisorHref={localizedPath(locale, "contact")}
-            advisorLabel={experience.advisor}
-            closeLabel={dictionary.common.close}
+            actionHref={localizedPath(locale, "countries")}
+            actionLabel={copy.home.primary}
+            closeLabel={copy.navigation.close}
             items={compactNav}
-            menuLabel={experience.menu}
-            signInHref={localizedPath(locale, "auth/sign-in")}
-            signInLabel={dictionary.auth.sign_in}
+            menuLabel={copy.navigation.menu}
           />
         </div>
       </div>
     </header>
   );
-}
-
-function navigationCopyFallback(locale: Locale, key: "about"): string {
-  const about = {
-    ht: "Sou nou",
-    fr: "À propos",
-    es: "Sobre nosotros",
-    pt: "Sobre nós",
-    en: "About"
-  } satisfies Record<Locale, string>;
-  return key === "about" ? about[locale] : about[locale];
 }
