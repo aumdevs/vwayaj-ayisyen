@@ -11,12 +11,13 @@ const outputRoot = resolve(
 const routes = {
   home: "/ht",
   countries: "/ht/countries",
-  country: "/ht/countries/usa",
-  compare: "/ht/compare",
-  assessment: "/ht/find-my-country",
-  services: "/ht/services",
-  guides: "/ht/guides",
-  login: "/ht/auth/sign-in",
+  "country-usa": "/ht/countries/usa",
+  "country-chile": "/ht/countries/chile",
+  "country-brazil": "/ht/countries/brazil",
+  "country-mexico": "/ht/countries/mexico",
+  about: "/ht/about",
+  faq: "/ht/faq",
+  contact: "/ht/contact",
   "not-found": "/ht/page-that-does-not-exist"
 };
 const targetViewports = {

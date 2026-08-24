@@ -1,10 +1,10 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v6";
+const CACHE_VERSION = "v8";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];
 const OFFLINE_URL = "/offline";
-const NEXT_STATIC_ASSET_PATTERN = /\/_next\/static\/[^"'\\\s<]+/g;
+const HTML_ASSET_ATTRIBUTE_PATTERN = /\b(?:href|src|srcset)=["']([^"']+)["']/gi;
 const PRECACHE_URLS = [
   OFFLINE_URL,
   "/icon.svg",
@@ -21,16 +21,20 @@ const PRECACHE_URLS = [
   "/icons/icon-maskable-192.png",
   "/icons/icon-maskable-512.png"
 ];
-const PRIVATE_ROUTE =
-  /^\/(?:ht|fr|es|pt|en)\/(?:auth|portal|admin|advisor|professional|editor|moderation)(?:\/|$)/;
+const PUBLIC_PAGE_URLS = [
+  "/ht",
+  "/ht/countries",
+  "/ht/countries/usa",
+  "/ht/countries/chile",
+  "/ht/countries/brazil",
+  "/ht/countries/mexico"
+];
 
-function isPrivateOrSensitive(request, url) {
+function isNonCacheable(request, url) {
   return (
     request.method !== "GET" ||
     url.origin !== self.location.origin ||
     url.pathname.startsWith("/api/") ||
-    PRIVATE_ROUTE.test(url.pathname) ||
-    request.headers.has("authorization") ||
     request.cache === "no-store"
   );
 }
@@ -41,20 +45,66 @@ function canCache(response) {
   return !/\b(?:private|no-store)\b/i.test(cacheControl);
 }
 
+function isStaticAssetPath(pathname) {
+  return (
+    pathname.startsWith("/_next/static/") ||
+    pathname.startsWith("/_next/image") ||
+    pathname.startsWith("/images/") ||
+    pathname.startsWith("/icons/") ||
+    pathname === "/icon.svg"
+  );
+}
+
+function extractSameOriginAssetUrls(html) {
+  const assetUrls = new Set();
+
+  for (const match of html.matchAll(HTML_ASSET_ATTRIBUTE_PATTERN)) {
+    const attributeValue = match[1].replaceAll("&amp;", "&");
+    for (const source of attributeValue.split(",")) {
+      const candidate = source.trim().split(/\s+/, 1)[0];
+      if (!candidate || candidate.startsWith("data:")) continue;
+
+      try {
+        const assetUrl = new URL(candidate, self.location.origin);
+        if (assetUrl.origin === self.location.origin && isStaticAssetPath(assetUrl.pathname)) {
+          assetUrls.add(assetUrl.href);
+        }
+      } catch {
+        // Ignore malformed attributes instead of aborting the complete installation.
+      }
+    }
+  }
+
+  return assetUrls;
+}
+
 async function precacheOfflineSurface() {
   const cache = await caches.open(STATIC_CACHE);
   await cache.addAll(PRECACHE_URLS);
+  const pageCache = await caches.open(PAGE_CACHE);
+
+  const publicPageHtml = await Promise.all(
+    PUBLIC_PAGE_URLS.map(async (pagePath) => {
+      const response = await fetch(pagePath, { cache: "reload" });
+      if (!canCache(response)) throw new Error(`Public page could not be cached: ${pagePath}`);
+      await pageCache.put(pagePath, response.clone());
+      return response.text();
+    })
+  );
 
   const offlineResponse = await cache.match(OFFLINE_URL);
   if (!offlineResponse) throw new Error("Offline surface was not cached.");
 
   const offlineHtml = await offlineResponse.text();
-  const buildAssets = [...new Set(offlineHtml.match(NEXT_STATIC_ASSET_PATTERN) ?? [])];
+  const buildAssets = new Set();
+  for (const html of [offlineHtml, ...publicPageHtml]) {
+    for (const assetUrl of extractSameOriginAssetUrls(html)) buildAssets.add(assetUrl);
+  }
+
   await Promise.all(
-    buildAssets.map(async (assetPath) => {
-      const assetUrl = new URL(assetPath, self.location.origin).href;
+    [...buildAssets].map(async (assetUrl) => {
       const response = await fetch(assetUrl, { cache: "reload" });
-      if (!canCache(response)) throw new Error(`Offline asset could not be cached: ${assetPath}`);
+      if (!canCache(response)) throw new Error(`Offline asset could not be cached: ${assetUrl}`);
       await cache.put(assetUrl, response.clone());
     })
   );
@@ -70,7 +120,7 @@ async function networkFirst(request) {
     return response;
   } catch {
     const pageCache = await caches.open(PAGE_CACHE);
-    const cachedPage = await pageCache.match(request);
+    const cachedPage = await pageCache.match(request, { ignoreSearch: true });
     if (cachedPage) return cachedPage;
 
     const staticCache = await caches.open(STATIC_CACHE);
@@ -120,20 +170,14 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
-  if (isPrivateOrSensitive(request, url)) return;
+  if (isNonCacheable(request, url)) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  if (
-    url.pathname.startsWith("/_next/static/") ||
-    url.pathname.startsWith("/_next/image") ||
-    url.pathname.startsWith("/images/") ||
-    url.pathname.startsWith("/icons/") ||
-    url.pathname === "/icon.svg"
-  ) {
+  if (isStaticAssetPath(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });

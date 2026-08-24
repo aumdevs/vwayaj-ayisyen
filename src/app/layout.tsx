@@ -28,8 +28,7 @@ export const metadata: Metadata = {
     default: BRAND.name,
     template: `%s · ${BRAND.name}`
   },
-  description:
-    "Yon platfòm enfòmasyon ak preparasyon pou kominote ayisyèn nan, ak sous, dat ak limit ki vizib.",
+  description: "Sous ofisyèl sou viza, konsila ak lavi pratik pou kominote ayisyèn nan.",
   applicationName: BRAND.name,
   category: "education",
   icons: {
@@ -68,7 +67,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#FFFFFF",
+  themeColor: "#07152e",
   colorScheme: "light",
   viewportFit: "cover"
 };

@@ -16,80 +16,55 @@ const copy = {
     close: "Fèmen",
     more: "Plis",
     countries: "Peyi yo",
-    compare: "Konpare",
-    guides: "Gid yo",
-    services: "Sèvis",
-    assessment: "Jwenn peyi pou mwen",
     faq: "Kesyon souvan",
     contact: "Kontakte nou",
     about: "Sou nou",
     privacy: "Konfidansyalite",
-    terms: "Kondisyon itilizasyon",
-    account: "Kont mwen"
+    terms: "Kondisyon itilizasyon"
   },
   fr: {
     back: "Retour",
     close: "Fermer",
     more: "Plus",
     countries: "Pays",
-    compare: "Comparer",
-    guides: "Guides",
-    services: "Services",
-    assessment: "Trouver mon pays",
     faq: "Questions fréquentes",
     contact: "Nous contacter",
     about: "À propos",
     privacy: "Confidentialité",
-    terms: "Conditions d’utilisation",
-    account: "Mon compte"
+    terms: "Conditions d’utilisation"
   },
   es: {
     back: "Volver",
     close: "Cerrar",
     more: "Más",
     countries: "Países",
-    compare: "Comparar",
-    guides: "Guías",
-    services: "Servicios",
-    assessment: "Encontrar mi país",
     faq: "Preguntas frecuentes",
     contact: "Contactar",
     about: "Sobre nosotros",
     privacy: "Privacidad",
-    terms: "Condiciones de uso",
-    account: "Mi cuenta"
+    terms: "Condiciones de uso"
   },
   pt: {
     back: "Voltar",
     close: "Fechar",
     more: "Mais",
     countries: "Países",
-    compare: "Comparar",
-    guides: "Guias",
-    services: "Serviços",
-    assessment: "Encontrar meu país",
     faq: "Perguntas frequentes",
     contact: "Contato",
     about: "Sobre nós",
     privacy: "Privacidade",
-    terms: "Termos de uso",
-    account: "Minha conta"
+    terms: "Termos de uso"
   },
   en: {
     back: "Back",
     close: "Close",
     more: "More",
     countries: "Countries",
-    compare: "Compare",
-    guides: "Guides",
-    services: "Services",
-    assessment: "Find my country",
     faq: "Frequently asked questions",
     contact: "Contact",
     about: "About",
     privacy: "Privacy",
-    terms: "Terms of use",
-    account: "My account"
+    terms: "Terms of use"
   }
 } satisfies Record<Locale, Record<string, string>>;
 
@@ -109,15 +84,7 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
       ? text.countries
       : pathname.startsWith(localizedPath(locale, "countries"))
         ? text.countries
-        : pathname.startsWith(localizedPath(locale, "compare"))
-          ? text.compare
-          : pathname.startsWith(localizedPath(locale, "guides"))
-            ? text.guides
-            : pathname.startsWith(localizedPath(locale, "services"))
-              ? text.services
-              : pathname.startsWith(localizedPath(locale, "find-my-country"))
-                ? text.assessment
-                : BRAND.name;
+        : BRAND.name;
 
   useEffect(() => {
     if (!moreOpen) {
@@ -158,7 +125,6 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
     [text.faq, "faq"],
     [text.contact, "contact"],
     [text.about, "about"],
-    [text.account, "portal"],
     [text.privacy, "legal/privacy"],
     [text.terms, "legal/terms"]
   ] as const;

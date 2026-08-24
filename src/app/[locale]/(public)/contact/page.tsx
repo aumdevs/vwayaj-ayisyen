@@ -1,88 +1,60 @@
 import { notFound } from "next/navigation";
-import { BadgeInfo, Mail, Megaphone, Scale, ShieldCheck } from "lucide-react";
+import { Link2, Mail, Scale, ShieldCheck } from "lucide-react";
 import { LEGAL_ENTITY } from "@/content/legal";
-import { getDictionary } from "@/lib/i18n/dictionaries";
-import { getExperienceCopy } from "@/lib/i18n/experience-copy";
+import { publicCopy } from "@/content/public-copy";
 import { isLocale } from "@/lib/i18n/config";
-import { getProductCopy } from "@/lib/i18n/product-copy";
 import type { Locale } from "@/types/domain";
-
-type ContactPageProps = { params: Promise<{ locale: string }> };
 
 const contactCopy = {
   ht: {
-    title: "Chanèl ofisyèl",
-    body: "Chwazi adrès ki koresponn ak demann ou an. Pa voye dokiman sansib pa imèl.",
-    support: "Sipò jeneral",
-    supportBody: "Kesyon sou sit la, kont ou oswa yon pwoblèm teknik.",
-    legal: "Legal ak vi prive",
-    legalBody: "Dwa sou done, kondisyon, sekirite oswa yon demann legal.",
-    marketing: "Nouvèl lansman",
-    marketingBody: "Mande nouvèl sou nouvo gid yo epi jere otorizasyon ou.",
-    updatesSubject: "Vwayaj Ayisyen — nouvèl lansman",
-    updatesBody:
-      "Tanpri ajoute m nan nouvèl lansman yo. Mwen konprann mwen pa dwe voye dokiman sansib oswa enfòmasyon koneksyon pa imèl.",
-    notice: "Imèl yo pa yon kanal pou ijans ni pou voye paspò, pyès idantite oswa dosye migrasyon."
+    title: "Pale ak ekip la",
+    body: "Rapòte yon lyen ki pa mache, yon fraz ki pa klè oswa yon koreksyon enpòtan.",
+    support: "Koreksyon ak sipò",
+    supportBody: "Voye non peyi a, tit paj la ak lyen ki bezwen verifye a.",
+    legal: "Kesyon legal ak vi prive",
+    legalBody: "Pou kestyon sou kondisyon, konfidansyalite oswa done yon imèl ou te voye.",
+    notice: "Pa voye paspò, pyès idantite, dosye migrasyon, enfòmasyon bankè oswa medikal pa imèl."
   },
   fr: {
-    title: "Canaux officiels",
-    body: "Choisissez l’adresse correspondant à votre demande. N’envoyez aucun document sensible par e-mail.",
-    support: "Assistance générale",
-    supportBody: "Questions sur le site, votre compte ou un problème technique.",
-    legal: "Juridique et confidentialité",
-    legalBody: "Droits sur les données, conditions, sécurité ou demande juridique.",
-    marketing: "Actualités du lancement",
-    marketingBody: "Demandez les actualités des nouveaux guides et gérez votre autorisation.",
-    updatesSubject: "Vwayaj Ayisyen — actualités du lancement",
-    updatesBody:
-      "Merci de m’ajouter aux actualités du lancement. Je comprends que je ne dois envoyer aucun document sensible ni identifiant de compte par e-mail.",
+    title: "Parler à l’équipe",
+    body: "Signalez un lien cassé, une phrase peu claire ou une correction importante.",
+    support: "Corrections et assistance",
+    supportBody: "Envoyez le pays, le titre de la page et le lien à vérifier.",
+    legal: "Questions juridiques et confidentialité",
+    legalBody:
+      "Pour les questions sur les conditions, la confidentialité ou les données d’un e-mail envoyé.",
     notice:
-      "Les e-mails ne sont pas un canal d’urgence et ne doivent pas contenir de passeport, pièce d’identité ou dossier migratoire."
+      "N’envoyez aucun passeport, pièce d’identité, dossier migratoire, information bancaire ou médicale par e-mail."
   },
   es: {
-    title: "Canales oficiales",
-    body: "Elige la dirección que corresponde a tu solicitud. No envíes documentos sensibles por correo.",
-    support: "Soporte general",
-    supportBody: "Preguntas sobre el sitio, tu cuenta o un problema técnico.",
-    legal: "Legal y privacidad",
-    legalBody: "Derechos de datos, términos, seguridad o una solicitud legal.",
-    marketing: "Novedades del lanzamiento",
-    marketingBody: "Solicita novedades sobre nuevas guías y gestiona tu autorización.",
-    updatesSubject: "Vwayaj Ayisyen — novedades del lanzamiento",
-    updatesBody:
-      "Por favor, agréguenme a las novedades del lanzamiento. Entiendo que no debo enviar documentos sensibles ni credenciales de cuenta por correo.",
+    title: "Habla con el equipo",
+    body: "Informa de un enlace roto, una frase poco clara o una corrección importante.",
+    support: "Correcciones y soporte",
+    supportBody: "Envía el país, el título de la página y el enlace que debemos verificar.",
+    legal: "Preguntas legales y privacidad",
+    legalBody: "Para consultas sobre términos, privacidad o datos de un correo que enviaste.",
     notice:
-      "El correo no es un canal de emergencias ni para enviar pasaportes, identificaciones o expedientes migratorios."
+      "No envíes pasaportes, identificaciones, expedientes migratorios, datos bancarios ni información médica por correo."
   },
   pt: {
-    title: "Canais oficiais",
-    body: "Escolha o endereço correspondente à sua solicitação. Não envie documentos sensíveis por e-mail.",
-    support: "Suporte geral",
-    supportBody: "Dúvidas sobre o site, sua conta ou um problema técnico.",
-    legal: "Jurídico e privacidade",
-    legalBody: "Direitos de dados, termos, segurança ou solicitação jurídica.",
-    marketing: "Novidades do lançamento",
-    marketingBody: "Solicite novidades sobre novos guias e gerencie sua autorização.",
-    updatesSubject: "Vwayaj Ayisyen — novidades do lançamento",
-    updatesBody:
-      "Por favor, incluam-me nas novidades do lançamento. Entendo que não devo enviar documentos sensíveis nem credenciais da conta por e-mail.",
+    title: "Fale com a equipe",
+    body: "Avise sobre um link quebrado, uma frase pouco clara ou uma correção importante.",
+    support: "Correções e suporte",
+    supportBody: "Envie o país, o título da página e o link que precisa ser verificado.",
+    legal: "Questões jurídicas e privacidade",
+    legalBody: "Para dúvidas sobre termos, privacidade ou dados de um e-mail enviado.",
     notice:
-      "O e-mail não é um canal de emergência nem deve ser usado para enviar passaportes, identidades ou processos migratórios."
+      "Não envie passaportes, documentos de identidade, processos migratórios, dados bancários ou informações médicas por e-mail."
   },
   en: {
-    title: "Official channels",
-    body: "Choose the address that matches your request. Do not send sensitive documents by email.",
-    support: "General support",
-    supportBody: "Questions about the site, your account or a technical issue.",
-    legal: "Legal and privacy",
-    legalBody: "Data rights, terms, security or a legal request.",
-    marketing: "Launch updates",
-    marketingBody: "Ask for updates about new guides and manage your permission.",
-    updatesSubject: "Vwayaj Ayisyen — launch updates",
-    updatesBody:
-      "Please add me to launch updates. I understand that I should not send sensitive documents or account credentials by email.",
+    title: "Talk to the team",
+    body: "Report a broken link, unclear phrase or important correction.",
+    support: "Corrections and support",
+    supportBody: "Send the country, page title and link that needs to be checked.",
+    legal: "Legal and privacy questions",
+    legalBody: "For questions about terms, privacy or data in an email you sent.",
     notice:
-      "Email is not an emergency channel and must not be used to send passports, IDs or immigration files."
+      "Do not send passports, identity documents, immigration files, bank data or medical information by email."
   }
 } satisfies Record<
   Locale,
@@ -93,66 +65,50 @@ const contactCopy = {
     supportBody: string;
     legal: string;
     legalBody: string;
-    marketing: string;
-    marketingBody: string;
-    updatesSubject: string;
-    updatesBody: string;
     notice: string;
   }
 >;
 
+type ContactPageProps = { params: Promise<{ locale: string }> };
+
 export default async function ContactPage({ params }: ContactPageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const dictionary = getDictionary(locale);
-  const experience = getExperienceCopy(locale);
-  const copy = getProductCopy(locale);
-  const contact = contactCopy[locale];
-  const updatesHref = `mailto:${LEGAL_ENTITY.email.marketing}?subject=${encodeURIComponent(contact.updatesSubject)}&body=${encodeURIComponent(contact.updatesBody)}`;
+  const page = contactCopy[locale];
+  const copy = publicCopy[locale];
 
   return (
     <>
       <section className="page-hero page-hero-contact">
         <div className="shell page-hero-inner">
-          <p className="eyebrow">{experience.advisor}</p>
-          <h1>{copy.contactTitle}</h1>
-          <p className="page-lede">{copy.contactBody}</p>
+          <p className="eyebrow">{copy.navigation.contact}</p>
+          <h1>{page.title}</h1>
+          <p className="page-lede">{page.body}</p>
         </div>
       </section>
       <section className="section section-white">
-        <div className="shell contact-channels">
-          <header>
-            <p className="eyebrow">
-              <BadgeInfo aria-hidden="true" size={15} /> {experience.advisor}
-            </p>
-            <h2>{contact.title}</h2>
-            <p>{contact.body}</p>
-          </header>
+        <div className="shell contact-channels premium-contact-channels">
           <div className="contact-channel-grid">
             <a href={`mailto:${LEGAL_ENTITY.email.support}`}>
-              <Mail aria-hidden="true" size={25} />
-              <strong>{contact.support}</strong>
-              <p>{contact.supportBody}</p>
+              <Link2 aria-hidden="true" size={25} />
+              <strong>{page.support}</strong>
+              <p>{page.supportBody}</p>
               <span>{LEGAL_ENTITY.email.support}</span>
             </a>
             <a href={`mailto:${LEGAL_ENTITY.email.legal}`}>
               <Scale aria-hidden="true" size={25} />
-              <strong>{contact.legal}</strong>
-              <p>{contact.legalBody}</p>
+              <strong>{page.legal}</strong>
+              <p>{page.legalBody}</p>
               <span>{LEGAL_ENTITY.email.legal}</span>
-            </a>
-            <a href={updatesHref}>
-              <Megaphone aria-hidden="true" size={25} />
-              <strong>{contact.marketing}</strong>
-              <p>{contact.marketingBody}</p>
-              <span>{LEGAL_ENTITY.email.marketing}</span>
             </a>
           </div>
           <aside className="contact-security-note">
             <ShieldCheck aria-hidden="true" size={21} />
             <div>
-              <strong>{dictionary.security.do_not_share}</strong>
-              <p>{contact.notice}</p>
+              <strong>
+                <Mail aria-hidden="true" size={17} /> {copy.footer.privacy}
+              </strong>
+              <p>{page.notice}</p>
             </div>
           </aside>
         </div>

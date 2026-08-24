@@ -10,50 +10,32 @@ const copy = {
   ht: {
     message: "Yon nouvo vèsyon disponib.",
     update: "Mete ajou",
-    later: "Pita",
-    blocked: "Fini oswa anrejistre fòm ou anvan ou mete ajou."
+    later: "Pita"
   },
   fr: {
     message: "Une nouvelle version est disponible.",
     update: "Mettre à jour",
-    later: "Plus tard",
-    blocked: "Terminez ou enregistrez votre formulaire avant la mise à jour."
+    later: "Plus tard"
   },
   es: {
     message: "Hay una nueva versión disponible.",
     update: "Actualizar",
-    later: "Más tarde",
-    blocked: "Termina o guarda el formulario antes de actualizar."
+    later: "Más tarde"
   },
   pt: {
     message: "Uma nova versão está disponível.",
     update: "Atualizar",
-    later: "Mais tarde",
-    blocked: "Conclua ou salve o formulário antes de atualizar."
+    later: "Mais tarde"
   },
   en: {
     message: "A new version is available.",
     update: "Update",
-    later: "Later",
-    blocked: "Finish or save your form before updating."
+    later: "Later"
   }
 } satisfies Record<Locale, Record<string, string>>;
 
-function hasFormProgress(): boolean {
-  return [...document.forms].some((form) =>
-    [...form.elements].some((element) => {
-      if (element instanceof HTMLTextAreaElement) return element.value.trim().length > 0;
-      if (element instanceof HTMLSelectElement) return element.selectedIndex > 0;
-      if (!(element instanceof HTMLInputElement) || element.type === "hidden") return false;
-      if (element.type === "checkbox" || element.type === "radio") return element.checked;
-      return element.value.trim().length > 0;
-    })
-  );
-}
-
 export function PwaUpdatePrompt({ locale }: { locale: Locale }) {
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
-  const [blocked, setBlocked] = useState(false);
   const reloadRequested = useRef(false);
   const text = copy[locale];
 
@@ -83,10 +65,6 @@ export function PwaUpdatePrompt({ locale }: { locale: Locale }) {
   if (!registration) return null;
 
   function update() {
-    if (hasFormProgress()) {
-      setBlocked(true);
-      return;
-    }
     reloadRequested.current = true;
     registration?.waiting?.postMessage({ type: "SKIP_WAITING" });
   }
@@ -96,7 +74,6 @@ export function PwaUpdatePrompt({ locale }: { locale: Locale }) {
       <RefreshCw aria-hidden="true" size={19} />
       <div>
         <strong>{text.message}</strong>
-        {blocked ? <small>{text.blocked}</small> : null}
       </div>
       <button className="button button-small" onClick={update} type="button">
         {text.update}

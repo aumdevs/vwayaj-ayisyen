@@ -10,10 +10,8 @@ type MobileNavigationDrawerProps = {
   items: readonly PublicNavItem[];
   menuLabel: string;
   closeLabel: string;
-  signInLabel: string;
-  signInHref: Route;
-  advisorLabel: string;
-  advisorHref: Route;
+  actionLabel: string;
+  actionHref: Route;
 };
 
 const FOCUSABLE =
@@ -23,10 +21,8 @@ export function MobileNavigationDrawer({
   items,
   menuLabel,
   closeLabel,
-  signInLabel,
-  signInHref,
-  advisorLabel,
-  advisorHref
+  actionLabel,
+  actionHref
 }: MobileNavigationDrawerProps) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -114,15 +110,8 @@ export function MobileNavigationDrawer({
               ))}
             </nav>
             <div className="mobile-drawer-actions">
-              <Link className="button" href={advisorHref} onClick={() => setOpen(false)}>
-                {advisorLabel}
-              </Link>
-              <Link
-                className="button button-secondary"
-                href={signInHref}
-                onClick={() => setOpen(false)}
-              >
-                {signInLabel}
+              <Link className="button" href={actionHref} onClick={() => setOpen(false)}>
+                {actionLabel}
               </Link>
             </div>
           </div>

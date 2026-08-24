@@ -8,15 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/*/portal/",
-          "/*/admin/",
-          "/*/advisor/",
-          "/*/professional/",
-          "/*/editor/",
-          "/*/moderation/",
-          "/api/"
-        ]
+        disallow: ["/api/"]
       }
     ],
     ...(isIndexingAllowed()

@@ -1,51 +1,27 @@
-# Empieza aquí — paquete de entrega para Codex
+# Empieza aquí
 
-**Proyecto técnico:** `vwayaj-ayisyen`
-**Fecha del documento:** 2026-07-21  
-**Propietario previsto del repositorio:** `aumdevs`  
-**Grupo de Supabase:** `aumprodz Group`  
-**Equipo de Vercel:** `aum prodz Group`
+Vwayaj Ayisyen es una web pública y una PWA informativa para la comunidad
+haitiana. La versión vigente no incluye cuentas, paneles, base de datos ni
+servicios privados.
 
-Este paquete contiene la especificación completa para construir desde cero una plataforma digital dirigida exclusivamente a la comunidad haitiana que desea informarse, prepararse y recibir acompañamiento legal y práctico para Estados Unidos, Chile, Brasil y México.
+## Orden de lectura
 
-## Qué debe hacer Codex
+1. [`README.md`](README.md)
+2. [`AGENTS.md`](AGENTS.md)
+3. [`docs/49_PUBLIC_INFORMATION_RELEASE_2026-08-24.md`](docs/49_PUBLIC_INFORMATION_RELEASE_2026-08-24.md)
+4. [`docs/DECISIONS_IMPLEMENTED.md`](docs/DECISIONS_IMPLEMENTED.md)
+5. [`docs/SCREEN_INVENTORY.md`](docs/SCREEN_INVENTORY.md)
+6. [`docs/VERIFIED_ROUTES.md`](docs/VERIFIED_ROUTES.md)
 
-1. Leer primero `CODEX_MASTER_PROMPT.md`.
-2. Leer `AGENTS.md` y todos los documentos de `/docs`.
-3. Usar el repositorio **público con licencia propietaria** `aumdevs/vwayaj-ayisyen`.
-4. Crear el proyecto de Supabase dentro de `aumprodz Group`.
-5. Crear/importar el proyecto en Vercel dentro de `aum prodz Group`.
-6. Construir, probar, securizar, desplegar y documentar la aplicación.
-7. No inventar información migratoria, precios, requisitos legales ni testimonios.
-8. No copiar credenciales a GitHub, logs, capturas, issues ni documentación pública.
-9. Crear el administrador usando las credenciales privadas entregadas por separado y obligar cambio de contraseña + MFA TOTP en el primer acceso.
-10. Entregar un informe final con URLs, estado de pruebas, configuración pendiente y riesgos conocidos.
+## Regla editorial
 
-## Archivos más importantes
+No inventar ni copiar como hechos estables requisitos migratorios, precios,
+plazos, salarios o garantías. Identificar a la autoridad responsable, explicar
+para qué sirve su página y mantener visible la fecha de revisión.
 
-- `CODEX_MASTER_PROMPT.md`: instrucciones generales y no negociables.
-- `docs/01_PRODUCT_REQUIREMENTS.md`: producto, usuarios y alcance.
-- `docs/10_TECHNICAL_ARCHITECTURE.md`: arquitectura de aplicación.
-- `docs/11_DATABASE_DATA_DICTIONARY.md`: modelo de datos.
-- `docs/12_SUPABASE_AUTH_RLS_STORAGE.md`: autenticación, autorización y Storage.
-- `docs/13_SECURITY_THREAT_MODEL.md`: controles contra ataques y abuso.
-- `docs/30_ACCEPTANCE_CRITERIA.md`: criterios que deben cumplirse antes de considerar el trabajo terminado.
-- `docs/43_BROWSER_ACCOUNT_PROVISIONING_GUARDRAILS.md`: límites para usar las sesiones abiertas de GitHub, Supabase y Vercel.
-- `docs/44_EXTERNAL_SERVICE_DECISIONS_AND_LAUNCH_BLOCKERS.md`: decisiones reales que no deben inventarse.
-- `docs/45_POST_DEPLOYMENT_SECURITY_HARDENING.md`: endurecimiento antes de manejar datos sensibles.
-- `supabase/migrations/`: migraciones de referencia.
-- `planning/BACKLOG.csv`: tareas ordenadas por dependencia.
-- `legal/`: borradores que requieren revisión jurídica antes de publicar.
-- `checklists/`: listas de verificación de infraestructura, seguridad y lanzamiento.
+## Comprobación
 
-## Advertencias importantes
-
-- **Vwayaj Ayisyen** es el nombre público oficial. `vwayaj-ayisyen` es el slug técnico y la URL oficial es `https://vwayajayisyen.com`.
-- La identidad pública mínima, el domicilio público y los tres correos oficiales están confirmados. Faltan CNPJ, domicilio registral completo, WhatsApp, configuración comercial de Stripe y credenciales de las funciones de alto riesgo.
-- Las funciones que dependan de secretos faltantes deben quedar terminadas, probadas con mocks o modo de prueba, y protegidas por feature flags.
-- La carga de documentos sensibles no debe habilitarse en producción hasta configurar validación de firma de archivo, cuarentena, análisis antimalware privado y políticas de retención.
-- Todo contenido migratorio de alto impacto debe permanecer en borrador hasta ser revisado por una persona competente.
-
-## Forma recomendada de entrega
-
-Entregar a Codex el ZIP completo. Como alternativa, `CODEX_ALL_IN_ONE.md` reúne la documentación narrativa, pero las migraciones, esquemas, CSV, plantillas y workflows del ZIP siguen siendo la fuente ejecutable.
+```bash
+pnpm check:all
+pnpm test:e2e
+```

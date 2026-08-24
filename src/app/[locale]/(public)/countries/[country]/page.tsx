@@ -1,21 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, BookOpenText, CalendarDays, Languages, Layers3 } from "lucide-react";
-import { ContextualAdvisorCTA } from "@/components/public/contextual-advisor-cta";
+import { ArrowDown, CalendarCheck2, Languages, Landmark, Route } from "lucide-react";
 import { OfficialSourceDirectory } from "@/components/public/official-source-directory";
-import { PublicContentArticle } from "@/components/public/public-content-article";
-import { SectionHeading } from "@/components/public/section-heading";
-import { EmptyState } from "@/components/ui/empty-state";
 import { StructuredData } from "@/components/seo/structured-data";
-import { LAUNCH_READINESS } from "@/config/launch-readiness";
+import {
+  COUNTRY_SOURCE_DIRECTORIES,
+  OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT
+} from "@/content/official-source-directory";
+import { publicCopy } from "@/content/public-copy";
 import { getSiteUrl } from "@/lib/config/runtime";
-import { countries, getCountry, getCountrySections, isCountryCode } from "@/lib/content/catalog";
-import { getDictionary } from "@/lib/i18n/dictionaries";
-import { getExperienceCopy } from "@/lib/i18n/experience-copy";
+import { countries, getCountry, isCountryCode } from "@/lib/content/catalog";
+import { formatLocalizedDate } from "@/lib/i18n/dates";
 import { isLocale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
-import { getPublishedCountryContent } from "@/server/content/public-content";
 
 type CountryPageProps = { params: Promise<{ locale: string; country: string }> };
 
@@ -26,55 +24,51 @@ export function generateStaticParams() {
 export default async function CountryPage({ params }: CountryPageProps) {
   const { locale, country: countryParam } = await params;
   if (!isLocale(locale) || !isCountryCode(countryParam)) notFound();
-  const dictionary = getDictionary(locale);
-  const copy = getExperienceCopy(locale);
+  const copy = publicCopy[locale];
   const country = getCountry(countryParam);
-  const sections = getCountrySections(dictionary);
-  const editorialGuideEnabled = LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
-  const publishedContent = editorialGuideEnabled
-    ? await getPublishedCountryContent(country.code, locale)
-    : [];
-  const sectionsWithContent = sections.filter((section) =>
-    publishedContent.some((item) => item.sectionKey === section.key)
-  );
-  const allSources = publishedContent.flatMap((item) => item.sources);
-  const latestUpdate = publishedContent
-    .map((item) => item.lastVerifiedAt)
-    .filter((date): date is string => Boolean(date))
-    .sort()
-    .at(-1);
+  const directory = COUNTRY_SOURCE_DIRECTORIES[country.code];
+  const reviewedAt = formatLocalizedDate(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT, locale, "short");
   const siteUrl = getSiteUrl();
-  const showOfficialSourceDirectory =
-    country.code === LAUNCH_READINESS.pilotCountry &&
-    LAUNCH_READINESS.countryContent.officialSourceDirectory &&
-    !LAUNCH_READINESS.countryContent.reviewedEditorialGuide;
-  const showReviewedEditorialGuide = editorialGuideEnabled && publishedContent.length > 0;
 
   return (
     <>
-      <section className={`country-hero country-accent-${country.accent}`}>
+      <section className={`country-hero premium-country-hero country-accent-${country.accent}`}>
         <Image alt={country.imageAlt[locale]} fill priority sizes="100vw" src={country.image} />
         <span className="country-hero-overlay" aria-hidden="true" />
         <div className="shell country-hero-inner">
           <nav className="breadcrumbs breadcrumbs-inverse" aria-label="Breadcrumb">
-            <Link href={localizedPath(locale, "countries")}>{dictionary.nav.countries}</Link>
+            <Link href={localizedPath(locale, "countries")}>{copy.country.allCountries}</Link>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{country.name[locale]}</span>
           </nav>
           <div className="country-hero-copy">
-            <p className="eyebrow">{copy.country.guideKicker}</p>
+            <p className="eyebrow">
+              {copy.country.kicker} · {country.shortLabel}
+            </p>
             <h1>{country.name[locale]}</h1>
-            <p>{copy.country.intro}</p>
-            {showOfficialSourceDirectory ? (
-              <div className="country-quick-facts">
-                {[Languages, Layers3, CalendarDays].map((Icon, index) => (
-                  <span key={copy.country.quickFacts[index]}>
-                    <Icon aria-hidden="true" size={18} />
-                    {copy.country.quickFacts[index]}
-                  </span>
-                ))}
-              </div>
-            ) : null}
+            <p>{directory.intro[locale]}</p>
+            <div className="country-quick-facts">
+              <span>
+                <Landmark aria-hidden="true" size={18} /> {directory.sources.length}{" "}
+                {copy.country.sourcesLabel}
+              </span>
+              <span>
+                <CalendarCheck2 aria-hidden="true" size={18} /> {copy.country.verifiedLabel}:{" "}
+                {reviewedAt}
+              </span>
+              <span>
+                <Languages aria-hidden="true" size={18} /> 5 {copy.home.languages}
+              </span>
+            </div>
+            <a className="button button-large country-hero-action" href="#official-sources">
+              {copy.home.secondary} <ArrowDown aria-hidden="true" size={18} />
+            </a>
+          </div>
+          <div className="country-hero-route" aria-hidden="true">
+            <Route size={34} />
+            <span>01</span>
+            <i />
+            <span>04</span>
           </div>
         </div>
       </section>
@@ -87,7 +81,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
             {
               "@type": "ListItem",
               position: 1,
-              name: dictionary.nav.countries,
+              name: copy.navigation.countries,
               item: new URL(localizedPath(locale, "countries"), siteUrl).toString()
             },
             {
@@ -100,144 +94,23 @@ export default async function CountryPage({ params }: CountryPageProps) {
         }}
       />
 
-      {showOfficialSourceDirectory ? (
-        <>
-          <OfficialSourceDirectory locale={locale} />
-          <section className="section section-white section-final-cta">
-            <div className="shell">
-              <ContextualAdvisorCTA
-                body={copy.home.finalBody}
-                locale={locale}
-                title={copy.home.finalTitle}
-              />
-            </div>
-          </section>
-        </>
-      ) : !showReviewedEditorialGuide ? (
-        <>
-          <section className="section section-white">
-            <div className="shell country-pending-layout">
-              <div>
-                <SectionHeading
-                  body={copy.country.coverageBody}
-                  kicker={dictionary.common.learn_more}
-                  title={copy.country.coverageTitle}
-                />
-                <ul className="coverage-list">
-                  {sections
-                    .filter((section) => section.key !== "sources")
-                    .map((section, index) => (
-                      <li key={section.key}>
-                        <span>{String(index + 1).padStart(2, "0")}</span>
-                        {section.label}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-              <aside>
-                <EmptyState
-                  actions={
-                    <>
-                      <Link className="button" href={localizedPath(locale, "countries/usa")}>
-                        {copy.home.primary}
-                      </Link>
-                      <Link
-                        className="button button-secondary"
-                        href={localizedPath(locale, "countries")}
-                      >
-                        {dictionary.nav.countries}
-                      </Link>
-                    </>
-                  }
-                  body={copy.country.pendingBody}
-                  icon={BookOpenText}
-                  title={copy.country.pendingTitle}
-                />
-                <div className="country-next-card">
-                  <h3>{copy.country.nextTitle}</h3>
-                  <p>{copy.country.nextBody}</p>
-                  <Link className="text-link" href={localizedPath(locale, "contact")}>
-                    {copy.advisor} <ArrowRight aria-hidden="true" size={17} />
-                  </Link>
-                </div>
-              </aside>
-            </div>
-          </section>
-          <section className="section section-white section-final-cta">
-            <div className="shell">
-              <ContextualAdvisorCTA
-                body={copy.home.finalBody}
-                locale={locale}
-                title={copy.home.finalTitle}
-              />
-            </div>
-          </section>
-        </>
-      ) : (
-        <section className="section section-white">
-          <div className="shell country-content-layout">
-            <aside className="country-guide-rail">
-              <nav aria-label={dictionary.common.learn_more}>
-                {sectionsWithContent.map((section) => (
-                  <a href={`#${section.key}`} key={section.key}>
-                    {section.label}
-                  </a>
-                ))}
-                {allSources.length > 0 ? <a href="#sources">{dictionary.common.sources}</a> : null}
-              </nav>
-              <div className="country-guide-meta">
-                {latestUpdate ? (
-                  <p>
-                    <CalendarDays aria-hidden="true" size={17} />
-                    <span>
-                      {dictionary.common.updated}
-                      <strong>{new Date(latestUpdate).toLocaleDateString(locale)}</strong>
-                    </span>
-                  </p>
-                ) : null}
-                <p>
-                  <BookOpenText aria-hidden="true" size={17} />
-                  <span>
-                    {dictionary.common.sources}
-                    <strong>{allSources.length}</strong>
-                  </span>
-                </p>
-              </div>
-            </aside>
-            <div className="country-published-content">
-              {sectionsWithContent.map((section) => (
-                <section id={section.key} key={section.key}>
-                  <h2>{section.label}</h2>
-                  {publishedContent
-                    .filter((item) => item.sectionKey === section.key)
-                    .map((item) => (
-                      <PublicContentArticle
-                        content={item}
-                        dictionary={dictionary}
-                        key={item.slug}
-                        locale={locale}
-                      />
-                    ))}
-                </section>
+      <OfficialSourceDirectory country={country.code} locale={locale} />
+
+      <section className="section country-cross-links">
+        <div className="shell">
+          <p className="eyebrow">{copy.country.allCountries}</p>
+          <div>
+            {countries
+              .filter(({ code }) => code !== country.code)
+              .map((item) => (
+                <Link href={localizedPath(locale, `countries/${item.code}`)} key={item.code}>
+                  <span>{item.shortLabel}</span>
+                  <strong>{item.name[locale]}</strong>
+                </Link>
               ))}
-              {allSources.length > 0 ? (
-                <section id="sources">
-                  <h2>{dictionary.common.sources}</h2>
-                  <ul className="source-list">
-                    {allSources.map((source) => (
-                      <li key={source.url}>
-                        <a href={source.url} rel="noreferrer" target="_blank">
-                          {source.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </>
   );
 }

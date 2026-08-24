@@ -1,115 +1,61 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo-mark";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { BRAND } from "@/config/brand";
-import type { Dictionary } from "@/lib/i18n/dictionaries";
-import { localizedPath } from "@/lib/i18n/paths";
+import { publicCopy } from "@/content/public-copy";
 import { countries } from "@/lib/content/catalog";
-import { isPromotableCountry } from "@/config/launch-readiness";
+import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 
 type SiteFooterProps = {
   locale: Locale;
-  dictionary: Dictionary;
 };
 
-const footerCopy = {
-  ht: {
-    countries: "Peyi yo",
-    tools: "Resous",
-    help: "Èd ak legal",
-    privacy: "Konfidansyalite",
-    terms: "Kondisyon",
-    top: "Retounen anlè"
-  },
-  fr: {
-    countries: "Pays",
-    tools: "Ressources",
-    help: "Aide et juridique",
-    privacy: "Confidentialité",
-    terms: "Conditions",
-    top: "Retour en haut"
-  },
-  es: {
-    countries: "Países",
-    tools: "Recursos",
-    help: "Ayuda y legal",
-    privacy: "Privacidad",
-    terms: "Términos",
-    top: "Volver arriba"
-  },
-  pt: {
-    countries: "Países",
-    tools: "Recursos",
-    help: "Ajuda e jurídico",
-    privacy: "Privacidade",
-    terms: "Termos",
-    top: "Voltar ao topo"
-  },
-  en: {
-    countries: "Countries",
-    tools: "Resources",
-    help: "Help and legal",
-    privacy: "Privacy",
-    terms: "Terms",
-    top: "Back to top"
-  }
-} satisfies Record<
-  Locale,
-  {
-    countries: string;
-    tools: string;
-    help: string;
-    privacy: string;
-    terms: string;
-    top: string;
-  }
->;
-
-export function SiteFooter({ locale, dictionary }: SiteFooterProps) {
-  const copy = footerCopy[locale];
+export function SiteFooter({ locale }: SiteFooterProps) {
+  const copy = publicCopy[locale];
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer premium-footer">
       <div className="shell footer-grid">
         <div className="footer-intro">
           <div className="footer-brand">
             <LogoMark className="brand-mark" />
             <strong>{BRAND.name}</strong>
           </div>
-          <p>{BRAND.descriptions[locale]}</p>
+          <p>{copy.footer.promise}</p>
           <LanguageSwitcher locale={locale} placement="footer" />
         </div>
-        <nav aria-label={copy.countries}>
-          <strong>{copy.countries}</strong>
-          {countries
-            .filter(({ code }) => isPromotableCountry(code))
-            .map((country) => (
-              <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
-                {country.name[locale]}
-              </Link>
-            ))}
+        <nav aria-label={copy.footer.destinations}>
+          <strong>{copy.footer.destinations}</strong>
+          {countries.map((country) => (
+            <Link href={localizedPath(locale, `countries/${country.code}`)} key={country.code}>
+              {country.name[locale]}
+            </Link>
+          ))}
         </nav>
-        <nav aria-label={copy.tools}>
-          <strong>{copy.tools}</strong>
-          <Link href={localizedPath(locale, "countries/usa")}>{dictionary.common.sources}</Link>
-          <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
+        <nav aria-label={copy.footer.resources}>
+          <strong>{copy.footer.resources}</strong>
+          <Link href={localizedPath(locale, "countries")}>{copy.navigation.countries}</Link>
+          <Link href={localizedPath(locale, "about")}>{copy.navigation.about}</Link>
+          <Link href={localizedPath(locale, "faq")}>{copy.navigation.faq}</Link>
+          <Link href={localizedPath(locale, "contact")}>{copy.navigation.contact}</Link>
         </nav>
-        <nav aria-label={copy.help}>
-          <strong>{copy.help}</strong>
-          <Link href={localizedPath(locale, "about")}>{dictionary.nav.help}</Link>
-          <Link href={localizedPath(locale, "faq")}>FAQ</Link>
-          <Link href={localizedPath(locale, "contact")}>{dictionary.common.contact}</Link>
-          <Link href={localizedPath(locale, "legal/privacy")}>{copy.privacy}</Link>
-          <Link href={localizedPath(locale, "legal/terms")}>{copy.terms}</Link>
+        <nav aria-label={copy.footer.legal}>
+          <strong>{copy.footer.legal}</strong>
+          <Link href={localizedPath(locale, "legal/privacy")}>{copy.footer.privacy}</Link>
+          <Link href={localizedPath(locale, "legal/terms")}>{copy.footer.terms}</Link>
+          <Link href={localizedPath(locale, "legal/cookies")}>{copy.footer.cookies}</Link>
         </nav>
       </div>
       <div className="shell footer-bottom">
         <span>
           © {new Date().getUTCFullYear()} {BRAND.name}.
         </span>
-        <span>{dictionary.packages.not_guarantee}</span>
-        <a href="#page-top">{copy.top}</a>
+        <span>{copy.footer.notice}</span>
+        <a href="#page-top">
+          {copy.footer.top} <ArrowUpRight aria-hidden="true" size={15} />
+        </a>
       </div>
     </footer>
   );

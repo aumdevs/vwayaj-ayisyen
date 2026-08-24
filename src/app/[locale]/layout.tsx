@@ -8,8 +8,7 @@ import { isPromotablePublicPath } from "@/config/launch-readiness";
 import { isIndexingAllowed } from "@/lib/config/runtime";
 import { BRAND } from "@/config/brand";
 import { getCountry, isCountryCode } from "@/lib/content/catalog";
-import { getDictionary } from "@/lib/i18n/dictionaries";
-import { getProductCopy } from "@/lib/i18n/product-copy";
+import { publicCopy } from "@/content/public-copy";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
 type LocaleLayoutProps = {
@@ -30,8 +29,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   const officialLegalRoute = path.startsWith("legal/");
   const alternateLocales = officialLegalRoute ? (["es", "pt"] as const) : SUPPORTED_LOCALES;
   const canonicalLocale = officialLegalRoute && locale !== "es" && locale !== "pt" ? "es" : locale;
-  const dictionary = getDictionary(locale);
-  const product = getProductCopy(locale);
+  const copy = publicCopy[locale];
   const legalTitles = {
     terms: {
       ht: "Kondisyon itilizasyon",
@@ -47,28 +45,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       pt: "Privacidade",
       en: "Privacy"
     },
-    cookies: { ht: "Cookies", fr: "Cookies", es: "Cookies", pt: "Cookies", en: "Cookies" },
-    ai: {
-      ht: "Asistan IA",
-      fr: "Assistant IA",
-      es: "Asistente de IA",
-      pt: "Assistente de IA",
-      en: "AI assistant"
-    },
-    community: {
-      ht: "Règ kominote",
-      fr: "Règles de la communauté",
-      es: "Reglas de la comunidad",
-      pt: "Regras da comunidade",
-      en: "Community rules"
-    },
-    editorial: {
-      ht: "Politik editoryal",
-      fr: "Politique éditoriale",
-      es: "Política editorial",
-      pt: "Política editorial",
-      en: "Editorial policy"
-    }
+    cookies: { ht: "Cookies", fr: "Cookies", es: "Cookies", pt: "Cookies", en: "Cookies" }
   } as const;
   const legalDocument = path.startsWith("legal/") ? path.slice("legal/".length) : "";
   const legalTitle =
@@ -84,21 +61,21 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
     path === ""
       ? BRAND.name
       : path === "countries"
-        ? dictionary.nav.countries
+        ? copy.navigation.countries
         : countryTitle
           ? countryTitle
           : path === "about"
-            ? product.aboutTitle
+            ? copy.navigation.about
             : path === "contact"
-              ? product.contactTitle
+              ? copy.navigation.contact
               : path === "faq"
                 ? "FAQ"
                 : (legalTitle ?? BRAND.name);
   const description =
     path === "about"
-      ? product.aboutBody
+      ? copy.footer.promise
       : path === "contact"
-        ? product.contactBody
+        ? copy.footer.promise
         : BRAND.descriptions[locale];
   return {
     title: title === BRAND.name ? { absolute: BRAND.name } : title,

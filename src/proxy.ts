@@ -1,53 +1,30 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getSupabasePublicConfig, getTurnstileSiteKey } from "@/lib/config/runtime";
-import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n/config";
-import { refreshAuthSession } from "@/lib/supabase/proxy";
+import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 
 const NEXT_IMAGE_FILL_STYLE_SHA256 = "'sha256-ZDrxqUOB4m/L0JWL/+gS52g1CRH0l/qwMhjTw5Z/Fsc='";
-const TURNSTILE_FLEXIBLE_STYLE_SHA256 = "'sha256-dMnbuGXRM5Y7/d67w8MZPydMv+XXsm0B9vkgAYOXC1I='";
 
 function buildContentSecurityPolicy(nonce: string): string {
   const isDevelopment = process.env.NODE_ENV === "development";
   const connectSources = ["'self'"];
   const scriptSources = ["'self'", `'nonce-${nonce}'`, "'strict-dynamic'"];
-  const styleAttributeHashes = [NEXT_IMAGE_FILL_STYLE_SHA256];
-  const frameSources: string[] = [];
-  const supabase = getSupabasePublicConfig();
-  const turnstileEnabled = getTurnstileSiteKey() !== null;
-  const analyticsEndpoint = process.env.NEXT_PUBLIC_ANALYTICS_ENDPOINT?.trim();
 
-  if (supabase) {
-    const origin = new URL(supabase.url).origin;
-    connectSources.push(origin, origin.replace(/^http/, "ws"));
+  if (isDevelopment) {
+    connectSources.push("ws:", "http:");
+    scriptSources.push("'unsafe-eval'");
   }
-  if (isDevelopment) connectSources.push("ws:", "http:");
-  if (analyticsEndpoint) {
-    try {
-      const analyticsOrigin = new URL(analyticsEndpoint).origin;
-      if (analyticsOrigin.startsWith("https://")) connectSources.push(analyticsOrigin);
-    } catch {
-      // Invalid optional configuration fails closed: the browser cannot connect.
-    }
-  }
-  if (turnstileEnabled) {
-    scriptSources.push("https://challenges.cloudflare.com");
-    frameSources.push("https://challenges.cloudflare.com");
-    styleAttributeHashes.push(TURNSTILE_FLEXIBLE_STYLE_SHA256);
-  }
-  if (isDevelopment) scriptSources.push("'unsafe-eval'");
 
   return [
     "default-src 'self'",
     `script-src ${scriptSources.join(" ")}`,
     `style-src 'self' 'nonce-${nonce}'`,
-    `style-src-attr 'unsafe-hashes' ${styleAttributeHashes.join(" ")}`,
+    `style-src-attr 'unsafe-hashes' ${NEXT_IMAGE_FILL_STYLE_SHA256}`,
     "img-src 'self' blob: data:",
     "font-src 'self' data:",
     `connect-src ${connectSources.join(" ")}`,
     "media-src 'self'",
     "worker-src 'self' blob:",
     "manifest-src 'self'",
-    `frame-src ${frameSources.length ? frameSources.join(" ") : "'none'"}`,
+    "frame-src 'none'",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -56,21 +33,9 @@ function buildContentSecurityPolicy(nonce: string): string {
   ].join("; ");
 }
 
-function applyResponseHeaders(response: NextResponse, csp: string, privateSurface: boolean) {
-  response.headers.set("Content-Security-Policy", csp);
-  if (privateSurface) {
-    response.headers.set("Cache-Control", "private, no-store, max-age=0");
-    response.headers.set("Pragma", "no-cache");
-  }
-  return response;
-}
-
-export async function proxy(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL(`/${DEFAULT_LOCALE}`, request.url));
-  }
-
+  if (pathname === "/") return NextResponse.redirect(new URL(`/${DEFAULT_LOCALE}`, request.url));
   if (pathname === "/offline") return NextResponse.next();
 
   const firstSegment = pathname.split("/").filter(Boolean)[0];
@@ -86,20 +51,9 @@ export async function proxy(request: NextRequest) {
   requestHeaders.set("x-pathname", pathname);
   requestHeaders.set("Content-Security-Policy", csp);
 
-  const privateSurface =
-    /^\/(ht|fr|es|pt|en)\/(portal|advisor|professional|editor|moderation|admin)(\/|$)/.test(
-      pathname
-    );
-  const authSurface = /^\/(ht|fr|es|pt|en)\/auth(\/|$)/.test(pathname);
-  const { response, claims } = await refreshAuthSession(request, requestHeaders);
-
-  if (privateSurface && !claims) {
-    const url = new URL(`/${firstSegment}/auth/sign-in`, request.url);
-    url.searchParams.set("reason", "required");
-    return applyResponseHeaders(NextResponse.redirect(url), csp, true);
-  }
-
-  return applyResponseHeaders(response, csp, privateSurface || authSurface);
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  response.headers.set("Content-Security-Policy", csp);
+  return response;
 }
 
 export const config = {

@@ -23,19 +23,19 @@ describe("PWA manifest", () => {
       start_url: "/ht?source=pwa",
       scope: "/",
       display: "standalone",
-      background_color: "#ffffff",
-      theme_color: "#ffffff",
+      background_color: "#f8f5ef",
+      theme_color: "#07152e",
       lang: "ht",
       dir: "ltr",
       orientation: "any"
     });
-    expect(value.shortcuts).toHaveLength(3);
-    expect(value.shortcuts).toContainEqual(
-      expect.objectContaining({
-        short_name: "Kont",
-        url: "/ht/portal?source=pwa-shortcut"
-      })
-    );
+    expect(value.shortcuts).toHaveLength(4);
+    expect(value.shortcuts?.map(({ url }) => url)).toEqual([
+      "/ht/countries/usa?source=pwa-shortcut",
+      "/ht/countries/chile?source=pwa-shortcut",
+      "/ht/countries/brazil?source=pwa-shortcut",
+      "/ht/countries/mexico?source=pwa-shortcut"
+    ]);
   });
 
   it("ships every required normal, maskable, monochrome and Apple icon size", () => {

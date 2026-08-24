@@ -21,7 +21,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm dev --hostname 127.0.0.1 --webpack",
-    url: "http://127.0.0.1:3000/api/health",
+    url: "http://127.0.0.1:3000/ht",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000
   }
