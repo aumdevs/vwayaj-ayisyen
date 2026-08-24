@@ -34,4 +34,16 @@ describe("offline cache policy", () => {
     expect(source).toContain("PAGE_CACHE");
     expect(source).toContain("STATIC_CACHE");
   });
+
+  it("matches PWA launch queries to precached pages", () => {
+    expect(source).toContain("pageCache.match(request, { ignoreSearch: true })");
+  });
+
+  it("precaches route-specific scripts, styles and images from every public page", () => {
+    expect(source).toContain("PUBLIC_PAGE_URLS.map");
+    expect(source).toContain("extractSameOriginAssetUrls(html)");
+    expect(source).toContain('pathname.startsWith("/_next/static/")');
+    expect(source).toContain('pathname.startsWith("/_next/image")');
+    expect(source).toContain('pathname.startsWith("/images/")');
+  });
 });
