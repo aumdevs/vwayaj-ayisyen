@@ -23,10 +23,15 @@ describe("public runtime configuration", () => {
     expect(getSiteUrl().toString()).toBe("https://example.org/base");
   });
 
-  it("allows indexing only for the exact true value", () => {
+  it("keeps previews opt-in while always indexing the launched public domain", () => {
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://preview.example.com");
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "TRUE");
     expect(isIndexingAllowed()).toBe(false);
     vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "true");
+    expect(isIndexingAllowed()).toBe(true);
+
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://vwayajayisyen.com");
+    vi.stubEnv("NEXT_PUBLIC_ALLOW_INDEXING", "false");
     expect(isIndexingAllowed()).toBe(true);
   });
 });
