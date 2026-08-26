@@ -41,13 +41,13 @@ export default async function CountriesPage({ params }: CountriesPageProps) {
             </span>
           </div>
           <div className="country-grid country-index-grid">
-            {countries.map((country) => (
+            {countries.map((country, index) => (
               <CountryCard
                 actionLabel={copy.home.explore}
                 country={country}
                 key={country.code}
                 locale={locale}
-                preload
+                preload={index < 2}
                 sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 50vw"
                 tags={copy.countries.cardTags}
               />
