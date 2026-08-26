@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return paths.map((path) => ({
     url: new URL(path, base).toString(),
     changeFrequency: "weekly",
+    lastModified: new Date("2026-08-25T00:00:00.000Z"),
     priority: path.split("/").filter(Boolean).length === 1 ? 1 : 0.7
   }));
 }

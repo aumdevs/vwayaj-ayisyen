@@ -12,9 +12,9 @@ export const LEGAL_ENTITY = {
 } as const;
 
 export const LEGAL_VERSIONS = {
-  terms: "terms-2026-08-24-v2",
-  privacy: "privacy-2026-08-24-v2",
-  cookies: "cookies-2026-08-24-v2"
+  terms: "terms-2026-08-25-v3",
+  privacy: "privacy-2026-08-25-v3",
+  cookies: "cookies-2026-08-25-v3"
 } as const;
 
 export const PUBLISHED_LEGAL_DOCUMENTS = ["terms", "privacy", "cookies"] as const;
@@ -50,7 +50,7 @@ const sharedSpanish = {
   languageNotice:
     "Las versiones en español y portugués son oficiales y equivalentes. Las demás traducciones facilitan la lectura.",
   contactTitle: "Contacto legal y soporte",
-  effectiveDate: "24 de agosto de 2026"
+  effectiveDate: "25 de agosto de 2026"
 } as const;
 
 const sharedPortuguese = {
@@ -61,14 +61,14 @@ const sharedPortuguese = {
   languageNotice:
     "As versões em espanhol e português são oficiais e equivalentes. As demais traduções facilitam a leitura.",
   contactTitle: "Contato jurídico e suporte",
-  effectiveDate: "24 de agosto de 2026"
+  effectiveDate: "25 de agosto de 2026"
 } as const;
 
 const spanishTerms: LegalDocumentContent = {
   ...sharedSpanish,
   title: "Condiciones de uso",
   summary:
-    "Estas condiciones regulan el uso del directorio público de Vwayaj Ayisyen y sus enlaces a fuentes oficiales.",
+    "Estas condiciones regulan el uso de las guías públicas de Vwayaj Ayisyen y sus enlaces a fuentes oficiales.",
   version: LEGAL_VERSIONS.terms,
   sections: [
     {
@@ -83,7 +83,7 @@ const spanishTerms: LegalDocumentContent = {
       id: "service",
       title: "2. Servicio público de información",
       paragraphs: [
-        "Vwayaj Ayisyen organiza enlaces y orientaciones generales para ayudar a la comunidad haitiana a encontrar autoridades responsables de visas, consulados, residencia, identidad, trabajo, estudios y salud.",
+        "Vwayaj Ayisyen ofrece orientaciones generales y enlaces oficiales para ayudar a la comunidad haitiana a preparar un proyecto de viaje, residencia, trabajo, estudios o protección.",
         "El sitio no ofrece cuentas, pagos, carga de documentos, asesoría individual ni representación. No somos una embajada, consulado, oficina de inmigración u organismo gubernamental."
       ]
     },
@@ -107,7 +107,7 @@ const spanishTerms: LegalDocumentContent = {
       id: "changes",
       title: "5. Cambios y contacto",
       paragraphs: [
-        "Podemos corregir, actualizar o retirar contenido para mantener el directorio útil y seguro. La versión y la fecha vigentes aparecen en esta página.",
+        "Podemos corregir, actualizar o retirar contenido para mantener las guías útiles y seguras. La versión y la fecha vigentes aparecen en esta página.",
         `Para comunicar un enlace incorrecto, escribe a ${LEGAL_ENTITY.email.support}.`
       ]
     }
@@ -118,7 +118,7 @@ const portugueseTerms: LegalDocumentContent = {
   ...sharedPortuguese,
   title: "Termos de uso",
   summary:
-    "Estes termos regulam o uso do diretório público Vwayaj Ayisyen e de seus links para fontes oficiais.",
+    "Estes termos regulam o uso dos guias públicos Vwayaj Ayisyen e de seus links para fontes oficiais.",
   version: LEGAL_VERSIONS.terms,
   sections: [
     {
@@ -133,7 +133,7 @@ const portugueseTerms: LegalDocumentContent = {
       id: "service",
       title: "2. Serviço público de informação",
       paragraphs: [
-        "Vwayaj Ayisyen organiza links e orientações gerais para ajudar a comunidade haitiana a encontrar as autoridades responsáveis por vistos, consulados, residência, identidade, trabalho, estudos e saúde.",
+        "Vwayaj Ayisyen oferece orientações gerais e links oficiais para ajudar a comunidade haitiana a preparar um projeto de viagem, residência, trabalho, estudos ou proteção.",
         "O site não oferece contas, pagamentos, envio de documentos, orientação individual ou representação. Não somos embaixada, consulado, órgão de imigração ou entidade governamental."
       ]
     },
@@ -157,7 +157,7 @@ const portugueseTerms: LegalDocumentContent = {
       id: "changes",
       title: "5. Alterações e contato",
       paragraphs: [
-        "Podemos corrigir, atualizar ou retirar conteúdo para manter o diretório útil e seguro. A versão e a data vigentes aparecem nesta página.",
+        "Podemos corrigir, atualizar ou retirar conteúdo para manter os guias úteis e seguros. A versão e a data vigentes aparecem nesta página.",
         `Para comunicar um link incorreto, escreva para ${LEGAL_ENTITY.email.support}.`
       ]
     }
@@ -168,7 +168,7 @@ const spanishPrivacy: LegalDocumentContent = {
   ...sharedSpanish,
   title: "Política de privacidad",
   summary:
-    "Vwayaj Ayisyen funciona como un directorio público sin cuentas, pagos, formularios ni carga de documentos.",
+    "Vwayaj Ayisyen funciona como una guía pública sin cuentas, pagos, formularios ni carga de documentos.",
   version: LEGAL_VERSIONS.privacy,
   sections: [
     {
@@ -216,7 +216,7 @@ const portuguesePrivacy: LegalDocumentContent = {
   ...sharedPortuguese,
   title: "Política de privacidade",
   summary:
-    "Vwayaj Ayisyen funciona como um diretório público sem contas, pagamentos, formulários ou envio de documentos.",
+    "Vwayaj Ayisyen funciona como um guia público sem contas, pagamentos, formulários ou envio de documentos.",
   version: LEGAL_VERSIONS.privacy,
   sections: [
     {
@@ -286,7 +286,7 @@ const spanishCookies: LegalDocumentContent = {
       id: "external",
       title: "3. Sitios externos",
       paragraphs: [
-        "Las fuentes gubernamentales que abres desde el directorio pueden utilizar sus propias cookies y aplican sus respectivas políticas."
+        "Las fuentes gubernamentales que abres desde las guías pueden utilizar sus propias cookies y aplican sus respectivas políticas."
       ]
     },
     {
@@ -325,7 +325,7 @@ const portugueseCookies: LegalDocumentContent = {
       id: "external",
       title: "3. Sites externos",
       paragraphs: [
-        "As fontes governamentais abertas a partir do diretório podem usar seus próprios cookies e aplicam as respectivas políticas."
+        "As fontes governamentais abertas a partir dos guias podem usar seus próprios cookies e aplicam as respectivas políticas."
       ]
     },
     {

@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowDown, CalendarCheck2, Languages, Landmark, Route } from "lucide-react";
+import { CountryMigrationGuide } from "@/components/public/country-migration-guide";
 import { OfficialSourceDirectory } from "@/components/public/official-source-directory";
 import { StructuredData } from "@/components/seo/structured-data";
+import { COUNTRY_MIGRATION_GUIDES } from "@/content/migration-guides";
 import {
   COUNTRY_SOURCE_DIRECTORIES,
   OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT
@@ -27,6 +29,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const copy = publicCopy[locale];
   const country = getCountry(countryParam);
   const directory = COUNTRY_SOURCE_DIRECTORIES[country.code];
+  const guide = COUNTRY_MIGRATION_GUIDES[country.code];
   const reviewedAt = formatLocalizedDate(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT, locale, "short");
   const siteUrl = getSiteUrl();
 
@@ -46,7 +49,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
               {copy.country.kicker} · {country.shortLabel}
             </p>
             <h1>{country.name[locale]}</h1>
-            <p>{directory.intro[locale]}</p>
+            <p>{guide.summary[locale]}</p>
             <div className="country-quick-facts">
               <span>
                 <Landmark aria-hidden="true" size={18} /> {directory.sources.length}{" "}
@@ -60,8 +63,8 @@ export default async function CountryPage({ params }: CountryPageProps) {
                 <Languages aria-hidden="true" size={18} /> 5 {copy.home.languages}
               </span>
             </div>
-            <a className="button button-large country-hero-action" href="#official-sources">
-              {copy.home.secondary} <ArrowDown aria-hidden="true" size={18} />
+            <a className="button button-large country-hero-action" href="#guide-overview">
+              {copy.home.explore} <ArrowDown aria-hidden="true" size={18} />
             </a>
           </div>
           <div className="country-hero-route" aria-hidden="true">
@@ -74,25 +77,46 @@ export default async function CountryPage({ params }: CountryPageProps) {
       </section>
 
       <StructuredData
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: copy.navigation.countries,
-              item: new URL(localizedPath(locale, "countries"), siteUrl).toString()
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: country.name[locale],
-              item: new URL(localizedPath(locale, `countries/${country.code}`), siteUrl).toString()
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: copy.navigation.countries,
+                item: new URL(localizedPath(locale, "countries"), siteUrl).toString()
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: country.name[locale],
+                item: new URL(
+                  localizedPath(locale, `countries/${country.code}`),
+                  siteUrl
+                ).toString()
+              }
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: `${country.name[locale]} · ${copy.country.kicker}`,
+            description: guide.summary[locale],
+            dateModified: guide.reviewedAt,
+            inLanguage: locale,
+            url: new URL(localizedPath(locale, `countries/${country.code}`), siteUrl).toString(),
+            isPartOf: {
+              "@type": "WebSite",
+              name: "Vwayaj Ayisyen",
+              url: siteUrl.toString()
             }
-          ]
-        }}
+          }
+        ]}
       />
+
+      <CountryMigrationGuide country={country.code} locale={locale} />
 
       <OfficialSourceDirectory country={country.code} locale={locale} />
 

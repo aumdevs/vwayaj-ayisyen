@@ -1,6 +1,6 @@
 import type { CountryCode, Locale } from "@/types/domain";
 
-export const OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT = "2026-08-24";
+export const OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT = "2026-08-25";
 
 export const OFFICIAL_SOURCE_CATEGORIES = [
   "visa",
@@ -175,6 +175,58 @@ const usa: CountrySourceDirectory = {
         pt: "Encontrar listas oficiais de advogados, serviços pro bono e representantes credenciados.",
         en: "Find official lists of attorneys, pro bono services and accredited representatives."
       }
+    },
+    {
+      title: "2026 Suspension of Visa Issuance",
+      publisher: "U.S. Department of State",
+      url: "https://travel.state.gov/content/travel/en/News/visas-news/suspension-of-visa-issuance-to-foreign-nationals-to-protect-the-security-of-the-united-states.html",
+      category: "visa",
+      purpose: {
+        ht: "Li restriksyon 2026 ki aplike pou sitwayen ayisyen yo ak eksepsyon limite li yo.",
+        fr: "Lire la restriction de 2026 applicable aux ressortissants haïtiens et ses exceptions limitées.",
+        es: "Leer la restricción de 2026 aplicable a nacionales haitianos y sus excepciones limitadas.",
+        pt: "Ler a restrição de 2026 aplicável a cidadãos haitianos e suas exceções limitadas.",
+        en: "Read the 2026 restriction that applies to Haitian nationals and its limited exceptions."
+      }
+    },
+    {
+      title: "Application for Asylum and Withholding of Removal",
+      publisher: "U.S. Citizenship and Immigration Services",
+      url: "https://www.uscis.gov/i-589",
+      category: "protection",
+      purpose: {
+        ht: "Konprann fòm, kondisyon ak delè jeneral pou yon demann azil ki baze sou pwòp ka moun nan.",
+        fr: "Comprendre le formulaire, les conditions et le délai général d’une demande d’asile fondée sur le cas personnel.",
+        es: "Entender el formulario, los requisitos y el plazo general de una solicitud de asilo basada en el caso personal.",
+        pt: "Entender o formulário, requisitos e prazo geral de um pedido de asilo baseado no caso pessoal.",
+        en: "Understand the form, requirements and general deadline for an asylum request based on the individual case."
+      }
+    },
+    {
+      title: "CareerOneStop Job Search",
+      publisher: "U.S. Department of Labor — sponsored service",
+      url: "https://www.careeronestop.org/JobSearch/job-search.aspx",
+      category: "work",
+      purpose: {
+        ht: "Chèche pòs travay ak resous karyè si ou deja gen otorizasyon legal pou travay.",
+        fr: "Rechercher des emplois et ressources de carrière si vous avez déjà l’autorisation légale de travailler.",
+        es: "Buscar empleos y recursos profesionales si ya tienes autorización legal para trabajar.",
+        pt: "Buscar empregos e recursos de carreira se já possui autorização legal para trabalhar.",
+        en: "Search jobs and career resources if you already have lawful authorization to work."
+      }
+    },
+    {
+      title: "Health Coverage for Immigrants",
+      publisher: "HealthCare.gov",
+      url: "https://www.healthcare.gov/immigrants/",
+      category: "health",
+      purpose: {
+        ht: "Verifye ki estati imigrasyon ki ka sèvi pou jwenn asirans sou mache sante federal la.",
+        fr: "Vérifier quels statuts d’immigration permettent une couverture sur le marché fédéral de santé.",
+        es: "Verificar qué estatus migratorios permiten cobertura en el mercado federal de salud.",
+        pt: "Verificar quais status migratórios permitem cobertura no mercado federal de saúde.",
+        en: "Check which immigration statuses may qualify for coverage through the federal health marketplace."
+      }
     }
   ]
 };
@@ -287,16 +339,16 @@ const chile: CountrySourceDirectory = {
       }
     },
     {
-      title: "Preguntas frecuentes de Migraciones",
+      title: "Habilitación Laboral para personas extranjeras",
       publisher: "Servicio Nacional de Migraciones de Chile",
-      url: "https://serviciomigraciones.cl/preguntas-frecuentes/",
+      url: "https://serviciomigraciones.cl/conoce-el-paso-a-paso-del-tramite-de-habilitacion-laboral/",
       category: "work",
       purpose: {
-        ht: "Verifye repons aktyèl sou antre, rezidans, travay ak etap demann migratwa yo.",
-        fr: "Vérifier les réponses actuelles sur l’entrée, la résidence, le travail et les étapes des démarches migratoires.",
-        es: "Consultar respuestas actuales sobre entrada, residencia, trabajo y etapas de los trámites migratorios.",
-        pt: "Consultar respostas atuais sobre entrada, residência, trabalho e etapas dos processos migratórios.",
-        en: "Check current answers about entry, residence, work and immigration process stages."
+        ht: "Jwenn prèv ofisyèl sou entènèt ki montre si dokiman ou pèmèt ou travay nan Chili.",
+        fr: "Obtenir en ligne le justificatif officiel indiquant si vos documents vous autorisent à travailler au Chili.",
+        es: "Obtener en línea el comprobante oficial que indica si tus documentos permiten trabajar en Chile.",
+        pt: "Obter online o comprovante oficial que indica se seus documentos permitem trabalhar no Chile.",
+        en: "Get the official online proof showing whether your documents authorize work in Chile."
       }
     },
     {
@@ -323,6 +375,58 @@ const chile: CountrySourceDirectory = {
         es: "Consultar quién puede incorporarse al sistema público de salud y los canales oficiales de afiliación.",
         pt: "Consultar quem pode ingressar no sistema público de saúde e os canais oficiais de filiação.",
         en: "Check who can join the public health system and the official enrollment channels."
+      }
+    },
+    {
+      title: "Residencia para actividades remuneradas",
+      publisher: "Servicio Nacional de Migraciones de Chile",
+      url: "https://serviciomigraciones.cl/residencia-temporal/subcategorias/actividades-remuneradas/",
+      category: "work",
+      purpose: {
+        ht: "Gade kondisyon aktyèl pou mande rezidans travay ak kontra oswa òf depi aletranje.",
+        fr: "Voir les conditions actuelles pour demander depuis l’étranger une résidence de travail avec contrat ou offre.",
+        es: "Ver requisitos actuales para solicitar desde el extranjero residencia de trabajo con contrato u oferta.",
+        pt: "Ver requisitos atuais para solicitar no exterior residência de trabalho com contrato ou oferta.",
+        en: "View current requirements to request work residence from abroad with a contract or offer."
+      }
+    },
+    {
+      title: "Residencia para estudiantes",
+      publisher: "Servicio Nacional de Migraciones de Chile",
+      url: "https://serviciomigraciones.cl/residencia-temporal/subcategorias/estudiantes/",
+      category: "study",
+      purpose: {
+        ht: "Prepare admisyon, mwayen finans ak dokiman pou rezidans etid ki mande depi aletranje.",
+        fr: "Préparer admission, ressources et documents pour la résidence d’études demandée depuis l’étranger.",
+        es: "Preparar admisión, solvencia y documentos para la residencia de estudios solicitada desde el extranjero.",
+        pt: "Preparar admissão, meios financeiros e documentos para residência de estudo solicitada no exterior.",
+        en: "Prepare admission, funds and documents for student residence requested from abroad."
+      }
+    },
+    {
+      title: "Solicitud de refugio en Chile",
+      publisher: "Servicio Nacional de Migraciones de Chile",
+      url: "https://serviciomigraciones.cl/refugio/",
+      category: "protection",
+      purpose: {
+        ht: "Konprann ki moun pwoteksyon refij la vize, ki kote pou prezante epi ki delè ki aplikab.",
+        fr: "Comprendre à qui s’adresse l’asile, où déposer et quel délai s’applique.",
+        es: "Entender a quién protege el refugio, dónde solicitar y qué plazo aplica.",
+        pt: "Entender quem o refúgio protege, onde solicitar e qual prazo se aplica.",
+        en: "Understand who refugee protection covers, where to apply and which deadline applies."
+      }
+    },
+    {
+      title: "Bolsa Nacional de Empleo",
+      publisher: "Ministerio del Trabajo y Previsión Social de Chile",
+      url: "https://www.bne.cl/ofertas?mostrar=empleo",
+      category: "work",
+      purpose: {
+        ht: "Chèche òf travay sou sèvis piblik la epi sonje BNE pa mande depo oswa peman nan seleksyon.",
+        fr: "Chercher des offres sur le service public et retenir que la BNE ne demande ni dépôt ni paiement de sélection.",
+        es: "Buscar ofertas en el servicio público y recordar que BNE no pide depósitos ni pagos de selección.",
+        pt: "Buscar vagas no serviço público e lembrar que a BNE não pede depósitos nem pagamentos na seleção.",
+        en: "Search openings on the public service and remember BNE does not request deposits or selection payments."
       }
     }
   ]
@@ -473,6 +577,58 @@ const brazil: CountrySourceDirectory = {
         pt: "Consultar como solicitar um novo Cartão Nacional de Saúde ou atualizar seus dados.",
         en: "Check how to request a new National Health Card or update its records."
       }
+    },
+    {
+      title: "Portaria Interministerial nº 60/2025",
+      publisher: "Ministério da Justiça e Segurança Pública do Brasil",
+      url: "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/migracoes/portal-de-imigracao-laboral/normas-migratorias-1/portarias/portarias-interministeriais/portaria-interministerial-mjsp-mre-no-60-de-30-de-dezembro-de-2025.pdf/view",
+      category: "immigration",
+      purpose: {
+        ht: "Li kad imanitè aktyèl ki ranplase ansyen règ espesifik pou Ayiti nan fen 2025.",
+        fr: "Lire le cadre humanitaire actuel qui a remplacé l’ancienne règle spécifique à Haïti fin 2025.",
+        es: "Leer el marco humanitario actual que reemplazó la antigua norma específica para Haití a finales de 2025.",
+        pt: "Ler a regra humanitária atual que substituiu a antiga norma específica do Haiti no fim de 2025.",
+        en: "Read the current humanitarian framework that replaced the former Haiti-specific rule at the end of 2025."
+      }
+    },
+    {
+      title: "Visto para reunião familiar",
+      publisher: "Ministério da Justiça e Segurança Pública do Brasil",
+      url: "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/refugio/servicos/visto-para-reuniao-familiar",
+      category: "immigration",
+      purpose: {
+        ht: "Verifye pwosedi aktyèl pou fanmi yon brezilyen, yon rezidan oswa yon refijye rekonèt.",
+        fr: "Vérifier la procédure actuelle pour la famille d’un Brésilien, résident ou réfugié reconnu.",
+        es: "Verificar el proceso actual para familiares de brasileño, residente o refugiado reconocido.",
+        pt: "Verificar o processo atual para familiares de brasileiro, residente ou refugiado reconhecido.",
+        en: "Check the current process for relatives of a Brazilian citizen, resident or recognized refugee."
+      }
+    },
+    {
+      title: "Buscar Emprego no Sine",
+      publisher: "Ministério do Trabalho e Emprego do Brasil",
+      url: "https://www.gov.br/pt-br/servicos/buscar-emprego-no-sistema-nacional-de-emprego-sine",
+      category: "work",
+      purpose: {
+        ht: "Chèche travay gratis nan SINE, Emprega Brasil oswa Carteira de Trabalho Digital apre ou gen dwa travay.",
+        fr: "Chercher gratuitement via SINE, Emprega Brasil ou la carte de travail numérique après autorisation de travailler.",
+        es: "Buscar empleo gratis en SINE, Emprega Brasil o Carteira de Trabalho Digital cuando tengas derecho a trabajar.",
+        pt: "Buscar emprego gratuitamente no SINE, Emprega Brasil ou Carteira de Trabalho Digital quando puder trabalhar.",
+        en: "Search jobs for free through SINE, Emprega Brasil or the Digital Work Card once authorized to work."
+      }
+    },
+    {
+      title: "Solicitar Refúgio no Brasil",
+      publisher: "Ministério da Justiça e Segurança Pública do Brasil",
+      url: "https://www.gov.br/pt-br/servicos/solicitar-refugio",
+      category: "protection",
+      purpose: {
+        ht: "Konprann Sisconare, etap Polícia Federal la ak kondisyon pwoteksyon pou moun ki deja Brezil.",
+        fr: "Comprendre Sisconare, l’étape Police fédérale et les conditions de protection pour les personnes déjà au Brésil.",
+        es: "Entender Sisconare, el paso ante Policía Federal y los requisitos de protección para quien ya está en Brasil.",
+        pt: "Entender Sisconare, a etapa na Polícia Federal e os requisitos de proteção para quem já está no Brasil.",
+        en: "Understand Sisconare, the Federal Police step and protection requirements for people already in Brazil."
+      }
     }
   ]
 };
@@ -621,6 +777,58 @@ const mexico: CountrySourceDirectory = {
         es: "Acceder al sistema oficial de equivalencia o revalidación de estudios realizados en el extranjero.",
         pt: "Acessar o sistema oficial de equivalência ou revalidação de estudos realizados no exterior.",
         en: "Access the official system for equivalency or revalidation of studies completed abroad."
+      }
+    },
+    {
+      title: "Visa de residente temporal estudiante",
+      publisher: "Embajada de México en Haití",
+      url: "https://embamex.sre.gob.mx/haiti/index.php/es/asuntos-consulares/visas/espanol/estudiante",
+      category: "study",
+      purpose: {
+        ht: "Gade kondisyon 2026 pou admisyon, mwayen finans, entèvyou ak kat rezidan etidyan an.",
+        fr: "Voir les conditions 2026 d’admission, ressources, entretien et carte de résident étudiant.",
+        es: "Ver requisitos de 2026 para admisión, solvencia, entrevista y tarjeta de residente estudiante.",
+        pt: "Ver requisitos de 2026 para admissão, meios financeiros, entrevista e carteira de estudante residente.",
+        en: "View 2026 requirements for admission, funds, interview and the student residence card."
+      }
+    },
+    {
+      title: "Solicitud de refugio — COMAR",
+      publisher: "Comisión Mexicana de Ayuda a Refugiados",
+      url: "https://www.gob.mx/comar/que-hacemos",
+      category: "protection",
+      purpose: {
+        ht: "Konprann delè, biwo, entèvyou ak obligasyon pou yon demann pwoteksyon nan Meksik.",
+        fr: "Comprendre délai, bureaux, entretien et obligations d’une demande de protection au Mexique.",
+        es: "Entender plazo, oficinas, entrevista y obligaciones de una solicitud de protección en México.",
+        pt: "Entender prazo, escritórios, entrevista e obrigações de um pedido de proteção no México.",
+        en: "Understand the deadline, offices, interview and duties in a protection request in Mexico."
+      }
+    },
+    {
+      title: "Portal del Empleo",
+      publisher: "Servicio Nacional de Empleo de México",
+      url: "https://empleo.gob.mx/",
+      category: "work",
+      purpose: {
+        ht: "Chèche pòs ak sèvis piblik travay apre dokiman migratwa ou otorize aktivite peye.",
+        fr: "Chercher des offres et services publics d’emploi après autorisation migratoire de travailler.",
+        es: "Buscar vacantes y servicios públicos de empleo cuando tu documento migratorio autorice trabajar.",
+        pt: "Buscar vagas e serviços públicos de emprego quando o documento migratório autorizar trabalho.",
+        en: "Search jobs and public employment services once the migration document authorizes work."
+      }
+    },
+    {
+      title: "Canje de visa por tarjeta de residencia",
+      publisher: "Instituto Nacional de Migración de México",
+      url: "https://www.gob.mx/tramites/ficha/expedicion-de-documento-migratorio-por-canje/INM811",
+      category: "identity",
+      purpose: {
+        ht: "Fè chanjman viza rezidans lan pou kat INM nan 30 jou natirèl apre antre.",
+        fr: "Échanger le visa de résidence contre la carte INM dans les 30 jours calendaires après l’entrée.",
+        es: "Canjear la visa de residencia por tarjeta del INM dentro de 30 días naturales de entrar.",
+        pt: "Trocar o visto de residência pela carteira do INM em 30 dias corridos após a entrada.",
+        en: "Exchange the residence visa for an INM card within 30 calendar days of entry."
       }
     }
   ]

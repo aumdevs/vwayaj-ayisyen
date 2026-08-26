@@ -1,6 +1,6 @@
 # Inventario actual de pantallas
 
-Fecha: 2026-08-24.
+Fecha: 2026-08-25.
 
 ## Sitio público
 

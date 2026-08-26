@@ -29,7 +29,7 @@ describe("versioned legal content", () => {
 
   it("describes the current public-only service without account or payment collection", () => {
     const privacy = getLegalDocumentContent("privacy", "es");
-    expect(privacy?.version).toBe("privacy-2026-08-24-v2");
+    expect(privacy?.version).toBe("privacy-2026-08-25-v3");
     expect(privacy?.summary).toContain("sin cuentas, pagos, formularios ni carga de documentos");
   });
 });

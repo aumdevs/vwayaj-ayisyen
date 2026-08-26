@@ -1,6 +1,6 @@
 # Decisiones implementadas
 
-Fecha de corte: 2026-08-24.
+Fecha de corte: 2026-08-25.
 
 ## Producto público
 
@@ -10,18 +10,21 @@ Fecha de corte: 2026-08-24.
 - Kreyòl haitiano es el idioma predeterminado. También se publican francés,
   español, portugués e inglés.
 - El alcance editorial incluye Estados Unidos, Chile, Brasil y México.
-- Cada país presenta ocho enlaces de autoridades responsables y un recorrido de
-  cuatro pasos.
-- La revisión visible del directorio es del 24 de agosto de 2026.
+- Cada país presenta una guía práctica y doce enlaces de autoridades o servicios
+  públicos responsables.
+- La revisión visible de las guías es del 25 de agosto de 2026.
 
 ## Contenido
 
 - Se enlazan embajadas, consulados, inmigración, identidad, trabajo, estudios,
   salud y protección según el país.
-- No se copian requisitos, precios, plazos ni criterios que puedan cambiar sin
-  revisión especializada.
+- Se explican las vías vigentes, la preparación desde Haití y la vida después de
+  llegar con fecha de revisión y enlace a la autoridad responsable.
+- No se inventan requisitos, precios, plazos, rutas, testimonios ni garantías.
 - Cada salida externa identifica al organismo, explica para qué sirve y abre la
   fuente oficial en una pestaña nueva.
+- Los corredores irregulares se describen sólo a nivel preventivo, sin contactos,
+  transporte, cruces ni instrucciones para evadir controles.
 - El sitio recuerda verificar siempre la página de la autoridad antes de
   solicitar, pagar, entregar documentos o viajar.
 

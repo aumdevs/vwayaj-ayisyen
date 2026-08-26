@@ -5,6 +5,7 @@ import {
   OFFICIAL_SOURCE_COUNT,
   OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT
 } from "@/content/official-source-directory";
+import { COUNTRY_MIGRATION_GUIDES } from "@/content/migration-guides";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
 describe("public country catalog", () => {
@@ -20,13 +21,40 @@ describe("public country catalog", () => {
     expect(() => getCountry("unknown" as "usa")).toThrow("Unknown country code");
   });
 
-  it("publishes eight reviewed sources for every country", () => {
-    expect(OFFICIAL_SOURCE_COUNT).toBe(32);
-    expect(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT).toBe("2026-08-24");
+  it("publishes twelve reviewed sources for every country", () => {
+    expect(OFFICIAL_SOURCE_COUNT).toBe(48);
+    expect(OFFICIAL_SOURCE_DIRECTORY_REVIEWED_AT).toBe("2026-08-25");
     for (const country of countries) {
       const directory = COUNTRY_SOURCE_DIRECTORIES[country.code];
-      expect(directory.sources).toHaveLength(8);
+      expect(directory.sources).toHaveLength(12);
       expect(directory.steps.ht).toHaveLength(4);
+    }
+  });
+
+  it("publishes a complete practical migration guide for every country and locale", () => {
+    for (const country of countries) {
+      const guide = COUNTRY_MIGRATION_GUIDES[country.code];
+      expect(guide.reviewedAt).toBe("2026-08-25");
+      expect(guide.pathways.length).toBeGreaterThanOrEqual(5);
+      expect(guide.fromHaiti.steps).toHaveLength(5);
+      expect(guide.life.length).toBeGreaterThanOrEqual(4);
+      expect(guide.irregular.patterns.length).toBeGreaterThanOrEqual(3);
+      expect(guide.irregular.risks.length).toBeGreaterThanOrEqual(4);
+      expect(guide.updates.length).toBeGreaterThanOrEqual(2);
+
+      for (const locale of SUPPORTED_LOCALES) {
+        expect(guide.summary[locale].length).toBeGreaterThan(80);
+        expect(guide.verdict.title[locale].length).toBeGreaterThan(30);
+        expect(guide.irregular.body[locale].length).toBeGreaterThan(100);
+      }
+
+      for (const url of [
+        ...guide.pathways.map(({ link }) => link.url),
+        ...guide.life.map(({ link }) => link.url),
+        ...guide.updates.map(({ link }) => link.url)
+      ]) {
+        expect(url).toMatch(/^https:\/\//);
+      }
     }
   });
 

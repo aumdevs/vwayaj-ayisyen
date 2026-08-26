@@ -72,8 +72,8 @@ export const publicCopy = {
     },
     home: {
       kicker: "Enfòmasyon klè pou desizyon serye",
-      title: "Vwayaje ak sous ki merite konfyans.",
-      body: "Viza, anbasad, rezidans, dokiman, travay, etid ak sante pou Etazini, Chili, Brezil ak Meksik — òganize pou kominote ayisyèn nan.",
+      title: "Soti Ayiti ak yon plan ki klè.",
+      body: "Chwazi Etazini, Chili, Brezil oswa Meksik epi konprann sa ki posib an 2026: kijan pou antre legalman, ki papye pou prepare, kote pou travay oswa etidye, ak sa pou fè apre ou rive.",
       primary: "Chwazi yon peyi",
       secondary: "Gade tout sous yo",
       sources: "sous ofisyèl",
@@ -83,44 +83,44 @@ export const publicCopy = {
       destinationsKicker: "Kat destinasyon · Yon sèl estanda",
       destinationsTitle: "Kòmanse kote plan ou mennen w.",
       destinationsBody:
-        "Chak gid rasanble otorite ki responsab yo nan lòd ki pi itil pou prepare yon demach.",
+        "Chak peyi gen yon repons klè sou antre, fanmi, travay, etid, dokiman, pwoteksyon ak risk wout iregilye yo.",
       explore: "Louvri gid la",
       methodKicker: "Fè bon etap la an premye",
-      methodTitle: "Mwens bri. Plis direksyon.",
+      methodTitle: "Repons klè anvan ou depanse lajan.",
       methodBody:
-        "Vwayaj Ayisyen pa vann randevou epi li pa fè pwomès. Li ede w rive nan bon sous la pi vit.",
+        "Gid la esplike reyalite 2026 la nan lang senp, montre ki etap pou fè epi mennen w nan paj ofisyèl ki konfime chak pwen.",
       methodItems: [
         {
-          title: "Kòmanse nan konsila a",
-          body: "Verifye antre oswa viza nan reprezantan ofisyèl peyi a pou Ayiti."
+          title: "Verifye si li posib kounye a",
+          body: "Konnen si chemen an ouvè, limite oswa fini anvan ou peye pou yon dosye oswa tikè."
         },
         {
-          title: "Prepare etap apre antre",
-          body: "Jwenn rezidans, idantite ak sèvis piblik nan otorite ki responsab yo."
+          title: "Prepare depi Ayiti",
+          body: "Mete paspò, batistè, dosye penal, kontra, admisyon oswa prèv fanmi yo nan bon lòd la."
         },
         {
-          title: "Tcheke ankò anvan ou aji",
-          body: "Règ yo ka chanje. Chak gid montre dat dènye verifikasyon lyen yo."
+          title: "Konnen kijan pou viv apre",
+          body: "Jwenn kat idantite, travay, etid, sante ak pwoteksyon san konfonn yon vizit ak rezidans."
         }
       ],
-      finalTitle: "Yon bon desizyon kòmanse ak bon sous la.",
-      finalBody: "Chwazi peyi a, suiv chemen an epi louvri sit gouvènman ki responsab la."
+      finalTitle: "Pa kite rimè chwazi wout ou.",
+      finalBody: "Chwazi peyi a, li reyalite 2026 la epi prepare chak etap anvan ou kite Ayiti."
     },
     countries: {
-      kicker: "Anyè peyi",
+      kicker: "Gid pa peyi",
       title: "Ki kote ou vle kòmanse?",
-      body: "Eksplore kat gid piblik ki fèt pou mennen w dirèkteman nan enfòmasyon ofisyèl ki pi itil yo.",
+      body: "Eksplore kat gid konplè pou antre, viv, travay oswa etidye — ak yon repons onèt sou sa ki posib an 2026.",
       cardTags: ["Viza", "Rezidans", "Lavi pratik"]
     },
     country: {
-      kicker: "Gid ofisyèl",
+      kicker: "Gid pratik 2026",
       introLabel: "Sa pou w konnen an premye",
       allCountries: "Tout peyi yo",
       sourcesLabel: "sous ofisyèl",
       verifiedLabel: "Lyen verifye"
     },
     footer: {
-      promise: "Sous ofisyèl, òganize ak respè pou kominote ayisyèn nan.",
+      promise: "Gid pratik, lang klè ak sous ofisyèl pou kominote ayisyèn nan.",
       destinations: "Destinasyon",
       resources: "Resous",
       legal: "Legal",
@@ -144,8 +144,8 @@ export const publicCopy = {
     },
     home: {
       kicker: "Des informations claires pour des décisions sérieuses",
-      title: "Voyagez avec des sources dignes de confiance.",
-      body: "Visas, ambassades, résidence, documents, travail, études et santé pour les États-Unis, le Chili, le Brésil et le Mexique — organisés pour la communauté haïtienne.",
+      title: "Quittez Haïti avec un projet clair.",
+      body: "Choisissez les États-Unis, le Chili, le Brésil ou le Mexique et comprenez ce qui est possible en 2026: entrée légale, documents, travail, études et premières démarches après l’arrivée.",
       primary: "Choisir un pays",
       secondary: "Voir toutes les sources",
       sources: "sources officielles",
@@ -155,45 +155,46 @@ export const publicCopy = {
       destinationsKicker: "Quatre destinations · Un seul standard",
       destinationsTitle: "Commencez là où votre projet vous mène.",
       destinationsBody:
-        "Chaque guide rassemble les autorités responsables dans l’ordre le plus utile pour préparer une démarche.",
+        "Chaque pays donne une réponse claire sur entrée, famille, travail, études, documents, protection et risques des routes irrégulières.",
       explore: "Ouvrir le guide",
       methodKicker: "Faire le bon premier pas",
-      methodTitle: "Moins de bruit. Plus de direction.",
+      methodTitle: "Des réponses claires avant de dépenser.",
       methodBody:
-        "Vwayaj Ayisyen ne vend pas de rendez-vous et ne fait pas de promesses. Il vous aide à atteindre plus vite la bonne source.",
+        "Le guide explique la réalité de 2026 en langage simple, indique les étapes et relie chaque point à la page officielle qui le confirme.",
       methodItems: [
         {
-          title: "Commencer par le consulat",
-          body: "Vérifiez l’entrée ou le visa auprès de la représentation officielle du pays pour Haïti."
+          title: "Vérifier si c’est possible maintenant",
+          body: "Sachez si la voie est ouverte, limitée ou terminée avant de payer un dossier ou un billet."
         },
         {
-          title: "Préparer l’après-arrivée",
-          body: "Trouvez résidence, identité et services publics auprès des autorités responsables."
+          title: "Préparer depuis Haïti",
+          body: "Mettez passeport, actes civils, casier, contrat, admission ou preuves familiales dans le bon ordre."
         },
         {
-          title: "Vérifier avant d’agir",
-          body: "Les règles peuvent changer. Chaque guide indique la date de dernière vérification des liens."
+          title: "Savoir vivre après l’arrivée",
+          body: "Trouvez identité, travail, études, santé et protection sans confondre visite et résidence."
         }
       ],
-      finalTitle: "Une bonne décision commence par la bonne source.",
+      finalTitle: "Ne laissez pas les rumeurs choisir votre route.",
       finalBody:
-        "Choisissez le pays, suivez le parcours et ouvrez le site de l’autorité responsable."
+        "Choisissez le pays, lisez la réalité de 2026 et préparez chaque étape avant de quitter Haïti."
     },
     countries: {
-      kicker: "Répertoire des pays",
+      kicker: "Guides par pays",
       title: "Où voulez-vous commencer?",
-      body: "Explorez quatre guides publics qui vous mènent directement aux informations officielles les plus utiles.",
+      body: "Explorez quatre guides complets pour entrer, vivre, travailler ou étudier, avec une réponse honnête sur 2026.",
       cardTags: ["Visa", "Résidence", "Vie pratique"]
     },
     country: {
-      kicker: "Guide officiel",
+      kicker: "Guide pratique 2026",
       introLabel: "À savoir en premier",
       allCountries: "Tous les pays",
       sourcesLabel: "sources officielles",
       verifiedLabel: "Liens vérifiés"
     },
     footer: {
-      promise: "Des sources officielles, organisées avec respect pour la communauté haïtienne.",
+      promise:
+        "Des guides pratiques, un langage clair et des sources officielles pour la communauté haïtienne.",
       destinations: "Destinations",
       resources: "Ressources",
       legal: "Juridique",
@@ -217,8 +218,8 @@ export const publicCopy = {
     },
     home: {
       kicker: "Información clara para decisiones serias",
-      title: "Viaja con fuentes que merecen confianza.",
-      body: "Visas, embajadas, residencia, documentos, trabajo, estudios y salud para Estados Unidos, Chile, Brasil y México — organizados para la comunidad haitiana.",
+      title: "Sal de Haití con un plan claro.",
+      body: "Elige Estados Unidos, Chile, Brasil o México y entiende qué es posible en 2026: entrada legal, documentos, trabajo, estudios y primeros pasos después de llegar.",
       primary: "Elegir un país",
       secondary: "Ver todas las fuentes",
       sources: "fuentes oficiales",
@@ -228,44 +229,45 @@ export const publicCopy = {
       destinationsKicker: "Cuatro destinos · Un solo estándar",
       destinationsTitle: "Empieza donde te lleva tu plan.",
       destinationsBody:
-        "Cada guía reúne a las autoridades responsables en el orden más útil para preparar un trámite.",
+        "Cada país responde con claridad sobre entrada, familia, trabajo, estudios, documentos, protección y riesgos de las rutas irregulares.",
       explore: "Abrir guía",
       methodKicker: "Dar primero el paso correcto",
-      methodTitle: "Menos ruido. Más dirección.",
+      methodTitle: "Respuestas claras antes de gastar dinero.",
       methodBody:
-        "Vwayaj Ayisyen no vende citas ni hace promesas. Te ayuda a llegar antes a la fuente correcta.",
+        "La guía explica la realidad de 2026 en lenguaje sencillo, muestra los pasos y enlaza cada punto con la página oficial que lo confirma.",
       methodItems: [
         {
-          title: "Empieza por el consulado",
-          body: "Verifica entrada o visa con la representación oficial del país para Haití."
+          title: "Comprueba si es posible ahora",
+          body: "Sabe si la vía está abierta, limitada o terminada antes de pagar un trámite o pasaje."
         },
         {
-          title: "Prepara lo que viene después",
-          body: "Encuentra residencia, identidad y servicios públicos en las autoridades responsables."
+          title: "Prepárate desde Haití",
+          body: "Ordena pasaporte, actas, antecedentes, contrato, admisión o pruebas familiares."
         },
         {
-          title: "Comprueba antes de actuar",
-          body: "Las reglas pueden cambiar. Cada guía muestra la fecha de la última revisión de enlaces."
+          title: "Entiende la vida después de llegar",
+          body: "Encuentra identidad, trabajo, estudios, salud y protección sin confundir visita con residencia."
         }
       ],
-      finalTitle: "Una buena decisión empieza con la fuente correcta.",
-      finalBody: "Elige el país, sigue la ruta y abre el sitio de la autoridad responsable."
+      finalTitle: "No dejes que los rumores elijan tu ruta.",
+      finalBody:
+        "Elige el país, lee la realidad de 2026 y prepara cada paso antes de salir de Haití."
     },
     countries: {
-      kicker: "Directorio de países",
+      kicker: "Guías por país",
       title: "¿Dónde quieres empezar?",
-      body: "Explora cuatro guías públicas que te llevan directamente a la información oficial más útil.",
+      body: "Explora cuatro guías completas para entrar, vivir, trabajar o estudiar, con una respuesta honesta sobre 2026.",
       cardTags: ["Visa", "Residencia", "Vida práctica"]
     },
     country: {
-      kicker: "Guía oficial",
+      kicker: "Guía práctica 2026",
       introLabel: "Lo primero que debes saber",
       allCountries: "Todos los países",
       sourcesLabel: "fuentes oficiales",
       verifiedLabel: "Enlaces verificados"
     },
     footer: {
-      promise: "Fuentes oficiales, organizadas con respeto para la comunidad haitiana.",
+      promise: "Guías prácticas, lenguaje claro y fuentes oficiales para la comunidad haitiana.",
       destinations: "Destinos",
       resources: "Recursos",
       legal: "Legal",
@@ -289,8 +291,8 @@ export const publicCopy = {
     },
     home: {
       kicker: "Informação clara para decisões sérias",
-      title: "Viaje com fontes que merecem confiança.",
-      body: "Vistos, embaixadas, residência, documentos, trabalho, estudos e saúde para Estados Unidos, Chile, Brasil e México — organizados para a comunidade haitiana.",
+      title: "Saia do Haiti com um plano claro.",
+      body: "Escolha Estados Unidos, Chile, Brasil ou México e entenda o que é possível em 2026: entrada legal, documentos, trabalho, estudo e primeiros passos após a chegada.",
       primary: "Escolher um país",
       secondary: "Ver todas as fontes",
       sources: "fontes oficiais",
@@ -300,44 +302,45 @@ export const publicCopy = {
       destinationsKicker: "Quatro destinos · Um só padrão",
       destinationsTitle: "Comece onde o seu plano leva você.",
       destinationsBody:
-        "Cada guia reúne as autoridades responsáveis na ordem mais útil para preparar um processo.",
+        "Cada país responde claramente sobre entrada, família, trabalho, estudo, documentos, proteção e riscos das rotas irregulares.",
       explore: "Abrir guia",
       methodKicker: "Dar primeiro o passo certo",
-      methodTitle: "Menos ruído. Mais direção.",
+      methodTitle: "Respostas claras antes de gastar dinheiro.",
       methodBody:
-        "Vwayaj Ayisyen não vende agendamentos nem faz promessas. Ajuda você a chegar mais rápido à fonte correta.",
+        "O guia explica a realidade de 2026 em linguagem simples, mostra os passos e liga cada ponto à página oficial que o confirma.",
       methodItems: [
         {
-          title: "Comece pelo consulado",
-          body: "Verifique entrada ou visto com a representação oficial do país para o Haiti."
+          title: "Confira se é possível agora",
+          body: "Saiba se a via está aberta, limitada ou encerrada antes de pagar processo ou passagem."
         },
         {
-          title: "Prepare o que vem depois",
-          body: "Encontre residência, identidade e serviços públicos nas autoridades responsáveis."
+          title: "Prepare-se no Haiti",
+          body: "Organize passaporte, certidões, antecedentes, contrato, admissão ou provas familiares."
         },
         {
-          title: "Confira antes de agir",
-          body: "As regras podem mudar. Cada guia mostra a data da última verificação dos links."
+          title: "Entenda a vida após a chegada",
+          body: "Encontre identidade, trabalho, estudo, saúde e proteção sem confundir visita com residência."
         }
       ],
-      finalTitle: "Uma boa decisão começa com a fonte certa.",
-      finalBody: "Escolha o país, siga o caminho e abra o site da autoridade responsável."
+      finalTitle: "Não deixe boatos escolherem sua rota.",
+      finalBody:
+        "Escolha o país, leia a realidade de 2026 e prepare cada passo antes de sair do Haiti."
     },
     countries: {
-      kicker: "Diretório de países",
+      kicker: "Guias por país",
       title: "Por onde você quer começar?",
-      body: "Explore quatro guias públicos que levam diretamente às informações oficiais mais úteis.",
+      body: "Explore quatro guias completos para entrar, viver, trabalhar ou estudar, com uma resposta honesta sobre 2026.",
       cardTags: ["Visto", "Residência", "Vida prática"]
     },
     country: {
-      kicker: "Guia oficial",
+      kicker: "Guia prático 2026",
       introLabel: "O que saber primeiro",
       allCountries: "Todos os países",
       sourcesLabel: "fontes oficiais",
       verifiedLabel: "Links verificados"
     },
     footer: {
-      promise: "Fontes oficiais, organizadas com respeito para a comunidade haitiana.",
+      promise: "Guias práticos, linguagem clara e fontes oficiais para a comunidade haitiana.",
       destinations: "Destinos",
       resources: "Recursos",
       legal: "Legal",
@@ -361,8 +364,8 @@ export const publicCopy = {
     },
     home: {
       kicker: "Clear information for serious decisions",
-      title: "Travel with sources worth trusting.",
-      body: "Visas, embassies, residence, documents, work, study and health for the United States, Chile, Brazil and Mexico — organized for the Haitian community.",
+      title: "Leave Haiti with a clear plan.",
+      body: "Choose the United States, Chile, Brazil or Mexico and understand what is possible in 2026: lawful entry, documents, work, study and first steps after arrival.",
       primary: "Choose a country",
       secondary: "See every source",
       sources: "official sources",
@@ -372,44 +375,45 @@ export const publicCopy = {
       destinationsKicker: "Four destinations · One standard",
       destinationsTitle: "Start where your plan is taking you.",
       destinationsBody:
-        "Each guide brings the responsible authorities together in the most useful order for preparing a process.",
+        "Each country clearly answers questions about entry, family, work, study, documents, protection and irregular-route risks.",
       explore: "Open guide",
       methodKicker: "Take the right first step",
-      methodTitle: "Less noise. More direction.",
+      methodTitle: "Clear answers before spending money.",
       methodBody:
-        "Vwayaj Ayisyen does not sell appointments or make promises. It helps you reach the right source sooner.",
+        "The guide explains the 2026 reality in plain language, shows the steps and links every point to the official page that confirms it.",
       methodItems: [
         {
-          title: "Start with the consulate",
-          body: "Check entry or visa information with the country’s official representation for Haiti."
+          title: "Check whether it is possible now",
+          body: "Know whether the route is open, limited or ended before paying for a process or ticket."
         },
         {
-          title: "Prepare for what comes next",
-          body: "Find residence, identity and public services through the responsible authorities."
+          title: "Prepare from Haiti",
+          body: "Put the passport, civil records, criminal record, contract, admission or family proof in order."
         },
         {
-          title: "Check before you act",
-          body: "Rules can change. Each guide shows the date its links were last checked."
+          title: "Understand life after arrival",
+          body: "Find identity, work, study, health and protection without confusing a visit with residence."
         }
       ],
-      finalTitle: "A good decision starts with the right source.",
-      finalBody: "Choose the country, follow the path and open the responsible authority’s website."
+      finalTitle: "Do not let rumors choose your route.",
+      finalBody:
+        "Choose the country, read the 2026 reality and prepare every step before leaving Haiti."
     },
     countries: {
-      kicker: "Country directory",
+      kicker: "Country guides",
       title: "Where do you want to start?",
-      body: "Explore four public guides that take you directly to the most useful official information.",
+      body: "Explore four complete guides for entry, living, work or study, with an honest answer about 2026.",
       cardTags: ["Visa", "Residence", "Daily life"]
     },
     country: {
-      kicker: "Official guide",
+      kicker: "Practical 2026 guide",
       introLabel: "What to know first",
       allCountries: "All countries",
       sourcesLabel: "official sources",
       verifiedLabel: "Links verified"
     },
     footer: {
-      promise: "Official sources, organized with respect for the Haitian community.",
+      promise: "Practical guides, plain language and official sources for the Haitian community.",
       destinations: "Destinations",
       resources: "Resources",
       legal: "Legal",
