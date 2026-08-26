@@ -1,6 +1,6 @@
 # Rutas verificadas
 
-Fecha: 2026-08-24.
+Fecha: 2026-08-25.
 
 ## Respuesta esperada
 
@@ -26,6 +26,6 @@ Fecha: 2026-08-24.
 | `/ht/services` | 404 |
 | `/api/health` | 404 |
 
-La matriz E2E comprueba las rutas en escritorio y teléfono, los 32 enlaces
+La matriz E2E comprueba las rutas en escritorio y teléfono, los 48 enlaces
 mostrados, accesibilidad, ausencia de desbordamiento, navegación pública,
 manifest e instalación PWA.

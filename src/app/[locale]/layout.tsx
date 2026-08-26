@@ -9,6 +9,7 @@ import { isIndexingAllowed } from "@/lib/config/runtime";
 import { BRAND } from "@/config/brand";
 import { getCountry, isCountryCode } from "@/lib/content/catalog";
 import { publicCopy } from "@/content/public-copy";
+import { COUNTRY_MIGRATION_GUIDES } from "@/content/migration-guides";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
 type LocaleLayoutProps = {
@@ -53,10 +54,9 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       ? legalTitles[legalDocument as keyof typeof legalTitles][locale]
       : null;
   const countryPathSegment = path.match(/^countries\/([^/]+)$/)?.[1];
-  const countryTitle =
-    countryPathSegment && isCountryCode(countryPathSegment)
-      ? getCountry(countryPathSegment).name[locale]
-      : null;
+  const countryRecord =
+    countryPathSegment && isCountryCode(countryPathSegment) ? getCountry(countryPathSegment) : null;
+  const countryTitle = countryRecord?.name[locale] ?? null;
   const title =
     path === ""
       ? BRAND.name
@@ -72,11 +72,16 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
                 ? "FAQ"
                 : (legalTitle ?? BRAND.name);
   const description =
-    path === "about"
-      ? copy.footer.promise
-      : path === "contact"
+    countryPathSegment && isCountryCode(countryPathSegment)
+      ? COUNTRY_MIGRATION_GUIDES[countryPathSegment].summary[locale]
+      : path === "about"
         ? copy.footer.promise
-        : BRAND.descriptions[locale];
+        : path === "contact"
+          ? copy.footer.promise
+          : BRAND.descriptions[locale];
+  const socialImages = countryRecord
+    ? [{ url: countryRecord.image, alt: countryRecord.imageAlt[locale] }]
+    : [{ url: "/opengraph-image", width: 1200, height: 630, alt: BRAND.name }];
   return {
     title: title === BRAND.name ? { absolute: BRAND.name } : title,
     description,
@@ -99,13 +104,13 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       description,
       url: localizedPath(canonicalLocale, path),
       locale: { ht: "ht_HT", fr: "fr_FR", es: "es_ES", pt: "pt_BR", en: "en_US" }[locale],
-      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: BRAND.name }]
+      images: socialImages
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/opengraph-image"]
+      images: socialImages
     }
   };
 }

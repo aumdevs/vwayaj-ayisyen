@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "/",
     name: "Vwayaj Ayisyen",
     short_name: "Vwayaj",
-    description: "Sous ofisyèl sou viza, konsila ak lavi pratik pou kominote ayisyèn nan.",
+    description: "Gid 2026 pou Ayisyen prepare pou viv, travay oswa etidye aletranje.",
     start_url: "/ht?source=pwa",
     scope: "/",
     display: "standalone",
@@ -78,28 +78,28 @@ export default function manifest(): MetadataRoute.Manifest {
       {
         name: "Gid Etazini",
         short_name: "Etazini",
-        description: "Louvri sous ofisyèl pou Etazini.",
+        description: "Louvri gid pratik Etazini an.",
         url: "/ht/countries/usa?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
         name: "Gid Chili",
         short_name: "Chili",
-        description: "Louvri sous ofisyèl pou Chili.",
+        description: "Louvri gid pratik Chili a.",
         url: "/ht/countries/chile?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
         name: "Gid Brezil",
         short_name: "Brezil",
-        description: "Louvri sous ofisyèl pou Brezil.",
+        description: "Louvri gid pratik Brezil la.",
         url: "/ht/countries/brazil?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
         name: "Gid Meksik",
         short_name: "Meksik",
-        description: "Louvri sous ofisyèl pou Meksik.",
+        description: "Louvri gid pratik Meksik la.",
         url: "/ht/countries/mexico?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       }

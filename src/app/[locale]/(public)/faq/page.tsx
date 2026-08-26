@@ -6,11 +6,11 @@ import type { Locale } from "@/types/domain";
 const faqCopy = {
   ht: {
     title: "Kesyon ou ka genyen",
-    body: "Repons kout sou sous yo, limit yo ak fason pou sèvi ak Vwayaj Ayisyen.",
+    body: "Repons kout pou konprann gid yo epi pran desizyon ak plis prekosyon.",
     items: [
       [
         "Kisa Vwayaj Ayisyen ye?",
-        "Se yon anyè piblik ki òganize lyen ofisyèl pou Etazini, Chili, Brezil ak Meksik pou kominote ayisyèn nan."
+        "Se yon gid piblik ki esplike kijan yon Ayisyen ka prepare pou viv, travay oswa etidye Etazini, Chili, Brezil oswa Meksik selon règ 2026 yo."
       ],
       [
         "Èske sit la ranplase yon anbasad oswa yon konseye legal?",
@@ -20,7 +20,10 @@ const faqCopy = {
         "Èske enfòmasyon yo toujou aktyèl?",
         "Nou montre dat dènye verifikasyon lyen yo. Règ ak sèvis ka chanje, se poutèt sa ou dwe tcheke paj ofisyèl la anvan ou aji."
       ],
-      ["Èske mwen bezwen yon kont?", "Non. Tout gid yo piblik epi yo pa mande koneksyon."],
+      [
+        "Poukisa nou pa bay detay pou travèse ilegalman?",
+        "Nou esplike koridò yo konnen ak danje yo pou w konprann reyalite a, men nou pa bay kontak, transpò, pwen travèse oswa fason pou evite kontwòl. Detay sa yo ka mete lavi w an danje."
+      ],
       [
         "Èske Vwayaj Ayisyen vann randevou oswa viza?",
         "Non. Nou pa vann randevou, viza oswa garanti. Sèvi sèlman ak chanèl otorite a endike."
@@ -33,11 +36,11 @@ const faqCopy = {
   },
   fr: {
     title: "Questions que vous pouvez vous poser",
-    body: "Des réponses brèves sur les sources, leurs limites et l’utilisation de Vwayaj Ayisyen.",
+    body: "Des réponses brèves pour comprendre les guides et décider avec davantage de prudence.",
     items: [
       [
         "Qu’est-ce que Vwayaj Ayisyen?",
-        "Un répertoire public qui organise des liens officiels pour les États-Unis, le Chili, le Brésil et le Mexique à destination de la communauté haïtienne."
+        "Un guide public qui explique comment une personne haïtienne peut se préparer à vivre, travailler ou étudier aux États-Unis, au Chili, au Brésil ou au Mexique selon les règles de 2026."
       ],
       [
         "Le site remplace-t-il une ambassade ou un conseil juridique?",
@@ -48,8 +51,8 @@ const faqCopy = {
         "Nous indiquons la date de dernière vérification des liens. Les règles peuvent changer; vérifiez la page officielle avant d’agir."
       ],
       [
-        "Ai-je besoin d’un compte?",
-        "Non. Tous les guides sont publics et ne demandent aucune connexion."
+        "Pourquoi ne donnez-vous pas d’instructions pour les passages irréguliers?",
+        "Nous expliquons les corridors connus et leurs dangers, mais ne donnons ni contacts, ni transports, ni points de passage, ni méthodes pour éviter les contrôles. Ces détails peuvent mettre des vies en danger."
       ],
       [
         "Vwayaj Ayisyen vend-il des rendez-vous ou des visas?",
@@ -63,11 +66,11 @@ const faqCopy = {
   },
   es: {
     title: "Preguntas que puedes tener",
-    body: "Respuestas breves sobre las fuentes, sus límites y cómo usar Vwayaj Ayisyen.",
+    body: "Respuestas breves para entender las guías y decidir con mayor cuidado.",
     items: [
       [
         "¿Qué es Vwayaj Ayisyen?",
-        "Un directorio público que organiza enlaces oficiales para Estados Unidos, Chile, Brasil y México dirigido a la comunidad haitiana."
+        "Una guía pública que explica cómo una persona haitiana puede prepararse para vivir, trabajar o estudiar en Estados Unidos, Chile, Brasil o México según las reglas de 2026."
       ],
       [
         "¿El sitio sustituye a una embajada o a un asesor legal?",
@@ -77,7 +80,10 @@ const faqCopy = {
         "¿La información está siempre actualizada?",
         "Mostramos la fecha de la última verificación de los enlaces. Las reglas pueden cambiar; revisa la página oficial antes de actuar."
       ],
-      ["¿Necesito una cuenta?", "No. Todas las guías son públicas y no requieren iniciar sesión."],
+      [
+        "¿Por qué no dan instrucciones para cruces irregulares?",
+        "Explicamos los corredores conocidos y sus peligros, pero no damos contactos, transportes, puntos de cruce ni formas de evitar controles. Esos detalles pueden poner vidas en riesgo."
+      ],
       [
         "¿Vwayaj Ayisyen vende citas o visas?",
         "No. No vendemos citas, visas ni garantías. Utiliza únicamente el canal indicado por la autoridad."
@@ -90,11 +96,11 @@ const faqCopy = {
   },
   pt: {
     title: "Perguntas que você pode ter",
-    body: "Respostas breves sobre as fontes, seus limites e como usar Vwayaj Ayisyen.",
+    body: "Respostas breves para entender os guias e decidir com mais cuidado.",
     items: [
       [
         "O que é Vwayaj Ayisyen?",
-        "Um diretório público que organiza links oficiais para Estados Unidos, Chile, Brasil e México voltado à comunidade haitiana."
+        "Um guia público que explica como uma pessoa haitiana pode se preparar para viver, trabalhar ou estudar nos Estados Unidos, Chile, Brasil ou México conforme as regras de 2026."
       ],
       [
         "O site substitui uma embaixada ou orientação jurídica?",
@@ -104,7 +110,10 @@ const faqCopy = {
         "As informações estão sempre atualizadas?",
         "Mostramos a data da última verificação dos links. As regras podem mudar; confira a página oficial antes de agir."
       ],
-      ["Preciso de uma conta?", "Não. Todos os guias são públicos e não exigem login."],
+      [
+        "Por que vocês não dão instruções para travessias irregulares?",
+        "Explicamos os corredores conhecidos e seus perigos, mas não damos contatos, transportes, pontos de travessia nem formas de evitar controles. Esses detalhes podem colocar vidas em risco."
+      ],
       [
         "Vwayaj Ayisyen vende agendamentos ou vistos?",
         "Não. Não vendemos agendamentos, vistos nem garantias. Use somente o canal indicado pela autoridade."
@@ -117,11 +126,11 @@ const faqCopy = {
   },
   en: {
     title: "Questions you may have",
-    body: "Short answers about the sources, their limits and how to use Vwayaj Ayisyen.",
+    body: "Short answers to understand the guides and make decisions more carefully.",
     items: [
       [
         "What is Vwayaj Ayisyen?",
-        "A public directory that organizes official links for the United States, Chile, Brazil and Mexico for the Haitian community."
+        "A public guide explaining how a Haitian person can prepare to live, work or study in the United States, Chile, Brazil or Mexico under 2026 rules."
       ],
       [
         "Does the site replace an embassy or legal adviser?",
@@ -131,7 +140,10 @@ const faqCopy = {
         "Is the information always current?",
         "We show when links were last checked. Rules can change, so check the official page before acting."
       ],
-      ["Do I need an account?", "No. Every guide is public and does not require sign-in."],
+      [
+        "Why do you not give instructions for irregular crossings?",
+        "We explain known corridors and their dangers, but do not provide contacts, transport, crossing points or ways to avoid controls. Those details can put lives at risk."
+      ],
       [
         "Does Vwayaj Ayisyen sell appointments or visas?",
         "No. We do not sell appointments, visas or guarantees. Use only the channel identified by the authority."

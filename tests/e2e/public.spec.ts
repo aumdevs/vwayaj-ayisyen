@@ -4,8 +4,8 @@ import { expect, test } from "@playwright/test";
 test("the public home presents all four reviewed destinations", async ({ page }) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/ht$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Vwayaje ak sous");
-  await expect(page.locator(".premium-hero-stats")).toContainText("32");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Soti Ayiti");
+  await expect(page.locator(".premium-hero-stats")).toContainText("48");
   await expect(page.locator(".country-card")).toHaveCount(4);
   await expect(page.locator(".country-card-title")).toHaveText([
     "Etazini",
@@ -15,13 +15,20 @@ test("the public home presents all four reviewed destinations", async ({ page })
   ]);
 });
 
-test("each country guide exposes eight official sources", async ({ page }) => {
+test("each country guide exposes practical guidance and twelve official sources", async ({
+  page
+}) => {
   for (const country of ["usa", "chile", "brazil", "mexico"]) {
     await page.goto(`/ht/countries/${country}`);
-    await expect(page.locator(".official-source-grid-complete article")).toHaveCount(8);
+    await expect(page.locator(".guide-verdict")).toBeVisible();
+    await expect(page.locator(".guide-pathway-grid article")).toHaveCount(5);
+    await expect(page.locator(".guide-preparation-steps li")).toHaveCount(5);
+    await expect(page.locator(".guide-irregular-panel")).toBeVisible();
+    await expect(page.locator(".guide-update-grid article")).toHaveCount(country === "usa" ? 3 : 2);
+    await expect(page.locator(".official-source-grid-complete article")).toHaveCount(12);
     await expect(page.locator(".source-path-panel li")).toHaveCount(4);
     const links = page.locator(".official-source-grid-complete article a");
-    await expect(links).toHaveCount(8);
+    await expect(links).toHaveCount(12);
     for (const href of await links.evaluateAll((items) =>
       items.map((item) => item.getAttribute("href"))
     )) {

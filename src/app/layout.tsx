@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: BRAND.name,
     template: `%s · ${BRAND.name}`
   },
-  description: "Sous ofisyèl sou viza, konsila ak lavi pratik pou kominote ayisyèn nan.",
+  description: "Gid 2026 pou Ayisyen prepare pou viv, travay oswa etidye aletranje.",
   applicationName: BRAND.name,
   category: "education",
   icons: {
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ht_HT",
     title: BRAND.name,
-    description: "Enfòmasyon estriktire, onèt ak aksesib pou kominote ayisyèn nan.",
+    description: "Soti Ayiti ak yon plan klè pou viv, travay oswa etidye aletranje an 2026.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: BRAND.name }]
   },
   twitter: {
     card: "summary_large_image",
     title: BRAND.name,
-    description: "Sous ofisyèl ak limit vizib pou kominote ayisyèn nan.",
+    description: "Gid pratik 2026 pou Ayisyen k ap prepare yon pwojè aletranje.",
     images: ["/opengraph-image"]
   }
 };

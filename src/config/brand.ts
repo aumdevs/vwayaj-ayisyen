@@ -23,10 +23,10 @@ export const BRAND = {
     } satisfies Record<CountryCode, string>
   },
   descriptions: {
-    ht: "Sous ofisyèl, dat ak limit vizib pou kominote ayisyèn nan.",
-    fr: "Sources officielles, dates et limites visibles pour la communauté haïtienne.",
-    es: "Fuentes oficiales, fechas y límites visibles para la comunidad haitiana.",
-    pt: "Fontes oficiais, datas e limites visíveis para a comunidade haitiana.",
-    en: "Official sources, dates and visible limits for the Haitian community."
+    ht: "Gid 2026 pou Ayisyen prepare yon pwojè lavi, travay oswa etid aletranje.",
+    fr: "Guide 2026 pour préparer un projet de vie, de travail ou d’études à l’étranger depuis Haïti.",
+    es: "Guía 2026 para preparar desde Haití un proyecto de vida, trabajo o estudios en el extranjero.",
+    pt: "Guia 2026 para preparar no Haiti um projeto de vida, trabalho ou estudos no exterior.",
+    en: "A 2026 guide for preparing from Haiti to live, work or study abroad."
   } satisfies Record<Locale, string>
 } as const;

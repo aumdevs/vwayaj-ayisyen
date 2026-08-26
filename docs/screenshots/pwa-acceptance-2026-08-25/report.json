@@ -1,0 +1,321 @@
+{
+  "captures": 25,
+  "failureCount": 0,
+  "failures": [],
+  "findings": [
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "mega-menu-countries",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "countries",
+      "path": "/ht/countries",
+      "status": 200,
+      "title": "Peyi yo · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/usa",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "country",
+      "path": "/ht/countries/usa",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/chile",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "chile",
+      "path": "/ht/countries/chile",
+      "status": 200,
+      "title": "Chili · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/brazil",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "brazil",
+      "path": "/ht/countries/brazil",
+      "status": 200,
+      "title": "Brezil · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/mexico",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "mexico",
+      "path": "/ht/countries/mexico",
+      "status": 200,
+      "title": "Meksik · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/contact",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "contact",
+      "path": "/ht/contact",
+      "status": 200,
+      "title": "Kontak · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/es/legal/privacy",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "legal",
+      "path": "/es/legal/privacy",
+      "status": 200,
+      "title": "Privacidad · Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "desktop",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "footer",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1440x900"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-app",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "more-menu",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "countries",
+      "path": "/ht/countries",
+      "status": 200,
+      "title": "Peyi yo · Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/usa",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "country",
+      "path": "/ht/countries/usa",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "install-android",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "install-ios-instructions",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/offline",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 0,
+      "name": "offline",
+      "path": "/offline",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "mobile",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "update",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "tablet",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-portrait",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "768x1024"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "tablet",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-landscape",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1024x768"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/usa",
+      "group": "tablet",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "country-master-detail",
+      "path": "/ht/countries/usa",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "viewport": "768x1024"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "tablet",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "install",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "768x1024"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-mobile.png",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht/countries/usa",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "country-mobile.png",
+      "path": "/ht/countries/usa",
+      "status": 200,
+      "title": "Etazini · Vwayaj Ayisyen",
+      "viewport": "390x844"
+    },
+    {
+      "browserErrors": [],
+      "finalPath": "/ht",
+      "group": "manifest",
+      "horizontalOverflow": false,
+      "ignoredDevelopmentCspMessages": 17,
+      "name": "home-tablet.png",
+      "path": "/ht",
+      "status": 200,
+      "title": "Vwayaj Ayisyen",
+      "viewport": "1024x768"
+    }
+  ],
+  "manifestScreenshots": [
+    {
+      "file": "home-mobile.png",
+      "viewport": "390x844"
+    },
+    {
+      "file": "country-mobile.png",
+      "viewport": "390x844"
+    },
+    {
+      "file": "home-tablet.png",
+      "viewport": "1024x768"
+    }
+  ]
+}

@@ -10,34 +10,34 @@ import type { Locale } from "@/types/domain";
 
 const aboutCopy = {
   ht: {
-    title: "Yon chemen pi klè pou jwenn bon enfòmasyon an.",
-    body: "Vwayaj Ayisyen fèt pou kominote ayisyèn nan jwenn sous ofisyèl sou vwayaj ak lavi nan yon lòt peyi san pèdi tan nan paj ki pa klè.",
+    title: "Yon gid klè pou pran yon desizyon ki pi byen prepare.",
+    body: "Vwayaj Ayisyen esplike sa yon Ayisyen bezwen konnen anvan li chwazi Etazini, Chili, Brezil oswa Meksik: ki chemen ki ouvè, sa pou prepare depi Ayiti ak premye demach pou viv, travay oswa etidye lè li rive.",
     principles: [
       [
         "Sous an premye",
         "Nou mennen w nan anbasad, sèvis imigrasyon ak lòt otorite ki responsab yo."
       ],
-      ["Dat ki vizib", "Chak anyè montre dènye dat lyen yo te verifye."],
+      ["Reyalite 2026", "Nou di klèman lè yon chemen ouvè, limite oswa fèmen pou Ayisyen."],
       ["Lang ki aksesib", "Eksplikasyon yo disponib an kreyòl, fransè, panyòl, pòtigè ak anglè."]
     ],
     processTitle: "Kijan nou òganize chak gid",
     process: [
-      "Nou idantifye otorite ki responsab la.",
-      "Nou verifye lyen an ak objektif li.",
-      "Nou mete etap yo nan yon lòd ki fasil pou suiv."
+      "Nou verifye règ aktyèl yo ak otorite ki responsab la.",
+      "Nou esplike opsyon legal yo ak risk yo nan mo ki senp.",
+      "Nou mete preparasyon, arive ak lavi chak jou nan yon lòd ki fasil pou suiv."
     ]
   },
   fr: {
-    title: "Un chemin plus clair vers la bonne information.",
-    body: "Vwayaj Ayisyen aide la communauté haïtienne à trouver des sources officielles sur le voyage et la vie dans un autre pays sans se perdre dans des pages confuses.",
+    title: "Un guide clair pour prendre une décision mieux préparée.",
+    body: "Vwayaj Ayisyen explique ce qu’une personne haïtienne doit savoir avant de choisir les États-Unis, le Chili, le Brésil ou le Mexique : voies disponibles, préparation depuis Haïti et premières démarches pour vivre, travailler ou étudier à l’arrivée.",
     principles: [
       [
         "Les sources d’abord",
         "Nous vous dirigeons vers les ambassades, services d’immigration et autres autorités responsables."
       ],
       [
-        "Des dates visibles",
-        "Chaque répertoire indique la dernière date de vérification des liens."
+        "La réalité de 2026",
+        "Nous indiquons clairement lorsqu’une voie est ouverte, limitée ou fermée aux Haïtiens."
       ],
       [
         "Des langues accessibles",
@@ -46,22 +46,22 @@ const aboutCopy = {
     ],
     processTitle: "Comment chaque guide est organisé",
     process: [
-      "Nous identifions l’autorité responsable.",
-      "Nous vérifions le lien et son objectif.",
-      "Nous plaçons les étapes dans un ordre facile à suivre."
+      "Nous vérifions les règles actuelles auprès de l’autorité responsable.",
+      "Nous expliquons les options légales et les risques en mots simples.",
+      "Nous ordonnons la préparation, l’arrivée et la vie quotidienne pour faciliter le parcours."
     ]
   },
   es: {
-    title: "Un camino más claro hacia la información correcta.",
-    body: "Vwayaj Ayisyen ayuda a la comunidad haitiana a encontrar fuentes oficiales sobre viajes y vida en otro país sin perderse en páginas confusas.",
+    title: "Una guía clara para tomar una decisión mejor preparada.",
+    body: "Vwayaj Ayisyen explica lo que una persona haitiana necesita saber antes de elegir Estados Unidos, Chile, Brasil o México: caminos disponibles, preparación desde Haití y primeros trámites para vivir, trabajar o estudiar al llegar.",
     principles: [
       [
         "Primero las fuentes",
         "Te llevamos a embajadas, servicios de inmigración y otras autoridades responsables."
       ],
       [
-        "Fechas visibles",
-        "Cada directorio muestra la última fecha de verificación de sus enlaces."
+        "La realidad de 2026",
+        "Decimos claramente si un camino está abierto, limitado o cerrado para personas haitianas."
       ],
       [
         "Idiomas accesibles",
@@ -70,20 +70,23 @@ const aboutCopy = {
     ],
     processTitle: "Cómo organizamos cada guía",
     process: [
-      "Identificamos a la autoridad responsable.",
-      "Verificamos el enlace y su propósito.",
-      "Ordenamos los pasos para que sean fáciles de seguir."
+      "Verificamos las reglas actuales con la autoridad responsable.",
+      "Explicamos las opciones legales y los riesgos con palabras sencillas.",
+      "Ordenamos la preparación, la llegada y la vida diaria para que sea fácil de seguir."
     ]
   },
   pt: {
-    title: "Um caminho mais claro para a informação certa.",
-    body: "Vwayaj Ayisyen ajuda a comunidade haitiana a encontrar fontes oficiais sobre viagem e vida em outro país sem se perder em páginas confusas.",
+    title: "Um guia claro para tomar uma decisão mais bem preparada.",
+    body: "Vwayaj Ayisyen explica o que uma pessoa haitiana precisa saber antes de escolher Estados Unidos, Chile, Brasil ou México: caminhos disponíveis, preparação no Haiti e primeiros trâmites para viver, trabalhar ou estudar ao chegar.",
     principles: [
       [
         "Fontes em primeiro lugar",
         "Levamos você a embaixadas, serviços de imigração e outras autoridades responsáveis."
       ],
-      ["Datas visíveis", "Cada diretório mostra a data da última verificação dos links."],
+      [
+        "A realidade de 2026",
+        "Dizemos claramente quando um caminho está aberto, limitado ou fechado para haitianos."
+      ],
       [
         "Idiomas acessíveis",
         "As explicações estão disponíveis em crioulo haitiano, francês, espanhol, português e inglês."
@@ -91,20 +94,23 @@ const aboutCopy = {
     ],
     processTitle: "Como organizamos cada guia",
     process: [
-      "Identificamos a autoridade responsável.",
-      "Verificamos o link e sua finalidade.",
-      "Organizamos as etapas em uma ordem fácil de seguir."
+      "Verificamos as regras atuais com a autoridade responsável.",
+      "Explicamos as opções legais e os riscos em linguagem simples.",
+      "Organizamos preparação, chegada e vida diária em uma ordem fácil de seguir."
     ]
   },
   en: {
-    title: "A clearer path to the right information.",
-    body: "Vwayaj Ayisyen helps the Haitian community find official sources about travel and life in another country without getting lost in confusing pages.",
+    title: "A clear guide for a better-prepared decision.",
+    body: "Vwayaj Ayisyen explains what a Haitian person needs to know before choosing the United States, Chile, Brazil or Mexico: available pathways, preparation from Haiti and first steps for living, working or studying after arrival.",
     principles: [
       [
         "Sources first",
         "We take you to embassies, immigration services and other responsible authorities."
       ],
-      ["Visible dates", "Every directory shows when its links were last checked."],
+      [
+        "The reality in 2026",
+        "We say clearly when a pathway is open, limited or closed to Haitian people."
+      ],
       [
         "Accessible languages",
         "Explanations are available in Haitian Creole, French, Spanish, Portuguese and English."
@@ -112,9 +118,9 @@ const aboutCopy = {
     ],
     processTitle: "How each guide is organized",
     process: [
-      "We identify the responsible authority.",
-      "We check the link and its purpose.",
-      "We place the steps in an order that is easy to follow."
+      "We check current rules with the responsible authority.",
+      "We explain legal options and risks in plain language.",
+      "We put preparation, arrival and daily life in an order that is easy to follow."
     ]
   }
 } satisfies Record<

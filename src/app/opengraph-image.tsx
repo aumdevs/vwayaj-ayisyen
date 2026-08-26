@@ -37,6 +37,17 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", fontSize: 76, fontWeight: 800, lineHeight: 1.02 }}>
           {BRAND.name}
         </div>
+        <div
+          style={{
+            color: "rgba(255,255,255,0.82)",
+            display: "flex",
+            fontSize: 31,
+            lineHeight: 1.3,
+            maxWidth: "900px"
+          }}
+        >
+          Soti Ayiti ak yon plan klè pou viv, travay oswa etidye aletranje an 2026.
+        </div>
         <div style={{ display: "flex", gap: "18px", marginTop: "8px" }}>
           {["HT", "FR", "ES", "PT", "EN"].map((locale) => (
             <span
