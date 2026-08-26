@@ -31,7 +31,7 @@ export function CountryCard({
         <Image
           alt={country.imageAlt[locale]}
           fill
-          preload={preload}
+          loading={preload ? "eager" : "lazy"}
           sizes={sizes}
           src={country.image}
         />
