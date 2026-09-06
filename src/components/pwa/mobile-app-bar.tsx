@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   AlertTriangle,
@@ -9,12 +10,13 @@ import {
   FileText,
   Grid2X2,
   LockKeyhole,
+  Plane,
   ShieldCheck,
   X
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { BRAND } from "@/config/brand";
-import { BrandLogo, LogoMark } from "@/components/brand/logo-mark";
+import { BrandLogo } from "@/components/brand/logo-mark";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
 
@@ -167,12 +169,21 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
         <div className="mobile-app-bar-primary">
           {isHome ? (
             <Link aria-label="Akèy Vwayaj Ayisyen" className="mobile-app-brand" href={home}>
-              <BrandLogo className="mobile-app-logo" priority />
+              <BrandLogo className="mobile-app-logo" transparent priority />
+              <Image
+                alt=""
+                aria-hidden="true"
+                className="mobile-app-airplane"
+                src="/images/editorial/header-airplane.png"
+                width={118}
+                height={59}
+                priority
+              />
             </Link>
           ) : (
             <strong className="mobile-app-title">
               <span>{title}</span>
-              <LogoMark />
+              <Plane aria-hidden="true" className="mobile-app-title-plane" size={15} />
             </strong>
           )}
         </div>

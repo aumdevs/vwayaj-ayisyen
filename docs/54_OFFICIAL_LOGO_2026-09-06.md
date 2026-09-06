@@ -39,3 +39,11 @@ No database, authentication, permission or environment-variable changes.
 Service-worker cache v11 and versioned icon metadata refresh existing clients.
 Installed launcher icons can refresh later according to the device's own policy.
 Rollback: revert the logo rollout commit and deploy; no data rollback is needed.
+
+## Header follow-up
+
+Keep the transparent PNG logo and the original airplane side by side in the home
+bar. Restore the yellow airplane beside page titles elsewhere. This preserves
+the requested navigation decoration independently of the logo replacement.
+Browser regression checks cover both elements and the single-screen home layout.
+Cache v12 refreshes the updated header. No data, security or environment changes.

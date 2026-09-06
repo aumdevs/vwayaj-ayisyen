@@ -3165,7 +3165,7 @@ h3 {
   .mobile-app-brand {
     top: 50%;
     z-index: 3;
-    width: 7.2rem;
+    width: 11.5rem;
     height: 3.85rem;
     justify-content: center;
     overflow: visible;
@@ -3178,14 +3178,6 @@ h3 {
     font-weight: 820;
   }
 
-  .mobile-app-title .logo-symbol {
-    width: 1.85rem;
-    height: 1.85rem;
-    padding: 0.15rem;
-    border-radius: 0.5rem;
-    background: #fff;
-  }
-
   .mobile-app-brand > .mobile-app-logo {
     display: block;
     width: 5.3rem;
@@ -3194,6 +3186,16 @@ h3 {
     border-radius: 0.65rem;
     background: #fff;
     object-fit: contain;
+  }
+
+  .mobile-app-brand > .mobile-app-airplane {
+    display: block;
+    width: 4.7rem;
+    height: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 8px rgb(2 24 48 / 35%));
+    animation: mobile-brand-plane 3.2s ease-in-out infinite;
   }
 
   .mobile-app-back,
