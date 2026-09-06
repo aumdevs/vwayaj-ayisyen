@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-import { Globe2, Landmark, ShieldCheck } from "lucide-react";
+import { Globe2 } from "lucide-react";
 import { CountryCard } from "@/components/ui/country-card";
-import { OFFICIAL_SOURCE_COUNT } from "@/content/official-source-directory";
 import { publicCopy } from "@/content/public-copy";
 import { countries } from "@/lib/content/catalog";
 import { isLocale } from "@/lib/i18n/config";
@@ -32,14 +31,6 @@ export default async function CountriesPage({ params }: CountriesPageProps) {
 
       <section className="section section-white">
         <div className="shell">
-          <div className="country-index-proof">
-            <span>
-              <Landmark aria-hidden="true" size={20} /> {OFFICIAL_SOURCE_COUNT} {copy.home.sources}
-            </span>
-            <span>
-              <ShieldCheck aria-hidden="true" size={20} /> {copy.home.reviewed}
-            </span>
-          </div>
           <div className="country-grid country-index-grid">
             {countries.map((country, index) => (
               <CountryCard

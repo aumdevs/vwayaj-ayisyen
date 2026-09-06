@@ -25,12 +25,33 @@ const obsoletePublicVariables = [
   "NEXT_PUBLIC_SUPABASE_URL",
   "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
   "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
-  "NEXT_PUBLIC_WHATSAPP_NUMBER",
   "NEXT_PUBLIC_ANALYTICS_ENDPOINT"
 ];
 
 for (const key of obsoletePublicVariables) {
   if (process.env[key]?.trim()) errors.push(`${key} is no longer permitted in the public-only site`);
+}
+
+const firebaseKeys = [
+  "NEXT_PUBLIC_FIREBASE_API_KEY",
+  "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
+  "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+  "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
+  "NEXT_PUBLIC_FIREBASE_APP_ID",
+  "FIREBASE_ADMIN_PROJECT_ID",
+  "FIREBASE_ADMIN_CLIENT_EMAIL",
+  "FIREBASE_ADMIN_PRIVATE_KEY"
+];
+const configuredFirebaseKeys = firebaseKeys.filter((key) => process.env[key]?.trim());
+if (configuredFirebaseKeys.length > 0 && configuredFirebaseKeys.length !== firebaseKeys.length) {
+  errors.push("Firebase must be configured completely or left disabled");
+}
+if (
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID?.trim() &&
+  process.env.FIREBASE_ADMIN_PROJECT_ID?.trim() &&
+  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID.trim() !== process.env.FIREBASE_ADMIN_PROJECT_ID.trim()
+) {
+  errors.push("Firebase public and admin project IDs must match");
 }
 
 for (const key of Object.keys(process.env)) {

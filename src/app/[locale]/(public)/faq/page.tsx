@@ -10,7 +10,7 @@ const faqCopy = {
     items: [
       [
         "Kisa Vwayaj Ayisyen ye?",
-        "Se yon gid piblik ki esplike kijan yon Ayisyen ka prepare pou viv, travay oswa etidye Etazini, Chili, Brezil oswa Meksik selon règ 2026 yo."
+        "Se yon ajans dijital ki ede kominote ayisyèn nan prepare yon pwojè pou Chili oswa Brezil, jwenn etap ofisyèl yo epi mande sipò lè sèvis la aktive."
       ],
       [
         "Èske sit la ranplase yon anbasad oswa yon konseye legal?",
@@ -26,7 +26,7 @@ const faqCopy = {
       ],
       [
         "Èske Vwayaj Ayisyen vann randevou oswa viza?",
-        "Non. Nou pa vann randevou, viza oswa garanti. Sèvi sèlman ak chanèl otorite a endike."
+        "Non. Nou pa vann viza, randevou gouvènman oswa garanti. Ajans lan ka ede w konprann epi prepare demach la, men se otorite a sèlman ki pran desizyon an."
       ],
       [
         "Kijan mwen ka rapòte yon lyen ki pa bon?",

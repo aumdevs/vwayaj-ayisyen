@@ -20,7 +20,8 @@ export default defineConfig({
     { name: "mobile", use: { ...devices["iPhone 13"], browserName: "chromium" } }
   ],
   webServer: {
-    command: "pnpm dev --hostname 127.0.0.1 --webpack",
+    // A production server avoids development HMR reloads aborting real navigation.
+    command: "pnpm build && pnpm start --hostname 127.0.0.1",
     url: "http://127.0.0.1:3000/ht",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000

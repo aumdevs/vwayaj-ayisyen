@@ -17,6 +17,7 @@ type BeforeInstallPromptEvent = Event & {
 
 const SESSION_KEY = "vwayaj-install-prompt-shown";
 const INSTALLED_KEY = "vwayaj-pwa-installed";
+export const INSTALL_PROMPT_EVENT = "vwayaj:request-install";
 
 const copy = {
   ht: {
@@ -138,6 +139,7 @@ export function InstallAppPrompt({ locale }: { locale: Locale }) {
     };
     window.addEventListener("beforeinstallprompt", onBeforeInstall);
     window.addEventListener("appinstalled", onInstalled);
+    document.documentElement.dataset.installPromptListener = "ready";
     const detectionTimer = window.setTimeout(() => {
       setIos(isAppleMobileDevice());
       setInstalled(
@@ -146,10 +148,21 @@ export function InstallAppPrompt({ locale }: { locale: Locale }) {
     }, 0);
     return () => {
       window.clearTimeout(detectionTimer);
+      delete document.documentElement.dataset.installPromptListener;
       window.removeEventListener("beforeinstallprompt", onBeforeInstall);
       window.removeEventListener("appinstalled", onInstalled);
     };
   }, []);
+
+  useEffect(() => {
+    const openAfterAccount = () => {
+      if (!appExperience || installed || isStandaloneExperience()) return;
+      window.sessionStorage.setItem(SESSION_KEY, "true");
+      setOpen(true);
+    };
+    window.addEventListener(INSTALL_PROMPT_EVENT, openAfterAccount);
+    return () => window.removeEventListener(INSTALL_PROMPT_EVENT, openAfterAccount);
+  }, [appExperience, installed]);
 
   useEffect(() => {
     if (
@@ -250,11 +263,13 @@ export function InstallAppPrompt({ locale }: { locale: Locale }) {
           </div>
         ) : null}
         <div className="install-prompt-actions">
-          <button className="button" onClick={() => void install()} type="button">
-            <Download aria-hidden="true" size={18} /> {text.install}
-          </button>
+          {ios || deferredPrompt ? (
+            <button className="button" onClick={() => void install()} type="button">
+              <Download aria-hidden="true" size={18} /> {text.install}
+            </button>
+          ) : null}
           <button className="button button-quiet" onClick={() => setOpen(false)} type="button">
-            {text.later}
+            {ios || deferredPrompt ? text.later : "Kontinye sou entènèt la"}
           </button>
         </div>
       </section>

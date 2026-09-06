@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All profile, saved-news and rate-limit access goes through authenticated
+    // server endpoints. The browser receives no direct database access.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
