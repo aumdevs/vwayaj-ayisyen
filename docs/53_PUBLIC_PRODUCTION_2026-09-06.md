@@ -21,11 +21,12 @@ Supabase directories in the published repository.
 
 ## Verification
 
-- Formatting, lint, TypeScript and 52 unit tests passed.
+- Formatting, lint, TypeScript and 54 unit tests passed; branch coverage is 81.35%.
 - Production build and local secret-pattern check passed.
 - Production dependency audit: no known vulnerabilities.
 - Browser checks against a production build: 23 passed, 3 device-specific skips.
 - Account access fails closed and all public navigation remains available.
+- Guest reading checked across all 10 articles and 14 residence/destination guides.
 - Service-worker cache version advances to v10 for installed applications.
 
 ## Deployment and rollback

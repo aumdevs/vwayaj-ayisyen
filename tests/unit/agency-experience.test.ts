@@ -49,6 +49,7 @@ describe("agency experience", () => {
   });
 
   it("enables Google accounts only when public and admin Firebase projects match", () => {
+    vi.stubEnv("ACCOUNTS_ENABLED", "true");
     vi.stubEnv("NEXT_PUBLIC_FIREBASE_API_KEY", "firebase-browser-key-value");
     vi.stubEnv("NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN", "vwayaj.test.firebaseapp.com");
     vi.stubEnv("NEXT_PUBLIC_FIREBASE_PROJECT_ID", "vwayaj-test");
@@ -63,5 +64,10 @@ describe("agency experience", () => {
     expect(isFirebaseAccountsReady()).toBe(false);
     vi.stubEnv("ACCOUNTS_ENABLED", "true");
     expect(isFirebaseAccountsReady()).toBe(true);
+    vi.stubEnv("ACCOUNTS_ENABLED", undefined);
+    expect(isFirebaseAccountsReady()).toBe(false);
+    vi.stubEnv("ACCOUNTS_ENABLED", "true");
+    vi.stubEnv("FIREBASE_ADMIN_PRIVATE_KEY", "");
+    expect(isFirebaseAccountsReady()).toBe(false);
   });
 });
