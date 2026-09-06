@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { FieldValue } from "firebase-admin/firestore";
 import { getSiteUrl } from "@/lib/config/runtime";
 import { getFirebaseAdminServices } from "@/lib/firebase/admin";
 import { getFirebaseViewer } from "@/lib/firebase/session";
@@ -21,7 +20,7 @@ function isWebp(bytes: Uint8Array): boolean {
 
 export async function GET() {
   const viewer = await getFirebaseViewer();
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!viewer || !viewer.hasCustomAvatar || !services)
     return NextResponse.json({ error: "not_found" }, { status: 404 });
 
@@ -43,7 +42,7 @@ export async function POST(request: NextRequest) {
   if (!hasTrustedOrigin(request) || request.headers.get("content-type") !== "image/webp")
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   const viewer = await getFirebaseViewer();
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!viewer || !services) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const declaredLength = Number(request.headers.get("content-length") ?? 0);
@@ -64,8 +63,8 @@ export async function POST(request: NextRequest) {
     await services.db.collection("profiles").doc(viewer.id).set(
       {
         hasCustomAvatar: true,
-        avatarUpdatedAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp()
+        avatarUpdatedAt: services.fieldValue.serverTimestamp(),
+        updatedAt: services.fieldValue.serverTimestamp()
       },
       { merge: true }
     );

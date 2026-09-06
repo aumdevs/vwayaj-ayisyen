@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { FieldValue } from "firebase-admin/firestore";
 import { z } from "zod";
 import { getSiteUrl, isFirebaseAccountsReady } from "@/lib/config/runtime";
 import { getFirebaseAdminServices } from "@/lib/firebase/admin";
@@ -23,7 +22,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
 
   const parsed = tokenSchema.safeParse(await request.json().catch(() => null));
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!parsed.success || !services)
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
 
@@ -47,8 +46,8 @@ export async function POST(request: NextRequest) {
       const trustedIdentity = {
         email: decoded.email,
         googlePhotoUrl: decoded.picture ?? null,
-        lastLoginAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp()
+        lastLoginAt: services.fieldValue.serverTimestamp(),
+        updatedAt: services.fieldValue.serverTimestamp()
       };
       if (existing.exists) {
         transaction.update(profileRef, trustedIdentity);
@@ -63,7 +62,7 @@ export async function POST(request: NextRequest) {
         notificationsEnabled: false,
         hasCustomAvatar: false,
         savedArticleSlugs: [],
-        createdAt: FieldValue.serverTimestamp()
+        createdAt: services.fieldValue.serverTimestamp()
       });
     });
 
