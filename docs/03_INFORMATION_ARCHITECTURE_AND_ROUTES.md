@@ -37,6 +37,8 @@
 /[locale]/search
 /[locale]/legal/terms
 /[locale]/legal/privacy
+/[locale]/legal/security
+/[locale]/legal/payments
 /[locale]/legal/cookies
 /[locale]/legal/refunds
 /[locale]/legal/ai

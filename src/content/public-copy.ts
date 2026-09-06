@@ -72,15 +72,15 @@ export const publicCopy = {
     },
     home: {
       kicker: "Enfòmasyon klè pou desizyon serye",
-      title: "Soti Ayiti ak yon plan ki klè.",
-      body: "Chwazi Etazini, Chili, Brezil oswa Meksik epi konprann sa ki posib an 2026: kijan pou antre legalman, ki papye pou prepare, kote pou travay oswa etidye, ak sa pou fè apre ou rive.",
+      title: "Prepare pwojè ou ak yon ekip bò kote w.",
+      body: "Chwazi Chili oswa Brezil epi konprann sa ki posib an 2026 selon peyi kote w ap viv la: kijan pou antre legalman, ki papye pou prepare, travay, etid ak premye etap apre ou rive.",
       primary: "Chwazi yon peyi",
       secondary: "Gade tout sous yo",
       sources: "sous ofisyèl",
       countries: "peyi",
       languages: "lang",
       reviewed: "verifye",
-      destinationsKicker: "Kat destinasyon · Yon sèl estanda",
+      destinationsKicker: "De destinasyon · Yon sèl ekip",
       destinationsTitle: "Kòmanse kote plan ou mennen w.",
       destinationsBody:
         "Chak peyi gen yon repons klè sou antre, fanmi, travay, etid, dokiman, pwoteksyon ak risk wout iregilye yo.",
@@ -109,7 +109,7 @@ export const publicCopy = {
     countries: {
       kicker: "Gid pa peyi",
       title: "Ki kote ou vle kòmanse?",
-      body: "Eksplore kat gid konplè pou antre, viv, travay oswa etidye — ak yon repons onèt sou sa ki posib an 2026.",
+      body: "Eksplore gid Chili ak Brezil pou antre, viv, travay oswa etidye — ak yon repons klè sou sa ki posib an 2026.",
       cardTags: ["Viza", "Rezidans", "Lavi pratik"]
     },
     country: {

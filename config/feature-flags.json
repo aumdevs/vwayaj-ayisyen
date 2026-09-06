@@ -23,6 +23,16 @@
     "default": false,
     "launch_requirements": ["number_verified", "templates_reviewed", "privacy_notice"]
   },
+  "feature_public_registration": {
+    "default": false,
+    "launch_requirements": [
+      "supabase_migration_applied",
+      "turnstile_configured",
+      "resend_configured",
+      "legal_versions_approved",
+      "rls_tests_passed"
+    ]
+  },
   "feature_public_intake": {
     "default": false,
     "launch_requirements": ["consent_approved", "captcha", "rate_limit", "crm_encryption"]

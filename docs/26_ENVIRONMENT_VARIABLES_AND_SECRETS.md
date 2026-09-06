@@ -7,7 +7,8 @@
 Sólo valores seguros para navegador con prefijo `NEXT_PUBLIC_`:
 
 - URL pública del sitio.
-- URL y anon/publishable key de Supabase, según modelo actual.
+- Configuración pública del cliente Firebase (API key, proyecto, dominio y app ID).
+- URL y anon/publishable key de Supabase para la infraestructura que aún la use.
 - site key pública de Cloudflare Turnstile.
 - identificador público de Stripe publishable, si la UI lo requiere.
 - flags estrictamente no sensibles compilados.
@@ -44,6 +45,17 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | Variable | Sensible | Entornos | Obligatoria para |
 |---|---:|---|---|
 | `NEXT_PUBLIC_SITE_URL` | No | todos | app |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | No | clientes con cuentas | Firebase Auth |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | No | clientes con cuentas | Firebase Auth |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | No | clientes con cuentas | Firebase Auth/Firestore/Storage |
+| `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | No | clientes con cuentas | fotos de perfil |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | No | clientes con cuentas | inicializar Firebase |
+| `FIREBASE_ADMIN_PROJECT_ID` | No/operativo | server | validar el proyecto esperado |
+| `FIREBASE_ADMIN_CLIENT_EMAIL` | Confidencial | server | Firebase Admin |
+| `FIREBASE_ADMIN_PRIVATE_KEY` | Sí crítico | server | Firebase Admin |
+| `RESEND_API_KEY` | Sí | server | formulario de contacto |
+| `EMAIL_FROM` | No/operativo | server | remitente verificado del contacto |
+| `NEXT_PUBLIC_SUPPORT_WHATSAPP_URL` | No | cliente | contacto por WhatsApp |
 | `NEXT_PUBLIC_SUPABASE_URL` | No | todos | app |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | No | todos | app |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | No | todos los entornos con Auth | Auth antiabuso |
@@ -60,7 +72,6 @@ No copiar secretos de producción a preview. Los datos de producción no se usan
 | `APP_SIGNING_KEY` | Sí | server | tokens internos |
 | `CRON_SECRET` | Sí | server | cron |
 | `EMAIL_PROVIDER_API_KEY` | Sí | server | email |
-| `EMAIL_FROM` | No/operativo | server | email |
 | `OPENAI_API_KEY` | Sí | server | IA |
 | `AI_MODEL` | No | server | IA |
 | `MALWARE_SCANNER_URL` | Interna | server | uploads |

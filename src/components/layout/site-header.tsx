@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo-mark";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { MobileNavigationDrawer } from "@/components/layout/mobile-navigation-drawer";
 import { PublicNavigation, type PublicNavGroup } from "@/components/layout/public-navigation";
 import { BRAND } from "@/config/brand";
@@ -34,7 +33,7 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         {
           href: localizedPath(locale, "countries"),
           label: copy.country.allCountries,
-          meta: "04"
+          meta: "02"
         }
       ]
     },
@@ -62,7 +61,6 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
         <PublicNavigation ariaLabel={copy.navigation.main} groups={groups} />
 
         <div className="header-actions">
-          <LanguageSwitcher locale={locale} />
           <Link className="button header-guide-action" href={localizedPath(locale, "countries")}>
             {copy.home.primary} <ArrowRight aria-hidden="true" size={17} />
           </Link>

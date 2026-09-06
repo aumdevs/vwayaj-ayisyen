@@ -9,10 +9,11 @@ describe("offline cache policy", () => {
     for (const path of [
       '"/ht"',
       '"/ht/countries"',
-      '"/ht/countries/usa"',
       '"/ht/countries/chile"',
       '"/ht/countries/brazil"',
-      '"/ht/countries/mexico"'
+      '"/ht/travel/chile"',
+      '"/ht/travel/brazil"',
+      '"/ht/news"'
     ]) {
       expect(source).toContain(path);
     }

@@ -6,6 +6,7 @@ import {
   getOfficialLegalLocale,
   isPublishedLegalDocument,
   LEGAL_ENTITY,
+  LEGAL_NAV_DOCUMENTS,
   PUBLISHED_LEGAL_DOCUMENTS
 } from "@/content/legal";
 import { publicCopy } from "@/content/public-copy";
@@ -22,16 +23,16 @@ const titles = {
     pt: "Privacidade",
     en: "Privacy"
   },
+  security: {
+    ht: "Sekirite",
+    fr: "Sécurité",
+    es: "Seguridad",
+    pt: "Segurança",
+    en: "Security"
+  },
+  payments: { ht: "Peman", fr: "Paiements", es: "Pagos", pt: "Pagamentos", en: "Payments" },
   cookies: { ht: "Cookies", fr: "Cookies", es: "Cookies", pt: "Cookies", en: "Cookies" }
 } satisfies Record<(typeof PUBLISHED_LEGAL_DOCUMENTS)[number], Record<Locale, string>>;
-
-const officialLanguageNotice = {
-  ht: "Vèsyon legal yo disponib an panyòl ak pòtigè. Paj sa a montre vèsyon panyòl la.",
-  fr: "Les versions juridiques sont disponibles en espagnol et en portugais. Cette page affiche l’espagnol.",
-  es: "Consulta también la versión oficial en portugués.",
-  pt: "Consulte também a versão oficial em espanhol.",
-  en: "Legal versions are available in Spanish and Portuguese. This page displays Spanish."
-} satisfies Record<Locale, string>;
 
 type LegalPageProps = {
   params: Promise<{ locale: string; document: string }>;
@@ -61,10 +62,10 @@ export default async function LegalPage({ params, searchParams }: LegalPageProps
           <p className="page-lede">{published.summary}</p>
         </div>
       </section>
-      <section className="section section-white">
+      <section className="section section-white legal-page-section">
         <div className="shell legal-layout">
           <nav aria-label={copy.footer.legal}>
-            {PUBLISHED_LEGAL_DOCUMENTS.map((item) => (
+            {LEGAL_NAV_DOCUMENTS.map((item) => (
               <Link
                 aria-current={item === document ? "page" : undefined}
                 href={localizedPath(locale, `legal/${item}`)}
@@ -91,25 +92,6 @@ export default async function LegalPage({ params, searchParams }: LegalPageProps
                 <div>
                   <strong>{published.languageLabel}</strong>
                   <p>{published.languageNotice}</p>
-                  <p lang={locale}>{officialLanguageNotice[locale]}</p>
-                  <span>
-                    <Link
-                      href={{
-                        pathname: localizedPath("es", `legal/${document}`),
-                        query: { version: published.version }
-                      }}
-                    >
-                      Español
-                    </Link>
-                    <Link
-                      href={{
-                        pathname: localizedPath("pt", `legal/${document}`),
-                        query: { version: published.version }
-                      }}
-                    >
-                      Português
-                    </Link>
-                  </span>
                 </div>
               </div>
             </header>

@@ -1,11 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { ArrowLeft, Grid2X2, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  AlertTriangle,
+  ChevronRight,
+  CreditCard,
+  FileText,
+  Grid2X2,
+  LockKeyhole,
+  Plane,
+  ShieldCheck,
+  X
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { LogoMark } from "@/components/brand/logo-mark";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { BRAND } from "@/config/brand";
 import { localizedPath } from "@/lib/i18n/paths";
 import type { Locale } from "@/types/domain";
@@ -70,7 +79,6 @@ const copy = {
 
 export function MobileAppBar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [moreOpen, setMoreOpen] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
@@ -79,12 +87,19 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
   const text = copy[locale];
   const home = localizedPath(locale);
   const isHome = pathname === home;
-  const title =
-    pathname.includes("/countries") && pathname !== localizedPath(locale, "countries")
-      ? text.countries
-      : pathname.startsWith(localizedPath(locale, "countries"))
-        ? text.countries
-        : BRAND.name;
+  const title = pathname.includes("/countries/chile")
+    ? "Chili"
+    : pathname.includes("/countries/brazil")
+      ? "Brezil"
+      : pathname.includes("/travel/chile")
+        ? "Ale Chili"
+        : pathname.includes("/travel/brazil")
+          ? "Ale Brezil"
+          : pathname.startsWith(localizedPath(locale, "news"))
+            ? "Nouvèl"
+            : pathname.startsWith(localizedPath(locale, "profile"))
+              ? "Pwofil"
+              : BRAND.name;
 
   useEffect(() => {
     if (!moreOpen) {
@@ -121,12 +136,30 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
   }, [moreOpen]);
 
   const links = [
-    [text.countries, "countries"],
-    [text.faq, "faq"],
-    [text.contact, "contact"],
-    [text.about, "about"],
-    [text.privacy, "legal/privacy"],
-    [text.terms, "legal/terms"]
+    {
+      description: "Konnen règ sit la ak sèvis yo",
+      icon: FileText,
+      label: text.terms,
+      path: "legal/terms"
+    },
+    {
+      description: "Kijan nou sèvi ak pwoteje done ou",
+      icon: ShieldCheck,
+      label: text.privacy,
+      path: "legal/privacy"
+    },
+    {
+      description: "Fason pou pwoteje tèt ou",
+      icon: LockKeyhole,
+      label: "Sekirite",
+      path: "legal/security"
+    },
+    {
+      description: "Sa pou konnen anvan yon peman",
+      icon: CreditCard,
+      label: "Peman",
+      path: "legal/payments"
+    }
   ] as const;
 
   return (
@@ -134,29 +167,25 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
       <header className="mobile-app-bar">
         <div className="mobile-app-bar-primary">
           {isHome ? (
-            <Link className="mobile-app-brand" href={home}>
-              <LogoMark />
-              <span>{BRAND.name}</span>
+            <Link aria-label="Akèy Vwayaj Ayisyen" className="mobile-app-brand" href={home}>
+              <Image
+                alt=""
+                aria-hidden="true"
+                className="mobile-app-airplane"
+                height={59}
+                priority
+                src="/images/editorial/header-airplane.png"
+                width={118}
+              />
             </Link>
           ) : (
-            <>
-              <button
-                aria-label={text.back}
-                className="mobile-app-back"
-                onClick={() => {
-                  if (window.history.length > 1) router.back();
-                  else router.push(home);
-                }}
-                type="button"
-              >
-                <ArrowLeft aria-hidden="true" size={21} />
-              </button>
-              <strong className="mobile-app-title">{title}</strong>
-            </>
+            <strong className="mobile-app-title">
+              <span>{title}</span>
+              <Plane aria-hidden="true" className="mobile-app-title-plane" size={15} />
+            </strong>
           )}
         </div>
         <div className="mobile-app-actions">
-          <LanguageSwitcher locale={locale} />
           <button
             aria-expanded={moreOpen}
             aria-haspopup="dialog"
@@ -182,7 +211,7 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
             role="dialog"
           >
             <header>
-              <h2 id="mobile-more-title">{text.more}</h2>
+              <h2 id="mobile-more-title">Enfòmasyon itil</h2>
               <button
                 aria-label={text.close}
                 onClick={() => setMoreOpen(false)}
@@ -193,16 +222,30 @@ export function MobileAppBar({ locale }: { locale: Locale }) {
               </button>
             </header>
             <nav aria-label={text.more}>
-              {links.map(([label, path]) => (
+              {links.map(({ description, icon: Icon, label, path }) => (
                 <Link
                   href={localizedPath(locale, path)}
                   key={path}
                   onClick={() => setMoreOpen(false)}
                 >
-                  {label}
+                  <span aria-hidden="true">
+                    <Icon size={20} />
+                  </span>
+                  <span>
+                    <strong>{label}</strong>
+                    <small>{description}</small>
+                  </span>
+                  <ChevronRight aria-hidden="true" size={18} />
                 </Link>
               ))}
             </nav>
+            <p className="mobile-more-disclaimer">
+              <AlertTriangle aria-hidden="true" size={20} />
+              <span>
+                <strong>Yon nòt enpòtan</strong>
+                Vwayaj Ayisyen pa òganize vwayaj nan okenn peyi.
+              </span>
+            </p>
           </section>
         </div>
       ) : null}

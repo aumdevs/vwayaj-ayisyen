@@ -10,7 +10,6 @@ import { BRAND } from "@/config/brand";
 import { getCountry, isCountryCode } from "@/lib/content/catalog";
 import { publicCopy } from "@/content/public-copy";
 import { COUNTRY_MIGRATION_GUIDES } from "@/content/migration-guides";
-import { SUPPORTED_LOCALES } from "@/types/domain";
 
 type LocaleLayoutProps = {
   children: ReactNode;
@@ -18,7 +17,7 @@ type LocaleLayoutProps = {
 };
 
 export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+  return [{ locale: "ht" }];
 }
 
 export async function generateMetadata({ params }: LocaleLayoutProps): Promise<Metadata> {
@@ -27,9 +26,8 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   const pathname = (await headers()).get("x-pathname") ?? localizedPath(locale);
   const path = pathname.split("/").filter(Boolean).slice(1).join("/");
   const allowIndexing = isIndexingAllowed() && isPromotablePublicPath(path, locale);
-  const officialLegalRoute = path.startsWith("legal/");
-  const alternateLocales = officialLegalRoute ? (["es", "pt"] as const) : SUPPORTED_LOCALES;
-  const canonicalLocale = officialLegalRoute && locale !== "es" && locale !== "pt" ? "es" : locale;
+  const alternateLocales = ["ht"] as const;
+  const canonicalLocale = "ht" as const;
   const copy = publicCopy[locale];
   const legalTitles = {
     terms: {
@@ -45,6 +43,20 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       es: "Privacidad",
       pt: "Privacidade",
       en: "Privacy"
+    },
+    security: {
+      ht: "Sekirite",
+      fr: "Sécurité",
+      es: "Seguridad",
+      pt: "Segurança",
+      en: "Security"
+    },
+    payments: {
+      ht: "Peman",
+      fr: "Paiements",
+      es: "Pagos",
+      pt: "Pagamentos",
+      en: "Payments"
     },
     cookies: { ht: "Cookies", fr: "Cookies", es: "Cookies", pt: "Cookies", en: "Cookies" }
   } as const;
@@ -66,11 +78,15 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
           ? countryTitle
           : path === "about"
             ? copy.navigation.about
-            : path === "contact"
-              ? copy.navigation.contact
-              : path === "faq"
-                ? "FAQ"
-                : (legalTitle ?? BRAND.name);
+            : path === "news" || path.startsWith("news/")
+              ? "Nouvèl enpòtan"
+              : path === "profile"
+                ? "Pwofil mwen"
+                : path === "contact"
+                  ? copy.navigation.contact
+                  : path === "faq"
+                    ? "FAQ"
+                    : (legalTitle ?? BRAND.name);
   const description =
     countryPathSegment && isCountryCode(countryPathSegment)
       ? COUNTRY_MIGRATION_GUIDES[countryPathSegment].summary[locale]
@@ -92,7 +108,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
           supportedLocale,
           localizedPath(supportedLocale, path)
         ]),
-        ["x-default", localizedPath(officialLegalRoute ? "es" : "ht", path)]
+        ["x-default", localizedPath("ht", path)]
       ])
     },
     robots: allowIndexing

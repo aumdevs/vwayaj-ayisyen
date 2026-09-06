@@ -23,13 +23,37 @@ describe("versioned legal content", () => {
     }
   );
 
-  it("uses the official Spanish artifact for courtesy-language routes", () => {
-    expect(getLegalDocumentContent("privacy", "ht")?.title).toBe("Política de privacidad");
+  it("uses Haitian Creole for every visible legal route", () => {
+    expect(getLegalDocumentContent("privacy", "ht")?.title).toBe("Règleman konfidansyalite");
+    expect(getLegalDocumentContent("terms", "ht")?.title).toBe("Kondisyon itilizasyon");
+    expect(getLegalDocumentContent("security", "ht")?.title).toBe("Sekirite");
+    expect(getLegalDocumentContent("payments", "ht")?.title).toBe("Peman");
   });
 
-  it("describes the current public-only service without account or payment collection", () => {
-    const privacy = getLegalDocumentContent("privacy", "es");
-    expect(privacy?.version).toBe("privacy-2026-08-25-v3");
-    expect(privacy?.summary).toContain("sin cuentas, pagos, formularios ni carga de documentos");
+  it("describes Google identity and editable profile data", () => {
+    const privacy = getLegalDocumentContent("privacy", "ht");
+    expect(privacy?.version).toBe("privacy-2026-09-04-v5");
+    expect(privacy?.summary).toContain("kont, pwofil, sekirite ak kominikasyon");
+    const accountData = privacy?.sections
+      .find(({ id }) => id === "account-data")
+      ?.paragraphs.join(" ");
+    expect(accountData).toContain("Google");
+    expect(accountData).toContain("Nou pa resevwa ni estoke modpas Google ou");
+    expect(accountData).toContain("dat nesans");
+  });
+
+  it("states the travel, security and payment boundaries clearly", () => {
+    const terms = getLegalDocumentContent("terms", "ht");
+    const security = getLegalDocumentContent("security", "ht");
+    const payments = getLegalDocumentContent("payments", "ht");
+    expect(terms?.sections).toHaveLength(10);
+    expect(security?.sections).toHaveLength(10);
+    expect(payments?.sections).toHaveLength(10);
+    expect(terms?.sections.find(({ id }) => id === "service")?.paragraphs.join(" ")).toContain(
+      "pa òganize vwayaj nan okenn sikonstans"
+    );
+    expect(
+      payments?.sections.find(({ id }) => id === "no-guarantee")?.paragraphs.join(" ")
+    ).toContain("Okenn peman pa garanti viza");
   });
 });

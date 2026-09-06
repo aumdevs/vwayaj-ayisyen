@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "/",
     name: "Vwayaj Ayisyen",
     short_name: "Vwayaj",
-    description: "Gid 2026 pou Ayisyen prepare pou viv, travay oswa etidye aletranje.",
+    description: "Ajans ak gid 2026 pou Ayisyen prepare yon pwojè pou Chili oswa Brezil.",
     start_url: "/ht?source=pwa",
     scope: "/",
     display: "standalone",
@@ -76,13 +76,6 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       {
-        name: "Gid Etazini",
-        short_name: "Etazini",
-        description: "Louvri gid pratik Etazini an.",
-        url: "/ht/countries/usa?source=pwa-shortcut",
-        icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
-      },
-      {
         name: "Gid Chili",
         short_name: "Chili",
         description: "Louvri gid pratik Chili a.",
@@ -97,10 +90,10 @@ export default function manifest(): MetadataRoute.Manifest {
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "Gid Meksik",
-        short_name: "Meksik",
-        description: "Louvri gid pratik Meksik la.",
-        url: "/ht/countries/mexico?source=pwa-shortcut",
+        name: "Nouvèl enpòtan",
+        short_name: "Nouvèl",
+        description: "Li nouvèl sou Chili ak Brezil.",
+        url: "/ht/news?source=pwa-shortcut",
         icons: [{ src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
       }
     ]

@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v8";
+const CACHE_VERSION = "v10";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];
@@ -24,10 +24,11 @@ const PRECACHE_URLS = [
 const PUBLIC_PAGE_URLS = [
   "/ht",
   "/ht/countries",
-  "/ht/countries/usa",
   "/ht/countries/chile",
   "/ht/countries/brazil",
-  "/ht/countries/mexico"
+  "/ht/travel/chile",
+  "/ht/travel/brazil",
+  "/ht/news"
 ];
 
 function isNonCacheable(request, url) {

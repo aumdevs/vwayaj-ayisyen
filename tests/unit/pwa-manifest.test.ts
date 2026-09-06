@@ -29,12 +29,11 @@ describe("PWA manifest", () => {
       dir: "ltr",
       orientation: "any"
     });
-    expect(value.shortcuts).toHaveLength(4);
+    expect(value.shortcuts).toHaveLength(3);
     expect(value.shortcuts?.map(({ url }) => url)).toEqual([
-      "/ht/countries/usa?source=pwa-shortcut",
       "/ht/countries/chile?source=pwa-shortcut",
       "/ht/countries/brazil?source=pwa-shortcut",
-      "/ht/countries/mexico?source=pwa-shortcut"
+      "/ht/news?source=pwa-shortcut"
     ]);
   });
 

@@ -1,9 +1,37 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getSiteUrl, isIndexingAllowed } from "@/lib/config/runtime";
+import {
+  getSiteUrl,
+  isIndexingAllowed,
+  getFirebasePublicConfig,
+  isFirebaseAccountsReady,
+  isSupportEmailReady
+} from "@/lib/config/runtime";
 
 afterEach(() => vi.unstubAllEnvs());
 
 describe("public runtime configuration", () => {
+  it("keeps account access unavailable when public configuration is incomplete", () => {
+    vi.stubEnv("ACCOUNTS_ENABLED", "true");
+    vi.stubEnv("NEXT_PUBLIC_FIREBASE_API_KEY", "");
+    expect(getFirebasePublicConfig()).toBeNull();
+    expect(isFirebaseAccountsReady()).toBe(false);
+  });
+
+  it("requires a supported mail provider, its credential and a sender", () => {
+    vi.stubEnv("EMAIL_PROVIDER", "unsupported");
+    vi.stubEnv("EMAIL_PROVIDER_API_KEY", "test-mail-key");
+    vi.stubEnv("EMAIL_FROM", "support@example.com");
+    expect(isSupportEmailReady()).toBe(false);
+    vi.stubEnv("EMAIL_PROVIDER", "resend");
+    vi.stubEnv("EMAIL_PROVIDER_API_KEY", "");
+    expect(isSupportEmailReady()).toBe(false);
+    vi.stubEnv("EMAIL_PROVIDER_API_KEY", "test-mail-key");
+    vi.stubEnv("EMAIL_FROM", "");
+    expect(isSupportEmailReady()).toBe(false);
+    vi.stubEnv("EMAIL_FROM", "support@example.com");
+    expect(isSupportEmailReady()).toBe(true);
+  });
+
   it("uses a safe localhost fallback for missing or malformed site URLs", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "not-a-url");
     vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "");

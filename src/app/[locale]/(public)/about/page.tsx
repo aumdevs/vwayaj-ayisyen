@@ -10,15 +10,15 @@ import type { Locale } from "@/types/domain";
 
 const aboutCopy = {
   ht: {
-    title: "Yon gid klè pou pran yon desizyon ki pi byen prepare.",
-    body: "Vwayaj Ayisyen esplike sa yon Ayisyen bezwen konnen anvan li chwazi Etazini, Chili, Brezil oswa Meksik: ki chemen ki ouvè, sa pou prepare depi Ayiti ak premye demach pou viv, travay oswa etidye lè li rive.",
+    title: "Yon ajans ki ede w prepare pwojè ou ak plis klète.",
+    body: "Vwayaj Ayisyen ede kominote ayisyèn nan konprann chemen pou Chili ak Brezil: sa pou prepare, ki otorite pou kontakte ak kijan pou mande sipò lè yon etap pa klè.",
     principles: [
       [
         "Sous an premye",
         "Nou mennen w nan anbasad, sèvis imigrasyon ak lòt otorite ki responsab yo."
       ],
       ["Reyalite 2026", "Nou di klèman lè yon chemen ouvè, limite oswa fèmen pou Ayisyen."],
-      ["Lang ki aksesib", "Eksplikasyon yo disponib an kreyòl, fransè, panyòl, pòtigè ak anglè."]
+      ["Kreyòl sèlman", "Tout eksplikasyon piblik yo disponib an kreyòl ayisyen sèlman."]
     ],
     processTitle: "Kijan nou òganize chak gid",
     process: [

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { LogoMark } from "@/components/brand/logo-mark";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { BRAND } from "@/config/brand";
 import { publicCopy } from "@/content/public-copy";
 import { countries } from "@/lib/content/catalog";
@@ -24,7 +23,6 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             <strong>{BRAND.name}</strong>
           </div>
           <p>{copy.footer.promise}</p>
-          <LanguageSwitcher locale={locale} placement="footer" />
         </div>
         <nav aria-label={copy.footer.destinations}>
           <strong>{copy.footer.destinations}</strong>

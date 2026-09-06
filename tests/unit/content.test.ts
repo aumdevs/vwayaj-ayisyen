@@ -9,13 +9,13 @@ import { COUNTRY_MIGRATION_GUIDES } from "@/content/migration-guides";
 import { SUPPORTED_LOCALES } from "@/types/domain";
 
 describe("public country catalog", () => {
-  it("contains exactly the four approved countries", () => {
-    expect(countries.map(({ code }) => code)).toEqual(["usa", "chile", "brazil", "mexico"]);
-    expect(new Set(countries.map(({ iso2 }) => iso2)).size).toBe(4);
+  it("contains exactly the two approved agency destinations", () => {
+    expect(countries.map(({ code }) => code)).toEqual(["chile", "brazil"]);
+    expect(new Set(countries.map(({ iso2 }) => iso2)).size).toBe(2);
   });
 
   it("rejects arbitrary country slugs", () => {
-    expect(isCountryCode("usa")).toBe(true);
+    expect(isCountryCode("usa")).toBe(false);
     expect(isCountryCode("haiti")).toBe(false);
     expect(getCountry("brazil").iso2).toBe("BR");
     expect(() => getCountry("unknown" as "usa")).toThrow("Unknown country code");

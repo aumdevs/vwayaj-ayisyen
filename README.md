@@ -1,22 +1,25 @@
 # Vwayaj Ayisyen
 
-[Vwayaj Ayisyen](https://vwayajayisyen.com) se yon gid piblik 2026 pou ede yon
-Ayisyen prepare pou viv, travay oswa etidye Etazini, Chili, Brezil oswa Meksik.
-Li esplike chemen ki posib yo, sa pou prepare depi Ayiti ak demach ki enpòtan
-lè moun nan rive.
+[Vwayaj Ayisyen](https://vwayajayisyen.com) se yon ajans dijital pou kominote
+ayisyèn nan. Eksperyans piblik la konsantre sèlman sou Chili ak Brezil. Li
+esplike chemen ki posib yo, sa pou prepare ak kote pou kòmanse demach ofisyèl
+yo, epi li bay yon pòt pou mande ekip la èd sou WhatsApp lè sèvis sa a aktive.
 
-Sit la disponib an kreyòl ayisyen, fransè, panyòl, pòtigè ak anglè. Kreyòl se
-lang prensipal la.
+Tout koòdone ak kontni piblik la disponib sèlman an kreyòl ayisyen.
 
 ## Sa ki disponib
 
-- 48 lyen ofisyèl, revize 25 out 2026;
-- gid konplè pou Etazini, Chili, Brezil ak Meksik;
+- chwa ant Chili ak Brezil sou òdinatè;
+- chwa peyi rezidans lan ant Ayiti, Repiblik Dominikèn, Chili, Brezil, Meksik
+  ak Etazini, plis yon chemen limite pou lòt peyi;
+- gid detaye pou Chili ak Brezil;
 - opsyon pou travay, fanmi, etid, vizit ak pwoteksyon;
 - preparasyon depi Ayiti, dokiman ak premye demach apre arive;
-- reyalite sou wout iregilye ak risk yo, san kontak ni enstriksyon danjere;
-- enstalasyon sou telefòn kòm PWA ak paj piblik ki disponib offline;
-- okenn kont, koneksyon, peman oswa telechajman dokiman.
+- dis nouvèl enpòtan prezante nan seksyon ki fasil pou li;
+- yon eksperyans mobil tankou yon aplikasyon, ak splash, kat ekran akèy,
+  koneksyon, pwofil ak enstalasyon PWA;
+- koneksyon oswa enskripsyon nan yon sèl etap ak Google, pwofil pèsonèl,
+  preferans notifikasyon ak nouvèl anrejistre, sèlman lè Firebase aktive.
 
 Sit la pa vann viza oswa randevou, li pa reprezante okenn gouvènman epi li pa
 garanti yon rezilta. Toujou verifye kondisyon aktyèl yo sou paj otorite a anvan
@@ -42,5 +45,7 @@ pwoblèm sekirite, itilize GitHub Security Advisories.
 Repozitwa a piblik men kòd la rete anba lisans pwopriyetè ki nan
 [`LICENSE`](LICENSE).
 
-Gade [`docs/50_PRACTICAL_MIGRATION_GUIDES_2026-08-25.md`](docs/50_PRACTICAL_MIGRATION_GUIDES_2026-08-25.md)
-pou dimansyon aktyèl la ak verifikasyon lansman an.
+Gade [`docs/51_MOBILE_AGENCY_EXPERIENCE_2026-09-04.md`](docs/51_MOBILE_AGENCY_EXPERIENCE_2026-09-04.md)
+pou dimansyon aktyèl la, sekirite, deplwaman ak verifikasyon lansman an.
+Entegrasyon kont Google la dokimante nan
+[`docs/52_FIREBASE_GOOGLE_ACCOUNTS_2026-09-04.md`](docs/52_FIREBASE_GOOGLE_ACCOUNTS_2026-09-04.md).

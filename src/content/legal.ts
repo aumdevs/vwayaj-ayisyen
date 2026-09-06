@@ -12,14 +12,23 @@ export const LEGAL_ENTITY = {
 } as const;
 
 export const LEGAL_VERSIONS = {
-  terms: "terms-2026-08-25-v3",
-  privacy: "privacy-2026-08-25-v3",
-  cookies: "cookies-2026-08-25-v3"
+  terms: "terms-2026-09-04-v5",
+  privacy: "privacy-2026-09-04-v5",
+  cookies: "cookies-2026-09-04-v5",
+  security: "security-2026-09-04-v1",
+  payments: "payments-2026-09-04-v1"
 } as const;
 
-export const PUBLISHED_LEGAL_DOCUMENTS = ["terms", "privacy", "cookies"] as const;
+export const PUBLISHED_LEGAL_DOCUMENTS = [
+  "terms",
+  "privacy",
+  "security",
+  "payments",
+  "cookies"
+] as const;
+export const LEGAL_NAV_DOCUMENTS = ["terms", "privacy", "security", "payments"] as const;
 export type PublishedLegalDocument = (typeof PUBLISHED_LEGAL_DOCUMENTS)[number];
-export type OfficialLegalLocale = "es" | "pt";
+export type OfficialLegalLocale = "ht" | "es" | "pt";
 
 export type LegalSection = {
   id: string;
@@ -338,17 +347,391 @@ const portugueseCookies: LegalDocumentContent = {
   ]
 };
 
-const legalContent = {
+const sharedHaitian = {
+  kicker: "Dokiman legal",
+  updatedLabel: "An vigè depi",
+  versionLabel: "Vèsyon",
+  languageLabel: "Lang dokiman an",
+  languageNotice: "Vèsyon an kreyòl ayisyen se vèsyon sit la itilize pou sèvis ak kont yo.",
+  contactTitle: "Kontak legal ak sipò",
+  effectiveDate: "4 septanm 2026"
+} as const;
+
+const haitianTerms: LegalDocumentContent = {
+  ...sharedHaitian,
+  title: "Kondisyon itilizasyon",
+  summary:
+    "Kondisyon sa yo esplike règ pou sèvi ak gid, kont ak chanèl asistans Vwayaj Ayisyen yo.",
+  version: LEGAL_VERSIONS.terms,
+  sections: [
+    {
+      id: "operator",
+      title: "1. Kilès ki opere sèvis la",
+      paragraphs: [
+        `${LEGAL_ENTITY.name}, yon antite ${LEGAL_ENTITY.type} nan ${LEGAL_ENTITY.country}, opere sèvis la depi ${LEGAL_ENTITY.publicAddress}.`,
+        `Pou sipò: ${LEGAL_ENTITY.email.support}. Pou kestyon legal oswa konfidansyalite: ${LEGAL_ENTITY.email.legal}.`
+      ]
+    },
+    {
+      id: "service",
+      title: "2. Sa sèvis la fè",
+      paragraphs: [
+        "Vwayaj Ayisyen bay enfòmasyon jeneral epi li ka ede yon kliyan konprann oswa prepare yon demach pou Chili oswa Brezil lè sèvis sa a aktive aklè.",
+        "Vwayaj Ayisyen pa òganize vwayaj nan okenn sikonstans. Nou pa achte tikè, nou pa fè rezèvasyon, nou pa chwazi wout vwayaj epi nou pa transpòte moun.",
+        "Nou pa yon anbasad, yon konsila oswa yon biwo imigrasyon. Nou pa ka garanti viza, rezidans, travay, antre nan yon peyi, yon delè oswa yon rezilta."
+      ]
+    },
+    {
+      id: "acceptance",
+      title: "3. Akseptasyon kondisyon yo",
+      paragraphs: [
+        "Lè ou itilize sit la, kreye yon kont oswa mande yon sèvis, ou dakò suiv kondisyon sa yo. Si ou pa dakò, ou dwe sispann sèvi ak fonksyon ki konsène a.",
+        "Yon kondisyon espesifik ki parèt klèman anvan yon sèvis ka konplete kondisyon jeneral sa yo."
+      ]
+    },
+    {
+      id: "accounts",
+      title: "4. Kont ak verifikasyon imèl",
+      paragraphs: [
+        "Lè enskripsyon aktive, kont la ka ouvri tousuit pou rann aksè a pi fasil. Itilizatè a dwe verifye adrès imèl li nan 24 èdtan ak lyen nou voye a.",
+        "Ou responsab pou bay enfòmasyon ki kòrèk, pwoteje modpas ou epi pa kite yon lòt moun sèvi ak kont ou san otorizasyon."
+      ]
+    },
+    {
+      id: "assistance",
+      title: "5. Limit asistans nou",
+      paragraphs: [
+        "Lè asistans viza disponib, nou ka ede òganize enfòmasyon ak etap yon dosye. Se otorite konsilè oswa migratwa a sèlman ki pran desizyon final la.",
+        "Nou pa garanti yon viza, yon randevou, yon delè, yon travay, yon admisyon oswa yon rezilta."
+      ]
+    },
+    {
+      id: "accuracy",
+      title: "6. Enfòmasyon ak desizyon",
+      paragraphs: [
+        "Règ gouvènman, pri ak pwosedi kapab chanje. Verifye enfòmasyon aktyèl la ak otorite ki responsab la anvan ou peye, remèt dokiman oswa achte yon tikè.",
+        "Yon bouton pou fè demach la poukont ou mennen nan yon sèvis ekstèn. Sit ekstèn nan aplike pwòp kondisyon ak règleman konfidansyalite li."
+      ]
+    },
+    {
+      id: "conduct",
+      title: "7. Itilizasyon ki pa akseptab",
+      paragraphs: [
+        "Pa sèvi ak sit la pou fwod, vòl idantite, antre nan kont yon lòt moun, voye kontni ilegal oswa deranje sekirite sèvis la.",
+        "Nou ka limite oswa fèmen yon kont ki vyole règ sa yo, apre mezi ki apwopriye pou pwoteje sèvis la ak itilizatè yo."
+      ]
+    },
+    {
+      id: "external-services",
+      title: "8. Lyen ak sèvis ekstèn",
+      paragraphs: [
+        "Lyen pou anbasad, konsila, sèvis gouvènman oswa WhatsApp mennen deyò Vwayaj Ayisyen. Chak sèvis ekstèn aplike pwòp règ ak règleman konfidansyalite li.",
+        "Prezans yon lyen pa vle di Vwayaj Ayisyen kontwole sit sa a oswa garanti enfòmasyon, disponiblite ak desizyon li yo."
+      ]
+    },
+    {
+      id: "availability",
+      title: "9. Disponiblite ak chanjman sèvis la",
+      paragraphs: [
+        "Nou ka korije, mete ajou, ajoute oswa retire yon fonksyon pou sekirite, antretyen oswa amelyorasyon sèvis la.",
+        "Nou fè efò pou kenbe platfòm nan disponib, men nou pa pwomèt li pap janm gen yon pann oswa yon reta teknik."
+      ]
+    },
+    {
+      id: "updates-contact",
+      title: "10. Mizajou ak kontak",
+      paragraphs: [
+        "Nou ka mete kondisyon sa yo ajou lè sèvis la oswa obligasyon nou yo chanje. Dat ak nimewo vèsyon ki anlè paj la montre dokiman ki an vigè a.",
+        `Pou kestyon sou kondisyon sa yo, ekri ${LEGAL_ENTITY.email.legal}. Pou sipò jeneral, ekri ${LEGAL_ENTITY.email.support}.`
+      ]
+    }
+  ]
+};
+
+const haitianSecurity: LegalDocumentContent = {
+  ...sharedHaitian,
+  title: "Sekirite",
+  summary: "Gid sa a esplike fason pou pwoteje kont ou, dokiman ou, lajan ou ak kominikasyon ou.",
+  version: LEGAL_VERSIONS.security,
+  sections: [
+    {
+      id: "responsibility",
+      title: "1. Sekirite se responsabilite tout moun",
+      paragraphs: [
+        "Vwayaj Ayisyen itilize mezi teknik ak òganizasyonèl pou pwoteje sèvis la. Ou dwe itilize bon abitid tou pou pwoteje aparèy, kont ak enfòmasyon ou.",
+        "Okenn sistèm pa elimine tout risk. Rete vijilan lè yon mesaj mande aksyon rapid, lajan oswa dokiman prive."
+      ]
+    },
+    {
+      id: "passwords",
+      title: "2. Modpas ak aksè nan kont",
+      paragraphs: [
+        "Chwazi yon modpas long ou pa itilize sou lòt sèvis. Pa bay pèsonn modpas ou, menm si moun nan di li travay pou Vwayaj Ayisyen.",
+        "Dekonekte sou aparèy piblik oswa aparèy ou pataje. Si ou panse yon lòt moun antre nan kont ou, chanje modpas la tousuit."
+      ]
+    },
+    {
+      id: "verification",
+      title: "3. Imèl ak kòd verifikasyon",
+      paragraphs: [
+        "Pa pataje kòd, lyen koneksyon oswa lyen verifikasyon imèl. Ekip nou an pap mande ou voye yon kòd prive nan WhatsApp.",
+        "Verifye adrès moun ki voye mesaj la ak adrès sit la anvan ou klike sou yon lyen."
+      ]
+    },
+    {
+      id: "documents",
+      title: "4. Dokiman pèsonèl",
+      paragraphs: [
+        "Pa voye paspò, kat idantite, dosye migrasyon, enfòmasyon medikal oswa done bankè nan yon gwoup oswa mesaj ki pa pwoteje.",
+        "Si yon sèvis mande yon dokiman, verifye objektif la, moun k ap resevwa li ak mwayen sekirize ki prevwa pou transmisyon an."
+      ]
+    },
+    {
+      id: "messages",
+      title: "5. WhatsApp ak rezo sosyal",
+      paragraphs: [
+        "Yon foto pwofil oswa yon logo pa pwouve yon kont ofisyèl. Sèvi sèlman ak nimewo ak lyen ki parèt sou platfòm Vwayaj Ayisyen an.",
+        "Pa kwè mesaj ki garanti viza, travay, papye oswa randevou an echanj pou yon peman rapid."
+      ]
+    },
+    {
+      id: "phishing",
+      title: "6. Fo sit ak fo lyen",
+      paragraphs: [
+        "Li adrès entènèt la anvan ou antre enfòmasyon. Yon ti chanjman nan non domèn nan ka mennen sou yon fo sit.",
+        "Pa telechaje yon fichye oswa aplikasyon yon moun enkoni voye ba ou pou swadizan fini yon demach."
+      ]
+    },
+    {
+      id: "money",
+      title: "7. Pwoteje lajan ou",
+      paragraphs: [
+        "Pa fè peman sou yon kont pèsonèl oswa ak yon metòd ki pa parèt nan enstriksyon ofisyèl sèvis la. Mande yon resi ki idantifye sèvis la.",
+        "Yon peman pou asistans pa achte yon viza epi li pa ka fòse yon otorite pran yon desizyon."
+      ]
+    },
+    {
+      id: "devices",
+      title: "8. Telefòn, òdinatè ak rezo",
+      paragraphs: [
+        "Mete sistèm ak navigatè ou ajou, sèvi ak yon kòd pou fèmen ekran an epi evite antre done sansib sou yon rezo piblik ou pa fè konfyans.",
+        "Pa kite foto dokiman rete san pwoteksyon nan galri yon aparèy lòt moun ka itilize."
+      ]
+    },
+    {
+      id: "report",
+      title: "9. Rapòte yon pwoblèm",
+      paragraphs: [
+        `Si yon moun sèvi ak non Vwayaj Ayisyen pou twonpe ou, sove prèv la san pataje li piblikman epi ekri ${LEGAL_ENTITY.email.support}.`,
+        "Si gen vòl lajan, menas oswa vòl idantite, kontakte sèvis lokal ki responsab la tou."
+      ]
+    },
+    {
+      id: "emergency",
+      title: "10. Lè gen yon ijans",
+      paragraphs: [
+        "Vwayaj Ayisyen pa yon sèvis ijans. Si lavi, sante oswa sekirite yon moun an danje, kontakte sèvis ijans oswa otorite lokal kote moun nan ye a.",
+        "Pa tann yon repons sou sit la oswa WhatsApp pou yon sitiyasyon ijan."
+      ]
+    }
+  ]
+};
+
+const haitianPayments: LegalDocumentContent = {
+  ...sharedHaitian,
+  title: "Peman",
+  summary: "Règ sa yo esplike sa pou verifye anvan, pandan ak apre yon peman pou yon sèvis.",
+  version: LEGAL_VERSIONS.payments,
+  sections: [
+    {
+      id: "current-status",
+      title: "1. Sitiyasyon peman sou sit la",
+      paragraphs: [
+        "Vwayaj Ayisyen pa resevwa ni trete peman dirèkteman sou sit la kounye a. Yon ekran ki mande kat oswa transfè sou sit la pa dwe konsidere kòm aktif san yon avi klè nan men nou.",
+        "Nou pa vann tikè avyon, rezèvasyon vwayaj, viza oswa randevou gouvènman."
+      ]
+    },
+    {
+      id: "service-scope",
+      title: "2. Sa yon sèvis peye dwe esplike",
+      paragraphs: [
+        "Anvan nenpòt peman, kliyan an dwe wè non sèvis la, sa li gen ladan l, sa li pa gen ladan l, pri a ak etap ki vin apre yo.",
+        "Pa peye sou baz yon pwomès oral ki pa koresponn ak deskripsyon sèvis la."
+      ]
+    },
+    {
+      id: "government-fees",
+      title: "3. Frè gouvènman ak frè sèvis",
+      paragraphs: [
+        "Yon frè konsila, anbasad oswa lòt otorite separe ak nenpòt frè asistans Vwayaj Ayisyen. Chak peman dwe idantifye kiyès k ap resevwa li ak rezon li.",
+        "Pri ak metòd peman yon otorite ka chanje; verifye yo sou paj otorite a anvan ou peye."
+      ]
+    },
+    {
+      id: "authorized-methods",
+      title: "4. Metòd peman ki otorize",
+      paragraphs: [
+        "Si peman aktive, sèvi sèlman ak metòd ki parèt nan òf oswa fakti ofisyèl la. Pa transfere lajan sou yon kont yon moun voye nan yon mesaj san verifikasyon.",
+        "Non moun oswa antite k ap resevwa lajan an dwe koresponn ak enstriksyon peman an."
+      ]
+    },
+    {
+      id: "receipts",
+      title: "5. Resi ak prèv peman",
+      paragraphs: [
+        "Kenbe fakti, resi, dat, kantite lajan ak referans tranzaksyon an. Pa pibliye prèv ki montre done bankè oswa enfòmasyon pèsonèl ou.",
+        "Yon resi dwe idantifye sèvis ou te peye a; li pa yon prèv ke yon viza ap apwouve."
+      ]
+    },
+    {
+      id: "no-guarantee",
+      title: "6. Peman pa garanti rezilta",
+      paragraphs: [
+        "Okenn peman pa garanti viza, rezidans, travay, randevou, admisyon, delè oswa yon desizyon favorab.",
+        "Se otorite ki responsab la ki analize dosye a epi pran desizyon final la."
+      ]
+    },
+    {
+      id: "cancellation-refund",
+      title: "7. Anilasyon ak ranbousman",
+      paragraphs: [
+        "Lè yon sèvis peye aktive, kondisyon anilasyon ak ranbousman ki aplikab yo dwe parèt anvan peman an. Li yo epi poze kestyon si yon pwen pa klè.",
+        "Yon frè yon otorite ekstèn resevwa ka suiv pwòp règ ranbousman otorite sa a."
+      ]
+    },
+    {
+      id: "disputes",
+      title: "8. Erè oswa dezakò sou yon peman",
+      paragraphs: [
+        `Si ou remake yon erè, pa voye done kat ou pa imèl oswa WhatsApp. Ekri ${LEGAL_ENTITY.email.support} ak referans ki pa sansib la.`,
+        "Pa fè menm peman an plizyè fwa pandan w ap tann yon konfimasyon."
+      ]
+    },
+    {
+      id: "fraud",
+      title: "9. Fo demann peman",
+      paragraphs: [
+        "Sispann si yon moun mete presyon sou ou, mande yon kòd sekrè oswa pwomèt yon rezilta garanti. Verifye demann lan atravè kontak ki sou sit la.",
+        "Vwayaj Ayisyen pap mande modpas bank ou oswa kòd verifikasyon kont finansye ou."
+      ]
+    },
+    {
+      id: "updates",
+      title: "10. Aktivasyon ak mizajou",
+      paragraphs: [
+        "N ap mete paj sa a ajou anvan nou aktive peman sou platfòm nan. Nimewo vèsyon ak dat ki anlè a ap montre règ ki an vigè yo.",
+        `Pou kestyon sou yon sèvis oswa yon peman, ekri ${LEGAL_ENTITY.email.support}.`
+      ]
+    }
+  ]
+};
+
+const haitianPrivacy: LegalDocumentContent = {
+  ...sharedHaitian,
+  title: "Règleman konfidansyalite",
+  summary: "Règleman sa a esplike done nou itilize pou kont, pwofil, sekirite ak kominikasyon.",
+  version: LEGAL_VERSIONS.privacy,
+  sections: [
+    {
+      id: "responsible",
+      title: "1. Responsab done yo",
+      paragraphs: [
+        `${LEGAL_ENTITY.name}, nan ${LEGAL_ENTITY.publicAddress}, responsab tretman ki dekri nan règleman sa a.`,
+        `Pou yon kestyon oswa demann sou done ou: ${LEGAL_ENTITY.email.legal}.`
+      ]
+    },
+    {
+      id: "account-data",
+      title: "2. Done kont ak pwofil",
+      paragraphs: [
+        "Pou konekte, Google voye nou idantifyan kont la, non, imèl verifye ak foto Google ou. Nou pa resevwa ni estoke modpas Google ou.",
+        "Nan pwofil la, ou ka ajoute oswa modifye non, foto pwofil, nimewo kontak, peyi kote ou rete, dat nesans ak preferans notifikasyon. Imèl Google la rete sèlman pou lekti sou sit la. Nou kenbe tou lis nouvèl ou chwazi anrejistre yo.",
+        "Pa mete paspò, nimewo idantite, dosye migrasyon, done medikal oswa dokiman prive nan foto pwofil la."
+      ]
+    },
+    {
+      id: "purpose",
+      title: "3. Poukisa nou itilize done yo",
+      paragraphs: [
+        "Nou itilize done sa yo pou louvri ak pwoteje kont la, montre ak pèsonalize pwofil la, kenbe preferans ak nouvèl anrejistre, reponn sipò ak anpeche abi.",
+        "Nou pa vann done pwofil ou. Founisè otantifikasyon, imèl ak lojman ka trete done teknik ki nesesè pou bay ak pwoteje sèvis la."
+      ]
+    },
+    {
+      id: "whatsapp",
+      title: "4. WhatsApp ak sit ekstèn",
+      paragraphs: [
+        "Lè ou peze yon bouton WhatsApp, ou kite Vwayaj Ayisyen. Mesaj ki prepare a pa dwe gen non konplè, paspò, estati migratwa oswa lòt done sansib.",
+        "Pa voye dokiman pèsonèl sou WhatsApp. WhatsApp ak paj gouvènman yo aplike pwòp règleman yo."
+      ]
+    },
+    {
+      id: "rights",
+      title: "5. Chwa ak dwa ou",
+      paragraphs: [
+        "Ou ka mande aksè, koreksyon oswa efasman done kont ou atravè kontak legal la. Nou ka bezwen verifye idantite moun ki fè demann lan san mande plis done pase sa ki nesesè.",
+        "N ap mete règleman sa a ajou anvan nou aktive yon fonksyon ki chanje fason nou trete done pèsonèl anpil."
+      ]
+    }
+  ]
+};
+
+const haitianCookies: LegalDocumentContent = {
+  ...sharedHaitian,
+  title: "Cookies ak depo sou telefòn",
+  summary:
+    "Aplikasyon entènèt la itilize depo ki nesesè pou sesyon, sekirite, onboarding ak preferans aparèy la.",
+  version: LEGAL_VERSIONS.cookies,
+  sections: [
+    {
+      id: "necessary",
+      title: "1. Cookies ki nesesè",
+      paragraphs: [
+        "Lè ou konekte ak Google, sèvis koneksyon an ak sit la itilize cookies sekirize ki nesesè pou kenbe sesyon an. Cookies sa yo pa sèvi pou piblisite sou Vwayaj Ayisyen.",
+        "Nou itilize depo lokal sèlman pou sonje etap akèy aplikasyon an ak si ou te kontinye kòm envite."
+      ]
+    },
+    {
+      id: "device-storage",
+      title: "2. Depo sou aparèy la",
+      paragraphs: [
+        "Nou sonje si ou deja wè splash ak onboarding lan, si ou kontinye kòm envite, epi si envitasyon pou enstale aplikasyon an te parèt.",
+        "Navigatè a ka kenbe dosye piblik yo pou aplikasyon an louvri pi vit oswa montre yon paj lè entènèt la koupe."
+      ]
+    },
+    {
+      id: "control",
+      title: "3. Kontwòl ou",
+      paragraphs: [
+        "Ou ka efase done sit la nan paramèt navigatè ou oswa dezinstale PWA a. Sa ka dekonekte kont la epi fè onboarding lan parèt ankò.",
+        "Paj gouvènman ak WhatsApp ou louvri yo ka itilize pwòp cookies pa yo."
+      ]
+    }
+  ]
+};
+
+const legalContent: Record<
+  OfficialLegalLocale,
+  Partial<Record<PublishedLegalDocument, LegalDocumentContent>>
+> = {
+  ht: {
+    terms: haitianTerms,
+    privacy: haitianPrivacy,
+    security: haitianSecurity,
+    payments: haitianPayments,
+    cookies: haitianCookies
+  },
   es: { terms: spanishTerms, privacy: spanishPrivacy, cookies: spanishCookies },
   pt: { terms: portugueseTerms, privacy: portuguesePrivacy, cookies: portugueseCookies }
-} satisfies Record<OfficialLegalLocale, Record<PublishedLegalDocument, LegalDocumentContent>>;
+};
 
 export function isPublishedLegalDocument(value: string): value is PublishedLegalDocument {
   return PUBLISHED_LEGAL_DOCUMENTS.some((document) => document === value);
 }
 
 export function getOfficialLegalLocale(locale: Locale): OfficialLegalLocale {
-  return locale === "pt" ? "pt" : "es";
+  void locale;
+  return "ht";
 }
 
 export function getLegalDocumentContent(
@@ -357,5 +740,5 @@ export function getLegalDocumentContent(
   version: string = LEGAL_VERSIONS[document]
 ): LegalDocumentContent | null {
   const content = legalContent[getOfficialLegalLocale(locale)][document];
-  return content.version === version ? content : null;
+  return content?.version === version ? content : null;
 }
