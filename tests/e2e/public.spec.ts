@@ -26,6 +26,11 @@ test("the agency home presents only Chile and Brazil", async ({ page }, testInfo
     testInfo.project.name === "mobile" ? 1024 : 640
   );
   if (testInfo.project.name === "mobile") {
+    await expect(page.locator(".mobile-app-logo")).toHaveAttribute(
+      "src",
+      "/images/brand/logo-transparent.png"
+    );
+    await expect(page.locator(".mobile-app-airplane")).toBeVisible();
     await expect(page.locator(".mobile-agency-home")).toBeVisible();
     await expect(page.locator(".mobile-destination-card")).toHaveCount(2);
     await expect(page.locator(".mobile-home-destinations")).toContainText("Chili");
@@ -46,6 +51,7 @@ test("the agency home presents only Chile and Brazil", async ({ page }, testInfo
     );
     await page.getByRole("link", { name: /Santiago/ }).click();
     await expect(page).toHaveURL(/\/ht\/travel\/chile$/);
+    await expect(page.locator(".mobile-app-title-plane")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Nan ki peyi ou ye kounye a?" })).toBeVisible();
   } else {
     await expect(
