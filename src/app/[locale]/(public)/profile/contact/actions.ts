@@ -28,7 +28,7 @@ export async function sendSupportMessageAction(
   formData: FormData
 ): Promise<SupportMessageState> {
   const viewer = await getFirebaseViewer();
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!viewer?.email || !services) return { status: "unauthorized" };
   if (!isSupportEmailReady()) return { status: "unavailable" };
   const parsed = supportMessageSchema.safeParse({

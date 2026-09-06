@@ -1,13 +1,11 @@
 import "server-only";
 
-import { cert, getApp, getApps, initializeApp, type App } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
-import { getStorage } from "firebase-admin/storage";
+import type { App } from "firebase-admin/app";
 import { getFirebasePublicConfig, isFirebaseAccountsReady } from "@/lib/config/runtime";
 
-export function getFirebaseAdminApp(): App | null {
+export async function getFirebaseAdminApp(): Promise<App | null> {
   if (!isFirebaseAccountsReady()) return null;
+  const { cert, getApp, getApps, initializeApp } = await import("firebase-admin/app");
   if (getApps().length) return getApp();
   const publicConfig = getFirebasePublicConfig();
   if (!publicConfig) return null;
@@ -23,10 +21,17 @@ export function getFirebaseAdminApp(): App | null {
   });
 }
 
-export function getFirebaseAdminServices() {
-  const app = getFirebaseAdminApp();
+export async function getFirebaseAdminServices() {
+  const app = await getFirebaseAdminApp();
   if (!app) return null;
+  // Public browsing must not load account infrastructure while accounts are disabled.
+  const [{ getAuth }, { getFirestore, FieldValue }, { getStorage }] = await Promise.all([
+    import("firebase-admin/auth"),
+    import("firebase-admin/firestore"),
+    import("firebase-admin/storage")
+  ]);
   return {
+    fieldValue: FieldValue,
     auth: getAuth(app),
     db: getFirestore(app),
     bucket: getStorage(app).bucket()

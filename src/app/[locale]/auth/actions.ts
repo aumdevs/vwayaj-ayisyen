@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { FieldValue } from "firebase-admin/firestore";
 import { z } from "zod";
 import { RESIDENCE_COUNTRIES } from "@/content/agency";
 import { getFirebaseAdminServices } from "@/lib/firebase/admin";
@@ -53,7 +52,7 @@ export async function updateMobileProfileAction(
       notificationsEnabled: formData.get("notifications_enabled") === "on"
     });
   if (!parsed.success) return { status: "invalid" };
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!services) return { status: "unauthorized" };
   try {
     await services.db.collection("profiles").doc(viewer.id).set(
@@ -63,7 +62,7 @@ export async function updateMobileProfileAction(
         phone: parsed.data.phone,
         birthDate: parsed.data.birthDate,
         notificationsEnabled: parsed.data.notificationsEnabled,
-        updatedAt: FieldValue.serverTimestamp()
+        updatedAt: services.fieldValue.serverTimestamp()
       },
       { merge: true }
     );

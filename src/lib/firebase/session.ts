@@ -24,7 +24,7 @@ function optionalString(value: unknown): string | null {
 }
 
 export async function getFirebaseViewer(): Promise<MobileViewer | null> {
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!services) return null;
   const sessionCookie = (await cookies()).get(FIREBASE_SESSION_COOKIE)?.value;
   if (!sessionCookie) return null;

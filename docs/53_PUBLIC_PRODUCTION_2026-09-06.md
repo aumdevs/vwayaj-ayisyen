@@ -39,6 +39,18 @@ a duplicate project or move the domain to another team.
 Rollback: restore the previous Vercel deployment and revert the release commit.
 There is no database rollback because this release does not apply migrations.
 
+## Production runtime follow-up
+
+The first production smoke check found HTTP 500 responses on routes importing
+the account server SDK; the independent sign-in notice returned HTTP 200.
+The public release now loads that SDK only after the server account flag and
+configuration checks succeed. Regression tests simulate an unavailable SDK and
+verify that public-only deployments never import it. This isolates public
+reading from future account infrastructure without relaxing authorization.
+The exact provider packaging failure requires deployment runtime logs before
+account activation; the current CLI identity cannot access the owning team's
+logs. No provider configuration or data is changed by this follow-up.
+
 ## Pending features
 
 Google accounts, saved articles, editable profiles, notifications and private

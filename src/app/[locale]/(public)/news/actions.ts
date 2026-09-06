@@ -1,6 +1,5 @@
 "use server";
 
-import { FieldValue } from "firebase-admin/firestore";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { NEWS_ARTICLES } from "@/content/agency";
@@ -18,7 +17,7 @@ export async function setNewsSavedAction(
     .safeParse({ slug, saved });
   if (!parsed.success || !knownSlugs.has(parsed.data.slug)) return { status: "invalid" };
   const viewer = await getFirebaseViewer();
-  const services = getFirebaseAdminServices();
+  const services = await getFirebaseAdminServices();
   if (!viewer || !services) return { status: "unauthorized" };
 
   try {
@@ -28,9 +27,9 @@ export async function setNewsSavedAction(
       .set(
         {
           savedArticleSlugs: saved
-            ? FieldValue.arrayUnion(parsed.data.slug)
-            : FieldValue.arrayRemove(parsed.data.slug),
-          updatedAt: FieldValue.serverTimestamp()
+            ? services.fieldValue.arrayUnion(parsed.data.slug)
+            : services.fieldValue.arrayRemove(parsed.data.slug),
+          updatedAt: services.fieldValue.serverTimestamp()
         },
         { merge: true }
       );
