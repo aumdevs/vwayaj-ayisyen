@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { LogoMark } from "@/components/brand/logo-mark";
+import { BrandLogo } from "@/components/brand/logo-mark";
 import { BRAND } from "@/config/brand";
 import { publicCopy } from "@/content/public-copy";
 import { countries } from "@/lib/content/catalog";
@@ -19,8 +19,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
       <div className="shell footer-grid">
         <div className="footer-intro">
           <div className="footer-brand">
-            <LogoMark className="brand-mark" />
-            <strong>{BRAND.name}</strong>
+            <BrandLogo />
           </div>
           <p>{copy.footer.promise}</p>
         </div>

@@ -309,6 +309,30 @@ h3 {
 .brand-mark {
   width: 2.45rem;
   height: 2.45rem;
+  padding: 0.2rem;
+  border-radius: 0.6rem;
+  background: #fff;
+}
+
+.logo-symbol {
+  display: block;
+  width: 2.45rem;
+  height: 2.45rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.brand-logo {
+  display: block;
+  width: 11rem;
+  height: auto;
+  object-fit: contain;
+}
+
+.footer-brand .brand-logo {
+  padding: 0.6rem;
+  border-radius: 1rem;
+  background: #fff;
 }
 
 .brand-name {
@@ -2943,10 +2967,10 @@ h3 {
   place-items: center;
   margin-bottom: 1.2rem;
   border-radius: 1rem;
-  background: var(--ink-950);
+  background: #fff;
 }
 
-.install-prompt-icon svg {
+.install-prompt-icon .logo-symbol {
   width: 2.5rem;
   height: 2.5rem;
 }
@@ -3142,7 +3166,7 @@ h3 {
     top: 50%;
     z-index: 3;
     width: 7.2rem;
-    height: 3.2rem;
+    height: 3.85rem;
     justify-content: center;
     overflow: visible;
     color: #fff;
@@ -3154,14 +3178,22 @@ h3 {
     font-weight: 820;
   }
 
-  .mobile-app-brand > img.mobile-app-airplane {
+  .mobile-app-title .logo-symbol {
+    width: 1.85rem;
+    height: 1.85rem;
+    padding: 0.15rem;
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  .mobile-app-brand > .mobile-app-logo {
     display: block;
-    width: 6.8rem;
-    height: auto;
+    width: 5.3rem;
+    height: 3.65rem;
+    padding: 0.15rem 0.3rem;
+    border-radius: 0.65rem;
+    background: #fff;
     object-fit: contain;
-    filter: drop-shadow(0 5px 8px rgb(2 24 48 / 35%));
-    will-change: transform;
-    animation: mobile-brand-plane 3.2s ease-in-out infinite;
   }
 
   .mobile-app-back,
@@ -5379,18 +5411,14 @@ h3 {
 
   .mobile-splash-logo {
     display: grid;
-    width: 6rem;
-    height: 6rem;
+    width: min(17rem, 74vw);
+    height: auto;
+    padding: 1rem;
     place-items: center;
     margin-bottom: 1.2rem;
     border-radius: 1.8rem;
     background: #fff;
     box-shadow: 0 24px 70px rgb(0 0 0 / 28%);
-  }
-
-  .mobile-splash-logo svg {
-    width: 4.4rem;
-    height: 4.4rem;
   }
 
   .mobile-splash > strong {
@@ -5469,7 +5497,7 @@ h3 {
     box-shadow: 0 8px 24px rgb(20 73 151 / 15%);
   }
 
-  .mobile-onboarding-brand svg {
+  .mobile-onboarding-brand .logo-symbol {
     width: 2.15rem;
     height: 2.15rem;
   }
@@ -5754,7 +5782,7 @@ h3 {
     box-shadow: 0 8px 22px rgb(20 73 151 / 14%);
   }
 
-  .mobile-entry-auth-page-brand svg {
+  .mobile-entry-auth-page-brand .logo-symbol {
     width: 2.15rem;
     height: 2.15rem;
   }
@@ -5831,7 +5859,7 @@ h3 {
     box-shadow: 0 10px 28px rgb(0 0 0 / 18%);
   }
 
-  .mobile-entry-auth-icon svg {
+  .mobile-entry-auth-icon .logo-symbol {
     width: 2.45rem;
     height: 2.45rem;
   }

@@ -5,7 +5,7 @@ import { ArrowRight, Plane } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AccountUnavailableNotice } from "@/components/auth/account-unavailable-notice";
-import { LogoMark } from "@/components/brand/logo-mark";
+import { BrandLogo, LogoMark } from "@/components/brand/logo-mark";
 import { FirebaseGoogleButton } from "@/components/auth/firebase-google-button";
 import { APP_EXPERIENCE_MEDIA_QUERY } from "@/components/pwa/app-experience";
 import { INSTALL_PROMPT_EVENT } from "@/components/pwa/install-app-prompt";
@@ -112,10 +112,7 @@ export function MobileEntryGate({ accountsReady }: { accountsReady: boolean }) {
   if (phase === "splash") {
     return (
       <div className="mobile-entry-layer mobile-splash" aria-label="Vwayaj Ayisyen ap louvri">
-        <span className="mobile-splash-logo">
-          <LogoMark />
-        </span>
-        <strong>Vwayaj Ayisyen</strong>
+        <BrandLogo className="mobile-splash-logo" priority />
         <small>Chili · Brezil · Nou bò kote w</small>
       </div>
     );

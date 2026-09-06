@@ -16,6 +16,15 @@ test.beforeEach(async ({ page }, testInfo) => {
 test("the agency home presents only Chile and Brazil", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page).toHaveURL(/\/ht$/);
+  const logo = page.locator(
+    testInfo.project.name === "mobile" ? ".mobile-app-logo" : ".brand-link .logo-symbol"
+  );
+  await expect(logo).toBeVisible();
+  await expect(logo).toHaveAttribute("src", /\/images\/brand\//);
+  await expect(logo).toHaveJSProperty(
+    "naturalWidth",
+    testInfo.project.name === "mobile" ? 1024 : 640
+  );
   if (testInfo.project.name === "mobile") {
     await expect(page.locator(".mobile-agency-home")).toBeVisible();
     await expect(page.locator(".mobile-destination-card")).toHaveCount(2);
@@ -76,6 +85,7 @@ test("mobile first visit follows splash, onboarding and guest access", async ({
   ];
   for (const [index, heading] of onboardingHeadings.entries()) {
     await expect(page.getByRole("heading", { name: heading })).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator(".mobile-onboarding-brand .logo-symbol")).toBeVisible();
     await expect(page.locator(".onboarding-visual img")).toBeVisible();
     await page
       .getByRole("button", {

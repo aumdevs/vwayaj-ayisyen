@@ -1,11 +1,14 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { BRAND } from "@/config/brand";
 
 export const alt = "Vwayaj Ayisyen";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const logo = await readFile(join(process.cwd(), "public/images/brand/logo-white.png"));
   return new ImageResponse(
     <div
       style={{
@@ -15,10 +18,19 @@ export default function OpenGraphImage() {
         display: "flex",
         height: "100%",
         justifyContent: "center",
-        padding: "72px",
+        padding: "48px",
+        gap: "36px",
         width: "100%"
       }}
     >
+      {/* ImageResponse renders the local raster directly; next/image is not supported here. */}
+      <img
+        alt="Vwayaj Ayisyen"
+        src={`data:image/png;base64,${logo.toString("base64")}`}
+        width={400}
+        height={296}
+        style={{ background: "white", borderRadius: 24, padding: 24, objectFit: "contain" }}
+      />
       <div
         style={{
           background: "rgba(8, 19, 54, 0.82)",
@@ -27,21 +39,21 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           gap: "26px",
-          padding: "64px",
-          width: "100%"
+          padding: "32px",
+          width: "650px"
         }}
       >
         <div style={{ color: "#f7d86f", display: "flex", fontSize: 24, letterSpacing: 4 }}>
           VWAYAJAYISYEN.COM
         </div>
-        <div style={{ display: "flex", fontSize: 76, fontWeight: 800, lineHeight: 1.02 }}>
+        <div style={{ display: "flex", fontSize: 55, fontWeight: 800, lineHeight: 1.02 }}>
           {BRAND.name}
         </div>
         <div
           style={{
             color: "rgba(255,255,255,0.82)",
             display: "flex",
-            fontSize: 31,
+            fontSize: 27,
             lineHeight: 1.3,
             maxWidth: "900px"
           }}
@@ -49,7 +61,7 @@ export default function OpenGraphImage() {
           Soti Ayiti ak yon plan klè pou viv, travay oswa etidye aletranje an 2026.
         </div>
         <div style={{ display: "flex", gap: "18px", marginTop: "8px" }}>
-          {["HT", "FR", "ES", "PT", "EN"].map((locale) => (
+          {["Chili", "Brezil"].map((locale) => (
             <span
               key={locale}
               style={{
@@ -62,7 +74,7 @@ export default function OpenGraphImage() {
                 fontWeight: 700,
                 height: "52px",
                 justifyContent: "center",
-                width: "76px"
+                width: "96px"
               }}
             >
               {locale}

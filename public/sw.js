@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "vwayaj-public";
-const CACHE_VERSION = "v10";
+const CACHE_VERSION = "v11";
 const STATIC_CACHE = `${CACHE_PREFIX}-static-${CACHE_VERSION}`;
 const PAGE_CACHE = `${CACHE_PREFIX}-pages-${CACHE_VERSION}`;
 const LEGACY_CACHE_NAMES = ["public-shell-v1"];
@@ -8,6 +8,9 @@ const HTML_ASSET_ATTRIBUTE_PATTERN = /\b(?:href|src|srcset)=["']([^"']+)["']/gi;
 const PRECACHE_URLS = [
   OFFLINE_URL,
   "/icon.svg",
+  "/images/brand/logo-transparent.png",
+  "/images/brand/logo-white.png",
+  "/images/brand/symbol-transparent.png",
   "/icons/icon-48.png",
   "/icons/icon-72.png",
   "/icons/icon-96.png",

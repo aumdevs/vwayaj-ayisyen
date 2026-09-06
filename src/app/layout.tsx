@@ -33,12 +33,12 @@ export const metadata: Metadata = {
   category: "education",
   icons: {
     icon: [
-      { url: "/icons/icon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon.svg", type: "image/svg+xml" }
+      { url: "/icons/icon-32.png?v=globe", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-192.png?v=globe", sizes: "192x192", type: "image/png" },
+      { url: "/icon.svg?v=globe", type: "image/svg+xml" }
     ],
-    shortcut: "/icons/icon-48.png",
-    apple: [{ url: "/icons/apple-touch-icon-180.png", sizes: "180x180", type: "image/png" }]
+    shortcut: "/icons/icon-48.png?v=globe",
+    apple: [{ url: "/icons/apple-touch-icon-180.png?v=globe", sizes: "180x180", type: "image/png" }]
   },
   appleWebApp: {
     capable: true,
